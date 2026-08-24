@@ -55,6 +55,8 @@ h1{font-family:Orbitron,sans-serif;font-size:clamp(48px,7vw,92px);line-height:.9
 .players{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.player{display:flex;align-items:center;gap:13px;padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.025)}.avatar{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-weight:900}.player b{display:block}.player small{color:#8f839d}.rating{margin-left:auto;color:#cfa8ff;font:800 14px Orbitron}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.stat{padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}.stat small{color:#897c95}.stat strong{display:block;font:800 28px Orbitron;margin-top:7px}
 .calculator{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field label{display:block;color:#9d91a9;font-size:12px;margin-bottom:7px}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid var(--line);background:#0d0815;color:#fff;outline:none}.field{margin-bottom:13px}.result{display:grid;place-items:center;border-radius:18px;border:1px solid rgba(180,110,255,.25);background:radial-gradient(circle,rgba(139,59,255,.16),transparent 60%),rgba(255,255,255,.025);min-height:210px}.result strong{font:900 44px Orbitron;color:#d2adff}.result span{color:#94869f;font-size:12px}
+
+.systemGallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.systemCard{padding:0;overflow:hidden;border-radius:20px;border:1px solid var(--line);background:rgba(15,8,25,.78);box-shadow:0 18px 55px rgba(0,0,0,.28);transition:.3s}.systemCard:hover{transform:translateY(-5px);border-color:rgba(183,122,255,.4);box-shadow:0 22px 65px rgba(0,0,0,.36),0 0 35px rgba(139,59,255,.1)}.systemCard img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;transition:.4s}.systemCard:hover img{transform:scale(1.025)}.liveOnly{display:inline-flex;align-items:center;gap:8px;color:var(--good);font:800 11px Orbitron;letter-spacing:1px}.liveOnly .dot{width:6px;height:6px}
 .cta{margin-top:60px;padding:45px;border-radius:24px;border:1px solid rgba(168,85,247,.22);background:radial-gradient(circle at 75% 50%,rgba(168,85,247,.17),transparent 32%),linear-gradient(135deg,rgba(28,13,44,.9),rgba(10,6,16,.9));display:flex;align-items:center;justify-content:space-between;gap:25px}.cta h2{font-family:Orbitron;margin:0 0 9px}.cta p{color:#9e91a9;margin:0}
 footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-align:center;font-size:12px}
 .modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(3,1,7,.76);backdrop-filter:blur(10px)}.modal.show{display:grid}.modalBox{width:min(720px,100%);max-height:85vh;overflow:auto;border:1px solid rgba(190,130,255,.28);border-radius:22px;background:#10091a;box-shadow:0 30px 100px #000;padding:26px;animation:pop .25s ease}@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}.modalTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modalTop h2{font-family:Orbitron;margin:0}.close{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:9px;padding:8px 11px;cursor:pointer}
@@ -110,45 +112,12 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 </section>
 
 <section class="section" id="systems">
-<div class="sectionHead"><div><h2>SİSTEMLER</h2><p>Bir butona bas. İhtiyacın olan paneli aç.</p></div></div>
-<div class="panel">
-<div class="tabs">
-<button class="tab active" data-tab="rules">⚔ Kurallar</button>
-<button class="tab" data-tab="players">👤 Oyuncular</button>
-<button class="tab" data-tab="training">🏋 Antrenman</button>
-<button class="tab" data-tab="finance">₺ Finans</button>
-</div>
-<div class="contentPane active" id="rules">
-<div class="rules">
-<div class="rule"><b>01 · Maç</b><span>Galibiyet 3 puan, beraberlik 1 puan kazandırır.</span></div>
-<div class="rule"><b>02 · Kadro</b><span>Kadro sınırına ve oyuncu değerlerine uymalısın.</span></div>
-<div class="rule"><b>03 · Transfer</b><span>Transfer bütçesi sezon ekonomisine göre yönetilir.</span></div>
-<div class="rule"><b>04 · Fair Play</b><span>Hile, manipülasyon ve sportmenlik dışı davranışlar yasaktır.</span></div>
-<div class="rule"><b>05 · Antrenman</b><span>Her antrenmanın maliyeti ve oyuncu gelişimine etkisi vardır.</span></div>
-<div class="rule"><b>06 · Sıralama</b><span>Puan eşitliğinde averaj ve ardından galibiyet sayısı dikkate alınır.</span></div>
-</div>
-</div>
-<div class="contentPane" id="players">
-<div class="players">
-<div class="player"><div class="avatar">AK</div><div><b>Arda K.</b><small>Forvet · 24 yaş</small></div><span class="rating">92</span></div>
-<div class="player"><div class="avatar">MY</div><div><b>Mert Y.</b><small>Orta Saha · 21 yaş</small></div><span class="rating">89</span></div>
-<div class="player"><div class="avatar">EO</div><div><b>Efe O.</b><small>Defans · 26 yaş</small></div><span class="rating">87</span></div>
-<div class="player"><div class="avatar">KA</div><div><b>Kaan A.</b><small>Kaleci · 23 yaş</small></div><span class="rating">91</span></div>
-<div class="player"><div class="avatar">BD</div><div><b>Bora D.</b><small>Forvet · 20 yaş</small></div><span class="rating">85</span></div>
-<div class="player"><div class="avatar">SE</div><div><b>Selim E.</b><small>Orta Saha · 25 yaş</small></div><span class="rating">88</span></div>
-</div>
-</div>
-<div class="contentPane" id="training">
-<div class="stats">
-<div class="stat"><small>Hız</small><strong>+12%</strong></div><div class="stat"><small>Şut</small><strong>+18%</strong></div><div class="stat"><small>Pas</small><strong>+9%</strong></div><div class="stat"><small>Dayanıklılık</small><strong>+14%</strong></div>
-</div>
-<div style="margin-top:18px;color:#988aa3;font-size:13px;line-height:1.7">Antrenman seç, oyuncunun gelişimini hızlandır. Yoğunluk arttıkça maliyet yükselir; doğru rotasyon yaparak sezon boyunca formu koru.</div>
-</div>
-<div class="contentPane" id="finance">
-<div class="stats">
-<div class="stat"><small>Başlangıç bütçesi</small><strong>₺2M</strong></div><div class="stat"><small>Maç geliri</small><strong>₺75K</strong></div><div class="stat"><small>Transfer payı</small><strong>%80</strong></div><div class="stat"><small>Ödül havuzu</small><strong>₺250K</strong></div>
-</div>
-</div>
+<div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">4 SİSTEM</span></div>
+<div class="systemGallery">
+<div class="systemCard"><img src="assets/9337.jpg" alt="MortaLeague Oyuncu Katkı Değerleri"></div>
+<div class="systemCard"><img src="assets/9339.jpg" alt="MortaLeague Takım Olma Sistemi"></div>
+<div class="systemCard"><img src="assets/9344.jpg" alt="MortaLeague Futbolcu Olma Sistemi"></div>
+<div class="systemCard"><img src="assets/9343.jpg" alt="MortaLeague Ev ve Taşıt Alma Sistemi"></div>
 </div>
 </section>
 
@@ -178,7 +147,7 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 <div class="rule"><b>05 · Antrenman</b><span>Antrenmanların oyuncu gelişimi ve maliyet üzerinde etkisi vardır.</span></div>
 <div class="rule"><b>06 · Sezon</b><span>Sezon sonunda en yüksek puana sahip takım şampiyon olur.</span></div>
 </div></div></div>
-<div class="modal" id="leagueModal"><div class="modalBox"><div class="modalTop"><h2>◈ SEASON 01</h2><button class="close" data-close>✕</button></div><div class="stats"><div class="stat"><small>Takım</small><strong>32</strong></div><div class="stat"><small>Oyuncu</small><strong>128+</strong></div><div class="stat"><small>Ödül</small><strong>₺250K</strong></div><div class="stat"><small>Durum</small><strong style="color:var(--good)">LIVE</strong></div></div><p style="color:#998ca5;line-height:1.8;margin-top:22px">Season 01 aktif. Kadronu oluştur, antrenmanını planla ve ligde yüksel.</p></div></div>
+<div class="modal" id="leagueModal"><div class="modalBox"><div class="modalTop"><h2>◈ LİG DURUMU</h2><button class="close" data-close>✕</button></div><div class="result" style="min-height:150px"><div style="text-align:center"><span class="liveOnly"><i class="dot"></i>LIVE</span><p style="color:#998ca5;line-height:1.7;margin:12px 0 0">Lig aktif durumda.</p></div></div></div></div>
 <div class="toast" id="toast">Değer güncellendi ✓</div>
 <script src="script.js"></script>
 </body>
