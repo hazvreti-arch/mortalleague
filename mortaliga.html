@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MortaLeague</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="brand">MORTA<span>LEAGUE</span></div>
+    <p>Futbol RP • Kural Merkezi</p>
+  </header>
+
+  <nav id="nav"></nav>
+
+  <main>
+    <section class="intro">
+      <h1>MortaLeague Kural Sistemi</h1>
+      <p>Lig, oyuncu, kulüp ve finans kuralları tek yerde.</p>
+    </section>
+
+    <section id="kurallar" class="grid"></section>
+
+    <section class="calculator">
+      <h2>Hızlı Oyuncu Değeri Hesaplama</h2>
+      <div class="calc-grid">
+        <label>Oyuncu yaşı
+          <input id="age" type="number" min="16" max="40" value="24">
+        </label>
+        <label>Temel değer (€)
+          <input id="value" type="number" min="0" value="2000000">
+        </label>
+        <label>Antrenman sahası
+          <select id="training">
+            <option value="0">Yok</option>
+            <option value="75000">Seviye 1 (+75k)</option>
+            <option value="100000">Seviye 2 (+100k)</option>
+            <option value="125000">Seviye 3 (+125k)</option>
+            <option value="150000">Seviye 4 (+150k)</option>
+            <option value="200000">Seviye 5 (+200k)</option>
+          </select>
+        </label>
+        <label>Stadyum
+          <select id="stadium">
+            <option value="0">Yok</option>
+            <option value="100000000">Seviye 1 (+2 güç)</option>
+            <option value="250000000">Seviye 2 (+4 güç)</option>
+            <option value="500000000">Seviye 3 (+6 güç)</option>
+            <option value="750000000">Seviye 4 (+8 güç)</option>
+            <option value="1000000000">Seviye 5 (+10 güç)</option>
+          </select>
+        </label>
+      </div>
+      <button onclick="calculate()">Hesapla</button>
+      <div id="result" class="result">Sonuç burada görünecek.</div>
+    </section>
+  </main>
+
+  <footer>MortaLeague • Kural sistemi</footer>
+  <script src="script.js"></script>
+</body>
+</html>
