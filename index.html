@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#0a0612">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none';">
 
 <title>MORTALLEAGUE — Karanlığın Ligi</title>
 <style>
@@ -133,9 +133,40 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
 
+
+/* MortaLeague account UI */
+.accountActions,.userPanel{display:flex;align-items:center;gap:8px}
+.accountBtn,.userPill{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#eee;padding:10px 13px;border-radius:11px;font:700 11px Orbitron;cursor:pointer}
+.accountPrimary{background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.35)}
+.userPill span{color:#a855f7;margin-right:5px}
+.userPanel{position:relative}
+.userMenu{display:none;position:absolute;right:0;top:calc(100% + 8px);min-width:210px;padding:8px;border:1px solid var(--line);border-radius:14px;background:#120b1b;box-shadow:0 18px 50px rgba(0,0,0,.35);z-index:100}
+.userMenu.open{display:grid}
+.userMenu button{border:0;background:transparent;color:#ddd;text-align:left;padding:11px;border-radius:9px;cursor:pointer;font:600 11px Inter}
+.userMenu button:hover{background:rgba(168,85,247,.1)}
+.accountModal,.contactModal{display:none;position:fixed;inset:0;z-index:1000}
+.accountModal.open,.contactModal.open{display:grid;place-items:center}
+.accountBackdrop{position:absolute;inset:0;background:rgba(4,2,7,.76);backdrop-filter:blur(8px)}
+.accountCard{position:relative;width:min(440px,calc(100% - 28px));padding:28px;border:1px solid rgba(168,85,247,.24);border-radius:22px;background:#100a18;box-shadow:0 30px 90px rgba(0,0,0,.5);z-index:1}
+.accountClose{position:absolute;right:13px;top:10px;border:0;background:transparent;color:#a99bb2;font-size:28px;cursor:pointer}
+.accountTabs{display:flex;gap:6px;margin-bottom:24px}
+.accountTab{flex:1;border:1px solid var(--line);background:transparent;color:#93869c;padding:11px;border-radius:10px;cursor:pointer;font:700 11px Orbitron}
+.accountTab.active{color:#fff;background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35)}
+.accountEyebrow{font:700 10px Orbitron;color:#a855f7;letter-spacing:1.5px}
+.accountCard h3{font:800 25px Orbitron;margin:8px 0}
+.accountCard p{color:#93879d;font-size:13px;line-height:1.55;margin:0 0 20px}
+.accountCard label{display:block;color:#aaa0b4;font-size:11px;font-weight:700;margin:13px 0}
+.accountCard input,.accountCard select,.accountCard textarea{display:block;width:100%;box-sizing:border-box;margin-top:7px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff;padding:12px;outline:none}
+.accountCard input:focus,.accountCard select:focus,.accountCard textarea:focus{border-color:rgba(168,85,247,.5)}
+.accountSubmit{width:100%;border:0;border-radius:11px;padding:13px;background:#a855f7;color:#fff;font:800 11px Orbitron;cursor:pointer;margin-top:8px}
+.accountMessage{min-height:20px;margin-top:12px;color:#bda7ce;font-size:12px}
+@media(max-width:700px){.accountActions .accountBtn{padding:9px 8px;font-size:9px}.accountCard{padding:23px}}
+
 </style>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div id="particles"></div>
@@ -893,6 +924,73 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 <div class="toast" id="toast">Değer güncellendi ✓</div>
 <script src="script.js"></script>
 
+
+
+<div class="accountActions" id="accountActions">
+  <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
+  <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
+</div>
+
+<div class="accountModal" id="accountsModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-account></div>
+  <div class="accountCard" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+    <button class="accountClose" data-close-account aria-label="Kapat">×</button>
+    <div class="accountTabs">
+      <button class="accountTab active" id="loginTab">Giriş Yap</button>
+      <button class="accountTab" id="registerTab">Kayıt Ol</button>
+    </div>
+
+    <div id="loginForm">
+      <span class="accountEyebrow">MORTALEAGUE HESABI</span>
+      <h3 id="accountTitle">Tekrar hoş geldin.</h3>
+      <p>Hesabına kullanıcı adın ve şifren ile giriş yap.</p>
+      <label>Kullanıcı Adı<input id="loginUsername" autocomplete="username" maxlength="24"></label>
+      <label>Şifre<input id="loginPassword" type="password" autocomplete="current-password"></label>
+      <button class="accountSubmit" id="loginSubmit">GİRİŞ YAP</button>
+    </div>
+
+    <div id="registerForm" hidden>
+      <span class="accountEyebrow">YENİ HESAP</span>
+      <h3>MortaLeague'e katıl.</h3>
+      <p>E-posta istemiyoruz. Sadece kullanıcı adı ve şifre yeterli.</p>
+      <label>Kullanıcı Adı<input id="registerUsername" autocomplete="username" maxlength="24"></label>
+      <label>Şifre<input id="registerPassword" type="password" autocomplete="new-password"></label>
+      <label>Şifre Tekrar<input id="registerPassword2" type="password" autocomplete="new-password"></label>
+      <button class="accountSubmit" id="registerSubmit">HESAP OLUŞTUR</button>
+    </div>
+
+    <div class="accountMessage" id="accountMessage" role="status"></div>
+  </div>
+</div>
+
+<div class="userPanel" id="userPanel" hidden>
+  <button id="userMenuButton" class="userPill"><span>●</span><b id="currentUsername"></b></button>
+  <div class="userMenu" id="userMenu">
+    <button id="contactAdmin">ADMİN İLE İLETİŞİME GEÇ</button>
+    <button id="logoutButton">ÇIKIŞ YAP</button>
+  </div>
+</div>
+
+<div class="contactModal" id="contactModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-contact></div>
+  <div class="accountCard contactCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-contact aria-label="Kapat">×</button>
+    <span class="accountEyebrow">DESTEK</span>
+    <h3>Admin ile İletişime Geç</h3>
+    <p>Şikayet, öneri, hata veya isteklerini buradan iletebilirsin.</p>
+    <label>Konu
+      <select id="contactType">
+        <option>Öneri</option>
+        <option>Şikayet</option>
+        <option>Hata Bildirimi</option>
+        <option>Diğer</option>
+      </select>
+    </label>
+    <label>Mesaj<textarea id="contactMessage" maxlength="2000" rows="6"></textarea></label>
+    <button class="accountSubmit" id="contactSubmit">MESAJI GÖNDER</button>
+    <div class="accountMessage" id="contactStatus"></div>
+  </div>
+</div>
 
 </body>
 </html>

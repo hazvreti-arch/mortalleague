@@ -143,3 +143,134 @@ window.addEventListener("scroll",()=>{
 
 // Sessiz güvenlik/kararlılık koruması: tek bir UI hatası tüm sayfayı kilitlemesin.
 window.addEventListener("error",()=>{}, {passive:true});
+
+
+/* MortaLeague account system
+   Backend: Supabase Auth. Username-only UI is mapped to a private synthetic email.
+   Before publishing, replace the two placeholders below with your Supabase project values
+   and run SUPABASE_SETUP.sql in the Supabase SQL editor.
+*/
+const MORTA_SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const MORTA_SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+let mortaSupabase = null;
+if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
+  mortaSupabase = window.supabase.createClient(MORTA_SUPABASE_URL, MORTA_SUPABASE_ANON_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+  });
+}
+
+const accountModal = $("#accountsModal");
+const contactModal = $("#contactModal");
+const loginForm = $("#loginForm");
+const registerForm = $("#registerForm");
+const accountMessage = $("#accountMessage");
+const userPanel = $("#userPanel");
+const accountActions = $("#accountActions");
+const userMenu = $("#userMenu");
+
+function showAccountMessage(text, error=false){
+  if(!accountMessage) return;
+  accountMessage.textContent=text;
+  accountMessage.style.color=error ? "#f0a0b0" : "#bda7ce";
+}
+function accountOpen(mode="login"){
+  accountModal?.classList.add("open");
+  accountModal?.setAttribute("aria-hidden","false");
+  loginForm.hidden = mode!=="login";
+  registerForm.hidden = mode!=="register";
+  $("#loginTab")?.classList.toggle("active", mode==="login");
+  $("#registerTab")?.classList.toggle("active", mode==="register");
+  showAccountMessage("");
+}
+function accountClose(){
+  accountModal?.classList.remove("open");
+  accountModal?.setAttribute("aria-hidden","true");
+}
+function syntheticEmail(username){
+  return username.trim().toLowerCase().replace(/[^a-z0-9._-]/g,"") + "@accounts.mortaleague.local";
+}
+function normalizeUsername(v){ return v.trim().toLowerCase(); }
+
+async function registerMorta(){
+  if(!mortaSupabase){ showAccountMessage("Hesap sistemi henüz bağlantı bilgileriyle etkinleştirilmedi.", true); return; }
+  const username=normalizeUsername($("#registerUsername").value);
+  const p1=$("#registerPassword").value;
+  const p2=$("#registerPassword2").value;
+  if(!/^[a-z0-9_]{3,24}$/.test(username)){ showAccountMessage("Kullanıcı adı 3-24 karakter olmalı; sadece a-z, 0-9 ve _ kullan.", true); return; }
+  if(p1.length<8){ showAccountMessage("Şifre en az 8 karakter olmalı.", true); return; }
+  if(p1!==p2){ showAccountMessage("Şifreler eşleşmiyor.", true); return; }
+  const {data,error}=await mortaSupabase.auth.signUp({email:syntheticEmail(username),password:p1});
+  if(error){ showAccountMessage(error.message, true); return; }
+  if(data.user) {
+    await mortaSupabase.from("profiles").upsert({id:data.user.id,username},{onConflict:"id"});
+  }
+  showAccountMessage("Hesabın oluşturuldu. Giriş yapabilirsin.");
+  setTimeout(()=>accountOpen("login"),700);
+}
+
+async function loginMorta(){
+  if(!mortaSupabase){ showAccountMessage("Hesap sistemi henüz bağlantı bilgileriyle etkinleştirilmedi.", true); return; }
+  const username=normalizeUsername($("#loginUsername").value);
+  const password=$("#loginPassword").value;
+  if(!username || !password){ showAccountMessage("Kullanıcı adı ve şifreyi doldur.", true); return; }
+  const {error}=await mortaSupabase.auth.signInWithPassword({email:syntheticEmail(username),password});
+  if(error){ showAccountMessage("Kullanıcı adı veya şifre hatalı.", true); return; }
+  accountClose();
+  await refreshMortaUser();
+}
+
+async function refreshMortaUser(){
+  if(!mortaSupabase) return;
+  const {data:{session}}=await mortaSupabase.auth.getSession();
+  if(session?.user){
+    const {data:profile}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).single();
+    $("#currentUsername").textContent=profile?.username || session.user.email.split("@")[0];
+    userPanel.hidden=false; accountActions.hidden=true;
+  }else{
+    userPanel.hidden=true; accountActions.hidden=false;
+  }
+}
+
+$("#openLogin")?.addEventListener("click",()=>accountOpen("login"));
+$("#openRegister")?.addEventListener("click",()=>accountOpen("register"));
+$("#loginTab")?.addEventListener("click",()=>accountOpen("login"));
+$("#registerTab")?.addEventListener("click",()=>accountOpen("register"));
+$("#loginSubmit")?.addEventListener("click",loginMorta);
+$("#registerSubmit")?.addEventListener("click",registerMorta);
+document.querySelectorAll("[data-close-account]").forEach(el=>el.addEventListener("click",accountClose));
+$("#userMenuButton")?.addEventListener("click",()=>userMenu?.classList.toggle("open"));
+$("#logoutButton")?.addEventListener("click",async()=>{
+  if(mortaSupabase) await mortaSupabase.auth.signOut();
+  userMenu?.classList.remove("open"); await refreshMortaUser();
+});
+
+$("#contactAdmin")?.addEventListener("click",()=>{
+  userMenu?.classList.remove("open");
+  $("#contactModal")?.classList.add("open");
+  $("#contactModal")?.setAttribute("aria-hidden","false");
+});
+document.querySelectorAll("[data-close-contact]").forEach(el=>el.addEventListener("click",()=>{
+  $("#contactModal")?.classList.remove("open");
+  $("#contactModal")?.setAttribute("aria-hidden","true");
+}));
+$("#contactSubmit")?.addEventListener("click",async()=>{
+  const status=$("#contactStatus");
+  if(!mortaSupabase){ status.textContent="Hesap sistemi henüz etkinleştirilmedi."; return; }
+  const {data:{user}}=await mortaSupabase.auth.getUser();
+  if(!user){ status.textContent="Önce giriş yapmalısın."; return; }
+  const message=$("#contactMessage").value.trim();
+  if(message.length<5){ status.textContent="Mesajını biraz daha açık yaz."; return; }
+  const {error}=await mortaSupabase.from("support_messages").insert({
+    user_id:user.id,
+    type:$("#contactType").value,
+    message
+  });
+  status.textContent=error ? "Mesaj gönderilemedi." : "Mesajın admin'e iletildi.";
+  if(!error) $("#contactMessage").value="";
+});
+
+if(mortaSupabase){
+  mortaSupabase.auth.onAuthStateChange(()=>refreshMortaUser());
+  refreshMortaUser();
+}
