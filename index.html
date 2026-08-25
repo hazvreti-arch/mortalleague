@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#0a0612">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; connect-src https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none';">
 
 <title>MORTALLEAGUE — Karanlığın Ligi</title>
 <style>
@@ -15,8 +15,8 @@
  --purple:#9b4dff;--violet:#6d28d9;--pink:#d946ef;--text:#f8f5ff;--muted:#a99bbd;
  --line:rgba(180,120,255,.18);--glow:rgba(139,59,255,.35);--good:#67f7bb;--danger:#ff668f;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
- [hidden]{display:none !important}
+*{box-sizing:border-box}
+[hidden]{display:none !important}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
 body:before{content:"";position:fixed;inset:0;z-index:-5;background:
 radial-gradient(circle at 15% 15%,rgba(142,48,255,.22),transparent 30%),
 radial-gradient(circle at 88% 28%,rgba(217,70,239,.13),transparent 28%),
@@ -144,7 +144,7 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .userMenu{display:none;position:absolute;right:0;top:calc(100% + 8px);min-width:210px;padding:8px;border:1px solid var(--line);border-radius:14px;background:#120b1b;box-shadow:0 18px 50px rgba(0,0,0,.35);z-index:100}
 .userMenu.open{display:grid}
 .userMenu button{border:0;background:transparent;color:#ddd;text-align:left;padding:11px;border-radius:9px;cursor:pointer;font:600 11px Inter}
-.userMenu button:hover{background:rgba(168,85,247,.1)}
+.userMenu button:hover{background:rgba(168,85,247,.1)}.userAvatarMini{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#ec4899);font-size:11px;color:#fff}.userAvatarMini img{width:100%;height:100%;object-fit:cover}.profileModal{display:none;position:fixed;inset:0;z-index:1000}.profileModal.open{display:grid;place-items:center}.profileCard{width:min(470px,calc(100% - 28px))}.profileHero{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);margin-bottom:16px}.profileHero b{display:block;font:800 15px Orbitron}.profileHero small{display:block;color:#94869f;margin-top:5px;font-size:11px;line-height:1.5}.profileAvatarLarge{width:64px;height:64px;border-radius:17px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 25px Orbitron;color:#fff;flex:0 0 auto}.profileAvatarLarge img{width:100%;height:100%;object-fit:cover}.profileActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.profileActions .accountBtn{width:100%;padding:12px}.profileCard input[type=file]{padding:9px}.profileCard textarea{resize:vertical;min-height:110px}
 .accountModal,.contactModal{display:none;position:fixed;inset:0;z-index:1000}
 .accountModal.open,.contactModal.open{display:grid;place-items:center}
 .accountBackdrop{position:absolute;inset:0;background:rgba(4,2,7,.76);backdrop-filter:blur(8px)}
@@ -196,6 +196,9 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 <div class="accountActions" id="accountActions">
   <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
   <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
+</div>
+<div class="userPanel" id="userPanel" hidden>
+  <button id="userMenuButton" class="userPill" type="button"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button>
 </div>
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
@@ -978,11 +981,18 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   </div>
 </div>
 
-<div class="userPanel" id="userPanel" hidden>
-  <button id="userMenuButton" class="userPill"><span>●</span><b id="currentUsername"></b></button>
-  <div class="userMenu" id="userMenu">
-    <button id="contactAdmin">ADMİN İLE İLETİŞİME GEÇ</button>
-    <button id="logoutButton">ÇIKIŞ YAP</button>
+<div class="profileModal" id="profileModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-profile></div>
+  <div class="accountCard profileCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-profile aria-label="Kapat">×</button>
+    <span class="accountEyebrow">OYUNCU PROFİLİ</span>
+    <h3>Profilin</h3>
+    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
+    <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
+    <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
+    <div class="profileActions"><button class="accountBtn accountPrimary" id="contactAdmin">ADMİN'E NOT BIRAK</button><button class="accountBtn" id="logoutButton">ÇIKIŞ YAP</button></div>
+    <div class="accountMessage" id="profileStatus"></div>
   </div>
 </div>
 
@@ -1007,6 +1017,20 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   </div>
 </div>
 
-  <script src="script.js"></script>
+<script>
+(function(){
+const pm=document.querySelector('#profileModal'),status=document.querySelector('#profileStatus'),fallback=document.querySelector('#profileAvatarFallback'),av=document.querySelector('#profileAvatar'),thumb=document.querySelector('#userAvatarThumb'),dot=document.querySelector('#userAvatarDot'),bio=document.querySelector('#profileBio'),input=document.querySelector('#avatarInput'),nameEl=document.querySelector('#profileUsername');
+const initial=u=>(u||'W').slice(0,1).toUpperCase();
+async function who(){if(typeof mortaSupabase==='undefined'||!mortaSupabase)return null;const {data:{user}}=await mortaSupabase.auth.getUser();if(!user)return null;const {data:profile}=await mortaSupabase.from('profiles').select('username,bio,avatar_url').eq('id',user.id).single();return {user,profile}}
+function render(p){const u=p?.username||'';nameEl.textContent=u;fallback.textContent=initial(u);bio.value=p?.bio||'';if(p?.avatar_url){av.src=p.avatar_url;av.hidden=false;thumb.src=p.avatar_url;thumb.hidden=false;dot.hidden=true}else{av.hidden=true;thumb.hidden=true;dot.hidden=false}}
+async function openProfile(){const x=await who();if(!x)return;render(x.profile);status.textContent='';input.value='';pm.classList.add('open');pm.setAttribute('aria-hidden','false')}
+function closeProfile(){pm.classList.remove('open');pm.setAttribute('aria-hidden','true')}
+document.querySelector('#userMenuButton')?.addEventListener('click',openProfile);document.querySelectorAll('[data-close-profile]').forEach(x=>x.addEventListener('click',closeProfile));
+input?.addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>3*1024*1024){status.textContent='Profil fotoğrafı en fazla 3 MB olabilir.';input.value='';return}const r=new FileReader();r.onload=()=>{av.src=String(r.result);av.hidden=false};r.readAsDataURL(f)});
+document.querySelector('#saveProfile')?.addEventListener('click',async()=>{const x=await who();if(!x)return;status.textContent='Kaydediliyor...';let url=x.profile?.avatar_url||null;const f=input?.files?.[0];if(f){const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=x.user.id+'/avatar.'+ext;const {error}=await mortaSupabase.storage.from('avatars').upload(path,f,{upsert:true,contentType:f.type||'image/jpeg'});if(error){status.textContent='Fotoğraf yüklenemedi: '+error.message;return}url=mortaSupabase.storage.from('avatars').getPublicUrl(path).data.publicUrl+'?v='+Date.now()}const {error}=await mortaSupabase.from('profiles').upsert({id:x.user.id,username:x.profile?.username||x.user.email.split('@')[0],bio:bio.value.trim(),avatar_url:url},{onConflict:'id'});if(error){status.textContent='Profil kaydedilemedi: '+error.message;return}render({username:x.profile?.username||x.user.email.split('@')[0],bio:bio.value.trim(),avatar_url:url});status.textContent='Profil kaydedildi. ✓'});
+if(typeof mortaSupabase!=='undefined'&&mortaSupabase)mortaSupabase.auth.onAuthStateChange(()=>setTimeout(async()=>{const x=await who();if(x)render(x.profile)},0));
+})();
+</script>
+<script src="script.js"></script>
 </body>
 </html>
