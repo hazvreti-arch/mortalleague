@@ -61,6 +61,8 @@ h1{font-family:Orbitron,sans-serif;font-size:clamp(48px,7vw,92px);line-height:.9
 footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-align:center;font-size:12px}
 .modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(3,1,7,.76);backdrop-filter:blur(10px)}.modal.show{display:grid}.modalBox{width:min(720px,100%);max-height:85vh;overflow:auto;border:1px solid rgba(190,130,255,.28);border-radius:22px;background:#10091a;box-shadow:0 30px 100px #000;padding:26px;animation:pop .25s ease}@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}.modalTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modalTop h2{font-family:Orbitron;margin:0}.close{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:9px;padding:8px 11px;cursor:pointer}
 .toast{position:fixed;right:20px;bottom:20px;z-index:120;padding:13px 17px;border:1px solid rgba(103,247,187,.25);background:rgba(7,20,16,.9);color:#aefbd9;border-radius:12px;transform:translateY(100px);opacity:0;transition:.3s}.toast.show{transform:none;opacity:1}
+
+.systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.ruleText{white-space:pre-wrap;padding:20px 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:480px;overflow:auto}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
 @media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:50px}.heroVisual{min-height:390px}.grid{grid-template-columns:repeat(2,1fr)}.players{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.navlinks{display:none}.rules,.calculator{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}}
 @media(max-width:560px){main{padding-left:15px;padding-right:15px}.nav{padding:0 15px}.logo{font-size:13px}.navCta{padding:9px 11px;font-size:12px}.grid,.players,.stats{grid-template-columns:1fr}.heroVisual{transform:scale(.82);margin:-30px 0}.section{padding:48px 0}h1{letter-spacing:-3px}.cta{padding:28px}.r1{width:330px;height:330px}}
 </style>
@@ -112,12 +114,612 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 </section>
 
 <section class="section" id="systems">
-<div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">4 SİSTEM</span></div>
-<div class="systemGallery">
-<div class="systemCard"><img src="assets/9337.jpg" alt="MortaLeague Oyuncu Katkı Değerleri"></div>
-<div class="systemCard"><img src="assets/9339.jpg" alt="MortaLeague Takım Olma Sistemi"></div>
-<div class="systemCard"><img src="assets/9344.jpg" alt="MortaLeague Futbolcu Olma Sistemi"></div>
-<div class="systemCard"><img src="assets/9343.jpg" alt="MortaLeague Ev ve Taşıt Alma Sistemi"></div>
+<div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">16 SİSTEM</span></div>
+<div class="systemsIntro"><span>◈</span><div><strong>TÜM SİSTEMLER</strong><small>Gönderdiğin metinler, tekrarlar ayıklanarak ve yeni ek bilgiler ilgili başlıkların devamına işlenerek burada yer alıyor.</small></div></div>
+<div class="systemLibrary">
+<article class="systemRule"><h3>MortaLeague Yayın Geliri Sistemi</h3><div class="ruleText">Takımlar sezon içerisinde gösterdiği performansa para kazanırlar. Bu paralar devrede veya sezon sonunda eklenebilir.
+
+Mortaliga Sıralama Gelin (Tüm Lig Kategorileri için geçerlidir)
+
+Ligde 1. Olan Takıma
+
+Ligde 2. Olan Takıma: 75.000.000€
+
+Ligde 3-5. Olan Takımlara: 50.000.000€
+
+Ligde 5-10. Olan Takımlara: 30.000.000€
+
+Ligde 10-15. Olan Takımlara: 25.000.000€
+
+Ligde 15-20. Olan Takımlara: 10.000.000€
+
+Mortal League Galibiyet Gelirleri:
+
+Mortaliga A
+
+Galibiyet: 4m
+
+Beraberlik: 2m
+
+Mortaliga B
+
+Galibiyet: 3m
+
+Beraberlik: 1m
+
+Kupa Maçları(Tüm Yerel Kupalar Dahildir)
+
+Galibiyet:2m Beraberlik: 1m
+
+~ Mortal League Kupa Primleri ~
+
+Zmk Şampiyonu: 70.000.000€
+
+Zmk İkincisi: 35.000.000€
+
+Fa Cup Şampiyonu: 50.000.000€
+
+Fa Cup İkincisi:25.000.000€
+
+Goat Cup Şampiyonu: 40.000.000€
+
+Goat Cup İkincisi: 20.000.000€
+
+Süper Kupa Şampiyonu: 20.000.000€
+
+Süper Kupa İkincisi: 10.000.000€</div></article>
+
+<article class="systemRule"><h3>MortaLeague Oyuncu Katkı Değerleri</h3><div class="ruleText">MIA
+
+GolxGym: 30K
+
+Asist: 20K
+
+Kupa: 2M
+
+MI B
+
+GolxGym: 20K
+
+Asist: 10k
+
+Kupa: 1m
+
+Zmk [ Ligdeki Tüm Takımlar Katılır ]
+
+GolxGym: 20K
+
+Asist: 10K
+
+Kupa: 1.5M
+
+Fa Cup [ MI A, Zmk kazanan katılamaz]
+
+GolxGym: 15K
+
+Asist: 10K
+
+Kupa: 1M
+
+Goat Cup [MIB, Zmk, MIA, Fa Cup kazananları katılamaz ]
+
+GolxGym: 10K
+
+Asist: 5K
+
+Kupa: 500K
+
+Süper Kupa [ MIA, Zmk, Fa Cup, Goat Cup kazanan takımlar arasında oynanır ]
+
+GolxGym: 10K
+
+Asist: 5K
+
+Kupa: 250K</div></article>
+
+<article class="systemRule"><h3>Mortal League Telefon Satın Alma Sistemi</h3><div class="ruleText">Oyuncular kazandıkları maaşlar ile kendilerine telefon satın alabilir. Telefonunuz ne kadar iyiyse lüks seviyeniz o kadar artar.
+
+Oppo Telefon: Fiyat 3M +250K değer ekler
+
+Mi Telefon: Fiyat 5M +500K değer ekler
+
+Samsung Telefon: Fiyat 15M +750K değer ekler
+
+iPhone Telefon: Fiyat 20M +1M değer ekler</div></article>
+
+<article class="systemRule"><h3>Mortal League Ev Satın Alma Sistemi</h3><div class="ruleText">Oyuncular kazandıkları maaşlar ile kendilerine ev satın alabilir. Eviniz ne kadar iyiyse o kadar değer katar.
+
+Apartman Dairesi Fiyat: 10M, 500K Değer Ekler
+
+Dubleks Ev: Fiyat: 25M, 1.5M Değer Ekler
+
+Villa: Fiyat: 50M, 2M Değer Ekler
+
+Malikane: Fiyat: 100M, 3M Değer Ekler
+
+Lüks Malikane: Fiyat: 150M, 3.5M Değer Ekler</div></article>
+
+<article class="systemRule"><h3>Mortal League Taşıt Alma Sistemi</h3><div class="ruleText">Oyuncular kazandıkları maaşlar ile kendilerine taşıt satın alabilir. Taşıtınız ne kadar lüksse o kadar değer katar.
+
+Motosiklet: Fiyat: 5M, 250K Değer Ekler
+
+SUV: Fiyat: 10M, 500K Değer Ekler Spor Araba: Fiyat: 20M, 1M Değer Ekler
+
+Yat: Fiyat: 40M, 2M Değer Ekler
+
+Özel Jet: Fiyat: 100M, 3M Değer Ekler</div></article>
+
+<article class="systemRule"><h3>MortaLeague Ödül Sistemi</h3><div class="ruleText">Ballon D'or = 2.500.000€
+
+Golden Boy = 1.500.000€
+
+Golden Boot = 1.000.000€
+
+Best Teknik Direktör = 1.000.000€
+
+Best Mevki = 1.000.000€
+
+Best 11 = 500.000€</div></article>
+
+<article class="systemRule"><h3>UCL / UEL / UECL Oyuncu Katkı Değerleri</h3><div class="ruleText">UCL
+
+Golx Gym:
+
+60k
+
+Asist: 50k
+
+Kupa: 4.5m
+
+UEL
+
+GolxGym: 50k
+
+Asist: 40k
+
+Kupa: 3.5m
+
+UECL
+
+GolxGym: 40k
+
+Asist: 30k
+
+Kupa: 2.5m
+
+UEFA SÜPER
+KUPA
+
+GolxGym: 50k
+
+Asist: 40k
+
+Kupa: 3m
+
+Dünya Kupası
+
+GolxGym: 70k
+
+Asist: 60k
+
+Kupa: 5m
+
+Avrupa
+Şampiyonası (E uro)
+
+GolxGym: 60k
+
+Asist: 50k
+
+Kupa: 4m
+
+Uluslar Ligi
+
+GolxGym: 40k
+
+Asist: 30k
+
+Kupa: 2.5m</div></article>
+
+<article class="systemRule"><h3>MortaLeague Sponsorluk Sistemi</h3><div class="ruleText">İsteyen Herkes Sponsor Hesabı açabilir bu çar sınırına girmez. Hesap açarken Sponsorluğunuzun hangi kategoride olduğunu belirtmeniz gerekmektedir(Sırt Sponsoru, Göğüs Sponsoru, Stadyum Sponsoru)
+
+Tüm Sponsorluk Kategorilerin bütçesi 500.000.000€ ile başlar ve her sezon bitiminde 100.000.000€ ekleyerek devam eder.
+
+Sırt Sponsoru maksimum 8 Takım Göğüs Sponsoru maksimum 6 Takım Stadyum Sponsoru maksimum 4 Takım ile sözleşme imzalayabilir
+
+Her Takımın Göğüs, Sırt ve Stadyum olmak üzere maksimum 3 sponsoru olabilir.
+
+Takımlar Sponsorluklardan Sadece İmza Primi Ve Kupa Primi Alır.
+
+Göğüs Sponsoru:
+
+İmza Primi (Maksimum): 20.000.000€
+
+Lig Şampiyonu (Mla): 25.000.000€
+
+Lig Şampiyonu (Mlb): 20.000.000€
+
+Zmk Şampiyonu: 20.000.000€
+
+Fa Cup Şampiyonu: 15.000.000€
+
+Goat Cup Şampiyonu: 10.000.000€
+
+Süper Kupa Şampiyonu: 5.000.000€
+
+Sırt Sponsoru:
+
+İmza Primi (Maksimum): 15.000.000€
+
+Lig Şampiyonu (Mla): 15.000.000€
+
+Lig Şampiyonu (Mlb): 10.000.000€
+
+Zmk Şampiyonu: 10.000.000€
+
+Fa Cup Şampiyonu: 7.000.000€
+
+Goat Cup Şampiyonu: 5.000.000€
+
+Süper Kupa Şampiyonu: 3.000.000€
+
+Stadyum Sponsoru:
+
+İmza Primi (Maksimum): 30.000.000€
+
+Lig Şampiyonu (Mla): 30.000.000€
+
+Lig Şampiyonu (Mlb): 25.000.00€
+
+Zmk Şampiyonu: 25.000.000€
+
+Fa Cup Şampiyonu: 20.000.000€
+
+Goat Cup Şampiyonu: 15.000.000€
+
+Süper Kupa Şampiyonu: 10.000.000€
+
+Sponsorlar ile en az 2 yıllık sözleşme imzalamak zorundasınızdır.
+
+Sponsorlar ile sözleşme süresi boyunca fesh edemezsiniz.
+
+Sponsorluğun kapanması halinde yeni sponsorluk yapmak için en az 1 sezon beklemelisinizdir.</div></article>
+
+<article class="systemRule"><h3>MortaLeague Teknik Direktör Olma Sistemi</h3><div class="ruleText">MortaLeague'de teknik direktör olmanız için öncelikle yapmanız gereken gerçekte olan bir teknik direktör ile ilgili bir hesap açıp @mortaligakayit hesabına 'Kayıt Olmak İstiyorum' mesajı atmaktır.
+
+Teknik direktörler lige 1.000.000€ değerle başlar ve aldığı sonuçlara/kupalara göre değeri artar.
+
+Teknik direktörler aldığı galibiyet/beraberlik/mağlubiyet ve kupa sayılarını Bio'suna eklemek ve düzenli olarak yenilemek zorundadır.
+
+Değer artışının nasıl olacağı ile ilgili bilgi yan sayfalarda verilmiştir</div></article>
+
+<article class="systemRule"><h3>MortaLeague Teknik Direktör Değerleri</h3><div class="ruleText">ML A
+
+Galibiyet: 30K
+
+Beraberlik: 10K
+
+Kupa: 2M
+
+İkincilik: 1M
+
+ML B
+
+Galibiyet: 20K
+
+Beraberlik: 10K
+
+Kupa: 1M
+
+İkincilik: 500K
+
+ZMK
+
+Galibiyet: 20K
+
+Beraberlik: 10K
+
+Kupa: 1.5M
+
+İkincilik: 750K
+
+FA Cup
+
+Galibiyet: 15K
+
+Beraberlik: 5K
+
+Kupa: 1M
+
+İkincilik: 500K
+
+GOAT Cup
+
+Galibiyet: 10K
+
+Beraberlik: 5K
+
+Kupa: 500K
+
+İkincilik: 250K
+
+ML Süper Kupa
+
+Galibiyet: 10K
+
+Beraberlik: 5K
+
+Kupa: 250K
+
+İkincilik: 100K
+
+UCL
+
+Galibiyet: 50K
+
+Beraberlik: 30K
+
+Kupa: 4.5M
+
+İkincilik: 2M
+
+UEL
+
+Galibiyet: 40K
+
+Beraberlik: 20K
+
+Kupa: 3.5M
+
+İkincilik: 1.5M
+
+UECL
+
+Galibiyet: 30K
+
+Beraberlik: 10K
+
+Kupa: 2.5M
+
+İkincilik: 1M
+
+Uefa S.Kupa
+
+G: 40K
+
+B: 20K
+
+Kupa: 3M
+
+İkincilik: 1.5M
+
+Dünya Kupası
+
+G: 50K
+
+B: 30K
+
+Kupa: 5M
+
+İkincilik: 2.5M
+
+Euro
+
+G: 40K
+
+B: 20K
+
+Kupa: 4M
+
+İkincilik 2M
+
+Uluslar Ligi
+
+G: 30K
+
+B: 10K
+
+Kupa: 2.5M
+
+M
+
+İkincilik: 1M</div></article>
+
+<article class="systemRule"><h3>MortaLeague Maaş Sistemi</h3><div class="ruleText">Bir futbolcunun maaşı minimum kendi değeri kadar olabilir. Maksimumda ise sınır yoktur.
+
+Örneğin; Oyuncunun değeri 2M€ ise siz oyuncuya minimum 2M€ maaş vermek zorundasınız
+
+Bir takım bütün oyuncularına maaş vermek zorundadır.
+
+Bonuslar: Bir takım bir oyuncu ile sözleşme imzalarken oyuncuya bonus maaş koyabilir. Örnek: Ballondor kazanırsa 5M€ maaş bonusu (Tek Seferlik)
+
+Maaşlar yarım sezonluk olarak ödenir yani bir takım bir oyuncuya sezon içerisinde bonuslar harici iki kez ödeme yapmak zorundadır.
+
+Oyuncular aldığı maaşı ve toplam parasını biyografisine yazmak zorundadır.
+
+Oyuncular aldığı maaşı ne yapacak sorusunun cevabı diğer sayfalarda bulunmaktadır.
+
+Not: Oyuncu ile 1M€ maaş üzerinden 3 yıllık sözleşme imzaladınız diyelim, 2. sezon oyuncunun değeri 2M€ olursa maaşı da otomatik olarak 2M€ olur.</div></article>
+
+<article class="systemRule"><h3>UCL / UEL / UECL Gelir Sistemi</h3><div class="ruleText">Ucl Lig Aşamasına Katılma: 50.000.000€
+
+Ucl Play Offlara Katılma: 10.000.000€
+
+Ucl Son 16 Turu Katılma: 20.000.000€
+
+Ucl Çeyrek Final Katılma: 40.000.000€
+
+Ucl Yarı Final Katılma: 60.000.000€
+
+Ucl Finale Katılma: 80.000.000€
+
+Ucl Şampiyonluğu: 100.000.000€
+
+Ucl Galibiyet: 5m
+
+Ucl Beraberlik:3m
+
+Uel Lig Aşamasına katılma: 30.000.000€
+
+Uel Play Offlara Katılma: 15.000.000€
+
+Uel Son 16 Turu Katılma: 20.000.000€
+
+Uel Çeyrek Final Katılma: 30.000.000€
+
+Uel Yarı Final Katılma: 40.000.000€
+
+Uel Final Katılma: 60.000.000€
+
+Uel Şampiyonluğu: 75.000.000€
+
+Uel Galibiyet: 4m
+
+Uel Beraberlik: 2m
+
+Uecl Lig Aşamasına Katılma: 20.000.000€
+
+Uecl Play Offlara Katılma: 10.000.000€
+
+Uecl Son 16 Turu Katılma: 15.000.000€
+
+Uecl Çeyrek Final Katılma: 20.000.000€
+
+Uecl Yarı Final Katılma: 25.000.000€
+
+Uecl Final Katılma: 40.000.000€
+
+Uecl Şampiyonluğu: 50.000.000€
+
+Uecl Galibiyet: 3m
+
+Uecl Beraberlik: 1m</div></article>
+
+<article class="systemRule"><h3>MortaLeague Stadyum Sistemi</h3><div class="ruleText">Stadyum sistemi, stadyum alan takımların değerine katkı sağlar.
+
+1. Seviye Stadyum=100.000.000€ 2 Güç ekler
+
+2. Seviye Stadyum=250.000.000€ 4 Güç ekler
+
+3. Seviye Stadyum=500.000.000€ 6 Güç Ekler
+
+4. Seviye Stadyum=750.000.000€ 8 Güç ekler
+
+5. Seviye Stadyum=1.000.000.000€ 10 Güç ekler
+
+NOT: Her takımın stadyumunun olması zorunludur
+
+M</div></article>
+
+<article class="systemRule"><h3>MortaLeague Katkı Sınırı Sistemi</h3><div class="ruleText">Forvetler maç başına en fazla 3G/A alabilir. 15 maçta bir ise en fazla 4 G/A alabilirler.
+
+Orta sahalar maç başına en fazla 2G/A alabilir. 15 maçta bir ise en fazla 3G/A alabilirler.
+
+Defanslar maç başına en fazla 1G/A alabilir. 15 maçta bir ise en fazla 2G/A alabilirler.
+
+Kaleciler 10 maçta en fazla 1 asist alabilir. 50 maçta bir ise 1 gol alabilirler</div></article>
+
+<article class="systemRule"><h3>MortaLeague Yaş Sistemi</h3><div class="ruleText">Yaş Sisteminde Oyuncular; Yaşlarına, Yaşlarına göre yaptıkları gol/asist/gym performansına göre değer kazanır.
+
+Oyuncular Yaşlarına göre kategorilere ayrılır
+
+16-20 Yaş: Genç Yetenek
+
+20-24 Yaş: Gelişen Yetenek
+
+24-28 Yaş: Zirve Dönemi
+
+28-33 Yaş: Deneyimli Oyuncu
+
+33-40 Yaş: Veteran Oyuncu
+
+Genç Yetenek
+
+17 Yaş +500k
+
+18 Yaş + 450k
+
+19 Yaş + 400k
+
+Gelişen Yetenek
+
+20 Yaş + 350k
+
+21 Yaş + 300k
+
+22 Yaş + 250k
+
+23 Yaş + 200k
+
+Zirve Dönemi
+
+24 Yaş + 150k
+
+25 Yaş + 100k 26 Yaş + 50k
+
+27 Yaş Nötr
+
+Deneyimli Oyuncu
+
+29 Yaş Nötr
+
+30 Yaş Nötr
+
+31 Yaş - 250k
+
+32 Yaş - 500k
+
+Veteran Oyuncu
+
+33 Yaş - 2.5m
+
+34 Yaş - 3m
+
+35 Yaş - 3.5m
+
+36 Yaş - 4m
+
+37 Yaş - 5m
+
+38 Yaş - 6m
+
+39 Yaş - 8m
+
+40 Yaş - 10m
+
+Oyuncular Bu Değerleri Sezon Sonunda Ekler veya Düşer.</div></article>
+
+<article class="systemRule"><h3>MortaLeague Antrenman Sahası Sistemi</h3><div class="ruleText">Antrenman Sahası Sisteminde belirli maliyetlerde antrenman sahaları satın alırsınız Antrenman Sahası seviyesi ne kadar yüksek ise oyuncuların değerinde o kadar artış
+
+olur
+
+1.Seviye Antrenman Sahası: 100.000.000€
+
+2. Seviye Antrenman Sahası: 250.000.000€
+
+3. Seviye Antrenman Sahası: 500.000.000€
+
+4.Seviye Antrenman Sahası: 750.000.000€
+
+5. Seviye Antrenman Sahası: 1.000.000.000€
+
+Peki Ya Antrenman Sahası Seviyesinin oyuncu değerine ne kadar etki ettiği
+
+1.Seviye Antrenman Sahası: 75k
+
+2.Seviye Antrenman Sahası : 100k
+
+3.Seviye Antrenman Sahası: 125k
+
+4. Seviye Antrenman Sahası: 150k
+
+5.Seviye Antrenman Sahası : 200k
+
+Antrenman Sahasında antrenman günlük olarak basılır maximum 5 oyuncuya basabilirsiniz.
+
+Antrenman Sahası Olmadan Yapılan Antrenmanlar Değere 50k etki eder.
+
+Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
 </section>
 
