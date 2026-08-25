@@ -62,34 +62,11 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(3,1,7,.76);backdrop-filter:blur(10px)}.modal.show{display:grid}.modalBox{width:min(720px,100%);max-height:85vh;overflow:auto;border:1px solid rgba(190,130,255,.28);border-radius:22px;background:#10091a;box-shadow:0 30px 100px #000;padding:26px;animation:pop .25s ease}@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}.modalTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modalTop h2{font-family:Orbitron;margin:0}.close{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:9px;padding:8px 11px;cursor:pointer}
 .toast{position:fixed;right:20px;bottom:20px;z-index:120;padding:13px 17px;border:1px solid rgba(103,247,187,.25);background:rgba(7,20,16,.9);color:#aefbd9;border-radius:12px;transform:translateY(100px);opacity:0;transition:.3s}.toast.show{transform:none;opacity:1}
 
-.systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.systemRule h3.accordionTrigger{border:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;background:transparent;cursor:pointer;transition:.25s}.systemRule h3.accordionTrigger:hover{background:rgba(168,85,247,.07)}.systemRule h3.accordionTrigger:after{content:"+";flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.3s}.systemRule.open h3.accordionTrigger{color:#fff;background:rgba(168,85,247,.07)}.systemRule.open h3.accordionTrigger:after{content:"−";transform:rotate(180deg);background:rgba(168,85,247,.12)}.ruleText{white-space:pre-wrap;padding:0 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,padding .35s ease,opacity .25s ease}.systemRule.open .ruleText{padding:20px 21px;max-height:9000px;overflow:auto;opacity:1}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
+.systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px};align-items:start.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.systemRule h3.accordionTrigger{border:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;background:transparent;cursor:pointer;transition:.25s}.systemRule h3.accordionTrigger:hover{background:rgba(168,85,247,.07)}.systemRule h3.accordionTrigger:after{content:"+";flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.3s}.systemRule.open h3.accordionTrigger{color:#fff;background:rgba(168,85,247,.07)}.systemRule.open h3.accordionTrigger:after{content:"−";transform:rotate(180deg);background:rgba(168,85,247,.12)}.ruleText{white-space:pre-wrap;padding:0 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,padding .35s ease,opacity .25s ease}.systemRule.open .ruleText{padding:20px 21px;max-height:9000px;overflow:auto;opacity:1}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
 @media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:50px}.heroVisual{min-height:390px}.grid{grid-template-columns:repeat(2,1fr)}.players{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.navlinks{display:none}.rules,.calculator{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}}
 @media(max-width:560px){main{padding-left:15px;padding-right:15px}.nav{padding:0 15px}.logo{font-size:13px}.navCta{padding:9px 11px;font-size:12px}.grid,.players,.stats{grid-template-columns:1fr}.heroVisual{transform:scale(.82);margin:-30px 0}.section{padding:48px 0}h1{letter-spacing:-3px}.cta{padding:28px}.r1{width:330px;height:330px}}
 </style>
 
-<style id="ml-accordion-style">
-/* MortaLeague: sistemler başlıklarını aç/kapa */
-.ml-system-accordion {
-  cursor: pointer;
-  position: relative;
-}
-.ml-system-accordion::after {
-  content: "+";
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 22px;
-  font-weight: 700;
-  opacity: .8;
-}
-.ml-system-accordion.ml-open::after {
-  content: "−";
-}
-.ml-system-content.ml-collapsed {
-  display: none !important;
-}
-</style>
 
 </head>
 <body>
@@ -778,53 +755,6 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 <div class="toast" id="toast">Değer güncellendi ✓</div>
 <script src="script.js"></script>
 
-<script id="ml-accordion-script">
-(function () {
-  function setupSystemAccordions() {
-    // Avoid touching unrelated site sections.
-    const candidates = Array.from(document.querySelectorAll('section, article, .card, .system, .system-card, .feature-card, div'));
-    const seen = new Set();
-
-    candidates.forEach(function (container) {
-      if (seen.has(container)) return;
-
-      // Find a likely system title and a following content area.
-      const title = container.querySelector('h1, h2, h3, h4, .title, .card-title, .system-title');
-      if (!title || title.dataset.mlAccordionBound) return;
-
-      const children = Array.from(container.children);
-      const titleIndex = children.indexOf(title);
-      if (titleIndex < 0 || titleIndex === children.length - 1) return;
-
-      const content = children[titleIndex + 1];
-      if (!content || content === title) return;
-
-      // Only bind when this looks like a substantial text block.
-      const text = content.innerText || "";
-      if (text.trim().length < 80) return;
-
-      title.dataset.mlAccordionBound = "1";
-      title.classList.add("ml-system-accordion");
-      content.classList.add("ml-system-content", "ml-collapsed");
-
-      title.addEventListener("click", function (e) {
-        e.preventDefault();
-        const open = !content.classList.contains("ml-collapsed");
-        content.classList.toggle("ml-collapsed", open);
-        title.classList.toggle("ml-open", !open);
-      });
-
-      seen.add(container);
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupSystemAccordions);
-  } else {
-    setupSystemAccordions();
-  }
-})();
-</script>
 
 </body>
 </html>
