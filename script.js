@@ -150,8 +150,8 @@ window.addEventListener("error",()=>{}, {passive:true});
    Before publishing, replace the two placeholders below with your Supabase project values
    and run SUPABASE_SETUP.sql in the Supabase SQL editor.
 */
-const MORTA_SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const MORTA_SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const MORTA_SUPABASE_URL = "https://hgogpczncecmnhbghogs.supabase.co";
+const MORTA_SUPABASE_ANON_KEY = "sb_publishable_eL6DG7HeCLdKfpnffP1_VQ_u6GN6s9b";
 
 let mortaSupabase = null;
 if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
