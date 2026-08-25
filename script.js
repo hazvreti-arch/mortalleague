@@ -15,6 +15,19 @@ function makeParticles(){
 }
 makeParticles();
 
+// Sistemler: başlıklar kapalı başlar, tıklayınca açıklama açılır.
+$$('.systemRule h3').forEach(title=>{
+  title.classList.add('accordionTrigger');
+  title.setAttribute('role','button');
+  title.setAttribute('tabindex','0');
+  const card=title.closest('.systemRule');
+  const toggle=()=>card.classList.toggle('open');
+  title.addEventListener('click',toggle);
+  title.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
+  });
+});
+
 $$("[data-scroll]").forEach(b=>b.addEventListener("click",()=>{
   const el=$("#"+b.dataset.scroll); if(el) el.scrollIntoView({behavior:"smooth"});
 }));
