@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Static site: no private/admin paths are published.
+Sitemap: https://hazvreti-arch.github.io/mortalleague/sitemap.xml

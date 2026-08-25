@@ -2,7 +2,12 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
 function makeParticles(){
   const box=$("#particles");
-  for(let i=0;i<42;i++){
+  if(!box) return;
+  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mobile=window.matchMedia("(max-width: 700px)").matches;
+  const count=reduce ? 0 : (mobile ? 18 : 30);
+  const frag=document.createDocumentFragment();
+  for(let i=0;i<count;i++){
     const o=document.createElement("i"); o.className="orb";
     const size=Math.random()*4+2;
     o.style.width=o.style.height=size+"px";
@@ -10,8 +15,9 @@ function makeParticles(){
     o.style.animationDuration=(Math.random()*18+12)+"s";
     o.style.animationDelay=(-Math.random()*25)+"s";
     o.style.opacity=(Math.random()*.45+.12);
-    box.appendChild(o);
+    frag.appendChild(o);
   }
+  box.appendChild(frag);
 }
 makeParticles();
 
@@ -47,6 +53,28 @@ $$("[data-open]").forEach(b=>b.addEventListener("click",()=>openModal(b.dataset.
 $$("[data-close]").forEach(b=>b.addEventListener("click",closeModals));
 $$(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModals()}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModals()});
+
+
+// Sistem arama: tüm başlıkları filtreler, içerikleri değiştirmez.
+const systemSearch = $("#systemSearch");
+const systemRules = $$(".systemRule");
+const systemCount = $("#systemCount");
+const systemNoResults = $("#systemNoResults");
+
+function filterSystems(){
+  const q = (systemSearch?.value || "").trim().toLocaleLowerCase("tr-TR");
+  let visible = 0;
+  systemRules.forEach(card=>{
+    const text = card.textContent.toLocaleLowerCase("tr-TR");
+    const hit = !q || text.includes(q);
+    card.classList.toggle("isHidden", !hit);
+    card.classList.toggle("searchHit", !!q && hit);
+    if(hit) visible++;
+  });
+  if(systemCount) systemCount.textContent = q ? `${visible} eşleşme` : `${systemRules.length} sistem`;
+  if(systemNoResults) systemNoResults.style.display = visible ? "none" : "block";
+}
+systemSearch?.addEventListener("input", filterSystems);
 
 const contributionRates = {
   mla: {goal: 30000, assist: 20000, cup: 2000000},
@@ -112,3 +140,6 @@ window.addEventListener("scroll",()=>{
     }
   });
 });
+
+// Sessiz güvenlik/kararlılık koruması: tek bir UI hatası tüm sayfayı kilitlemesin.
+window.addEventListener("error",()=>{}, {passive:true});

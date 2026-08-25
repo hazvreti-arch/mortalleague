@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#0a0612">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none';">
+
 <title>MORTALLEAGUE — Karanlığın Ligi</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap');
@@ -86,6 +89,49 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .contributionBreakdown small{display:block;color:#897c95;font-size:11px}
 .contributionBreakdown b{display:block;margin-top:5px;font-size:14px}
 @media(max-width:900px){.contributionCalc{grid-template-columns:1fr}.calcGrid{grid-template-columns:1fr}.calcGrid .field:first-child{grid-column:auto}}
+
+
+/* MortaLeague v1: performance, mobile and system search */
+.systemTools{display:flex;align-items:center;gap:10px;margin:0 0 16px}
+.systemSearch{flex:1;display:flex;align-items:center;gap:10px;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}
+.systemSearch span{font-size:21px;color:#a98ac6}
+.systemSearch input{width:100%;border:0;outline:0;background:transparent;color:#fff;font:500 14px Inter}
+.systemSearch input::placeholder{color:#776a83}
+.systemCount{white-space:nowrap;padding:9px 12px;border-radius:999px;border:1px solid var(--line);color:#a998b8;font-size:11px}
+.systemNoResults{display:none;padding:22px;border:1px dashed var(--line);border-radius:15px;color:#a99bbd;text-align:center;margin-bottom:12px}
+.systemRule.isHidden{display:none}
+.systemRule.searchHit h3{color:#fff}
+@media (max-width:900px){
+  .nav{height:68px;padding:0 14px}
+  .navlinks{display:none}
+  .navCta{padding:10px 13px;font-size:12px}
+  main{padding:90px 15px 55px}
+  .hero{min-height:590px;grid-template-columns:1fr;gap:10px;text-align:center}
+  .hero p{margin-left:auto;margin-right:auto;font-size:15px}
+  .heroActions{justify-content:center}
+  .heroVisual{min-height:320px;transform:scale(.78)}
+  .section{padding:48px 0}
+  .sectionHead{align-items:flex-start;flex-direction:column}
+  .sectionHead h2{font-size:24px}
+  .grid{grid-template-columns:1fr 1fr}
+  .rules{grid-template-columns:1fr}
+  .panel{padding:17px}
+  .systemTools{align-items:stretch;flex-direction:column}
+  .systemCount{text-align:center}
+}
+@media (max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .logo small{display:none}
+  .logo{letter-spacing:1px}
+  h1{letter-spacing:-2px;font-size:clamp(40px,14vw,66px)}
+  .heroVisual{transform:scale(.64);margin-top:-35px}
+  .calcGrid{grid-template-columns:1fr}
+  .contributionBreakdown{grid-template-columns:1fr}
+}
+/* Respect reduced-motion preferences for accessibility and lower CPU use. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
 
 </style>
 
@@ -213,7 +259,17 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 
 <section class="section" id="systems">
 <div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">16 SİSTEM</span></div>
+
+<div class="systemTools">
+  <label class="systemSearch" aria-label="Sistemlerde ara">
+    <span>⌕</span>
+    <input id="systemSearch" type="search" autocomplete="off" placeholder="Sistemlerde ara...">
+  </label>
+  <span class="systemCount" id="systemCount">16 sistem</span>
+</div>
+
 <div class="systemsIntro"><span>◈</span><div><strong>TÜM SİSTEMLER</strong><small>Gönderdiğin metinler, tekrarlar ayıklanarak ve yeni ek bilgiler ilgili başlıkların devamına işlenerek burada yer alıyor.</small></div></div>
+<div class="systemNoResults" id="systemNoResults">Aramanla eşleşen sistem bulunamadı.</div>
 <div class="systemLibrary">
 <article class="systemRule"><h3>MortaLeague Yayın Geliri Sistemi</h3><div class="ruleText">Takımlar sezon içerisinde gösterdiği performansa para kazanırlar. Bu paralar devrede veya sezon sonunda eklenebilir.
 
