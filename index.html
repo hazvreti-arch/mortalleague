@@ -198,7 +198,7 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
   <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
 </div>
 <div class="userPanel" id="userPanel" hidden>
-  <button id="userMenuButton" class="userPill" type="button"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button>
+  <button id="userMenuButton" class="userPill" type="button" onclick="window.__openMortaProfile && window.__openMortaProfile(event)"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button>
 </div>
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
@@ -1094,6 +1094,12 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     e.stopPropagation();
     openProfile();
   });
+
+  window.__openMortaProfile = (e) => {
+    e?.preventDefault?.();
+    e?.stopPropagation?.();
+    openProfile();
+  };
 
   document.querySelectorAll('[data-close-profile]').forEach((el) => {
     el.addEventListener('click', closeProfile);
