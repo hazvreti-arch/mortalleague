@@ -1017,20 +1017,155 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   </div>
 </div>
 
+
+<script src="script.js"></script>
 <script>
-(function(){
-const pm=document.querySelector('#profileModal'),status=document.querySelector('#profileStatus'),fallback=document.querySelector('#profileAvatarFallback'),av=document.querySelector('#profileAvatar'),thumb=document.querySelector('#userAvatarThumb'),dot=document.querySelector('#userAvatarDot'),bio=document.querySelector('#profileBio'),input=document.querySelector('#avatarInput'),nameEl=document.querySelector('#profileUsername');
-const initial=u=>(u||'W').slice(0,1).toUpperCase();
-async function who(){if(typeof mortaSupabase==='undefined'||!mortaSupabase)return null;const {data:{user}}=await mortaSupabase.auth.getUser();if(!user)return null;const {data:profile}=await mortaSupabase.from('profiles').select('username,bio,avatar_url').eq('id',user.id).single();return {user,profile}}
-function render(p){const u=p?.username||'';nameEl.textContent=u;fallback.textContent=initial(u);bio.value=p?.bio||'';if(p?.avatar_url){av.src=p.avatar_url;av.hidden=false;thumb.src=p.avatar_url;thumb.hidden=false;dot.hidden=true}else{av.hidden=true;thumb.hidden=true;dot.hidden=false}}
-async function openProfile(){const x=await who();if(!x)return;render(x.profile);status.textContent='';input.value='';pm.classList.add('open');pm.setAttribute('aria-hidden','false')}
-function closeProfile(){pm.classList.remove('open');pm.setAttribute('aria-hidden','true')}
-document.querySelector('#userMenuButton')?.addEventListener('click',openProfile);document.querySelectorAll('[data-close-profile]').forEach(x=>x.addEventListener('click',closeProfile));
-input?.addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>3*1024*1024){status.textContent='Profil fotoğrafı en fazla 3 MB olabilir.';input.value='';return}const r=new FileReader();r.onload=()=>{av.src=String(r.result);av.hidden=false};r.readAsDataURL(f)});
-document.querySelector('#saveProfile')?.addEventListener('click',async()=>{const x=await who();if(!x)return;status.textContent='Kaydediliyor...';let url=x.profile?.avatar_url||null;const f=input?.files?.[0];if(f){const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=x.user.id+'/avatar.'+ext;const {error}=await mortaSupabase.storage.from('avatars').upload(path,f,{upsert:true,contentType:f.type||'image/jpeg'});if(error){status.textContent='Fotoğraf yüklenemedi: '+error.message;return}url=mortaSupabase.storage.from('avatars').getPublicUrl(path).data.publicUrl+'?v='+Date.now()}const {error}=await mortaSupabase.from('profiles').upsert({id:x.user.id,username:x.profile?.username||x.user.email.split('@')[0],bio:bio.value.trim(),avatar_url:url},{onConflict:'id'});if(error){status.textContent='Profil kaydedilemedi: '+error.message;return}render({username:x.profile?.username||x.user.email.split('@')[0],bio:bio.value.trim(),avatar_url:url});status.textContent='Profil kaydedildi. ✓'});
-if(typeof mortaSupabase!=='undefined'&&mortaSupabase)mortaSupabase.auth.onAuthStateChange(()=>setTimeout(async()=>{const x=await who();if(x)render(x.profile)},0));
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const modal = $('#profileModal');
+  const status = $('#profileStatus');
+  const usernameEl = $('#profileUsername');
+  const bioEl = $('#profileBio');
+  const avatar = $('#profileAvatar');
+  const fallback = $('#profileAvatarFallback');
+  const avatarInput = $('#avatarInput');
+  const userButton = $('#userMenuButton');
+  const thumb = $('#userAvatarThumb');
+  const dot = $('#userAvatarDot');
+
+  const initial = (u) => (u || 'W').slice(0, 1).toUpperCase();
+
+  const closeProfile = () => {
+    modal?.classList.remove('open');
+    modal?.setAttribute('aria-hidden', 'true');
+  };
+
+  async function openProfile() {
+    if (!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    status.textContent = 'Profil yükleniyor...';
+
+    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) {
+      status.textContent = 'Hesap bağlantısı hazır değil.';
+      return;
+    }
+
+    try {
+      const { data: { user }, error: userError } = await mortaSupabase.auth.getUser();
+      if (userError || !user) {
+        status.textContent = 'Oturum bulunamadı.';
+        return;
+      }
+
+      const { data: p, error } = await mortaSupabase
+        .from('profiles')
+        .select('username,bio,avatar_url')
+        .eq('id', user.id)
+        .maybeSingle();
+      if (error) throw error;
+
+      const username = p?.username || user.email?.split('@')[0] || '';
+      usernameEl.textContent = username;
+      bioEl.value = p?.bio || '';
+      fallback.textContent = initial(username);
+
+      if (p?.avatar_url) {
+        avatar.src = p.avatar_url;
+        avatar.hidden = false;
+        if (thumb) { thumb.src = p.avatar_url; thumb.hidden = false; }
+        if (dot) dot.hidden = true;
+      } else {
+        avatar.hidden = true;
+        if (thumb) thumb.hidden = true;
+        if (dot) dot.hidden = false;
+      }
+
+      if (avatarInput) avatarInput.value = '';
+      status.textContent = '';
+    } catch (err) {
+      console.error(err);
+      status.textContent = 'Profil yüklenemedi.';
+    }
+  }
+
+  userButton?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openProfile();
+  });
+
+  document.querySelectorAll('[data-close-profile]').forEach((el) => {
+    el.addEventListener('click', closeProfile);
+  });
+
+  avatarInput?.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      status.textContent = 'Profil fotoğrafı en fazla 3 MB olabilir.';
+      avatarInput.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      avatar.src = String(reader.result);
+      avatar.hidden = false;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  $('#saveProfile')?.addEventListener('click', async () => {
+    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+    try {
+      const { data: { user } } = await mortaSupabase.auth.getUser();
+      if (!user) { status.textContent = 'Oturum bulunamadı.'; return; }
+
+      status.textContent = 'Kaydediliyor...';
+      let avatarUrl = null;
+      const file = avatarInput?.files?.[0];
+
+      if (file) {
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+        const path = `${user.id}/avatar.${ext}`;
+        const { error: uploadError } = await mortaSupabase.storage
+          .from('avatars').upload(path, file, { upsert: true, contentType: file.type || 'image/jpeg' });
+        if (uploadError) throw uploadError;
+        avatarUrl = mortaSupabase.storage.from('avatars').getPublicUrl(path).data.publicUrl + `?v=${Date.now()}`;
+      } else {
+        const { data: existing, error: existingError } = await mortaSupabase
+          .from('profiles').select('avatar_url').eq('id', user.id).maybeSingle();
+        if (existingError) throw existingError;
+        avatarUrl = existing?.avatar_url || null;
+      }
+
+      const { data: current, error: currentError } = await mortaSupabase
+        .from('profiles').select('username').eq('id', user.id).maybeSingle();
+      if (currentError) throw currentError;
+
+      const username = current?.username || user.email?.split('@')[0] || '';
+      const { error: saveError } = await mortaSupabase.from('profiles').upsert({
+        id: user.id, username, bio: bioEl.value.trim(), avatar_url: avatarUrl
+      }, { onConflict: 'id' });
+      if (saveError) throw saveError;
+
+      usernameEl.textContent = username;
+      fallback.textContent = initial(username);
+      if (avatarUrl) { avatar.src = avatarUrl; avatar.hidden = false; }
+      status.textContent = 'Profil kaydedildi. ✓';
+    } catch (err) {
+      console.error(err);
+      status.textContent = `Profil kaydedilemedi: ${err.message || err}`;
+    }
+  });
+
+  $('#contactAdmin')?.addEventListener('click', () => {
+    closeProfile();
+    const cm = $('#contactModal');
+    cm?.classList.add('open');
+    cm?.setAttribute('aria-hidden', 'false');
+  });
 })();
 </script>
-<script src="script.js"></script>
 </body>
 </html>
