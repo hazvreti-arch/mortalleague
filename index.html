@@ -65,6 +65,28 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px};align-items:start.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.systemRule h3.accordionTrigger{border:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;background:transparent;cursor:pointer;transition:.25s}.systemRule h3.accordionTrigger:hover{background:rgba(168,85,247,.07)}.systemRule h3.accordionTrigger:after{content:"+";flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.3s}.systemRule.open h3.accordionTrigger{color:#fff;background:rgba(168,85,247,.07)}.systemRule.open h3.accordionTrigger:after{content:"−";transform:rotate(180deg);background:rgba(168,85,247,.12)}.ruleText{white-space:pre-wrap;padding:0 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,padding .35s ease,opacity .25s ease}.systemRule.open .ruleText{padding:20px 21px;max-height:9000px;overflow:auto;opacity:1}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
 @media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:50px}.heroVisual{min-height:390px}.grid{grid-template-columns:repeat(2,1fr)}.players{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.navlinks{display:none}.rules,.calculator{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}}
 @media(max-width:560px){main{padding-left:15px;padding-right:15px}.nav{padding:0 15px}.logo{font-size:13px}.navCta{padding:9px 11px;font-size:12px}.grid,.players,.stats{grid-template-columns:1fr}.heroVisual{transform:scale(.82);margin:-30px 0}.section{padding:48px 0}h1{letter-spacing:-3px}.cta{padding:28px}.r1{width:330px;height:330px}}
+
+/* MortaLeague contribution calculator */
+
+.contributionCalc{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}
+.calcPanel,.contributionResult{padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(15,8,25,.72);box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.calcNotice{display:flex;align-items:center;gap:13px;padding:15px;border:1px solid rgba(168,85,247,.18);border-radius:14px;background:rgba(168,85,247,.06);margin-bottom:20px}
+.calcNotice>span{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:rgba(168,85,247,.14);color:#d2adff;font-size:18px}
+.calcNotice strong{display:block;font:800 12px Orbitron;letter-spacing:1px}
+.calcNotice small{display:block;color:#9d91a9;font-size:12px;margin-top:4px}
+.calcNotice small b{color:#d9c3ff}
+.calcGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
+.calcGrid .field:first-child{grid-column:1/-1}
+.calcContributionBtn{width:100%;margin-top:4px}
+.contributionResult{display:flex;flex-direction:column;justify-content:center;min-height:100%}
+.contributionResult>span{color:#94869f;font:700 11px Orbitron;letter-spacing:1.5px}
+.contributionResult>strong{font:900 clamp(32px,5vw,52px) Orbitron;color:#d2adff;margin:10px 0 22px;word-break:break-word}
+.contributionBreakdown{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contributionBreakdown>div{padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.025)}
+.contributionBreakdown small{display:block;color:#897c95;font-size:11px}
+.contributionBreakdown b{display:block;margin-top:5px;font-size:14px}
+@media(max-width:900px){.contributionCalc{grid-template-columns:1fr}.calcGrid{grid-template-columns:1fr}.calcGrid .field:first-child{grid-column:auto}}
+
 </style>
 
 
@@ -111,6 +133,75 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 <div class="card"><div class="icon">◈</div><h3>Strateji</h3><p>Antrenman ve oyuncu seçimleri yalnızca güç değil, denge ister.</p></div>
 <div class="card"><div class="icon">₺</div><h3>Ekonomi</h3><p>Bütçeni doğru kullan, oyuncu değerini yükselt ve kaynaklarını koru.</p></div>
 <div class="card"><div class="icon">★</div><h3>Şöhret</h3><p>Başarıların lig tarihine yazılır. Sezon sonunda sıralama her şeyi söyler.</p></div>
+</div>
+</section>
+
+
+<section class="section" id="playerCalculator">
+<div class="sectionHead">
+  <div>
+    <h2>OYUNCU KATKI DEĞERİ HESAPLAMA</h2>
+    <p>Devre veya dönem sonunda oyuncunun gol, asist ve kupa katkısını MortaLeague kurallarına göre hesapla.</p>
+  </div>
+  <span class="badge">BAŞLANGIÇ €1M</span>
+</div>
+
+<div class="contributionCalc">
+  <div class="calcPanel">
+    <div class="calcNotice">
+      <span>◈</span>
+      <div><strong>OYUNCU DEĞERİ</strong><small>Her oyuncu <b>1.000.000€</b> başlangıç değeriyle hesaplanır.</small></div>
+    </div>
+
+    <div class="calcGrid">
+      <div class="field">
+        <label for="contributionTournament">Turnuva</label>
+        <select id="contributionTournament">
+          <option value="mla">MortaLeague A</option>
+          <option value="mlb">MortaLeague B</option>
+          <option value="zmk">ZMK</option>
+          <option value="facup">FA Cup</option>
+          <option value="goat">GOAT Cup</option>
+          <option value="supercup">Süper Kupa</option>
+          <option value="ucl">UCL</option>
+          <option value="uel">UEL</option>
+          <option value="uecl">UECL</option>
+          <option value="uefa_super">UEFA Süper Kupa</option>
+          <option value="worldcup">Dünya Kupası</option>
+          <option value="euro">Avrupa Şampiyonası (Euro)</option>
+          <option value="nations">Uluslar Ligi</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="contributionGoals">GolxGym / Gol</label>
+        <input id="contributionGoals" type="number" min="0" step="1" value="0" placeholder="Örn. 20">
+      </div>
+
+      <div class="field">
+        <label for="contributionAssists">Asist</label>
+        <input id="contributionAssists" type="number" min="0" step="1" value="0" placeholder="Örn. 30">
+      </div>
+
+      <div class="field">
+        <label for="contributionCups">Kupa</label>
+        <input id="contributionCups" type="number" min="0" step="1" value="0" placeholder="Örn. 1">
+      </div>
+    </div>
+
+    <button class="primary calcContributionBtn" id="calculateContribution">KATKI DEĞERİNİ HESAPLA <span>↗</span></button>
+  </div>
+
+  <div class="contributionResult">
+    <span>GÜNCEL OYUNCU DEĞERİ</span>
+    <strong id="contributionTotal">€1.000.000</strong>
+    <div class="contributionBreakdown">
+      <div><small>Başlangıç</small><b id="contributionBase">€1.000.000</b></div>
+      <div><small>Gol katkısı</small><b id="contributionGoalValue">+€0</b></div>
+      <div><small>Asist katkısı</small><b id="contributionAssistValue">+€0</b></div>
+      <div><small>Kupa katkısı</small><b id="contributionCupValue">+€0</b></div>
+    </div>
+  </div>
 </div>
 </section>
 

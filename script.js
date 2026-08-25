@@ -48,26 +48,52 @@ $$("[data-close]").forEach(b=>b.addEventListener("click",closeModals));
 $$(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModals()}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModals()});
 
-function money(n){
-  return new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:0}).format(n);
+const contributionRates = {
+  mla: {goal: 30000, assist: 20000, cup: 2000000},
+  mlb: {goal: 20000, assist: 10000, cup: 1000000},
+  zmk: {goal: 20000, assist: 10000, cup: 1500000},
+  facup: {goal: 15000, assist: 10000, cup: 1000000},
+  goat: {goal: 10000, assist: 5000, cup: 500000},
+  supercup: {goal: 10000, assist: 5000, cup: 250000},
+  ucl: {goal: 60000, assist: 50000, cup: 4500000},
+  uel: {goal: 50000, assist: 40000, cup: 3500000},
+  uecl: {goal: 40000, assist: 30000, cup: 2500000},
+  uefa_super: {goal: 50000, assist: 40000, cup: 3000000},
+  worldcup: {goal: 70000, assist: 60000, cup: 5000000},
+  euro: {goal: 60000, assist: 50000, cup: 4000000},
+  nations: {goal: 40000, assist: 30000, cup: 2500000}
+};
+
+function euro(n){
+  return "€" + new Intl.NumberFormat("tr-TR",{maximumFractionDigits:0}).format(n);
 }
-function calculate(){
-  const age=Math.max(16,Math.min(40,Number($("#age").value)||24));
-  const base=Math.max(0,Number($("#base").value)||0);
-  const train=Number($("#trainingLevel").value)||0;
-  let ageFactor=1;
-  if(age<22) ageFactor=1.18;
-  else if(age<=25) ageFactor=1.10;
-  else if(age<=28) ageFactor=1.00;
-  else if(age<=32) ageFactor=.86;
-  else ageFactor=.68;
-  const value=base*ageFactor*(1+train);
-  $("#result").textContent=money(value);
-  const toast=$("#toast"); toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),1600);
+
+function calculateContribution(){
+  const tournament = $("#contributionTournament").value;
+  const rates = contributionRates[tournament];
+  const goals = Math.max(0, Number($("#contributionGoals").value) || 0);
+  const assists = Math.max(0, Number($("#contributionAssists").value) || 0);
+  const cups = Math.max(0, Number($("#contributionCups").value) || 0);
+
+  const base = 1000000;
+  const goalValue = goals * rates.goal;
+  const assistValue = assists * rates.assist;
+  const cupValue = cups * rates.cup;
+  const total = base + goalValue + assistValue + cupValue;
+
+  $("#contributionBase").textContent = euro(base);
+  $("#contributionGoalValue").textContent = "+" + euro(goalValue);
+  $("#contributionAssistValue").textContent = "+" + euro(assistValue);
+  $("#contributionCupValue").textContent = "+" + euro(cupValue);
+  $("#contributionTotal").textContent = euro(total);
 }
-$("#calculate").addEventListener("click",calculate);
-["age","base","trainingLevel"].forEach(id=>$("#"+id).addEventListener("change",calculate));
+
+$("#calculateContribution")?.addEventListener("click", calculateContribution);
+["contributionTournament","contributionGoals","contributionAssists","contributionCups"].forEach(id=>{
+  $("#"+id)?.addEventListener("input", calculateContribution);
+  $("#"+id)?.addEventListener("change", calculateContribution);
+});
+calculateContribution();
 
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation="fade .6s ease both"});
