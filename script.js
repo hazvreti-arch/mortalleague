@@ -151,7 +151,7 @@ window.addEventListener("error",()=>{}, {passive:true});
    and run SUPABASE_SETUP.sql in the Supabase SQL editor.
 */
 const MORTA_SUPABASE_URL = "https://hgogpczncecmnhbghogs.supabase.co";
-const MORTA_SUPABASE_ANON_KEY = "sb_publishable_eL6DG7HeCLdKfpnffP1_VQ_u6GN6s9b";
+const MORTA_SUPABASE_ANON_KEY = "sb_publishable_SDen1VfLk6M3V5V62lH9xw__p-ulv5O";
 
 let mortaSupabase = null;
 if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
