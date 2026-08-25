@@ -162,6 +162,19 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .accountMessage{min-height:20px;margin-top:12px;color:#bda7ce;font-size:12px}
 @media(max-width:700px){.accountActions .accountBtn{padding:9px 8px;font-size:9px}.accountCard{padding:23px}}
 
+
+/* Account buttons belong to the top navigation */
+.nav .accountActions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav .accountBtn{white-space:nowrap}
+@media(max-width:900px){
+  .nav .accountActions{display:flex;margin-left:auto}
+  .nav .accountBtn{padding:9px 10px;font-size:9px}
+}
+@media(max-width:520px){
+  .nav .accountActions{gap:5px}
+  .nav .accountBtn{padding:8px 7px;font-size:8px}
+}
+
 </style>
 
 
@@ -178,6 +191,10 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 <button data-scroll="home">Ana Sayfa</button>
 <button data-scroll="league">Lig</button>
 <button data-scroll="systems">Sistemler</button>
+</div>
+<div class="accountActions" id="accountActions">
+  <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
+  <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
 </div>
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
@@ -926,10 +943,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 
 
 
-<div class="accountActions" id="accountActions">
-  <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
-  <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
-</div>
+
 
 <div class="accountModal" id="accountsModal" aria-hidden="true">
   <div class="accountBackdrop" data-close-account></div>
