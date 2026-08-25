@@ -72,24 +72,27 @@ function calculateContribution(){
   const tournament = $("#contributionTournament").value;
   const rates = contributionRates[tournament];
   const goals = Math.max(0, Number($("#contributionGoals").value) || 0);
+  const gym = Math.max(0, Number($("#contributionGym").value) || 0);
   const assists = Math.max(0, Number($("#contributionAssists").value) || 0);
   const cups = Math.max(0, Number($("#contributionCups").value) || 0);
 
   const base = 1000000;
   const goalValue = goals * rates.goal;
+  const gymValue = gym * rates.goal;
   const assistValue = assists * rates.assist;
   const cupValue = cups * rates.cup;
-  const total = base + goalValue + assistValue + cupValue;
+  const total = base + goalValue + gymValue + assistValue + cupValue;
 
   $("#contributionBase").textContent = euro(base);
   $("#contributionGoalValue").textContent = "+" + euro(goalValue);
+  $("#contributionGymValue").textContent = "+" + euro(gymValue);
   $("#contributionAssistValue").textContent = "+" + euro(assistValue);
   $("#contributionCupValue").textContent = "+" + euro(cupValue);
   $("#contributionTotal").textContent = euro(total);
 }
 
 $("#calculateContribution")?.addEventListener("click", calculateContribution);
-["contributionTournament","contributionGoals","contributionAssists","contributionCups"].forEach(id=>{
+["contributionTournament","contributionGoals","contributionGym","contributionAssists","contributionCups"].forEach(id=>{
   $("#"+id)?.addEventListener("input", calculateContribution);
   $("#"+id)?.addEventListener("change", calculateContribution);
 });
