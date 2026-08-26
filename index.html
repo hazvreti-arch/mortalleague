@@ -161,6 +161,17 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .accountCard input:focus,.accountCard select:focus,.accountCard textarea:focus{border-color:rgba(168,85,247,.5)}
 .accountSubmit{width:100%;border:0;border-radius:11px;padding:13px;background:#a855f7;color:#fff;font:800 11px Orbitron;cursor:pointer;margin-top:8px}
 .accountMessage{min-height:20px;margin-top:12px;color:#bda7ce;font-size:12px}
+
+/* Admin inbox */
+.adminModal{display:none;position:fixed;inset:0;z-index:1100}.adminModal.open{display:grid;place-items:center}
+.adminCard{position:relative;width:min(860px,calc(100% - 24px));max-height:min(82vh,760px);overflow:auto;padding:24px;border:1px solid rgba(168,85,247,.24);border-radius:22px;background:#100a18;box-shadow:0 30px 90px rgba(0,0,0,.55);z-index:1}
+.adminHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.adminHead h3{margin:6px 0 0}
+.adminToolbar{display:flex;gap:8px;align-items:center}.adminToolbar .accountBtn{padding:9px 12px}
+.adminList{display:grid;gap:10px}.adminEmpty{padding:24px;border:1px dashed var(--line);border-radius:14px;color:#a99bbd;text-align:center}
+.adminMsg{border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025);padding:14px}.adminMsgTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.adminMsgMeta{color:#a99bbd;font-size:11px;line-height:1.5}.adminMsgMeta b{color:#fff;font:700 12px Orbitron}.adminMsgBody{margin:11px 0;color:#eee;white-space:pre-wrap;line-height:1.55;font-size:13px}
+.adminMsgActions{display:flex;gap:8px;align-items:center;justify-content:flex-end}.adminMsgActions select{border:1px solid var(--line);border-radius:9px;background:#0b0710;color:#fff;padding:8px 10px}
+@media(max-width:700px){.adminCard{padding:18px}.adminMsgTop{flex-direction:column}.adminMsgActions{justify-content:flex-start}}
 @media(max-width:700px){.accountActions .accountBtn{padding:9px 8px;font-size:9px}.accountCard{padding:23px}}
 
 
@@ -991,8 +1002,22 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
     <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
-    <div class="profileActions"><button class="accountBtn accountPrimary" id="contactAdmin">ADMİN'E NOT BIRAK</button><button class="accountBtn" id="logoutButton">ÇIKIŞ YAP</button></div>
+    <div class="profileActions"><button class="accountBtn accountPrimary" id="contactAdmin">ADMİN'E NOT BIRAK</button><button class="accountBtn" id="adminInboxButton" hidden>ADMİN PANELİ</button><button class="accountBtn" id="logoutButton">ÇIKIŞ YAP</button></div>
     <div class="accountMessage" id="profileStatus"></div>
+  </div>
+</div>
+
+<div class="adminModal" id="adminModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-admin></div>
+  <div class="adminCard" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <button class="accountClose" data-close-admin aria-label="Kapat">×</button>
+    <div class="adminHead">
+      <div><span class="accountEyebrow">YÖNETİM</span><h3 id="adminTitle">Admin Gelen Kutusu</h3></div>
+      <div class="adminToolbar"><button class="accountBtn accountPrimary" id="adminRefresh">YENİLE</button></div>
+    </div>
+    <p>Kullanıcılardan gelen destek mesajlarını buradan okuyabilir ve durumlarını güncelleyebilirsin.</p>
+    <div class="adminList" id="adminList"></div>
+    <div class="accountMessage" id="adminStatus"></div>
   </div>
 </div>
 
@@ -1171,6 +1196,38 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     cm?.classList.add('open');
     cm?.setAttribute('aria-hidden', 'false');
   });
+})();
+</script>
+<script>
+(() => {
+  const adminModal = document.querySelector('#adminModal');
+  const adminButton = document.querySelector('#adminInboxButton');
+  const adminList = document.querySelector('#adminList');
+  const adminStatus = document.querySelector('#adminStatus');
+  const adminRefresh = document.querySelector('#adminRefresh');
+  const closeAdmin = () => { adminModal?.classList.remove('open'); adminModal?.setAttribute('aria-hidden','true'); };
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const loadMessages = async () => {
+    if (!adminList) return;
+    adminList.innerHTML = '<div class="adminEmpty">Mesajlar yükleniyor...</div>';
+    adminStatus.textContent = '';
+    const { data: messages, error } = await mortaSupabase.from('support_messages').select('id,user_id,type,message,status,created_at').order('created_at', {ascending:false});
+    if (error) { adminList.innerHTML='<div class="adminEmpty">Mesajlar okunamadı.</div>'; adminStatus.textContent=error.message||'Yetki veya bağlantı hatası.'; return; }
+    if (!messages?.length) { adminList.innerHTML='<div class="adminEmpty">Henüz kullanıcı mesajı yok.</div>'; return; }
+    const ids=[...new Set(messages.map(m=>m.user_id).filter(Boolean))];
+    let profiles=[]; if(ids.length){const {data}=await mortaSupabase.from('profiles').select('id,username').in('id',ids); profiles=data||[];}
+    const names=new Map(profiles.map(p=>[p.id,p.username]));
+    adminList.innerHTML=messages.map(m=>{
+      const name=names.get(m.user_id)||'Bilinmeyen kullanıcı'; const date=new Date(m.created_at).toLocaleString('tr-TR');
+      return `<article class="adminMsg" data-message-id="${esc(m.id)}"><div class="adminMsgTop"><div class="adminMsgMeta"><b>${esc(name)}</b><br>${esc(m.type)} · ${esc(date)}</div><div class="adminMsgActions"><select class="adminStatusSelect" aria-label="Mesaj durumu"><option ${m.status==='Bekliyor'?'selected':''}>Bekliyor</option><option ${m.status==='İnceleniyor'?'selected':''}>İnceleniyor</option><option ${m.status==='Yanıtlandı'?'selected':''}>Yanıtlandı</option><option ${m.status==='Reddedildi'?'selected':''}>Reddedildi</option></select><button class="accountBtn accountPrimary adminSaveStatus">KAYDET</button></div></div><div class="adminMsgBody">${esc(m.message)}</div></article>`;
+    }).join('');
+  };
+  const openAdmin = async () => { if(!adminModal||typeof mortaSupabase==='undefined'||!mortaSupabase)return; adminModal.classList.add('open'); adminModal.setAttribute('aria-hidden','false'); await loadMessages(); };
+  adminList?.addEventListener('click',async e=>{const btn=e.target.closest('.adminSaveStatus');if(!btn)return;const card=btn.closest('[data-message-id]');const id=card?.dataset.messageId;const status=card?.querySelector('.adminStatusSelect')?.value;if(!id||!status)return;btn.disabled=true;const {error}=await mortaSupabase.from('support_messages').update({status}).eq('id',id);btn.disabled=false;adminStatus.textContent=error?(error.message||'Durum güncellenemedi.'):'Mesaj durumu güncellendi. ✓';});
+  document.querySelectorAll('[data-close-admin]').forEach(el=>el.addEventListener('click',closeAdmin));
+  adminButton?.addEventListener('click',openAdmin); adminRefresh?.addEventListener('click',loadMessages);
+  const showAdmin=async()=>{if(!adminButton||typeof mortaSupabase==='undefined'||!mortaSupabase)return;try{const {data:{user}}=await mortaSupabase.auth.getUser();if(!user){adminButton.hidden=true;return;}const {data:p}=await mortaSupabase.from('profiles').select('username').eq('id',user.id).maybeSingle();adminButton.hidden=String(p?.username||'').toLowerCase()!=='wexemir';}catch{adminButton.hidden=true;}};
+  showAdmin(); setInterval(showAdmin,2000);
 })();
 </script>
 </body>
