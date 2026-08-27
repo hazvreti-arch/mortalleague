@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0a0612">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none';">
+
+<title>MORTALLEAGUE — Karanlığın Ligi</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap');
+:root{
+ --bg:#07040d;--bg2:#0d0718;--panel:rgba(19,10,31,.72);--panel2:rgba(31,15,49,.82);
+ --purple:#9b4dff;--violet:#6d28d9;--pink:#d946ef;--text:#f8f5ff;--muted:#a99bbd;
+ --line:rgba(180,120,255,.18);--glow:rgba(139,59,255,.35);--good:#67f7bb;--danger:#ff668f;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-5;background:
+radial-gradient(circle at 15% 15%,rgba(142,48,255,.22),transparent 30%),
+radial-gradient(circle at 88% 28%,rgba(217,70,239,.13),transparent 28%),
+radial-gradient(circle at 50% 100%,rgba(81,25,160,.18),transparent 40%),
+linear-gradient(125deg,#050309,#0b0513 50%,#08040e)}
+body:after{content:"";position:fixed;inset:0;z-index:-4;opacity:.18;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}
+#particles{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden}.orb{position:absolute;width:5px;height:5px;border-radius:50%;background:#c78aff;box-shadow:0 0 16px #a855f7;opacity:.45;animation:float linear infinite}
+@keyframes float{from{transform:translateY(110vh) translateX(0)}to{transform:translateY(-15vh) translateX(80px)}}
+header{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(5,3,10,.68);backdrop-filter:blur(20px)}
+.nav{max-width:1240px;margin:auto;height:78px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:12px;font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px}
+.logoMark{width:38px;height:38px;border:1px solid rgba(201,147,255,.6);border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#291044,#0c0713);box-shadow:0 0 28px var(--glow);position:relative}
+.logoMark:after{content:"";width:13px;height:13px;border-radius:4px;background:linear-gradient(135deg,#fff,#a855f7);transform:rotate(45deg);box-shadow:0 0 15px #b26bff}
+.logo span{color:#b77aff}.logo small{display:block;color:#81748f;font:600 8px Inter;letter-spacing:3px;margin-top:2px}
+.navlinks{display:flex;align-items:center;gap:5px}.navlinks button{border:0;background:transparent;padding:11px 14px;border-radius:10px;color:#bcb0c9;cursor:pointer;transition:.25s}
+.navlinks button:hover,.navlinks button.active{color:#fff;background:rgba(168,85,247,.12);box-shadow:inset 0 0 0 1px rgba(168,85,247,.15)}
+.navCta{padding:11px 17px;border-radius:11px;border:1px solid rgba(182,120,255,.45);background:linear-gradient(135deg,rgba(139,59,255,.3),rgba(217,70,239,.1));box-shadow:0 0 24px rgba(139,59,255,.12);cursor:pointer}
+main{max-width:1240px;margin:auto;padding:110px 22px 80px}
+.hero{min-height:650px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:999px;color:#cdbbe2;font-size:12px;font-weight:700;letter-spacing:1.3px}
+.dot{width:7px;height:7px;border-radius:50%;background:#7fffd4;box-shadow:0 0 13px #5effc8}
+h1{font-family:Orbitron,sans-serif;font-size:clamp(48px,7vw,92px);line-height:.94;letter-spacing:-4px;margin:22px 0 18px}
+.gradient{background:linear-gradient(100deg,#fff 10%,#d7b5ff 42%,#9d4edd 75%,#ef7cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:650px;color:#a99eb5;font-size:17px;line-height:1.75;margin:0 0 28px}.heroActions{display:flex;gap:12px;flex-wrap:wrap}
+.primary,.secondary{border-radius:12px;padding:14px 19px;cursor:pointer;border:1px solid var(--line);transition:.25s}.primary{background:linear-gradient(135deg,#8b3dff,#bd45d9);box-shadow:0 10px 35px rgba(139,59,255,.24);font-weight:800}.primary:hover{transform:translateY(-2px);box-shadow:0 14px 42px rgba(139,59,255,.4)}.secondary{background:rgba(255,255,255,.04);color:#d8cde1}.secondary:hover{background:rgba(255,255,255,.08)}
+.heroVisual{position:relative;min-height:470px;display:grid;place-items:center}.ring{position:absolute;border:1px solid rgba(180,110,255,.16);border-radius:50%;animation:spin 22s linear infinite}.r1{width:390px;height:390px}.r2{width:300px;height:300px;animation-duration:15s;animation-direction:reverse}.r3{width:220px;height:220px;animation-duration:11s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.trophy{width:235px;height:300px;border:1px solid rgba(220,180,255,.3);border-radius:34% 34% 23% 23%;background:linear-gradient(145deg,rgba(196,137,255,.16),rgba(255,255,255,.025));box-shadow:inset 0 0 55px rgba(160,77,255,.13),0 0 80px rgba(139,59,255,.2);position:relative;display:grid;place-items:center}
+.trophy:before{content:"M";font-family:Orbitron;font-size:120px;font-weight:900;color:rgba(209,165,255,.72);text-shadow:0 0 35px #9b4dff}
+.trophy:after{content:"MORTAL";position:absolute;bottom:28px;font:700 11px Orbitron;letter-spacing:5px;color:#bfa5d6}
+.floatCard{position:absolute;padding:14px 16px;border:1px solid var(--line);background:rgba(14,8,23,.78);backdrop-filter:blur(14px);border-radius:14px;box-shadow:0 15px 50px rgba(0,0,0,.35);font-size:12px;color:#b8a9c5}.floatCard b{display:block;color:#fff;font-size:16px;margin-top:4px}.fc1{top:35px;right:20px}.fc2{bottom:42px;left:10px}.fc3{top:170px;left:-20px}
+.section{padding:72px 0}.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.sectionHead h2{font-family:Orbitron;font-size:30px;margin:0 0 8px}.sectionHead p{margin:0;color:var(--muted);font-size:14px}.badge{font-size:11px;color:#cdb4e4;border:1px solid var(--line);padding:7px 10px;border-radius:999px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:linear-gradient(145deg,rgba(28,14,44,.78),rgba(12,7,20,.78));border:1px solid var(--line);border-radius:18px;padding:22px;position:relative;overflow:hidden;transition:.3s}.card:before{content:"";position:absolute;inset:-50%;background:radial-gradient(circle at 50% 0,rgba(168,85,247,.13),transparent 35%);pointer-events:none}.card:hover{transform:translateY(-5px);border-color:rgba(183,122,255,.35);box-shadow:0 18px 55px rgba(0,0,0,.3),0 0 35px rgba(139,59,255,.08)}
+.icon{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.18);font-size:21px;margin-bottom:18px}.card h3{margin:0 0 8px;font-size:16px}.card p{color:#9588a2;line-height:1.6;font-size:13px;margin:0}
+.panel{margin-top:25px;padding:26px;border-radius:22px;border:1px solid var(--line);background:rgba(15,8,25,.72);box-shadow:inset 0 1px rgba(255,255,255,.03)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.tab{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.025);cursor:pointer;color:#aaa0b3}.tab.active{color:#fff;background:rgba(139,59,255,.16);border-color:rgba(168,85,247,.35)}
+.contentPane{display:none;animation:fade .35s ease}.contentPane.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rule{padding:16px;border-radius:13px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06)}.rule b{color:#e5d6f2}.rule span{color:#8f839d;font-size:13px;display:block;margin-top:5px;line-height:1.5}
+.players{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.player{display:flex;align-items:center;gap:13px;padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.025)}.avatar{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-weight:900}.player b{display:block}.player small{color:#8f839d}.rating{margin-left:auto;color:#cfa8ff;font:800 14px Orbitron}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.stat{padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}.stat small{color:#897c95}.stat strong{display:block;font:800 28px Orbitron;margin-top:7px}
+.calculator{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field label{display:block;color:#9d91a9;font-size:12px;margin-bottom:7px}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid var(--line);background:#0d0815;color:#fff;outline:none}.field{margin-bottom:13px}.result{display:grid;place-items:center;border-radius:18px;border:1px solid rgba(180,110,255,.25);background:radial-gradient(circle,rgba(139,59,255,.16),transparent 60%),rgba(255,255,255,.025);min-height:210px}.result strong{font:900 44px Orbitron;color:#d2adff}.result span{color:#94869f;font-size:12px}
+
+.systemGallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.systemCard{padding:0;overflow:hidden;border-radius:20px;border:1px solid var(--line);background:rgba(15,8,25,.78);box-shadow:0 18px 55px rgba(0,0,0,.28);transition:.3s}.systemCard:hover{transform:translateY(-5px);border-color:rgba(183,122,255,.4);box-shadow:0 22px 65px rgba(0,0,0,.36),0 0 35px rgba(139,59,255,.1)}.systemCard img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;transition:.4s}.systemCard:hover img{transform:scale(1.025)}.liveOnly{display:inline-flex;align-items:center;gap:8px;color:var(--good);font:800 11px Orbitron;letter-spacing:1px}.liveOnly .dot{width:6px;height:6px}
+.cta{margin-top:60px;padding:45px;border-radius:24px;border:1px solid rgba(168,85,247,.22);background:radial-gradient(circle at 75% 50%,rgba(168,85,247,.17),transparent 32%),linear-gradient(135deg,rgba(28,13,44,.9),rgba(10,6,16,.9));display:flex;align-items:center;justify-content:space-between;gap:25px}.cta h2{font-family:Orbitron;margin:0 0 9px}.cta p{color:#9e91a9;margin:0}
+footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-align:center;font-size:12px}
+.modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(3,1,7,.76);backdrop-filter:blur(10px)}.modal.show{display:grid}.modalBox{width:min(720px,100%);max-height:85vh;overflow:auto;border:1px solid rgba(190,130,255,.28);border-radius:22px;background:#10091a;box-shadow:0 30px 100px #000;padding:26px;animation:pop .25s ease}@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}.modalTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modalTop h2{font-family:Orbitron;margin:0}.close{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:9px;padding:8px 11px;cursor:pointer}
+.toast{position:fixed;right:20px;bottom:20px;z-index:120;padding:13px 17px;border:1px solid rgba(103,247,187,.25);background:rgba(7,20,16,.9);color:#aefbd9;border-radius:12px;transform:translateY(100px);opacity:0;transition:.3s}.toast.show{transform:none;opacity:1}
+
+.systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px};align-items:start.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.systemRule h3.accordionTrigger{border:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;background:transparent;cursor:pointer;transition:.25s}.systemRule h3.accordionTrigger:hover{background:rgba(168,85,247,.07)}.systemRule h3.accordionTrigger:after{content:"+";flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.3s}.systemRule.open h3.accordionTrigger{color:#fff;background:rgba(168,85,247,.07)}.systemRule.open h3.accordionTrigger:after{content:"−";transform:rotate(180deg);background:rgba(168,85,247,.12)}.ruleText{white-space:pre-wrap;padding:0 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,padding .35s ease,opacity .25s ease}.systemRule.open .ruleText{padding:20px 21px;max-height:9000px;overflow:auto;opacity:1}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
+@media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:50px}.heroVisual{min-height:390px}.grid{grid-template-columns:repeat(2,1fr)}.players{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.navlinks{display:none}.rules,.calculator{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}}
+@media(max-width:560px){main{padding-left:15px;padding-right:15px}.nav{padding:0 15px}.logo{font-size:13px}.navCta{padding:9px 11px;font-size:12px}.grid,.players,.stats{grid-template-columns:1fr}.heroVisual{transform:scale(.82);margin:-30px 0}.section{padding:48px 0}h1{letter-spacing:-3px}.cta{padding:28px}.r1{width:330px;height:330px}}
+
+/* MortaLeague contribution calculator */
+
+.contributionCalc{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}
+.calcPanel,.contributionResult{padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(15,8,25,.72);box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.calcNotice{display:flex;align-items:center;gap:13px;padding:15px;border:1px solid rgba(168,85,247,.18);border-radius:14px;background:rgba(168,85,247,.06);margin-bottom:20px}
+.calcNotice>span{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:rgba(168,85,247,.14);color:#d2adff;font-size:18px}
+.calcNotice strong{display:block;font:800 12px Orbitron;letter-spacing:1px}
+.calcNotice small{display:block;color:#9d91a9;font-size:12px;margin-top:4px}
+.calcNotice small b{color:#d9c3ff}
+.calcGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
+.calcGrid .field:first-child{grid-column:1/-1}
+.calcContributionBtn{width:100%;margin-top:4px}
+.contributionResult{display:flex;flex-direction:column;justify-content:center;min-height:100%}
+.contributionResult>span{color:#94869f;font:700 11px Orbitron;letter-spacing:1.5px}
+.contributionResult>strong{font:900 clamp(32px,5vw,52px) Orbitron;color:#d2adff;margin:10px 0 22px;word-break:break-word}
+.contributionBreakdown{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contributionBreakdown>div{padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.025)}
+.contributionBreakdown small{display:block;color:#897c95;font-size:11px}
+.contributionBreakdown b{display:block;margin-top:5px;font-size:14px}
+@media(max-width:900px){.contributionCalc{grid-template-columns:1fr}.calcGrid{grid-template-columns:1fr}.calcGrid .field:first-child{grid-column:auto}}
+
+
+/* MortaLeague v1: performance, mobile and system search */
+.systemTools{display:flex;align-items:center;gap:10px;margin:0 0 16px}
+.systemSearch{flex:1;display:flex;align-items:center;gap:10px;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}
+.systemSearch span{font-size:21px;color:#a98ac6}
+.systemSearch input{width:100%;border:0;outline:0;background:transparent;color:#fff;font:500 14px Inter}
+.systemSearch input::placeholder{color:#776a83}
+.systemCount{white-space:nowrap;padding:9px 12px;border-radius:999px;border:1px solid var(--line);color:#a998b8;font-size:11px}
+.systemNoResults{display:none;padding:22px;border:1px dashed var(--line);border-radius:15px;color:#a99bbd;text-align:center;margin-bottom:12px}
+.systemRule.isHidden{display:none}
+.systemRule.searchHit h3{color:#fff}
+@media (max-width:900px){
+  .nav{height:68px;padding:0 14px}
+  .navlinks{display:none}
+  .navCta{padding:10px 13px;font-size:12px}
+  main{padding:90px 15px 55px}
+  .hero{min-height:590px;grid-template-columns:1fr;gap:10px;text-align:center}
+  .hero p{margin-left:auto;margin-right:auto;font-size:15px}
+  .heroActions{justify-content:center}
+  .heroVisual{min-height:320px;transform:scale(.78)}
+  .section{padding:48px 0}
+  .sectionHead{align-items:flex-start;flex-direction:column}
+  .sectionHead h2{font-size:24px}
+  .grid{grid-template-columns:1fr 1fr}
+  .rules{grid-template-columns:1fr}
+  .panel{padding:17px}
+  .systemTools{align-items:stretch;flex-direction:column}
+  .systemCount{text-align:center}
+}
+@media (max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .logo small{display:none}
+  .logo{letter-spacing:1px}
+  h1{letter-spacing:-2px;font-size:clamp(40px,14vw,66px)}
+  .heroVisual{transform:scale(.64);margin-top:-35px}
+  .calcGrid{grid-template-columns:1fr}
+  .contributionBreakdown{grid-template-columns:1fr}
+}
+/* Respect reduced-motion preferences for accessibility and lower CPU use. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+
+/* MortaLeague account UI */
+.accountActions,.userPanel{display:flex;align-items:center;gap:8px}
+.accountBtn,.userPill{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#eee;padding:10px 13px;border-radius:11px;font:700 11px Orbitron;cursor:pointer}
+.accountPrimary{background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.35)}
+.userPill span{color:#a855f7;margin-right:5px}
+.userPanel{position:relative}
+.userMenu{display:none;position:absolute;right:0;top:calc(100% + 8px);min-width:210px;padding:8px;border:1px solid var(--line);border-radius:14px;background:#120b1b;box-shadow:0 18px 50px rgba(0,0,0,.35);z-index:100}
+.userMenu.open{display:grid}
+.userMenu button{border:0;background:transparent;color:#ddd;text-align:left;padding:11px;border-radius:9px;cursor:pointer;font:600 11px Inter}
+.userMenu button:hover{background:rgba(168,85,247,.1)}.userAvatarMini{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#ec4899);font-size:11px;color:#fff}.userAvatarMini img{width:100%;height:100%;object-fit:contain;background:#0b0710}.profileModal{display:none;position:fixed;inset:0;z-index:1000}.profileModal.open{display:grid;place-items:center}.profileCard{width:min(470px,calc(100% - 28px))}.profileHero{display:flex;align-items:center;gap:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);margin-bottom:16px}.profileHero b{display:block;font:800 15px Orbitron}.profileHero small{display:block;color:#94869f;margin-top:5px;font-size:11px}.profileAvatarLarge{width:64px;height:64px;border-radius:17px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 25px Orbitron;color:#fff}.profileAvatarLarge img{width:100%;height:100%;object-fit:contain;background:#0b0710}.profileActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.profileActions .accountBtn{width:100%;padding:12px}.profileCard input[type=file]{padding:9px}.profileCard textarea{resize:vertical;min-height:110px}
+.accountModal,.contactModal{display:none;position:fixed;inset:0;z-index:1000}
+.accountModal.open,.contactModal.open{display:grid;place-items:center}
+.accountBackdrop{position:absolute;inset:0;background:rgba(4,2,7,.76);backdrop-filter:blur(8px)}
+.accountCard{position:relative;width:min(440px,calc(100% - 28px));padding:28px;border:1px solid rgba(168,85,247,.24);border-radius:22px;background:#100a18;box-shadow:0 30px 90px rgba(0,0,0,.5);z-index:1}
+.accountClose{position:absolute;right:13px;top:10px;border:0;background:transparent;color:#a99bb2;font-size:28px;cursor:pointer}
+.accountTabs{display:flex;gap:6px;margin-bottom:24px}
+.accountTab{flex:1;border:1px solid var(--line);background:transparent;color:#93869c;padding:11px;border-radius:10px;cursor:pointer;font:700 11px Orbitron}
+.accountTab.active{color:#fff;background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35)}
+.accountEyebrow{font:700 10px Orbitron;color:#a855f7;letter-spacing:1.5px}
+.accountCard h3{font:800 25px Orbitron;margin:8px 0}
+.accountCard p{color:#93879d;font-size:13px;line-height:1.55;margin:0 0 20px}
+.accountCard label{display:block;color:#aaa0b4;font-size:11px;font-weight:700;margin:13px 0}
+.accountCard input,.accountCard select,.accountCard textarea{display:block;width:100%;box-sizing:border-box;margin-top:7px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff;padding:12px;outline:none}
+.accountCard input:focus,.accountCard select:focus,.accountCard textarea:focus{border-color:rgba(168,85,247,.5)}
+.accountSubmit{width:100%;border:0;border-radius:11px;padding:13px;background:#a855f7;color:#fff;font:800 11px Orbitron;cursor:pointer;margin-top:8px}
+.accountMessage{min-height:20px;margin-top:12px;color:#bda7ce;font-size:12px}
+@media(max-width:700px){.accountActions .accountBtn{padding:9px 8px;font-size:9px}.accountCard{padding:23px}}
+
+
+/* Account buttons belong to the top navigation */
+.nav .accountActions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav .accountBtn{white-space:nowrap}
+@media(max-width:900px){
+  .nav .accountActions{display:flex;margin-left:auto}
+  .nav .accountBtn{padding:9px 10px;font-size:9px}
+}
+@media(max-width:520px){
+  .nav .accountActions{gap:5px}
+  .nav .accountBtn{padding:8px 7px;font-size:8px}
+}
+
+</style>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div id="particles"></div>
+
+<header>
+<nav class="nav">
+<a class="logo" href="#home"><span class="logoMark"></span><div>MORTALLEAGUE<small>THE DARK FOOTBALL ERA</small></div></a>
+<div class="navlinks">
+<button data-scroll="home">Ana Sayfa</button>
+<button data-scroll="league">Lig</button>
+<button data-scroll="systems">Sistemler</button>
+</div>
+<div class="accountActions" id="accountActions">
+  <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
+  <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
+</div>
+<div class="profileModal" id="profileModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-profile></div>
+  <div class="accountCard profileCard" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+    <button class="accountClose" data-close-profile aria-label="Kapat">×</button>
+    <span class="accountEyebrow">OYUNCU PROFİLİ</span>
+    <h3 id="profileTitle">Profilin</h3>
+    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername">wexemir</b><small>Profil bilgilerini buradan düzenleyebilirsin.</small></div></div>
+    <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
+    <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
+    <div class="profileActions"><button class="accountBtn accountPrimary" id="contactAdmin">ADMİN'E NOT BIRAK</button><button class="accountBtn" id="logoutButton">ÇIKIŞ YAP</button></div>
+    <div class="accountMessage" id="profileStatus"></div>
+  </div>
+</div>
+
+<div class="contactModal" id="contactModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-contact></div>
+  <div class="accountCard contactCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-contact aria-label="Kapat">×</button>
+    <span class="accountEyebrow">DESTEK</span>
+    <h3>Admin ile İletişime Geç</h3>
+    <p>Şikayet, öneri, hata veya isteklerini buradan iletebilirsin.</p>
+    <label>Konu
+      <select id="contactType">
+        <option>Öneri</option>
+        <option>Şikayet</option>
+        <option>Hata Bildirimi</option>
+        <option>Diğer</option>
+      </select>
+    </label>
+    <label>Mesaj<textarea id="contactMessage" maxlength="2000" rows="6"></textarea></label>
+    <button class="accountSubmit" id="contactSubmit">MESAJI GÖNDER</button>
+    <div class="accountMessage" id="contactStatus"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
