@@ -187,6 +187,102 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
   .nav .accountBtn{padding:8px 7px;font-size:8px}
 }
 
+
+/* MortaLeague mobile-first responsive override */
+html, body {
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+img, video, canvas, svg { max-width:100%; }
+
+@media (max-width: 768px) {
+  body { min-width:0 !important; }
+  header { width:100%; }
+  .nav {
+    width:100%;
+    max-width:none;
+    height:64px;
+    padding:0 12px;
+    gap:8px;
+  }
+  .logo {
+    min-width:0;
+    flex:1 1 auto;
+    gap:8px;
+    font-size:13px;
+    letter-spacing:1px;
+  }
+  .logoMark { width:32px; height:32px; border-radius:9px; }
+  .logoMark:after { width:11px; height:11px; }
+  .logo small { display:none; }
+  .navlinks { display:none !important; }
+  .navCta { flex:0 0 auto; padding:9px 10px; font-size:10px; white-space:nowrap; }
+  .nav .accountActions { margin-left:0; gap:5px; }
+  .nav .accountBtn { padding:8px 8px; font-size:8px; white-space:nowrap; }
+  .userPanel { margin-left:0; }
+  .userPill { padding:7px 8px; font-size:8px; white-space:nowrap; }
+
+  main {
+    width:100%;
+    max-width:none;
+    padding:84px 14px 48px;
+  }
+  .hero {
+    width:100%;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    text-align:center;
+  }
+  .hero > div:first-child { width:100%; }
+  h1 { font-size:clamp(42px,13vw,64px); letter-spacing:-2px; }
+  .hero p { width:100%; max-width:100%; font-size:14px; line-height:1.65; }
+  .heroActions { justify-content:center; width:100%; }
+  .heroActions .primary, .heroActions .secondary { padding:12px 14px; }
+  .heroVisual { width:100%; min-height:280px; transform:scale(.7); transform-origin:center top; margin:0 0 -65px; }
+
+  .section { width:100%; padding:44px 0; }
+  .sectionHead { width:100%; }
+  .sectionHead h2 { font-size:22px; line-height:1.2; }
+  .sectionHead p { font-size:13px; }
+  .grid, .players, .stats, .rules, .calculator, .systemGallery, .systemLibrary, .contributionCalc {
+    width:100%;
+    grid-template-columns:1fr !important;
+  }
+  .card, .panel, .calcPanel, .contributionResult { padding:18px; }
+  .systemTools { width:100%; }
+  .systemSearch { min-width:0; width:100%; }
+  .systemSearch input { min-width:0; }
+
+  .modal { padding:10px; }
+  .modalBox, .accountCard, .adminCard {
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box;
+  }
+  .accountCard { padding:20px; }
+  .profileCard { width:100% !important; }
+  .profileHero { align-items:center; }
+  .profileActions { grid-template-columns:1fr !important; }
+  .adminCard { max-height:88vh; padding:16px; }
+  .adminToolbar { flex-wrap:wrap; }
+
+  .cta { width:100%; padding:26px 20px; box-sizing:border-box; }
+  footer { padding:22px 14px; }
+}
+
+@media (max-width: 420px) {
+  .logo { font-size:11px; }
+  .logoMark { width:30px; height:30px; }
+  .navCta { font-size:9px; padding:8px 8px; }
+  .nav .accountBtn { font-size:7px; padding:7px 6px; }
+  main { padding-left:12px; padding-right:12px; }
+  .heroVisual { transform:scale(.6); margin-bottom:-100px; }
+  .contributionBreakdown { grid-template-columns:1fr !important; }
+}
+
 </style>
 
 
@@ -1176,14 +1272,9 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       if (currentError) throw currentError;
 
       const username = current?.username || user.email?.split('@')[0] || '';
-      const { error: saveError } = await mortaSupabase
-        .from('profiles')
-        .update({
-          username,
-          bio: bioEl.value.trim(),
-          avatar_url: avatarUrl
-        })
-        .eq('id', user.id);
+      const { error: saveError } = await mortaSupabase.from('profiles').upsert({
+        id: user.id, username, bio: bioEl.value.trim(), avatar_url: avatarUrl
+      }, { onConflict: 'id' });
       if (saveError) throw saveError;
 
       usernameEl.textContent = username;
