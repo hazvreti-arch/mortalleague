@@ -99,6 +99,7 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .systemSearch input{width:100%;border:0;outline:0;background:transparent;color:#fff;font:500 14px Inter}
 .systemSearch input::placeholder{color:#776a83}
 .systemCount{white-space:nowrap;padding:9px 12px;border-radius:999px;border:1px solid var(--line);color:#a998b8;font-size:11px}
+.systemToggle{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;margin:0 0 16px;padding:15px 18px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025));color:#efe7f7;cursor:pointer;font:800 12px Orbitron;letter-spacing:.7px;transition:.25s}.systemToggle:hover{background:rgba(168,85,247,.10);border-color:rgba(183,122,255,.35)}.systemToggle span:last-child{display:grid;place-items:center;width:30px;height:30px;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.25s}.systemSectionBody{display:none}.systemSectionBody.open{display:block}.systemToggle.open span:last-child{transform:rotate(180deg);background:rgba(168,85,247,.12)}
 .systemNoResults{display:none;padding:22px;border:1px dashed var(--line);border-radius:15px;color:#a99bbd;text-align:center;margin-bottom:12px}
 .systemRule.isHidden{display:none}
 .systemRule.searchHit h3{color:#fff}
@@ -187,167 +188,6 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
   .nav .accountBtn{padding:8px 7px;font-size:8px}
 }
 
-
-/* MortaLeague mobile-first responsive override */
-html, body {
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden;
-}
-img, video, canvas, svg { max-width:100%; }
-
-@media (max-width: 768px) {
-  body { min-width:0 !important; }
-  header { width:100%; }
-  .nav {
-    width:100%;
-    max-width:none;
-    height:64px;
-    padding:0 12px;
-    gap:8px;
-  }
-  .logo {
-    min-width:0;
-    flex:1 1 auto;
-    gap:8px;
-    font-size:13px;
-    letter-spacing:1px;
-  }
-  .logoMark { width:32px; height:32px; border-radius:9px; }
-  .logoMark:after { width:11px; height:11px; }
-  .logo small { display:none; }
-  .navlinks { display:none !important; }
-  .navCta { flex:0 0 auto; padding:9px 10px; font-size:10px; white-space:nowrap; }
-  .nav .accountActions { margin-left:0; gap:5px; }
-  .nav .accountBtn { padding:8px 8px; font-size:8px; white-space:nowrap; }
-  .userPanel { margin-left:0; }
-  .userPill { padding:7px 8px; font-size:8px; white-space:nowrap; }
-
-  main {
-    width:100%;
-    max-width:none;
-    padding:84px 14px 48px;
-  }
-  .hero {
-    width:100%;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    text-align:center;
-  }
-  .hero > div:first-child { width:100%; }
-  h1 { font-size:clamp(42px,13vw,64px); letter-spacing:-2px; }
-  .hero p { width:100%; max-width:100%; font-size:14px; line-height:1.65; }
-  .heroActions { justify-content:center; width:100%; }
-  .heroActions .primary, .heroActions .secondary { padding:12px 14px; }
-  .heroVisual { width:100%; min-height:280px; transform:scale(.7); transform-origin:center top; margin:0 0 -65px; }
-
-  .section { width:100%; padding:44px 0; }
-  .sectionHead { width:100%; }
-  .sectionHead h2 { font-size:22px; line-height:1.2; }
-  .sectionHead p { font-size:13px; }
-  .grid, .players, .stats, .rules, .calculator, .systemGallery, .systemLibrary, .contributionCalc {
-    width:100%;
-    grid-template-columns:1fr !important;
-  }
-  .card, .panel, .calcPanel, .contributionResult { padding:18px; }
-  .systemTools { width:100%; }
-  .systemSearch { min-width:0; width:100%; }
-  .systemSearch input { min-width:0; }
-
-  .modal { padding:10px; }
-  .modalBox, .accountCard, .adminCard {
-    width:100% !important;
-    max-width:100% !important;
-    box-sizing:border-box;
-  }
-  .accountCard { padding:20px; }
-  .profileCard { width:100% !important; }
-  .profileHero { align-items:center; }
-  .profileActions { grid-template-columns:1fr !important; }
-  .adminCard { max-height:88vh; padding:16px; }
-  .adminToolbar { flex-wrap:wrap; }
-
-  .cta { width:100%; padding:26px 20px; box-sizing:border-box; }
-  footer { padding:22px 14px; }
-}
-
-@media (max-width: 420px) {
-  .logo { font-size:11px; }
-  .logoMark { width:30px; height:30px; }
-  .navCta { font-size:9px; padding:8px 8px; }
-  .nav .accountBtn { font-size:7px; padding:7px 6px; }
-  main { padding-left:12px; padding-right:12px; }
-  .heroVisual { transform:scale(.6); margin-bottom:-100px; }
-  .contributionBreakdown { grid-template-columns:1fr !important; }
-}
-
-
-/* MortaLeague v2 — mobile navigation + profile polish */
-.mobileMenuButton{
-  display:none;border:1px solid var(--line);background:rgba(255,255,255,.035);
-  color:#fff;width:38px;height:38px;border-radius:11px;cursor:pointer;
-  font-size:20px;line-height:1;flex:0 0 auto;
-}
-.mobileDrawer{
-  display:none;position:fixed;inset:0;z-index:1200;
-}
-.mobileDrawer.open{display:block}
-.mobileDrawerBackdrop{position:absolute;inset:0;background:rgba(4,2,7,.72);backdrop-filter:blur(8px)}
-.mobileDrawerPanel{
-  position:absolute;right:0;top:0;height:100%;width:min(310px,88vw);
-  padding:78px 18px 24px;background:#100a18;border-left:1px solid rgba(168,85,247,.25);
-  box-shadow:-20px 0 70px rgba(0,0,0,.45);transform:translateX(100%);
-  transition:transform .25s ease;
-}
-.mobileDrawer.open .mobileDrawerPanel{transform:translateX(0)}
-.mobileDrawerClose{
-  position:absolute;right:14px;top:16px;width:38px;height:38px;border:1px solid var(--line);
-  border-radius:11px;background:transparent;color:#cfc2d8;font-size:25px;cursor:pointer;
-}
-.mobileDrawerTitle{font:800 12px Orbitron;color:#a855f7;letter-spacing:1.5px;margin-bottom:14px}
-.mobileDrawerLinks{display:grid;gap:8px}
-.mobileDrawerLinks button{
-  width:100%;padding:14px;text-align:left;border:1px solid var(--line);border-radius:12px;
-  background:rgba(255,255,255,.025);color:#eee;font:700 11px Orbitron;cursor:pointer;
-}
-.mobileDrawerLinks button:hover{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35)}
-.profileHero{position:relative}
-.profileOnline{
-  display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:5px 8px;border-radius:999px;
-  border:1px solid rgba(127,255,212,.18);background:rgba(127,255,212,.05);
-  color:#91e8ca;font:700 9px Inter;letter-spacing:.5px;
-}
-.profileOnline i{width:6px;height:6px;border-radius:50%;background:#7fffd4;box-shadow:0 0 9px #5effc8}
-.profileCard .accountSubmit{transition:transform .2s,box-shadow .2s}
-.profileCard .accountSubmit:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(168,85,247,.25)}
-@media(max-width:768px){
-  .mobileMenuButton{display:block}
-  .nav .navCta{display:none}
-  .nav .accountActions{display:none}
-  .nav .userPanel{display:block}
-  .nav .userPill{max-width:120px;overflow:hidden;text-overflow:ellipsis}
-  .profileModal{padding:10px}
-  .profileCard{max-height:calc(100vh - 20px);overflow:auto;padding:18px !important;border-radius:18px}
-  .profileCard h3{font-size:23px}
-  .profileHero{padding:12px;gap:11px}
-  .profileAvatarLarge{width:58px;height:58px;border-radius:15px}
-  .profileHero small{font-size:10px}
-  .profileActions{grid-template-columns:1fr 1fr !important}
-  .profileActions .accountBtn{min-height:44px}
-  .profileActions #logoutButton{grid-column:1/-1}
-}
-@media(max-width:430px){
-  .nav{padding:0 10px}
-  .logo{font-size:10px}
-  .logoMark{width:29px;height:29px}
-  .mobileMenuButton{width:36px;height:36px}
-  .userPill{max-width:96px}
-  .profileActions{grid-template-columns:1fr !important}
-  .profileActions #logoutButton{grid-column:auto}
-}
-
 </style>
 
 
@@ -359,7 +199,6 @@ img, video, canvas, svg { max-width:100%; }
 
 <header>
 <nav class="nav">
-<button class="mobileMenuButton" id="mobileMenuButton" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
 <a class="logo" href="#home"><span class="logoMark"></span><div>MORTALLEAGUE<small>THE DARK FOOTBALL ERA</small></div></a>
 <div class="navlinks">
 <button data-scroll="home">Ana Sayfa</button>
@@ -376,21 +215,6 @@ img, video, canvas, svg { max-width:100%; }
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
 </header>
-
-
-<div class="mobileDrawer" id="mobileDrawer" aria-hidden="true">
-  <div class="mobileDrawerBackdrop" data-close-mobile></div>
-  <aside class="mobileDrawerPanel" aria-label="Mobil menü">
-    <button class="mobileDrawerClose" type="button" data-close-mobile aria-label="Menüyü kapat">×</button>
-    <div class="mobileDrawerTitle">MORTALLEAGUE</div>
-    <div class="mobileDrawerLinks">
-      <button data-mobile-scroll="home">⌂ &nbsp; ANA SAYFA</button>
-      <button data-mobile-scroll="league">⚔ &nbsp; LİG</button>
-      <button data-mobile-scroll="systems">◈ &nbsp; SİSTEMLER</button>
-      <button data-mobile-rules>▣ &nbsp; KURALLAR</button>
-    </div>
-  </aside>
-</div>
 
 <main>
 <section class="hero" id="home">
@@ -500,17 +324,21 @@ img, video, canvas, svg { max-width:100%; }
 <section class="section" id="systems">
 <div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">16 SİSTEM</span></div>
 
-<div class="systemTools">
-  <label class="systemSearch" aria-label="Sistemlerde ara">
-    <span>⌕</span>
-    <input id="systemSearch" type="search" autocomplete="off" placeholder="Sistemlerde ara...">
-  </label>
-  <span class="systemCount" id="systemCount">16 sistem</span>
-</div>
+<button class="systemToggle" id="systemToggle" type="button" aria-expanded="false">
+  <span>TÜM SİSTEMLERİ GÖSTER</span><span>+</span>
+</button>
+<div class="systemSectionBody" id="systemSectionBody">
+  <div class="systemTools">
+    <label class="systemSearch" aria-label="Sistemlerde ara">
+      <span>⌕</span>
+      <input id="systemSearch" type="search" autocomplete="off" placeholder="Sistemlerde ara...">
+    </label>
+    <span class="systemCount" id="systemCount">16 sistem</span>
+  </div>
 
-<div class="systemsIntro"><span>◈</span><div><strong>TÜM SİSTEMLER</strong><small>Gönderdiğin metinler, tekrarlar ayıklanarak ve yeni ek bilgiler ilgili başlıkların devamına işlenerek burada yer alıyor.</small></div></div>
-<div class="systemNoResults" id="systemNoResults">Aramanla eşleşen sistem bulunamadı.</div>
-<div class="systemLibrary">
+  <div class="systemsIntro"><span>◈</span><div><strong>TÜM SİSTEMLER</strong><small>Gönderdiğin metinler, tekrarlar ayıklanarak ve yeni ek bilgiler ilgili başlıkların devamına işlenerek burada yer alıyor.</small></div></div>
+  <div class="systemNoResults" id="systemNoResults">Aramanla eşleşen sistem bulunamadı.</div>
+  <div class="systemLibrary">
 <article class="systemRule"><h3>MortaLeague Yayın Geliri Sistemi</h3><div class="ruleText">Takımlar sezon içerisinde gösterdiği performansa para kazanırlar. Bu paralar devrede veya sezon sonunda eklenebilir.
 
 Mortaliga Sıralama Gelin (Tüm Lig Kategorileri için geçerlidir)
@@ -1115,6 +943,7 @@ Antrenman Sahası Olmadan Yapılan Antrenmanlar Değere 50k etki eder.
 
 Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
+</div>
 </section>
   <div class="cta"><div><h2>SAHAYA ÇIKMAYA HAZIR MISIN?</h2><p>MortalLeague'de her kararın bir sonucu var.</p></div><button class="primary" data-open="rulesModal">Kuralları Aç →</button></div>
 </main>
@@ -1175,7 +1004,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <button class="accountClose" data-close-profile aria-label="Kapat">×</button>
     <span class="accountEyebrow">OYUNCU PROFİLİ</span>
     <h3>Profilin</h3>
-    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small><span class="profileOnline"><i></i> HESAP AKTİF</span></div></div>
+    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
     <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
@@ -1353,19 +1182,9 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       if (currentError) throw currentError;
 
       const username = current?.username || user.email?.split('@')[0] || '';
-      const { data: updatedProfile, error: saveError } = await mortaSupabase
-        .from('profiles')
-        .update({
-          username,
-          bio: bioEl.value.trim(),
-          avatar_url: avatarUrl
-        })
-        .eq('id', user.id)
-        .select('id')
-        .maybeSingle();
-      if (!saveError && !updatedProfile) {
-        throw new Error('Profil kaydı bulunamadı. Önce hesabın profil kaydı oluşturulmalı.');
-      }
+      const { error: saveError } = await mortaSupabase.from('profiles').upsert({
+        id: user.id, username, bio: bioEl.value.trim(), avatar_url: avatarUrl
+      }, { onConflict: 'id' });
       if (saveError) throw saveError;
 
       usernameEl.textContent = username;
@@ -1418,39 +1237,20 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   showAdmin(); setInterval(showAdmin,2000);
 })();
 </script>
-
 <script>
 (() => {
-  const drawer = document.getElementById('mobileDrawer');
-  const menuBtn = document.getElementById('mobileMenuButton');
-  if (!drawer || !menuBtn) return;
-
-  const close = () => {
-    drawer.classList.remove('open');
-    drawer.setAttribute('aria-hidden','true');
-    menuBtn.setAttribute('aria-expanded','false');
-    document.body.style.overflow = '';
-  };
-  const open = () => {
-    drawer.classList.add('open');
-    drawer.setAttribute('aria-hidden','false');
-    menuBtn.setAttribute('aria-expanded','true');
-    document.body.style.overflow = 'hidden';
-  };
-
-  menuBtn.addEventListener('click', () => drawer.classList.contains('open') ? close() : open());
-  drawer.querySelectorAll('[data-close-mobile]').forEach(el => el.addEventListener('click', close));
-  drawer.querySelectorAll('[data-mobile-scroll]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      close();
-      document.getElementById(btn.dataset.mobileScroll)?.scrollIntoView({behavior:'smooth', block:'start'});
-    });
+  const toggle = document.querySelector('#systemToggle');
+  const body = document.querySelector('#systemSectionBody');
+  if (!toggle || !body) return;
+  toggle.addEventListener('click', () => {
+    const open = body.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    const label = toggle.querySelector('span:first-child');
+    if (label) label.textContent = open ? 'TÜM SİSTEMLERİ GİZLE' : 'TÜM SİSTEMLERİ GÖSTER';
+    const icon = toggle.querySelector('span:last-child');
+    if (icon) icon.textContent = open ? '−' : '+';
   });
-  drawer.querySelector('[data-mobile-rules]')?.addEventListener('click', () => {
-    close();
-    document.querySelector('[data-open="rulesModal"]')?.click();
-  });
-  document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
 })();
 </script>
 </body>
