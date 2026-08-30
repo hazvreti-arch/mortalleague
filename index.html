@@ -283,6 +283,71 @@ img, video, canvas, svg { max-width:100%; }
   .contributionBreakdown { grid-template-columns:1fr !important; }
 }
 
+
+/* MortaLeague v2 — mobile navigation + profile polish */
+.mobileMenuButton{
+  display:none;border:1px solid var(--line);background:rgba(255,255,255,.035);
+  color:#fff;width:38px;height:38px;border-radius:11px;cursor:pointer;
+  font-size:20px;line-height:1;flex:0 0 auto;
+}
+.mobileDrawer{
+  display:none;position:fixed;inset:0;z-index:1200;
+}
+.mobileDrawer.open{display:block}
+.mobileDrawerBackdrop{position:absolute;inset:0;background:rgba(4,2,7,.72);backdrop-filter:blur(8px)}
+.mobileDrawerPanel{
+  position:absolute;right:0;top:0;height:100%;width:min(310px,88vw);
+  padding:78px 18px 24px;background:#100a18;border-left:1px solid rgba(168,85,247,.25);
+  box-shadow:-20px 0 70px rgba(0,0,0,.45);transform:translateX(100%);
+  transition:transform .25s ease;
+}
+.mobileDrawer.open .mobileDrawerPanel{transform:translateX(0)}
+.mobileDrawerClose{
+  position:absolute;right:14px;top:16px;width:38px;height:38px;border:1px solid var(--line);
+  border-radius:11px;background:transparent;color:#cfc2d8;font-size:25px;cursor:pointer;
+}
+.mobileDrawerTitle{font:800 12px Orbitron;color:#a855f7;letter-spacing:1.5px;margin-bottom:14px}
+.mobileDrawerLinks{display:grid;gap:8px}
+.mobileDrawerLinks button{
+  width:100%;padding:14px;text-align:left;border:1px solid var(--line);border-radius:12px;
+  background:rgba(255,255,255,.025);color:#eee;font:700 11px Orbitron;cursor:pointer;
+}
+.mobileDrawerLinks button:hover{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35)}
+.profileHero{position:relative}
+.profileOnline{
+  display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:5px 8px;border-radius:999px;
+  border:1px solid rgba(127,255,212,.18);background:rgba(127,255,212,.05);
+  color:#91e8ca;font:700 9px Inter;letter-spacing:.5px;
+}
+.profileOnline i{width:6px;height:6px;border-radius:50%;background:#7fffd4;box-shadow:0 0 9px #5effc8}
+.profileCard .accountSubmit{transition:transform .2s,box-shadow .2s}
+.profileCard .accountSubmit:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(168,85,247,.25)}
+@media(max-width:768px){
+  .mobileMenuButton{display:block}
+  .nav .navCta{display:none}
+  .nav .accountActions{display:none}
+  .nav .userPanel{display:block}
+  .nav .userPill{max-width:120px;overflow:hidden;text-overflow:ellipsis}
+  .profileModal{padding:10px}
+  .profileCard{max-height:calc(100vh - 20px);overflow:auto;padding:18px !important;border-radius:18px}
+  .profileCard h3{font-size:23px}
+  .profileHero{padding:12px;gap:11px}
+  .profileAvatarLarge{width:58px;height:58px;border-radius:15px}
+  .profileHero small{font-size:10px}
+  .profileActions{grid-template-columns:1fr 1fr !important}
+  .profileActions .accountBtn{min-height:44px}
+  .profileActions #logoutButton{grid-column:1/-1}
+}
+@media(max-width:430px){
+  .nav{padding:0 10px}
+  .logo{font-size:10px}
+  .logoMark{width:29px;height:29px}
+  .mobileMenuButton{width:36px;height:36px}
+  .userPill{max-width:96px}
+  .profileActions{grid-template-columns:1fr !important}
+  .profileActions #logoutButton{grid-column:auto}
+}
+
 </style>
 
 
@@ -294,6 +359,7 @@ img, video, canvas, svg { max-width:100%; }
 
 <header>
 <nav class="nav">
+<button class="mobileMenuButton" id="mobileMenuButton" type="button" aria-label="Menüyü aç" aria-expanded="false">☰</button>
 <a class="logo" href="#home"><span class="logoMark"></span><div>MORTALLEAGUE<small>THE DARK FOOTBALL ERA</small></div></a>
 <div class="navlinks">
 <button data-scroll="home">Ana Sayfa</button>
@@ -310,6 +376,21 @@ img, video, canvas, svg { max-width:100%; }
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
 </header>
+
+
+<div class="mobileDrawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobileDrawerBackdrop" data-close-mobile></div>
+  <aside class="mobileDrawerPanel" aria-label="Mobil menü">
+    <button class="mobileDrawerClose" type="button" data-close-mobile aria-label="Menüyü kapat">×</button>
+    <div class="mobileDrawerTitle">MORTALLEAGUE</div>
+    <div class="mobileDrawerLinks">
+      <button data-mobile-scroll="home">⌂ &nbsp; ANA SAYFA</button>
+      <button data-mobile-scroll="league">⚔ &nbsp; LİG</button>
+      <button data-mobile-scroll="systems">◈ &nbsp; SİSTEMLER</button>
+      <button data-mobile-rules>▣ &nbsp; KURALLAR</button>
+    </div>
+  </aside>
+</div>
 
 <main>
 <section class="hero" id="home">
@@ -1094,7 +1175,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <button class="accountClose" data-close-profile aria-label="Kapat">×</button>
     <span class="accountEyebrow">OYUNCU PROFİLİ</span>
     <h3>Profilin</h3>
-    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
+    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small><span class="profileOnline"><i></i> HESAP AKTİF</span></div></div>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
     <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
@@ -1335,6 +1416,41 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   adminButton?.addEventListener('click',openAdmin); adminRefresh?.addEventListener('click',loadMessages);
   const showAdmin=async()=>{if(!adminButton||typeof mortaSupabase==='undefined'||!mortaSupabase)return;try{const {data:{user}}=await mortaSupabase.auth.getUser();if(!user){adminButton.hidden=true;return;}const {data:p}=await mortaSupabase.from('profiles').select('username').eq('id',user.id).maybeSingle();adminButton.hidden=String(p?.username||'').toLowerCase()!=='wexemir';}catch{adminButton.hidden=true;}};
   showAdmin(); setInterval(showAdmin,2000);
+})();
+</script>
+
+<script>
+(() => {
+  const drawer = document.getElementById('mobileDrawer');
+  const menuBtn = document.getElementById('mobileMenuButton');
+  if (!drawer || !menuBtn) return;
+
+  const close = () => {
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true');
+    menuBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  };
+  const open = () => {
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden','false');
+    menuBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  };
+
+  menuBtn.addEventListener('click', () => drawer.classList.contains('open') ? close() : open());
+  drawer.querySelectorAll('[data-close-mobile]').forEach(el => el.addEventListener('click', close));
+  drawer.querySelectorAll('[data-mobile-scroll]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      close();
+      document.getElementById(btn.dataset.mobileScroll)?.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  drawer.querySelector('[data-mobile-rules]')?.addEventListener('click', () => {
+    close();
+    document.querySelector('[data-open="rulesModal"]')?.click();
+  });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
 })();
 </script>
 </body>
