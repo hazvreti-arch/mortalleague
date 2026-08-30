@@ -1272,9 +1272,19 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       if (currentError) throw currentError;
 
       const username = current?.username || user.email?.split('@')[0] || '';
-      const { error: saveError } = await mortaSupabase.from('profiles').upsert({
-        id: user.id, username, bio: bioEl.value.trim(), avatar_url: avatarUrl
-      }, { onConflict: 'id' });
+      const { data: updatedProfile, error: saveError } = await mortaSupabase
+        .from('profiles')
+        .update({
+          username,
+          bio: bioEl.value.trim(),
+          avatar_url: avatarUrl
+        })
+        .eq('id', user.id)
+        .select('id')
+        .maybeSingle();
+      if (!saveError && !updatedProfile) {
+        throw new Error('Profil kaydı bulunamadı. Önce hesabın profil kaydı oluşturulmalı.');
+      }
       if (saveError) throw saveError;
 
       usernameEl.textContent = username;
