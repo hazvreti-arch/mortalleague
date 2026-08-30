@@ -284,31 +284,44 @@ img, video, canvas, svg { max-width:100%; }
 }
 
 
-/* Mobile modal scroll fix */
+/* Player directory / profile expansion / notifications */
+.playerDirectory{padding:20px;border:1px solid var(--line);border-radius:20px;background:rgba(15,8,25,.72)}
+.directoryToolbar{display:grid;grid-template-columns:minmax(0,1fr) 170px 190px;gap:10px;margin-bottom:16px}
+.directorySearch{display:flex;align-items:center;gap:10px;padding:0 14px;min-height:46px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}
+.directorySearch span{color:#a98ac6;font-size:20px}.directorySearch input{width:100%;border:0;outline:0;background:transparent;color:#fff;font:500 14px Inter}
+.directoryToolbar select{border:1px solid var(--line);border-radius:12px;background:#0d0815;color:#fff;padding:0 12px;outline:0}
+.playerDirectoryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.directoryPlayer{padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:rgba(255,255,255,.025);cursor:pointer;transition:.25s}
+.directoryPlayer:hover{transform:translateY(-3px);border-color:rgba(183,122,255,.35);box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.directoryPlayerTop{display:flex;align-items:center;gap:12px}.directoryPlayerAvatar{width:54px;height:54px;border-radius:15px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 20px Orbitron;flex:0 0 auto}.directoryPlayerAvatar img{width:100%;height:100%;object-fit:cover}
+.directoryPlayer b{display:block;font:800 13px Orbitron}.directoryPlayer small{color:#8f839d}.directoryMeta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.directoryMeta div{padding:9px;border:1px solid rgba(255,255,255,.05);border-radius:10px;background:rgba(255,255,255,.02)}.directoryMeta span{display:block;color:#786c85;font-size:9px}.directoryMeta strong{display:block;margin-top:4px;font-size:11px}.directoryValue{margin-top:10px;color:#d2adff;font:800 13px Orbitron}.directoryEmpty{padding:25px;border:1px dashed var(--line);border-radius:14px;color:#a99bbd;text-align:center;grid-column:1/-1}
+.profileFieldGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.profileFieldGrid label{margin-top:10px}.liveValue{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:11px 13px;border:1px solid rgba(168,85,247,.16);border-radius:11px;background:rgba(168,85,247,.05);color:#9689a3;font-size:11px}.liveValue strong{color:#d7b2ff;font:800 13px Orbitron}
+.publicProfileModal,.offerModal,.notificationModal{display:none;position:fixed;inset:0;z-index:1200}.publicProfileModal.open,.offerModal.open,.notificationModal.open{display:grid;place-items:center}.publicProfileCard{width:min(520px,calc(100% - 28px))}.publicHero{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025)}.publicHero h3{margin:0;font:800 20px Orbitron}.publicHero small{display:block;margin-top:6px;color:#998ca5;font-size:11px;word-break:break-all}.publicBio{color:#c7bbd2;white-space:pre-wrap;line-height:1.6;margin:17px 0}.publicStats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}.publicStats>div{padding:12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.025)}.publicStats span{display:block;color:#756980;font-size:9px}.publicStats b{display:block;margin-top:5px;font-size:12px}.offerCard{width:min(470px,calc(100% - 28px))}.notificationCard{width:min(640px,calc(100% - 28px));max-height:80vh;overflow:auto}.notificationList{display:grid;gap:10px}.notificationItem{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}.notificationItem.unread{border-color:rgba(168,85,247,.34);background:rgba(168,85,247,.055)}.notificationItemTop{display:flex;justify-content:space-between;gap:10px}.notificationItem b{font:800 12px Orbitron}.notificationItem time{color:#786b84;font-size:9px}.notificationItem p{margin:8px 0 0;color:#bdb0c8;line-height:1.5;font-size:12px}.notificationItemActions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.notificationBell{position:relative}.notificationBadge{position:absolute;top:-5px;right:-5px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ff668f;color:#fff;font:800 9px Inter;display:grid;place-items:center;border:2px solid #0b0612}.adminReplyInput{width:100%;margin-top:10px;box-sizing:border-box;border:1px solid var(--line);border-radius:11px;background:#0b0710;color:#fff;padding:11px;outline:0;resize:vertical}.adminReplyInput:focus{border-color:rgba(168,85,247,.5)}
+@media(max-width:900px){.directoryToolbar{grid-template-columns:1fr}.playerDirectoryGrid{grid-template-columns:1fr}.profileFieldGrid{grid-template-columns:1fr}.publicStats{grid-template-columns:1fr}.notificationCard{max-height:88vh}}
+
+\n/* Mobile profile modal scroll fix */
 @media (max-width: 560px) {
   .profileModal.open {
-    display: block !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px 0 !important;
+    display:block !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:10px 0 !important;
   }
-
   .profileModal .profileCard {
-    width: calc(100% - 20px) !important;
-    max-width: 470px !important;
-    max-height: calc(100dvh - 20px) !important;
-    margin: 0 auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
+    width:calc(100% - 20px) !important;
+    max-width:470px !important;
+    max-height:calc(100dvh - 20px) !important;
+    margin:0 auto !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
   }
-
   .profileModal .accountBackdrop {
-    position: fixed !important;
-    inset: 0 !important;
+    position:fixed !important;
+    inset:0 !important;
   }
 }
 
@@ -327,14 +340,14 @@ img, video, canvas, svg { max-width:100%; }
 <div class="navlinks">
 <button data-scroll="home">Ana Sayfa</button>
 <button data-scroll="league">Lig</button>
-<button data-scroll="systems">Sistemler</button>
+<button data-scroll="players">Oyuncular</button><button data-scroll="systems">Sistemler</button>
 </div>
 <div class="accountActions" id="accountActions">
   <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
   <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
 </div>
 <div class="userPanel" id="userPanel" hidden>
-  <button id="userMenuButton" class="userPill" type="button" onclick="window.__openMortaProfile && window.__openMortaProfile(event)"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button>
+  <button id="userMenuButton" class="userPill" type="button" onclick="window.__openMortaProfile && window.__openMortaProfile(event)"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button><button id="notificationButton" class="accountBtn notificationBell" type="button" aria-label="Bildirimler">🔔<span id="notificationBadge" class="notificationBadge" hidden>0</span></button>
 </div>
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
@@ -443,6 +456,26 @@ img, video, canvas, svg { max-width:100%; }
     </div>
   </div>
 </div>
+</section>
+
+
+<section class="section" id="players">
+  <div class="sectionHead">
+    <div><h2>OYUNCULAR</h2><p>MortaLeague'e kayıtlı oyuncuları bul, profillerini incele ve teklif gönder.</p></div>
+    <span class="badge" id="playerCount">0 OYUNCU</span>
+  </div>
+
+  <div class="playerDirectory">
+    <div class="directoryToolbar">
+      <label class="directorySearch"><span>⌕</span><input id="playerSearch" type="search" autocomplete="off" placeholder="Oyuncu ara..." /></label>
+      <select id="playerPositionFilter" aria-label="Pozisyon filtrele">
+        <option value="">Tüm Pozisyonlar</option>
+        <option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option>
+      </select>
+      <select id="playerTeamFilter" aria-label="Takım filtrele"><option value="">Tüm Takımlar</option></select>
+    </div>
+    <div id="playerList" class="playerDirectoryGrid"><div class="directoryEmpty">Oyuncular yükleniyor...</div></div>
+  </div>
 </section>
 
 <section class="section" id="systems">
@@ -1126,9 +1159,55 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
+    <div class="profileFieldGrid">
+      <label>Mevki<select id="profilePosition"><option value="">Seçiniz</option><option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option></select></label>
+      <label>Takım<input id="profileTeam" maxlength="60" placeholder="Örn. Juventus"></label>
+      <label>Oyuncu Değeri (€)<input id="profileValue" type="number" min="0" step="1000" inputmode="numeric" placeholder="1000000"></label>
+      <label>Sosyal Medya<input id="profileSocial" maxlength="120" placeholder="@kullanici veya bağlantı"></label>
+    </div>
+    <div class="liveValue"><span>Oyuncu kartındaki güncel değer</span><strong id="profileValueLive">€1.000.000</strong></div>
     <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
     <div class="profileActions"><button class="accountBtn accountPrimary" id="contactAdmin">ADMİN'E NOT BIRAK</button><button class="accountBtn" id="adminInboxButton" hidden>ADMİN PANELİ</button><button class="accountBtn" id="logoutButton">ÇIKIŞ YAP</button></div>
     <div class="accountMessage" id="profileStatus"></div>
+  </div>
+</div>
+
+
+<div class="publicProfileModal" id="publicProfileModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-public-profile></div>
+  <div class="accountCard publicProfileCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-public-profile aria-label="Kapat">×</button>
+    <span class="accountEyebrow">OYUNCU PROFİLİ</span>
+    <div class="publicHero"><div class="profileAvatarLarge"><span id="publicAvatarFallback">W</span><img id="publicAvatar" alt="Profil fotoğrafı" hidden></div><div><h3 id="publicUsername">Oyuncu</h3><small id="publicSocial"></small></div></div>
+    <p id="publicBio" class="publicBio"></p>
+    <div class="publicStats">
+      <div><span>MEVKİ</span><b id="publicPosition">—</b></div>
+      <div><span>TAKIM</span><b id="publicTeam">—</b></div>
+      <div><span>DEĞER</span><b id="publicValue">€1.000.000</b></div>
+    </div>
+    <button class="accountSubmit" id="makeOfferButton">TEKLİF YAP</button>
+  </div>
+</div>
+
+<div class="offerModal" id="offerModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-offer></div>
+  <div class="accountCard offerCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-offer aria-label="Kapat">×</button>
+    <span class="accountEyebrow">TRANSFER</span>
+    <h3><span id="offerTargetName">Oyuncu</span> için teklif</h3>
+    <label>Teklif Tutarı (€)<input id="offerAmount" type="number" min="1" step="1000" inputmode="numeric" placeholder="1000000"></label>
+    <label>Mesaj (opsiyonel)<textarea id="offerMessage" maxlength="500" rows="4" placeholder="Teklifin hakkında kısa bir not..."></textarea></label>
+    <button class="accountSubmit" id="submitOffer">TEKLİFİ GÖNDER</button>
+    <div class="accountMessage" id="offerStatus"></div>
+  </div>
+</div>
+
+<div class="notificationModal" id="notificationModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-notifications></div>
+  <div class="accountCard notificationCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-notifications aria-label="Kapat">×</button>
+    <div class="modalTop"><div><span class="accountEyebrow">MERKEZ</span><h3>Bildirimler</h3></div><button class="accountBtn accountPrimary" id="markNotificationsRead">TÜMÜ OKUNDU</button></div>
+    <div id="notificationList" class="notificationList"><div class="directoryEmpty">Bildirimler yükleniyor...</div></div>
   </div>
 </div>
 
@@ -1140,7 +1219,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <div><span class="accountEyebrow">YÖNETİM</span><h3 id="adminTitle">Admin Gelen Kutusu</h3></div>
       <div class="adminToolbar"><button class="accountBtn accountPrimary" id="adminRefresh">YENİLE</button></div>
     </div>
-    <p>Kullanıcılardan gelen destek mesajlarını buradan okuyabilir ve durumlarını güncelleyebilirsin.</p>
+    <p>Kullanıcılardan gelen destek mesajlarını okuyabilir, durumlarını değiştirebilir ve doğrudan yanıt gönderebilirsin.</p>
     <div class="adminList" id="adminList"></div>
     <div class="accountMessage" id="adminStatus"></div>
   </div>
@@ -1347,7 +1426,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     if (!adminList) return;
     adminList.innerHTML = '<div class="adminEmpty">Mesajlar yükleniyor...</div>';
     adminStatus.textContent = '';
-    const { data: messages, error } = await mortaSupabase.from('support_messages').select('id,user_id,type,message,status,created_at').order('created_at', {ascending:false});
+    const { data: messages, error } = await mortaSupabase.from('support_messages').select('id,user_id,type,message,status,admin_reply,created_at').order('created_at', {ascending:false});
     if (error) { adminList.innerHTML='<div class="adminEmpty">Mesajlar okunamadı.</div>'; adminStatus.textContent=error.message||'Yetki veya bağlantı hatası.'; return; }
     if (!messages?.length) { adminList.innerHTML='<div class="adminEmpty">Henüz kullanıcı mesajı yok.</div>'; return; }
     const ids=[...new Set(messages.map(m=>m.user_id).filter(Boolean))];
@@ -1360,11 +1439,164 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   };
   const openAdmin = async () => { if(!adminModal||typeof mortaSupabase==='undefined'||!mortaSupabase)return; adminModal.classList.add('open'); adminModal.setAttribute('aria-hidden','false'); await loadMessages(); };
   adminList?.addEventListener('click',async e=>{const btn=e.target.closest('.adminSaveStatus');if(!btn)return;const card=btn.closest('[data-message-id]');const id=card?.dataset.messageId;const status=card?.querySelector('.adminStatusSelect')?.value;if(!id||!status)return;btn.disabled=true;const {error}=await mortaSupabase.from('support_messages').update({status}).eq('id',id);btn.disabled=false;adminStatus.textContent=error?(error.message||'Durum güncellenemedi.'):'Mesaj durumu güncellendi. ✓';});
+  adminList?.addEventListener('click',async e=>{const btn=e.target.closest('.adminReplyButton');if(!btn)return;const card=btn.closest('[data-message-id]');const id=card?.dataset.messageId;const reply=card?.querySelector('.adminReplyInput')?.value.trim();if(!id||!reply)return;btn.disabled=true;const {error}=await mortaSupabase.from('support_messages').update({admin_reply:reply,status:'Yanıtlandı'}).eq('id',id);btn.disabled=false;adminStatus.textContent=error?(error.message||'Yanıt gönderilemedi.'):'Yanıt gönderildi. ✓';if(!error)loadNotifications();});
   document.querySelectorAll('[data-close-admin]').forEach(el=>el.addEventListener('click',closeAdmin));
   adminButton?.addEventListener('click',openAdmin); adminRefresh?.addEventListener('click',loadMessages);
   const showAdmin=async()=>{if(!adminButton||typeof mortaSupabase==='undefined'||!mortaSupabase)return;try{const {data:{user}}=await mortaSupabase.auth.getUser();if(!user){adminButton.hidden=true;return;}const {data:p}=await mortaSupabase.from('profiles').select('username').eq('id',user.id).maybeSingle();adminButton.hidden=String(p?.username||'').toLowerCase()!=='wexemir';}catch{adminButton.hidden=true;}};
   showAdmin(); setInterval(showAdmin,2000);
 })();
 </script>
+
+<script>
+(() => {
+  const q = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtMoney = (v) => `€${Number(v || 0).toLocaleString('tr-TR')}`;
+  const initial = (u) => (u || 'W').slice(0, 1).toUpperCase();
+
+  const positionEl = q('#profilePosition');
+  const teamEl = q('#profileTeam');
+  const valueEl = q('#profileValue');
+  const socialEl = q('#profileSocial');
+  const valueLive = q('#profileValueLive');
+  const playerList = q('#playerList');
+  const playerSearch = q('#playerSearch');
+  const playerPositionFilter = q('#playerPositionFilter');
+  const playerTeamFilter = q('#playerTeamFilter');
+  const playerCount = q('#playerCount');
+  const publicModal = q('#publicProfileModal');
+  const offerModal = q('#offerModal');
+  const notificationModal = q('#notificationModal');
+  let players = [];
+  let selectedPlayer = null;
+  let valueTimer = null;
+
+  function refreshLiveValue() { if (valueLive) valueLive.textContent = fmtMoney(valueEl?.value || 1000000); }
+  valueEl?.addEventListener('input', () => {
+    refreshLiveValue();
+    clearTimeout(valueTimer);
+    valueTimer = setTimeout(async () => {
+      if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+      const { data: { user } } = await mortaSupabase.auth.getUser();
+      if (!user) return;
+      const value = Number(valueEl.value || 0);
+      if (!Number.isFinite(value) || value < 0) return;
+      await mortaSupabase.from('profiles').update({ player_value: value }).eq('id', user.id);
+      loadPlayers();
+    }, 900);
+  });
+
+  async function loadPlayers() {
+    if (!playerList || typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+    playerList.innerHTML = '<div class="directoryEmpty">Oyuncular yükleniyor...</div>';
+    const { data, error } = await mortaSupabase.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle').order('username', {ascending:true});
+    if (error) { playerList.innerHTML = `<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message || error)}</div>`; return; }
+    players = data || [];
+    playerCount.textContent = `${players.length} OYUNCU`;
+    const teams = [...new Set(players.map(p => (p.team || '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));
+    const selectedTeam = playerTeamFilter?.value || '';
+    if (playerTeamFilter) playerTeamFilter.innerHTML = '<option value="">Tüm Takımlar</option>' + teams.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
+    if (selectedTeam && teams.includes(selectedTeam)) playerTeamFilter.value = selectedTeam;
+    renderPlayers();
+  }
+
+  function renderPlayers() {
+    const term = (playerSearch?.value || '').trim().toLocaleLowerCase('tr');
+    const pos = playerPositionFilter?.value || '';
+    const team = playerTeamFilter?.value || '';
+    const filtered = players.filter(p => {
+      const text = `${p.username||''} ${p.team||''} ${p.position||''} ${p.social_handle||''}`.toLocaleLowerCase('tr');
+      return (!term || text.includes(term)) && (!pos || p.position === pos) && (!team || p.team === team);
+    });
+    if (!filtered.length) { playerList.innerHTML = '<div class="directoryEmpty">Eşleşen oyuncu bulunamadı.</div>'; return; }
+    playerList.innerHTML = filtered.map(p => {
+      const avatarHtml = p.avatar_url ? `<img src="${esc(p.avatar_url)}" alt="">` : esc(initial(p.username));
+      return `<article class="directoryPlayer" data-player-id="${esc(p.id)}"><div class="directoryPlayerTop"><div class="directoryPlayerAvatar">${avatarHtml}</div><div><b>${esc(p.username || 'Oyuncu')}</b><small>${esc(p.position || 'Mevki belirtilmedi')}</small></div></div><div class="directoryMeta"><div><span>TAKIM</span><strong>${esc(p.team || 'Takımsız')}</strong></div><div><span>SOSYAL</span><strong>${esc(p.social_handle || '—')}</strong></div></div><div class="directoryValue">${fmtMoney(p.player_value || 1000000)}</div></article>`;
+    }).join('');
+  }
+  playerSearch?.addEventListener('input', renderPlayers); playerPositionFilter?.addEventListener('change', renderPlayers); playerTeamFilter?.addEventListener('change', renderPlayers);
+  playerList?.addEventListener('click', (e) => { const card = e.target.closest('[data-player-id]'); if (!card) return; const p = players.find(x => x.id === card.dataset.playerId); if (p) openPublicProfile(p); });
+
+  function openPublicProfile(p) {
+    selectedPlayer = p;
+    q('#publicUsername').textContent = p.username || 'Oyuncu';
+    q('#publicSocial').textContent = p.social_handle || 'Sosyal medya hesabı eklenmemiş.';
+    q('#publicBio').textContent = p.bio || 'Bu oyuncu henüz bir bio eklemedi.';
+    q('#publicPosition').textContent = p.position || '—'; q('#publicTeam').textContent = p.team || '—'; q('#publicValue').textContent = fmtMoney(p.player_value || 1000000);
+    const img = q('#publicAvatar'), fb = q('#publicAvatarFallback');
+    if (p.avatar_url) { img.src = p.avatar_url; img.hidden = false; fb.textContent=''; } else { img.hidden = true; fb.textContent = initial(p.username); }
+    const { data: { user } } = mortaSupabase.auth.getUser();
+    q('#makeOfferButton').style.display = (user?.id === p.id) ? 'none' : '';
+    publicModal.classList.add('open'); publicModal.setAttribute('aria-hidden','false');
+  }
+  function closePublic() { publicModal?.classList.remove('open'); publicModal?.setAttribute('aria-hidden','true'); }
+  document.querySelectorAll('[data-close-public-profile]').forEach(el => el.addEventListener('click', closePublic));
+  q('#makeOfferButton')?.addEventListener('click', () => { if (!selectedPlayer) return; q('#offerTargetName').textContent = selectedPlayer.username || 'Oyuncu'; q('#offerAmount').value = ''; q('#offerMessage').value=''; q('#offerStatus').textContent=''; closePublic(); offerModal.classList.add('open'); offerModal.setAttribute('aria-hidden','false'); });
+  document.querySelectorAll('[data-close-offer]').forEach(el => el.addEventListener('click', () => { offerModal.classList.remove('open'); offerModal.setAttribute('aria-hidden','true'); }));
+
+  q('#submitOffer')?.addEventListener('click', async () => {
+    const status = q('#offerStatus');
+    if (!selectedPlayer || typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+    const { data: { user } } = await mortaSupabase.auth.getUser();
+    if (!user) { status.textContent='Teklif göndermek için giriş yapmalısın.'; return; }
+    if (user.id === selectedPlayer.id) { status.textContent='Kendine teklif gönderemezsin.'; return; }
+    const amount = Number(q('#offerAmount').value || 0); const message = q('#offerMessage').value.trim();
+    if (!Number.isFinite(amount) || amount <= 0) { status.textContent='Geçerli bir teklif tutarı gir.'; return; }
+    status.textContent='Gönderiliyor...';
+    const { error } = await mortaSupabase.from('transfer_offers').insert({ from_user_id:user.id,to_user_id:selectedPlayer.id,amount,message });
+    if (error) { status.textContent=`Teklif gönderilemedi: ${error.message || error}`; return; }
+    status.textContent='Teklif gönderildi. ✓'; setTimeout(()=>{offerModal.classList.remove('open');offerModal.setAttribute('aria-hidden','true');},700);
+    loadNotifications();
+  });
+
+  async function loadNotifications() {
+    const btn = q('#notificationBadge'); const list = q('#notificationList');
+    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+    const { data: { user } } = await mortaSupabase.auth.getUser(); if (!user) { if(btn) btn.hidden=true; return; }
+    const { data: notes, error } = await mortaSupabase.from('notifications').select('id,type,title,message,read_at,related_id,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(40);
+    if (error) return;
+    const unread = (notes||[]).filter(n=>!n.read_at).length; const badge=q('#notificationBadge'); if(badge){badge.hidden=unread===0;badge.textContent=String(unread); }
+    if (!list) return;
+    if (!notes?.length) { list.innerHTML='<div class="directoryEmpty">Yeni bildirimin yok.</div>'; return; }
+    list.innerHTML = notes.map(n => `<article class="notificationItem ${n.read_at?'':'unread'}" data-notification-id="${esc(n.id)}"><div class="notificationItemTop"><b>${esc(n.title||'Bildirim')}</b><time>${new Date(n.created_at).toLocaleString('tr-TR')}</time></div><p>${esc(n.message||'')}</p></article>`).join('');
+  }
+  q('#notificationButton')?.addEventListener('click', async () => { await loadNotifications(); notificationModal.classList.add('open'); notificationModal.setAttribute('aria-hidden','false'); });
+  document.querySelectorAll('[data-close-notifications]').forEach(el => el.addEventListener('click', () => { notificationModal.classList.remove('open'); notificationModal.setAttribute('aria-hidden','true'); }));
+  q('#markNotificationsRead')?.addEventListener('click', async () => { if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return; const {data:{user}}=await mortaSupabase.auth.getUser(); if(!user)return; await mortaSupabase.from('notifications').update({read_at:new Date().toISOString()}).eq('user_id',user.id).is('read_at',null); loadNotifications(); });
+  setInterval(loadNotifications, 10000); loadPlayers(); loadNotifications();
+
+  // Extend the existing profile form without replacing its working photo/upload flow.
+  const originalOpenProfile = window.__openMortaProfile;
+  // Patch profile field hydration by observing the modal opening.
+  const hydrateExtended = async () => {
+    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+    const {data:{user}} = await mortaSupabase.auth.getUser(); if (!user) return;
+    const {data:p} = await mortaSupabase.from('profiles').select('position,team,player_value,social_handle').eq('id',user.id).maybeSingle();
+    if (!p) return;
+    if (positionEl) positionEl.value=p.position||''; if(teamEl) teamEl.value=p.team||''; if(valueEl) valueEl.value=p.player_value ?? 1000000; if(socialEl) socialEl.value=p.social_handle||''; refreshLiveValue();
+  };
+  q('#profileModal')?.addEventListener('transitionend', hydrateExtended);
+  q('#profileModal')?.addEventListener('click', (e) => { if (e.target === q('#profileModal')) hydrateExtended(); });
+  if (q('#profileModal')) new MutationObserver(() => { if (q('#profileModal').classList.contains('open')) hydrateExtended(); }).observe(q('#profileModal'), {attributes:true, attributeFilter:['class']});
+
+  // Replace the existing save button once, preserving its avatar upload and existing status handling by rebuilding the listener.
+  const saveBtn = q('#saveProfile');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', async () => {
+      // This supplementary save runs after the existing handler and writes only the new fields.
+      setTimeout(async () => {
+        try {
+          if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+          const {data:{user}} = await mortaSupabase.auth.getUser(); if(!user) return;
+          const value = Number(valueEl?.value || 1000000);
+          await mortaSupabase.from('profiles').update({position:positionEl?.value||'',team:teamEl?.value?.trim()||'',player_value:Number.isFinite(value)?value:1000000,social_handle:socialEl?.value?.trim()||''}).eq('id',user.id);
+          loadPlayers();
+        } catch(e) { console.error(e); }
+      }, 250);
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
