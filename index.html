@@ -325,6 +325,71 @@ img, video, canvas, svg { max-width:100%; }
   }
 }
 
+
+/* FINAL MOBILE PROFILE SCROLL FIX */
+@media (max-width: 768px) {
+  .profileModal {
+    inset: 0 !important;
+    display: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    padding: 10px 0 28px !important;
+    box-sizing: border-box !important;
+  }
+
+  .profileModal.open {
+    display: block !important;
+  }
+
+  .profileModal .accountBackdrop {
+    position: fixed !important;
+    inset: 0 !important;
+  }
+
+  .profileModal .profileCard {
+    width: calc(100% - 20px) !important;
+    max-width: 470px !important;
+    max-height: none !important;
+    height: auto !important;
+    margin: 0 auto 28px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .profileModal .profileCard textarea {
+    max-height: 240px;
+  }
+}
+
+
+/* Systems section collapsed by default */
+.systemSectionToggle{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 16px;padding:13px 18px;border:1px solid rgba(168,85,247,.28);border-radius:13px;background:linear-gradient(135deg,rgba(139,59,255,.11),rgba(217,70,239,.05));color:#e7d7f7;cursor:pointer;font:800 11px Orbitron;letter-spacing:.7px;transition:.25s}
+.systemSectionToggle:hover{background:rgba(168,85,247,.15);border-color:rgba(183,122,255,.45);transform:translateY(-1px)}
+.systemSectionToggle .toggleIcon{font:700 20px Inter;color:#cfa8ff;line-height:1;transition:.25s}
+#systems.systemSectionCollapsed .systemSectionBody{display:none}
+#systems:not(.systemSectionCollapsed) .systemSectionToggle .toggleIcon{transform:rotate(45deg)}
+@media(max-width:560px){.systemSectionToggle{padding:12px 14px;font-size:10px}.systemSectionToggle .toggleIcon{font-size:18px}}
+
+
+/* Reliable mobile scrolling + native systems disclosure */
+html, body { width:100%; min-height:100%; overflow-x:hidden !important; overflow-y:auto !important; }
+body { touch-action:pan-y; }
+.systemsDisclosure { width:100%; }
+.systemsDisclosure > summary { list-style:none; }
+.systemsDisclosure > summary::-webkit-details-marker { display:none; }
+.systemsDisclosure > summary .toggleIcon { transition:transform .2s ease; }
+.systemsDisclosure[open] > summary .toggleIcon { transform:rotate(45deg); }
+@media (max-width:768px){
+  main { width:100%; min-height:100dvh; overflow:visible !important; }
+  .section { overflow:visible !important; }
+  .profileModal { position:fixed !important; inset:0 !important; display:none; overflow-y:auto !important; overflow-x:hidden !important; align-items:flex-start !important; justify-content:center !important; padding:12px !important; -webkit-overflow-scrolling:touch !important; touch-action:pan-y !important; }
+  .profileModal.open { display:block !important; }
+  .profileModal .accountBackdrop { position:fixed !important; inset:0 !important; pointer-events:auto; }
+  .profileModal .profileCard { position:relative !important; z-index:1 !important; width:100% !important; max-width:470px !important; max-height:none !important; height:auto !important; margin:0 auto 24px !important; overflow:visible !important; }
+}
+
 </style>
 
 
@@ -480,7 +545,9 @@ img, video, canvas, svg { max-width:100%; }
 
 <section class="section" id="systems">
 <div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">16 SİSTEM</span></div>
-
+<details class="systemsDisclosure" id="systemsDisclosure">
+<summary class="systemSectionToggle"><span>TÜM SİSTEMLERİ GÖSTER</span><span class="toggleIcon">+</span></summary>
+<div class="systemSectionBody">
 <div class="systemTools">
   <label class="systemSearch" aria-label="Sistemlerde ara">
     <span>⌕</span>
@@ -1096,6 +1163,8 @@ Antrenman Sahası Olmadan Yapılan Antrenmanlar Değere 50k etki eder.
 
 Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
+</div>
+</details>
 </section>
   <div class="cta"><div><h2>SAHAYA ÇIKMAYA HAZIR MISIN?</h2><p>MortalLeague'de her kararın bir sonucu var.</p></div><button class="primary" data-open="rulesModal">Kuralları Aç →</button></div>
 </main>
@@ -1595,6 +1664,24 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       }, 250);
     });
   }
+})();
+</script>
+
+
+<script>
+(() => {
+  const section = document.getElementById('systems');
+  const btn = document.getElementById('toggleAllSystems');
+  if (!section || !btn) return;
+  btn.addEventListener('click', () => {
+    const collapsed = section.classList.toggle('systemSectionCollapsed');
+    const expanded = !collapsed;
+    btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    const label = btn.querySelector('span:first-child');
+    const icon = btn.querySelector('.toggleIcon');
+    if (label) label.textContent = expanded ? 'TÜM SİSTEMLERİ GİZLE' : 'TÜM SİSTEMLERİ GÖSTER';
+    if (icon) icon.textContent = expanded ? '−' : '+';
+  });
 })();
 </script>
 
