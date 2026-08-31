@@ -390,31 +390,31 @@ body { touch-action:pan-y; }
   .profileModal .profileCard { position:relative !important; z-index:1 !important; width:100% !important; max-width:470px !important; max-height:none !important; height:auto !important; margin:0 auto 24px !important; overflow:visible !important; }
 }
 
-
-/* MortaLeague v2 social / team / admin extras */
-.profileFieldGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
-.profileFieldGrid label{margin-bottom:13px}
-.directoryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.directoryPlayer,.directoryTeam{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);padding:15px;cursor:pointer;transition:.25s}
-.directoryPlayer:hover,.directoryTeam:hover{transform:translateY(-3px);border-color:rgba(183,122,255,.35)}
-.directoryPlayerTop{display:flex;align-items:center;gap:12px}.directoryPlayerTop b{display:block}.directoryPlayerTop small{display:block;color:#8f839d;margin-top:4px}
-.directoryPlayerAvatar,.directoryTeamLogo{width:48px;height:48px;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 15px Orbitron;color:#fff;flex:0 0 auto}.directoryPlayerAvatar img,.directoryTeamLogo img{width:100%;height:100%;object-fit:cover}
-.directoryMeta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.directoryMeta span{display:block;color:#74677f;font-size:9px;letter-spacing:1px}.directoryMeta strong{display:block;margin-top:4px;font-size:11px}.directoryValue{margin-top:13px;font:900 15px Orbitron;color:#d2adff}
-.directoryEmpty{padding:22px;border:1px dashed var(--line);border-radius:14px;color:#a99bbd;text-align:center}
-.publicActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.publicActions .accountBtn{width:100%}
-.socialLink{color:#cfa8ff}.compareBar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:1150;display:none;align-items:center;gap:10px;padding:10px 12px;border:1px solid rgba(168,85,247,.35);background:rgba(16,9,24,.96);backdrop-filter:blur(18px);border-radius:14px;box-shadow:0 18px 55px rgba(0,0,0,.45)}
-.compareBar.show{display:flex}.compareBar small{color:#a99bbd}.compareBar b{color:#fff}.compareBar button{border:0;background:rgba(168,85,247,.13);padding:9px 12px;border-radius:9px;cursor:pointer;color:#fff;font:800 10px Orbitron}
-.compareGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.compareCard{border:1px solid var(--line);border-radius:15px;padding:15px;background:rgba(255,255,255,.025)}.compareCard h4{margin:0 0 8px;font:800 15px Orbitron}.compareRow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}.compareRow span{color:#8f839d;font-size:11px}.compareRow b{font-size:11px;text-align:right}
-.commentList{display:grid;gap:8px;margin-top:14px}.commentItem{padding:11px 12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.02)}.commentItem b{font-size:11px}.commentItem small{color:#736880;margin-left:7px}.commentItem p{margin:6px 0 0;color:#d7d0de;font-size:12px;line-height:1.5}.commentForm{display:grid;gap:8px;margin-top:12px}.commentForm textarea{width:100%;resize:vertical;min-height:80px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff;padding:11px}
-.adminDashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.adminStat{padding:13px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)}.adminStat small{display:block;color:#867a90;font-size:10px}.adminStat b{display:block;margin-top:5px;font:800 19px Orbitron;color:#d2adff}
-@media(max-width:900px){.directoryGrid{grid-template-columns:1fr 1fr}.profileFieldGrid,.compareGrid{grid-template-columns:1fr}.adminDashboard{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.directoryGrid{grid-template-columns:1fr}.compareBar{width:calc(100% - 20px);justify-content:space-between}.compareBar small{display:none}.adminDashboard{grid-template-columns:1fr 1fr}.profileActions{grid-template-columns:1fr}.publicActions{grid-template-columns:1fr}}
-
 </style>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+/* MortaLeague Super Upgrade: hub, news, themes, teams, negotiation */
+.hubGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.hubPanel{padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));box-shadow:0 18px 55px rgba(0,0,0,.22)}.hubWelcome{display:flex;align-items:center;gap:14px}.hubAvatar{width:58px;height:58px;border-radius:16px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 24px Orbitron}.hubAvatar img{width:100%;height:100%;object-fit:cover}.hubWelcome h3{margin:0;font:800 22px Orbitron}.hubWelcome p{margin:5px 0 0;color:#9588a2}.hubStats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}.hubStat{padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.025)}.hubStat span{display:block;color:#7d7189;font-size:9px}.hubStat strong{display:block;margin-top:5px;font:800 16px Orbitron;color:#d2adff}.hubActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.newsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.newsCard{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);overflow:hidden}.newsCardCover{height:130px;background:linear-gradient(135deg,rgba(139,59,255,.3),rgba(217,70,239,.08));overflow:hidden}.newsCardCover img{width:100%;height:100%;object-fit:cover}.newsCardBody{padding:15px}.newsCard h3{margin:0 0 7px;font:800 15px Orbitron}.newsCard p{margin:0;color:#9c90a8;font-size:12px;line-height:1.55}.newsMeta{display:flex;justify-content:space-between;gap:8px;margin-top:11px;color:#746a7c;font-size:9px}.adminNewsForm{margin-top:16px;padding:14px;border:1px dashed var(--line);border-radius:14px}.adminNewsForm input,.adminNewsForm textarea{width:100%;box-sizing:border-box;margin-top:7px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff;padding:11px}.adminNewsForm textarea{resize:vertical}.themeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.themeBtn{padding:11px 8px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);color:#cfc4da;cursor:pointer}.themeBtn.active{border-color:#a855f7;background:rgba(168,85,247,.12);color:#fff}.profileCoverPreview{height:120px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(139,59,255,.32),rgba(217,70,239,.08));overflow:hidden;margin:8px 0 12px}.profileCoverPreview img{width:100%;height:100%;object-fit:cover}.publicProfileHeader{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.025)}.publicProfileCover{height:135px;background:linear-gradient(135deg,rgba(139,59,255,.28),rgba(217,70,239,.08));overflow:hidden}.publicProfileCover img{width:100%;height:100%;object-fit:cover}.publicProfileMain{display:flex;align-items:center;gap:14px;padding:14px}.publicProfileMain .profileAvatarLarge{margin-top:-40px;border:3px solid #100a18}.teamDirectory{margin-top:28px}.directoryTeamCard{padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);cursor:pointer}.directoryTeamCard:hover{border-color:rgba(183,122,255,.4);transform:translateY(-2px)}.teamMini{display:flex;align-items:center;gap:12px}.teamMiniLogo{width:52px;height:52px;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 18px Orbitron}.teamMiniLogo img{width:100%;height:100%;object-fit:cover}.teamCardStats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:13px}.teamCardStats div{padding:9px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05)}.teamCardStats span{display:block;color:#776d82;font-size:8px}.teamCardStats b{display:block;margin-top:4px;font-size:11px}.teamProfileCard{width:min(600px,calc(100% - 28px))}.teamProfileHero{padding:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.025)}.teamProfileCover{height:145px;background:linear-gradient(135deg,rgba(139,59,255,.3),rgba(217,70,239,.08));overflow:hidden}.teamProfileCover img{width:100%;height:100%;object-fit:cover}.teamProfileInfo{display:flex;align-items:center;gap:14px;padding:14px}.teamProfileLogo{width:76px;height:76px;border-radius:18px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 25px Orbitron;margin-top:-42px;border:3px solid #100a18}.teamProfileLogo img{width:100%;height:100%;object-fit:cover}.teamStatsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.teamStatsGrid div{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:rgba(255,255,255,.025)}.teamStatsGrid span{display:block;color:#776d82;font-size:8px}.teamStatsGrid b{display:block;margin-top:4px;font-size:11px}.offerThread{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}.offerRow{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;margin-top:8px;background:rgba(255,255,255,.02)}.offerRow b{font-size:12px}.offerRow small{display:block;color:#82778d;margin-top:3px}.offerActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.offerActions input{width:150px;max-width:100%;border:1px solid var(--line);border-radius:9px;background:#0b0710;color:#fff;padding:8px}.theme-violet{--purple:#9b4dff;--violet:#6d28d9;--pink:#d946ef}.theme-crimson{--purple:#ff4d6d;--violet:#a71930;--pink:#ff7b8f}.theme-cyan{--purple:#38bdf8;--violet:#2563eb;--pink:#22d3ee}.theme-emerald{--purple:#34d399;--violet:#059669;--pink:#6ee7b7}
+@media(max-width:900px){.hubGrid,.newsGrid{grid-template-columns:1fr 1fr}.teamStatsGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.hubGrid,.newsGrid,.teamStatsGrid,.themeGrid{grid-template-columns:1fr}.hubStats{grid-template-columns:1fr 1fr}.profileCoverPreview{height:100px}}
+</style>
+
+
+<style>
+@media(max-width:768px){
+  .profileModal,.publicProfileModal,.offerModal,.notificationModal,.adminModal{overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;padding:10px 0 28px!important;align-items:flex-start!important}
+  .profileModal.open,.publicProfileModal.open,.offerModal.open,.notificationModal.open,.adminModal.open{display:block!important}
+  .profileModal .accountCard,.publicProfileModal .accountCard,.offerModal .accountCard,.notificationModal .accountCard,.adminModal .accountCard,.adminModal .adminCard{margin:0 auto 24px!important;max-height:none!important;overflow:visible!important}
+}
+</style>
+
+<style>
+.commentList{display:grid;gap:8px;margin-top:10px}.commentItem{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:rgba(255,255,255,.02)}.commentItem b{font:800 11px Orbitron}.commentItem small{display:block;color:#756b80;margin-top:3px;font-size:8px}.commentItem p{margin:7px 0 0;color:#bdb1c8;font-size:12px;line-height:1.5}.commentForm{margin-top:10px}.commentForm textarea{width:100%;box-sizing:border-box;min-height:75px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff}.publicActions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}.publicActions>*{min-width:0}.modalBox{max-width:720px;width:calc(100% - 28px)}
+</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -456,6 +456,23 @@ body { touch-action:pan-y; }
 
 <div class="floatCard fc3">OYUNCULAR<b>128+</b></div>
 </div>
+</section>
+
+<section class="section" id="mortaHub">
+  <div class="sectionHead"><div><h2>MORTA HUB</h2><p>Hesabın, transferlerin ve MortaLeague'deki hareketlerin tek yerde.</p></div><span class="badge" id="hubStatus">ÇEVRİMDIŞI</span></div>
+  <div class="hubGrid">
+    <div class="hubPanel">
+      <div class="hubWelcome"><div class="hubAvatar"><span id="hubAvatarFallback">M</span><img id="hubAvatar" hidden alt=""></div><div><h3 id="hubUsername">MortaLeague</h3><p id="hubSubtitle">Giriş yaparak kişisel merkezinizi kullan.</p></div></div>
+      <div class="hubStats"><div class="hubStat"><span>OYUNCU DEĞERİ</span><strong id="hubValue">€—</strong></div><div class="hubStat"><span>BİLDİRİM</span><strong id="hubNotifications">0</strong></div><div class="hubStat"><span>TEKLİF</span><strong id="hubOffers">0</strong></div></div>
+      <div class="hubActions"><button class="accountBtn accountPrimary" id="hubProfileButton">PROFİLİM</button><button class="accountBtn" id="hubNotificationButton">BİLDİRİMLER</button><button class="accountBtn" id="hubPlayersButton">OYUNCULAR</button></div>
+    </div>
+    <div class="hubPanel"><span class="accountEyebrow">HIZLI DURUM</span><h3 style="margin:8px 0">MortaLeague hareketleri</h3><p id="hubActivityText" style="color:#9c90a8;line-height:1.65;font-size:13px;margin:0">Şimdilik yeni hareket yok.</p><div class="hubActions"><button class="accountBtn" id="hubNewsButton">MORTANEWS</button><button class="accountBtn" id="hubSystemsButton">SİSTEMLER</button></div></div>
+  </div>
+</section>
+
+<section class="section" id="news">
+  <div class="sectionHead"><div><h2>MORTANEWS</h2><p>Ligden, topluluktan ve MortaLeague'den son gelişmeler.</p></div><span class="badge" id="newsCount">0 HABER</span></div>
+  <div id="newsGrid" class="newsGrid"><div class="directoryEmpty">Haberler yükleniyor...</div></div>
 </section>
 
 <section class="section" id="league">
@@ -560,12 +577,8 @@ body { touch-action:pan-y; }
       <select id="playerTeamFilter" aria-label="Takım filtrele"><option value="">Tüm Takımlar</option></select>
     </div>
     <div id="playerList" class="playerDirectoryGrid"><div class="directoryEmpty">Oyuncular yükleniyor...</div></div>
+    <div class="teamDirectory"><div class="sectionHead" style="margin-top:28px"><div><h2 style="font-size:22px">TAKIMLAR</h2><p>Takım profillerini incele.</p></div><span class="badge" id="teamCount">0 TAKIM</span></div><div id="teamList" class="playerDirectoryGrid"><div class="directoryEmpty">Takımlar yükleniyor...</div></div></div>
   </div>
-</section>
-
-<section class="section" id="teams">
-  <div class="sectionHead"><div><h2>TAKIMLAR</h2><p>Takım hesapları ve kulüp profilleri.</p></div><span class="badge" id="teamCount">0 TAKIM</span></div>
-  <div class="directoryGrid" id="teamList"><div class="directoryEmpty">Takımlar yükleniyor...</div></div>
 </section>
 
 <section class="section" id="systems">
@@ -1237,7 +1250,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <label>Kullanıcı Adı<input id="registerUsername" autocomplete="username" maxlength="24"></label>
       <label>Şifre<input id="registerPassword" type="password" autocomplete="new-password"></label>
       <label>Hesap Türü<select id="registerRole"><option value="player">⚽ Oyuncu</option><option value="team">🏟️ Takım</option></select></label>
-      <label>Şifre Tekrar<input id="registerPassword2" type="password" autocomplete="new-password"></label>
+    <label>Şifre Tekrar<input id="registerPassword2" type="password" autocomplete="new-password"></label>
       <button class="accountSubmit" id="registerSubmit">HESAP OLUŞTUR</button>
     </div>
 
@@ -1254,25 +1267,25 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
-    <label>Hesap Türü<select id="profileRole"><option value="player">⚽ Oyuncu</option><option value="team">🏟️ Takım</option></select></label>
-    <div class="profileFieldGrid" id="playerProfileFields">
+    <label>Hesap Türü<select id="profileAccountType"><option value="player">⚽ Oyuncu</option><option value="team">🏟️ Takım</option></select></label>
+    <div id="playerProfileFields">
+    <div class="profileFieldGrid">
       <label>Mevki<select id="profilePosition"><option value="">Seçiniz</option><option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option></select></label>
       <label>Takım<input id="profileTeam" maxlength="60" placeholder="Örn. Juventus"></label>
       <label>Oyuncu Değeri (€)<input id="profileValue" type="number" min="0" step="1000" inputmode="numeric" placeholder="1000000"></label>
       <label>Sosyal Medya<input id="profileSocial" maxlength="120" placeholder="@kullanici veya bağlantı"></label>
     </div>
+    </div>
     <div id="teamProfileFields" hidden>
-      <label>Takım Adı<input id="teamName" maxlength="60" placeholder="Örn. Juventus"></label>
+      <label>Takım Adı<input id="teamName" maxlength="60" placeholder="Örn. Juventus FC"></label>
       <label>Takım Açıklaması<textarea id="teamBio" maxlength="500" rows="3" placeholder="Takım hakkında kısa açıklama..."></textarea></label>
       <label>Takım Logosu<input id="teamLogoInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
-      <div class="profileFieldGrid">
-        <label>Takım Bütçesi (€)<input id="teamBudget" type="number" min="0" step="1000" inputmode="numeric" placeholder="500000000"></label>
-        <label>Antrenman Tesisi<select id="teamTraining"><option value="1">Seviye 1</option><option value="2">Seviye 2</option><option value="3">Seviye 3</option><option value="4">Seviye 4</option><option value="5">Seviye 5</option></select></label>
-        <label>Stadyum Seviyesi<select id="teamStadium"><option value="1">Seviye 1</option><option value="2">Seviye 2</option><option value="3">Seviye 3</option><option value="4">Seviye 4</option><option value="5">Seviye 5</option></select></label>
-        <label>Oyuncu Sayısı<input id="teamPlayerCount" type="number" readonly></label>
-      </div>
+      <div class="profileFieldGrid"><label>Takım Bütçesi (€)<input id="teamBudget" type="number" min="0" step="1000"></label><label>Oyuncu Sayısı<input id="teamPlayerCount" type="number" min="0" step="1" value="0"></label><label>Antrenman Tesisi<select id="teamTraining"><option value="1">Seviye 1</option><option value="2">Seviye 2</option><option value="3">Seviye 3</option><option value="4">Seviye 4</option><option value="5">Seviye 5</option></select></label><label>Stadyum Seviyesi<select id="teamStadium"><option value="1">Seviye 1</option><option value="2">Seviye 2</option><option value="3">Seviye 3</option><option value="4">Seviye 4</option><option value="5">Seviye 5</option></select></label></div>
     </div>
-    <div class="liveValue" id="playerValueLiveWrap"><span>Oyuncu kartındaki güncel değer</span><strong id="profileValueLive">€1.000.000</strong></div>
+    <label>Profil Teması<div class="themeGrid"><button type="button" class="themeBtn active" data-theme="violet">VIOLET</button><button type="button" class="themeBtn" data-theme="crimson">CRIMSON</button><button type="button" class="themeBtn" data-theme="cyan">CYAN</button><button type="button" class="themeBtn" data-theme="emerald">EMERALD</button></div></label>
+    <label>Profil Kapak Görseli<input id="profileCoverInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <div class="profileCoverPreview" id="profileCoverPreview"><img id="profileCoverPreviewImg" hidden alt=""></div>
+    <div class="liveValue"><span>Oyuncu kartındaki güncel değer</span><strong id="profileValueLive">€1.000.000</strong></div>
     <button class="accountSubmit" id="saveProfile">PROFİLİ KAYDET</button>
     <div class="profileActions"><button class="accountBtn accountPrimary" id="contactAdmin">ADMİN'E NOT BIRAK</button><button class="accountBtn" id="adminInboxButton" hidden>ADMİN PANELİ</button><button class="accountBtn" id="logoutButton">ÇIKIŞ YAP</button></div>
     <div class="accountMessage" id="profileStatus"></div>
@@ -1280,31 +1293,35 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
 
 
+<div class="publicProfileModal" id="teamPublicModal" aria-hidden="true">
+  <div class="accountBackdrop" data-close-team-public></div>
+  <div class="accountCard teamProfileCard" role="dialog" aria-modal="true">
+    <button class="accountClose" data-close-team-public aria-label="Kapat">×</button>
+    <span class="accountEyebrow">TAKIM PROFİLİ</span>
+    <div class="teamProfileHero"><div class="teamProfileCover"><img id="teamPublicCover" alt="" hidden></div><div class="teamProfileInfo"><div class="teamProfileLogo"><span id="teamPublicLogoFallback">T</span><img id="teamPublicLogo" alt="" hidden></div><div><h3 id="teamPublicName">Takım</h3><small id="teamPublicBio"></small></div></div></div>
+    <div class="teamStatsGrid"><div><span>BÜTÇE</span><b id="teamPublicBudget">€0</b></div><div><span>OYUNCU</span><b id="teamPublicPlayers">0</b></div><div><span>TESİS</span><b id="teamPublicTraining">Seviye 1</b></div><div><span>STADYUM</span><b id="teamPublicStadium">Seviye 1</b></div></div>
+  </div>
+</div>
+
 <div class="publicProfileModal" id="publicProfileModal" aria-hidden="true">
   <div class="accountBackdrop" data-close-public-profile></div>
   <div class="accountCard publicProfileCard" role="dialog" aria-modal="true">
     <button class="accountClose" data-close-public-profile aria-label="Kapat">×</button>
     <span class="accountEyebrow">OYUNCU PROFİLİ</span>
-    <div class="publicHero"><div class="profileAvatarLarge"><span id="publicAvatarFallback">W</span><img id="publicAvatar" alt="Profil fotoğrafı" hidden></div><div><h3 id="publicUsername">Oyuncu</h3><small id="publicSocial"></small></div></div>
+    <div class="publicProfileHeader"><div class="publicProfileCover"><img id="publicCover" alt="" hidden></div><div class="publicProfileMain"><div class="profileAvatarLarge"><span id="publicAvatarFallback">W</span><img id="publicAvatar" alt="Profil fotoğrafı" hidden></div><div><h3 id="publicUsername">Oyuncu</h3><small id="publicSocial"></small></div></div></div>
     <p id="publicBio" class="publicBio"></p>
     <div class="publicStats">
       <div><span>MEVKİ</span><b id="publicPosition">—</b></div>
       <div><span>TAKIM</span><b id="publicTeam">—</b></div>
       <div><span>DEĞER</span><b id="publicValue">€1.000.000</b></div>
     </div>
-    <div class="publicActions">
-      <button class="accountSubmit" id="makeOfferButton">TEKLİF YAP</button>
-      <button class="accountBtn" id="comparePlayerButton">KARŞILAŞTIRMAYA EKLE</button>
-      <button class="accountBtn" id="reportPlayerButton">RAPOR ET</button>
-    </div>
+    <div class="publicActions"><button class="accountSubmit" id="makeOfferButton">TEKLİF YAP</button><button class="accountBtn" id="comparePlayerButton">KARŞILAŞTIR</button><button class="accountBtn" id="reportPlayerButton">RAPOR ET</button></div>
     <div class="liveValue"><span>Profil görüntülenmesi</span><strong id="publicVisitCount">0</strong></div>
-    <div style="margin-top:16px"><span class="accountEyebrow">YORUMLAR</span><div id="publicComments" class="commentList"></div><div class="commentForm"><textarea id="publicCommentInput" maxlength="500" placeholder="Bu oyuncu hakkında bir yorum yaz..."></textarea><button class="accountBtn accountPrimary" id="submitPublicComment">YORUM YAP</button></div></div>
+    <div style="margin-top:15px"><span class="accountEyebrow">YORUMLAR</span><div id="publicComments" class="commentList"></div><div class="commentForm"><textarea id="publicCommentInput" maxlength="500" placeholder="Oyuncu hakkında bir yorum yaz..."></textarea><button class="accountBtn accountPrimary" id="submitPublicComment">YORUM YAP</button></div></div>
   </div>
 </div>
 
 <div class="modal" id="compareModal"><div class="modalBox"><div class="modalTop"><h2>⚖ OYUNCU KARŞILAŞTIRMA</h2><button class="close" data-close-compare>✕</button></div><div id="compareContent" class="compareGrid"></div></div></div>
-
-<div class="compareBar" id="compareBar"><small>Karşılaştırma</small><b id="compareBarCount">0/2</b><button id="openCompareBar">KARŞILAŞTIR</button><button id="clearCompareBar">TEMİZLE</button></div>
 
 <div class="offerModal" id="offerModal" aria-hidden="true">
   <div class="accountBackdrop" data-close-offer></div>
@@ -1324,8 +1341,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   <div class="accountCard notificationCard" role="dialog" aria-modal="true">
     <button class="accountClose" data-close-notifications aria-label="Kapat">×</button>
     <div class="modalTop"><div><span class="accountEyebrow">MERKEZ</span><h3>Bildirimler</h3></div><button class="accountBtn accountPrimary" id="markNotificationsRead">TÜMÜ OKUNDU</button></div>
-    <div id="notificationList" class="notificationList"><div class="directoryEmpty">Bildirimler yükleniyor...</div></div>
-    <div style="margin-top:18px"><span class="accountEyebrow">TRANSFER TEKLİFLERİ</span><div id="offerList" class="notificationList"><div class="directoryEmpty">Teklifler yükleniyor...</div></div></div>
+    <div id="notificationList" class="notificationList"><div class="directoryEmpty">Bildirimler yükleniyor...</div></div><div style="margin-top:18px"><span class="accountEyebrow">TRANSFER MERKEZİ</span><div id="offerList" class="notificationList"><div class="directoryEmpty">Teklifler yükleniyor...</div></div></div>
   </div>
 </div>
 
@@ -1338,8 +1354,10 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <div class="adminToolbar"><button class="accountBtn accountPrimary" id="adminRefresh">YENİLE</button></div>
     </div>
     <p>Kullanıcılardan gelen destek mesajlarını okuyabilir, durumlarını değiştirebilir ve doğrudan yanıt gönderebilirsin.</p>
-    <div class="adminDashboard"><div class="adminStat"><small>KULLANICI</small><b id="adminUserCount">—</b></div><div class="adminStat"><small>TAKIM</small><b id="adminTeamCount">—</b></div><div class="adminStat"><small>OYUNCU</small><b id="adminPlayerCount">—</b></div><div class="adminStat"><small>BEKLEYEN MESAJ</small><b id="adminPendingCount">—</b></div></div>
+    <div class="hubStats" style="margin:14px 0"><div class="hubStat"><span>KULLANICI</span><strong id="adminUserCount">—</strong></div><div class="hubStat"><span>BEKLEYEN TEKLİF</span><strong id="adminOfferCount">—</strong></div><div class="hubStat"><span>BEKLEYEN RAPOR</span><strong id="adminReportCount">—</strong></div></div>
     <div class="adminList" id="adminList"></div>
+    <div style="margin-top:18px"><span class="accountEyebrow">RAPORLAR</span><div class="adminList" id="adminReportList"><div class="adminEmpty">Raporlar yükleniyor...</div></div></div>
+    <div class="adminNewsForm"><span class="accountEyebrow">MORTANEWS YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">MORTANEWS YAYINLA</button></div>
     <div class="accountMessage" id="adminStatus"></div>
   </div>
 </div>
@@ -1553,7 +1571,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     const names=new Map(profiles.map(p=>[p.id,p.username]));
     adminList.innerHTML=messages.map(m=>{
       const name=names.get(m.user_id)||'Bilinmeyen kullanıcı'; const date=new Date(m.created_at).toLocaleString('tr-TR');
-      return `<article class="adminMsg" data-message-id="${esc(m.id)}"><div class="adminMsgTop"><div class="adminMsgMeta"><b>${esc(name)}</b><br>${esc(m.type)} · ${esc(date)}</div><div class="adminMsgActions"><select class="adminStatusSelect" aria-label="Mesaj durumu"><option ${m.status==='Bekliyor'?'selected':''}>Bekliyor</option><option ${m.status==='İnceleniyor'?'selected':''}>İnceleniyor</option><option ${m.status==='Yanıtlandı'?'selected':''}>Yanıtlandı</option><option ${m.status==='Reddedildi'?'selected':''}>Reddedildi</option></select><button class="accountBtn accountPrimary adminSaveStatus">KAYDET</button></div></div><div class="adminMsgBody">${esc(m.message)}</div></article>`;
+      return `<article class="adminMsg" data-message-id="${esc(m.id)}"><div class="adminMsgTop"><div class="adminMsgMeta"><b>${esc(name)}</b><br>${esc(m.type)} · ${esc(date)}</div><div class="adminMsgActions"><select class="adminStatusSelect" aria-label="Mesaj durumu"><option ${m.status==='Bekliyor'?'selected':''}>Bekliyor</option><option ${m.status==='İnceleniyor'?'selected':''}>İnceleniyor</option><option ${m.status==='Yanıtlandı'?'selected':''}>Yanıtlandı</option><option ${m.status==='Reddedildi'?'selected':''}>Reddedildi</option></select><button class="accountBtn accountPrimary adminSaveStatus">KAYDET</button></div></div><div class="adminMsgBody">${esc(m.message)}</div><textarea class="adminReplyInput" rows=3 placeholder="Bu kullanıcıya yanıt yaz...">${esc(m.admin_reply||'')}</textarea><button class="accountBtn accountPrimary adminReplyButton">YANIT GÖNDER</button>${m.admin_reply?`<div class="adminMsgBody"><b>Son yanıt:</b> ${esc(m.admin_reply)}</div>`:''}</article>`;
     }).join('');
   };
   const openAdmin = async () => { if(!adminModal||typeof mortaSupabase==='undefined'||!mortaSupabase)return; adminModal.classList.add('open'); adminModal.setAttribute('aria-hidden','false'); await loadMessages(); };
@@ -1568,245 +1586,209 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 
 <script>
 (() => {
-  const q = (s) => document.querySelector(s);
-  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const fmtMoney = (v) => `€${Number(v || 0).toLocaleString('tr-TR')}`;
-  const initial = (u) => (u || 'W').slice(0, 1).toUpperCase();
-
-  const positionEl = q('#profilePosition');
-  const teamEl = q('#profileTeam');
-  const valueEl = q('#profileValue');
-  const socialEl = q('#profileSocial');
-  const valueLive = q('#profileValueLive');
-  const playerList = q('#playerList');
-  const playerSearch = q('#playerSearch');
-  const playerPositionFilter = q('#playerPositionFilter');
-  const playerTeamFilter = q('#playerTeamFilter');
-  const playerCount = q('#playerCount');
-  const publicModal = q('#publicProfileModal');
-  const offerModal = q('#offerModal');
-  const notificationModal = q('#notificationModal');
-  let players = [];
-  let selectedPlayer = null;
-  let valueTimer = null;
-
-  function refreshLiveValue() { if (valueLive) valueLive.textContent = fmtMoney(valueEl?.value || 1000000); }
-  valueEl?.addEventListener('input', () => {
-    refreshLiveValue();
-    clearTimeout(valueTimer);
-    valueTimer = setTimeout(async () => {
-      if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
-      const { data: { user } } = await mortaSupabase.auth.getUser();
-      if (!user) return;
-      const value = Number(valueEl.value || 0);
-      if (!Number.isFinite(value) || value < 0) return;
-      await mortaSupabase.from('profiles').update({ player_value: value }).eq('id', user.id);
-      loadPlayers();
-    }, 900);
-  });
-
-  async function loadPlayers() {
-    if (!playerList || typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
-    playerList.innerHTML = '<div class="directoryEmpty">Oyuncular yükleniyor...</div>';
-    const { data, error } = await mortaSupabase.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle').order('username', {ascending:true});
-    if (error) { playerList.innerHTML = `<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message || error)}</div>`; return; }
-    players = data || [];
-    playerCount.textContent = `${players.length} OYUNCU`;
-    const teams = [...new Set(players.map(p => (p.team || '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));
-    const selectedTeam = playerTeamFilter?.value || '';
-    if (playerTeamFilter) playerTeamFilter.innerHTML = '<option value="">Tüm Takımlar</option>' + teams.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
-    if (selectedTeam && teams.includes(selectedTeam)) playerTeamFilter.value = selectedTeam;
-    renderPlayers();
-  }
-
-  function renderPlayers() {
-    const term = (playerSearch?.value || '').trim().toLocaleLowerCase('tr');
-    const pos = playerPositionFilter?.value || '';
-    const team = playerTeamFilter?.value || '';
-    const filtered = players.filter(p => {
-      const text = `${p.username||''} ${p.team||''} ${p.position||''} ${p.social_handle||''}`.toLocaleLowerCase('tr');
-      return (!term || text.includes(term)) && (!pos || p.position === pos) && (!team || p.team === team);
-    });
-    if (!filtered.length) { playerList.innerHTML = '<div class="directoryEmpty">Eşleşen oyuncu bulunamadı.</div>'; return; }
-    playerList.innerHTML = filtered.map(p => {
-      const avatarHtml = p.avatar_url ? `<img src="${esc(p.avatar_url)}" alt="">` : esc(initial(p.username));
-      return `<article class="directoryPlayer" data-player-id="${esc(p.id)}"><div class="directoryPlayerTop"><div class="directoryPlayerAvatar">${avatarHtml}</div><div><b>${esc(p.username || 'Oyuncu')}</b><small>${esc(p.position || 'Mevki belirtilmedi')}</small></div></div><div class="directoryMeta"><div><span>TAKIM</span><strong>${esc(p.team || 'Takımsız')}</strong></div><div><span>SOSYAL</span><strong>${esc(p.social_handle || '—')}</strong></div></div><div class="directoryValue">${fmtMoney(p.player_value || 1000000)}</div></article>`;
-    }).join('');
-  }
-  playerSearch?.addEventListener('input', renderPlayers); playerPositionFilter?.addEventListener('change', renderPlayers); playerTeamFilter?.addEventListener('change', renderPlayers);
-  playerList?.addEventListener('click', (e) => { const card = e.target.closest('[data-player-id]'); if (!card) return; const p = players.find(x => x.id === card.dataset.playerId); if (p) openPublicProfile(p); });
-
-  function openPublicProfile(p) {
-    selectedPlayer = p;
-    q('#publicUsername').textContent = p.username || 'Oyuncu';
-    q('#publicSocial').textContent = p.social_handle || 'Sosyal medya hesabı eklenmemiş.';
-    q('#publicBio').textContent = p.bio || 'Bu oyuncu henüz bir bio eklemedi.';
-    q('#publicPosition').textContent = p.position || '—'; q('#publicTeam').textContent = p.team || '—'; q('#publicValue').textContent = fmtMoney(p.player_value || 1000000);
-    const img = q('#publicAvatar'), fb = q('#publicAvatarFallback');
-    if (p.avatar_url) { img.src = p.avatar_url; img.hidden = false; fb.textContent=''; } else { img.hidden = true; fb.textContent = initial(p.username); }
-    const { data: { user } } = mortaSupabase.auth.getUser();
-    q('#makeOfferButton').style.display = (user?.id === p.id) ? 'none' : '';
-    publicModal.classList.add('open'); publicModal.setAttribute('aria-hidden','false');
-  }
-  function closePublic() { publicModal?.classList.remove('open'); publicModal?.setAttribute('aria-hidden','true'); }
-  document.querySelectorAll('[data-close-public-profile]').forEach(el => el.addEventListener('click', closePublic));
-  q('#makeOfferButton')?.addEventListener('click', () => { if (!selectedPlayer) return; q('#offerTargetName').textContent = selectedPlayer.username || 'Oyuncu'; q('#offerAmount').value = ''; q('#offerMessage').value=''; q('#offerStatus').textContent=''; closePublic(); offerModal.classList.add('open'); offerModal.setAttribute('aria-hidden','false'); });
-  document.querySelectorAll('[data-close-offer]').forEach(el => el.addEventListener('click', () => { offerModal.classList.remove('open'); offerModal.setAttribute('aria-hidden','true'); }));
-
-  q('#submitOffer')?.addEventListener('click', async () => {
-    const status = q('#offerStatus');
-    if (!selectedPlayer || typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
-    const { data: { user } } = await mortaSupabase.auth.getUser();
-    if (!user) { status.textContent='Teklif göndermek için giriş yapmalısın.'; return; }
-    if (user.id === selectedPlayer.id) { status.textContent='Kendine teklif gönderemezsin.'; return; }
-    const amount = Number(q('#offerAmount').value || 0); const message = q('#offerMessage').value.trim();
-    if (!Number.isFinite(amount) || amount <= 0) { status.textContent='Geçerli bir teklif tutarı gir.'; return; }
-    status.textContent='Gönderiliyor...';
-    const { error } = await mortaSupabase.from('transfer_offers').insert({ from_user_id:user.id,to_user_id:selectedPlayer.id,amount,message });
-    if (error) { status.textContent=`Teklif gönderilemedi: ${error.message || error}`; return; }
-    status.textContent='Teklif gönderildi. ✓'; setTimeout(()=>{offerModal.classList.remove('open');offerModal.setAttribute('aria-hidden','true');},700);
-    loadNotifications();
-  });
-
-  async function loadNotifications() {
-    const btn = q('#notificationBadge'); const list = q('#notificationList');
-    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
-    const { data: { user } } = await mortaSupabase.auth.getUser(); if (!user) { if(btn) btn.hidden=true; return; }
-    const { data: notes, error } = await mortaSupabase.from('notifications').select('id,type,title,message,read_at,related_id,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(40);
-    if (error) return;
-    const unread = (notes||[]).filter(n=>!n.read_at).length; const badge=q('#notificationBadge'); if(badge){badge.hidden=unread===0;badge.textContent=String(unread); }
-    if (!list) return;
-    if (!notes?.length) { list.innerHTML='<div class="directoryEmpty">Yeni bildirimin yok.</div>'; return; }
-    list.innerHTML = notes.map(n => `<article class="notificationItem ${n.read_at?'':'unread'}" data-notification-id="${esc(n.id)}"><div class="notificationItemTop"><b>${esc(n.title||'Bildirim')}</b><time>${new Date(n.created_at).toLocaleString('tr-TR')}</time></div><p>${esc(n.message||'')}</p></article>`).join('');
-  }
-  q('#notificationButton')?.addEventListener('click', async () => { await loadNotifications(); notificationModal.classList.add('open'); notificationModal.setAttribute('aria-hidden','false'); });
-  document.querySelectorAll('[data-close-notifications]').forEach(el => el.addEventListener('click', () => { notificationModal.classList.remove('open'); notificationModal.setAttribute('aria-hidden','true'); }));
-  q('#markNotificationsRead')?.addEventListener('click', async () => { if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return; const {data:{user}}=await mortaSupabase.auth.getUser(); if(!user)return; await mortaSupabase.from('notifications').update({read_at:new Date().toISOString()}).eq('user_id',user.id).is('read_at',null); loadNotifications(); });
-  setInterval(loadNotifications, 10000); loadPlayers(); loadNotifications();
-
-  // Extend the existing profile form without replacing its working photo/upload flow.
-  const originalOpenProfile = window.__openMortaProfile;
-  // Patch profile field hydration by observing the modal opening.
-  const hydrateExtended = async () => {
-    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
-    const {data:{user}} = await mortaSupabase.auth.getUser(); if (!user) return;
-    const {data:p} = await mortaSupabase.from('profiles').select('position,team,player_value,social_handle').eq('id',user.id).maybeSingle();
-    if (!p) return;
-    if (positionEl) positionEl.value=p.position||''; if(teamEl) teamEl.value=p.team||''; if(valueEl) valueEl.value=p.player_value ?? 1000000; if(socialEl) socialEl.value=p.social_handle||''; refreshLiveValue();
+  const d = document.getElementById('systemsDisclosure');
+  if (!d) return;
+  const summary = d.querySelector('summary');
+  const label = summary?.querySelector('span:first-child');
+  const icon = summary?.querySelector('.toggleIcon');
+  const sync = () => {
+    const open = d.open;
+    if (label) label.textContent = open ? 'TÜM SİSTEMLERİ GİZLE' : 'TÜM SİSTEMLERİ GÖSTER';
+    if (icon) icon.textContent = open ? '−' : '+';
   };
-  q('#profileModal')?.addEventListener('transitionend', hydrateExtended);
-  q('#profileModal')?.addEventListener('click', (e) => { if (e.target === q('#profileModal')) hydrateExtended(); });
-  if (q('#profileModal')) new MutationObserver(() => { if (q('#profileModal').classList.contains('open')) hydrateExtended(); }).observe(q('#profileModal'), {attributes:true, attributeFilter:['class']});
-
-  // Replace the existing save button once, preserving its avatar upload and existing status handling by rebuilding the listener.
-  const saveBtn = q('#saveProfile');
-  if (saveBtn) {
-    saveBtn.addEventListener('click', async () => {
-      // This supplementary save runs after the existing handler and writes only the new fields.
-      setTimeout(async () => {
-        try {
-          if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
-          const {data:{user}} = await mortaSupabase.auth.getUser(); if(!user) return;
-          const value = Number(valueEl?.value || 1000000);
-          await mortaSupabase.from('profiles').update({position:positionEl?.value||'',team:teamEl?.value?.trim()||'',player_value:Number.isFinite(value)?value:1000000,social_handle:socialEl?.value?.trim()||''}).eq('id',user.id);
-          loadPlayers();
-        } catch(e) { console.error(e); }
-      }, 250);
-    });
-  }
+  d.addEventListener('toggle', sync);
+  sync();
 })();
 </script>
 
 
-<script>
-(() => {
-  const section = document.getElementById('systems');
-  const btn = document.getElementById('toggleAllSystems');
-  if (!section || !btn) return;
-  btn.addEventListener('click', () => {
-    const collapsed = section.classList.toggle('systemSectionCollapsed');
-    const expanded = !collapsed;
-    btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    const label = btn.querySelector('span:first-child');
-    const icon = btn.querySelector('.toggleIcon');
-    if (label) label.textContent = expanded ? 'TÜM SİSTEMLERİ GİZLE' : 'TÜM SİSTEMLERİ GÖSTER';
-    if (icon) icon.textContent = expanded ? '−' : '+';
-  });
-})();
-</script>
+
 
 
 <script>
 (() => {
-  const q=(s)=>document.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), fmt=v=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(v)||0);
-  const getUser=async()=>{if(!mortaSupabase)return null;const {data}=await mortaSupabase.auth.getUser();return data?.user||null;};
-  const role=q('#profileRole'), playerFields=q('#playerProfileFields'), teamFields=q('#teamProfileFields'), liveWrap=q('#playerValueLiveWrap');
-  const pos=q('#profilePosition'), team=q('#profileTeam'), val=q('#profileValue'), social=q('#profileSocial'), live=q('#profileValueLive');
-  const teamName=q('#teamName'), teamBio=q('#teamBio'), teamBudget=q('#teamBudget'), teamTraining=q('#teamTraining'), teamStadium=q('#teamStadium'), teamCountInput=q('#teamPlayerCount'), teamLogoInput=q('#teamLogoInput');
-  const setRole=()=>{const isTeam=role?.value==='team'; if(playerFields)playerFields.hidden=isTeam; if(teamFields)teamFields.hidden=!isTeam; if(liveWrap)liveWrap.hidden=isTeam;};
-  role?.addEventListener('change',setRole); setRole();
-  val?.addEventListener('input',()=>{if(live)live.textContent=fmt(val.value||1000000);});
+  const q = s => document.querySelector(s);
+  const qa = s => [...document.querySelectorAll(s)];
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt = v => '€' + new Intl.NumberFormat('tr-TR').format(Number(v || 0));
+  const initial = u => (u || 'M').slice(0,1).toUpperCase();
+  const sup = () => (typeof mortaSupabase !== 'undefined' && mortaSupabase) ? mortaSupabase : null;
+  const getUser = async () => { const s=sup(); if(!s) return null; const {data}=await s.auth.getUser(); return data?.user || null; };
 
-  // Registration role is stored after the existing auth flow creates the profile row.
-  const regBtn=q('#registerSubmit'), regRole=q('#registerRole');
-  regBtn?.addEventListener('click',()=>{const wanted=regRole?.value||'player'; setTimeout(async()=>{try{const u=await getUser();if(u)await mortaSupabase.from('profiles').update({role:wanted}).eq('id',u.id);}catch(e){console.error(e)}},900);});
+  /* =========================
+     PROFILE: role, cover, theme
+     ========================= */
+  const roleEl=q('#profileAccountType'), playerFields=q('#playerProfileFields'), teamFields=q('#teamProfileFields');
+  const syncRole=()=>{const isTeam=roleEl?.value==='team'; if(playerFields) playerFields.hidden=isTeam; if(teamFields) teamFields.hidden=!isTeam; q('#playerValueLiveWrap')?.toggleAttribute('hidden',isTeam);};
+  roleEl?.addEventListener('change',syncRole); syncRole();
+  q('#profileValue')?.addEventListener('input',e=>{ const v=Number(e.target.value||0); if(q('#profileValueLive')) q('#profileValueLive').textContent=fmt(v); });
+  let currentTheme='violet', coverFile=null, teamLogoFile=null;
+  const applyTheme=t=>{currentTheme=t||'violet'; document.documentElement.classList.remove('theme-violet','theme-crimson','theme-cyan','theme-emerald'); document.documentElement.classList.add('theme-'+currentTheme); qa('.themeBtn').forEach(b=>b.classList.toggle('active',b.dataset.theme===currentTheme));};
+  qa('.themeBtn').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.theme)));
+  q('#profileCoverInput')?.addEventListener('change',e=>{coverFile=e.target.files?.[0]||null;if(coverFile){const img=q('#profileCoverPreviewImg');img.src=URL.createObjectURL(coverFile);img.hidden=false;}});
+  q('#teamLogoInput')?.addEventListener('change',e=>{teamLogoFile=e.target.files?.[0]||null;});
 
-  async function hydrateTeam(){
-    if(!teamFields)return; const u=await getUser(); if(!u)return;
-    const {data:t}=await mortaSupabase.from('team_profiles').select('team_name,bio,logo_url,budget,training_level,stadium_level').eq('id',u.id).maybeSingle();
-    if(t){teamName.value=t.team_name||'';teamBio.value=t.bio||'';teamBudget.value=t.budget??0;teamTraining.value=t.training_level||1;teamStadium.value=t.stadium_level||1;}
-    const {count}=await mortaSupabase.from('profiles').select('id',{count:'exact',head:true}).eq('role','player').eq('team',t?.team_name||'__none__');
-    if(teamCountInput)teamCountInput.value=count||0;
+  async function hydrateProfile(){
+    const s=sup(),u=await getUser(); if(!s||!u)return;
+    const {data:p}=await s.from('profiles').select('account_type,profile_theme,cover_url,position,team,player_value,social_handle').eq('id',u.id).maybeSingle();
+    if(!p)return;
+    if(roleEl){roleEl.value=p.account_type||'player';syncRole();}
+    currentTheme=p.profile_theme||'violet';applyTheme(currentTheme);
+    const cover=q('#profileCoverPreviewImg'); if(cover){cover.src=p.cover_url||'';cover.hidden=!p.cover_url;}
+    q('#profilePosition')&&(q('#profilePosition').value=p.position||'');
+    q('#profileTeam')&&(q('#profileTeam').value=p.team||'');
+    q('#profileValue')&&(q('#profileValue').value=p.player_value??1000000); q('#profileValueLive')&&(q('#profileValueLive').textContent=fmt(p.player_value??1000000));
+    q('#profileSocial')&&(q('#profileSocial').value=p.social_handle||'');
+    if(p.account_type==='team'){
+      const {data:t}=await s.from('team_profiles').select('team_name,bio,logo_url,budget,player_count,training_level,stadium_level').eq('user_id',u.id).maybeSingle();
+      if(t){q('#teamName').value=t.team_name||'';q('#teamBio').value=t.bio||'';q('#teamBudget').value=t.budget??0;q('#teamPlayerCount').value=t.player_count??0;q('#teamTraining').value=String(t.training_level||1);q('#teamStadium').value=String(t.stadium_level||1);}
+    }
   }
   const originalOpen=window.__openMortaProfile;
-  const syncProfileExtras=async()=>{try{const u=await getUser();if(!u)return;const {data:p}=await mortaSupabase.from('profiles').select('role,position,team,player_value,social_handle').eq('id',u.id).maybeSingle();if(p){role.value=p.role||'player';setRole();pos.value=p.position||'';team.value=p.team||'';val.value=p.player_value??1000000;social.value=p.social_handle||'';if(live)live.textContent=fmt(val.value);}if(role.value==='team')await hydrateTeam();}catch(e){console.error(e)}};
-  document.querySelector('#profileModal')?.addEventListener('click',e=>{if(e.target.closest('#profileModal'))setTimeout(syncProfileExtras,0)});
-  const mo=q('#profileModal'); if(mo)new MutationObserver(()=>{if(mo.classList.contains('open'))syncProfileExtras()}).observe(mo,{attributes:true,attributeFilter:['class']});
+  window.__openMortaProfile=async e=>{originalOpen?.(e);setTimeout(hydrateProfile,220);};
+  q('#profileModal')?.addEventListener('transitionend',hydrateProfile);
+  q('#profileModal')?.addEventListener('click',e=>{if(e.target===q('#profileModal'))hydrateProfile();});
+  const pm=q('#profileModal'); if(pm)new MutationObserver(()=>{if(pm.classList.contains('open'))hydrateProfile();}).observe(pm,{attributes:true,attributeFilter:['class']});
 
-  // Save extended player/team fields independently so the existing avatar handler can coexist.
-  q('#saveProfile')?.addEventListener('click',()=>setTimeout(async()=>{try{const u=await getUser();if(!u)return;if(role.value==='team'){
-      let logoUrl=null;const f=teamLogoInput?.files?.[0];if(f){const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=`${u.id}/teamlogo.${ext}`;const up=await mortaSupabase.storage.from('avatars').upload(path,f,{upsert:true,contentType:f.type||'image/jpeg'});if(up.error)throw up.error;logoUrl=mortaSupabase.storage.from('avatars').getPublicUrl(path).data.publicUrl+`?v=${Date.now()}`;}
-      const existing=await mortaSupabase.from('team_profiles').select('logo_url').eq('id',u.id).maybeSingle();if(!logoUrl)logoUrl=existing.data?.logo_url||null;
-      await mortaSupabase.from('team_profiles').upsert({id:u.id,team_name:teamName.value.trim(),bio:teamBio.value.trim(),logo_url:logoUrl,budget:Number(teamBudget.value)||0,training_level:Number(teamTraining.value)||1,stadium_level:Number(teamStadium.value)||1,updated_at:new Date().toISOString()},{onConflict:'id'});
-      await mortaSupabase.from('profiles').update({role:'team',team:teamName.value.trim()}).eq('id',u.id);
-    } else {
-      await mortaSupabase.from('profiles').update({role:'player',position:pos.value||'',team:team.value.trim(),player_value:Number(val.value)||1000000,social_handle:social.value.trim()}).eq('id',u.id);
+  // Registration choice gets persisted immediately after the existing registration flow creates the profile.
+  q('#registerSubmit')?.addEventListener('click',()=>setTimeout(async()=>{const s=sup(),u=await getUser();if(!s||!u)return;const chosen=q('#registerRole')?.value==='team'?'team':'player';await s.from('profiles').update({account_type:chosen}).eq('id',u.id);},1500));
+
+  // Supplement the already-working avatar/bio save with the new fields and team record.
+  q('#saveProfile')?.addEventListener('click',()=>setTimeout(async()=>{
+    const s=sup(),u=await getUser();if(!s||!u)return;
+    try{
+      let coverUrl=(await s.from('profiles').select('cover_url').eq('id',u.id).maybeSingle()).data?.cover_url||null;
+      if(coverFile){const ext=(coverFile.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=`${u.id}/cover.${ext}`;const r=await s.storage.from('avatars').upload(path,coverFile,{upsert:true,contentType:coverFile.type||'image/jpeg'});if(r.error)throw r.error;coverUrl=s.storage.from('avatars').getPublicUrl(path).data.publicUrl+`?v=${Date.now()}`;}
+      const accountType=roleEl?.value==='team'?'team':'player';
+      const update={account_type:accountType,position:accountType==='player'?(q('#profilePosition')?.value||''):'',team:accountType==='player'?(q('#profileTeam')?.value?.trim()||''):(q('#teamName')?.value?.trim()||''),player_value:accountType==='player'?Number(q('#profileValue')?.value||1000000):1000000,social_handle:accountType==='player'?(q('#profileSocial')?.value?.trim()||''):'',profile_theme:currentTheme,cover_url:coverUrl};
+      const r1=await s.from('profiles').update(update).eq('id',u.id);if(r1.error)throw r1.error;
+      if(accountType==='team'){
+        let logoUrl=(await s.from('team_profiles').select('logo_url').eq('user_id',u.id).maybeSingle()).data?.logo_url||null;
+        if(teamLogoFile){const ext=(teamLogoFile.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=`${u.id}/team-logo.${ext}`;const r=await s.storage.from('avatars').upload(path,teamLogoFile,{upsert:true,contentType:teamLogoFile.type||'image/jpeg'});if(r.error)throw r.error;logoUrl=s.storage.from('avatars').getPublicUrl(path).data.publicUrl+`?v=${Date.now()}`;}
+        const r2=await s.from('team_profiles').upsert({user_id:u.id,team_name:q('#teamName').value.trim(),bio:q('#teamBio').value.trim(),logo_url:logoUrl,budget:Number(q('#teamBudget').value||0),player_count:Number(q('#teamPlayerCount').value||0),training_level:Number(q('#teamTraining').value||1),stadium_level:Number(q('#teamStadium').value||1),updated_at:new Date().toISOString()},{onConflict:'user_id'});if(r2.error)throw r2.error;
+      }
+      coverFile=null;teamLogoFile=null;setTimeout(()=>{loadDirectory();loadHub();},400);
+    }catch(err){console.error('profile extras save',err);}
+  },800));
+
+  /* =========================
+     PLAYER + TEAM DIRECTORY
+     ========================= */
+  const playerList=q('#playerList'),teamList=q('#teamList'),playerSearch=q('#playerSearch'),posFilter=q('#playerPositionFilter'),teamFilter=q('#playerTeamFilter');
+  let players=[],teams=[];
+  function renderPlayers(){
+    if(!playerList)return;
+    const term=(playerSearch?.value||'').trim().toLocaleLowerCase('tr'),pos=posFilter?.value||'',tm=teamFilter?.value||'';
+    const xs=players.filter(p=>(!term||`${p.username} ${p.team||''} ${p.position||''}`.toLocaleLowerCase('tr').includes(term))&&(!pos||p.position===pos)&&(!tm||p.team===tm));
+    playerList.innerHTML=xs.length?xs.map(p=>`<article class="directoryPlayer" data-player-id="${esc(p.id)}"><div class="directoryPlayerTop"><div class="directoryPlayerAvatar">${p.avatar_url?`<img src="${esc(p.avatar_url)}" alt="">`:esc(initial(p.username))}</div><div><b>${esc(p.username)}</b><small>${esc(p.position||'Mevki belirtilmedi')}</small></div></div><div class="directoryMeta"><div><span>TAKIM</span><strong>${esc(p.team||'Takımsız')}</strong></div><div><span>DEĞER</span><strong>${fmt(p.player_value)}</strong></div></div><div class="directoryValue">${esc(p.social_handle||'Sosyal medya yok')}</div></article>`).join(''):'<div class="directoryEmpty">Eşleşen oyuncu bulunamadı.</div>';
+  }
+  async function loadDirectory(){
+    const s=sup();if(!s)return;
+    const {data:ps,error}=await s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,profile_theme,cover_url,account_type').eq('account_type','player').order('username');
+    if(error){playerList&&(playerList.innerHTML=`<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message)}</div>`);return;}
+    players=ps||[];q('#playerCount')&&(q('#playerCount').textContent=`${players.length} OYUNCU`);
+    const teamNames=[...new Set(players.map(p=>(p.team||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));if(teamFilter){const keep=teamFilter.value;teamFilter.innerHTML='<option value="">Tüm Takımlar</option>'+teamNames.map(t=>`<option>${esc(t)}</option>`).join('');if(teamNames.includes(keep))teamFilter.value=keep;}renderPlayers();await loadTeams();
+  }
+  async function loadTeams(){const s=sup();if(!s||!teamList)return;const {data,error}=await s.from('team_profiles').select('user_id,team_name,bio,logo_url,budget,player_count,training_level,stadium_level').order('team_name');if(error){teamList.innerHTML=`<div class="directoryEmpty">Takımlar yüklenemedi: ${esc(error.message)}</div>`;return;}teams=data||[];q('#teamCount')&&(q('#teamCount').textContent=`${teams.length} TAKIM`);teamList.innerHTML=teams.length?teams.map(t=>`<article class="directoryTeamCard" data-team-id="${esc(t.user_id)}"><div class="teamMini"><div class="teamMiniLogo">${t.logo_url?`<img src="${esc(t.logo_url)}" alt="">`:esc(initial(t.team_name))}</div><div><b>${esc(t.team_name||'Takım')}</b><small>Takım Profili</small></div></div><div class="teamCardStats"><div><span>BÜTÇE</span><b>${fmt(t.budget)}</b></div><div><span>OYUNCU</span><b>${Number(t.player_count||0)}</b></div></div></article>`).join(''):'<div class="directoryEmpty">Henüz takım hesabı yok.</div>';}
+  playerSearch?.addEventListener('input',renderPlayers);posFilter?.addEventListener('change',renderPlayers);teamFilter?.addEventListener('change',renderPlayers);
+  playerList?.addEventListener('click',e=>{const c=e.target.closest('[data-player-id]');if(!c)return;const p=players.find(x=>x.id===c.dataset.playerId);if(p)openPublic(p);});
+  teamList?.addEventListener('click',e=>{const c=e.target.closest('[data-team-id]');if(c)openTeam(c.dataset.teamId);});
+
+  const teamPublic=q('#teamPublicModal');
+  async function openTeam(id){const s=sup();if(!s)return;const [{data:t},{data:p}]=await Promise.all([s.from('team_profiles').select('user_id,team_name,bio,logo_url,budget,player_count,training_level,stadium_level').eq('user_id',id).maybeSingle(),s.from('profiles').select('cover_url,profile_theme').eq('id',id).maybeSingle()]);if(!t)return;q('#teamPublicName').textContent=t.team_name||'Takım';q('#teamPublicBio').textContent=t.bio||'Takım açıklaması eklenmemiş.';q('#teamPublicBudget').textContent=fmt(t.budget);q('#teamPublicPlayers').textContent=String(t.player_count||0);q('#teamPublicTraining').textContent=`Seviye ${t.training_level||1}`;q('#teamPublicStadium').textContent=`Seviye ${t.stadium_level||1}`;const img=q('#teamPublicLogo'),fb=q('#teamPublicLogoFallback');if(t.logo_url){img.src=t.logo_url;img.hidden=false;fb.textContent=''}else{img.hidden=true;fb.textContent=initial(t.team_name)}const cover=q('#teamPublicCover');if(p?.cover_url){cover.src=p.cover_url;cover.hidden=false}else cover.hidden=true;teamPublic?.classList.add('open');teamPublic?.setAttribute('aria-hidden','false');}
+  qa('[data-close-team-public]').forEach(e=>e.addEventListener('click',()=>{teamPublic?.classList.remove('open');teamPublic?.setAttribute('aria-hidden','true')}));
+
+  /* =========================
+     PUBLIC PLAYER PROFILES
+     ========================= */
+  const publicModal=q('#publicProfileModal');let selected=null,compare=[];
+  async function loadComments(pid){const s=sup(),box=q('#publicComments');if(!s||!box)return;const {data}=await s.from('profile_comments').select('id,author_id,comment,created_at').eq('profile_id',pid).order('created_at',{ascending:false}).limit(20);const ids=[...new Set((data||[]).map(c=>c.author_id))];const ps=ids.length?(await s.from('profiles').select('id,username').in('id',ids)).data||[]:[];const nm=new Map(ps.map(x=>[x.id,x.username]));box.innerHTML=data?.length?data.map(c=>`<article class="commentItem"><b>${esc(nm.get(c.author_id)||'Oyuncu')}</b><small>${new Date(c.created_at).toLocaleString('tr-TR')}</small><p>${esc(c.comment)}</p></article>`).join(''):'<div class="directoryEmpty">Henüz yorum yok.</div>';}
+  async function openPublic(p){selected=p;q('#publicUsername').textContent=p.username||'Oyuncu';q('#publicSocial').textContent=p.social_handle||'Sosyal medya hesabı eklenmemiş.';q('#publicBio').textContent=p.bio||'Bu oyuncu henüz bio eklemedi.';q('#publicPosition').textContent=p.position||'—';q('#publicTeam').textContent=p.team||'—';q('#publicValue').textContent=fmt(p.player_value||1000000);const im=q('#publicAvatar'),fb=q('#publicAvatarFallback'),cv=q('#publicCover');if(p.avatar_url){im.src=p.avatar_url;im.hidden=false;fb.textContent=''}else{im.hidden=true;fb.textContent=initial(p.username)}if(p.cover_url){cv.src=p.cover_url;cv.hidden=false}else cv.hidden=true;applyTheme(p.profile_theme||'violet');publicModal?.classList.add('open');publicModal?.setAttribute('aria-hidden','false');const u=await getUser();if(u&&u.id!==p.id)await sup().from('profile_visits').insert({profile_id:p.id,visitor_id:u.id});const {count}=await sup().from('profile_visits').select('id',{count:'exact',head:true}).eq('profile_id',p.id);q('#publicVisitCount')&&(q('#publicVisitCount').textContent=String(count||0));await loadComments(p.id);}
+  function closePublic(){publicModal?.classList.remove('open');publicModal?.setAttribute('aria-hidden','true');applyTheme(currentTheme);}
+  qa('[data-close-public-profile]').forEach(e=>e.addEventListener('click',closePublic));
+  q('#submitPublicComment')?.addEventListener('click',async()=>{if(!selected)return;const u=await getUser(),txt=q('#publicCommentInput')?.value.trim();if(!u||!txt)return;const r=await sup().from('profile_comments').insert({profile_id:selected.id,author_id:u.id,comment:txt});if(r.error)return alert(r.error.message);q('#publicCommentInput').value='';loadComments(selected.id);});
+  q('#reportPlayerButton')?.addEventListener('click',async()=>{if(!selected)return;const u=await getUser();if(!u)return;const reason=prompt('Rapor nedeni:');if(!reason)return;const details=prompt('Ek açıklama (opsiyonel):')||'';const r=await sup().from('profile_reports').insert({profile_id:selected.id,reporter_id:u.id,reason,details});alert(r.error?r.error.message:'Rapor adminlere iletildi.');});
+  q('#comparePlayerButton')?.addEventListener('click',()=>{if(!selected)return;if(!compare.some(x=>x.id===selected.id)){if(compare.length>=2)compare.shift();compare.push(selected)}if(compare.length<2)return;const box=q('#compareContent');box.innerHTML=compare.map(p=>`<div class="compareCard"><h4>${esc(p.username)}</h4><div class="compareRow"><span>Mevki</span><b>${esc(p.position||'—')}</b></div><div class="compareRow"><span>Takım</span><b>${esc(p.team||'—')}</b></div><div class="compareRow"><span>Değer</span><b>${fmt(p.player_value)}</b></div></div>`).join('');q('#compareModal')?.classList.add('show');});
+  qa('[data-close-compare]').forEach(e=>e.addEventListener('click',()=>q('#compareModal')?.classList.remove('show')));
+
+  /* =========================
+     TRANSFER OFFERS / COUNTERS
+     ========================= */
+  q('#makeOfferButton')?.addEventListener('click',()=>{if(!selected)return;q('#offerTargetName').textContent=selected.username||'Oyuncu';q('#offerAmount').value='';q('#offerMessage').value='';q('#offerStatus').textContent='';closePublic();q('#offerModal')?.classList.add('open');q('#offerModal')?.setAttribute('aria-hidden','false');});
+  qa('[data-close-offer]').forEach(e=>e.addEventListener('click',()=>q('#offerModal')?.classList.remove('open')));
+  q('#submitOffer')?.addEventListener('click',async()=>{const s=sup(),u=await getUser(),st=q('#offerStatus');if(!s||!u||!selected)return;const amount=Number(q('#offerAmount').value||0),message=q('#offerMessage').value.trim();if(!amount||amount<=0){st.textContent='Geçerli bir teklif tutarı gir.';return}st.textContent='Gönderiliyor...';const r=await s.from('transfer_offers').insert({from_user_id:u.id,to_user_id:selected.id,amount,message,status:'pending'});st.textContent=r.error?`Teklif gönderilemedi: ${r.error.message}`:'Teklif gönderildi. ✓';if(!r.error){loadHub();loadNotifications();setTimeout(()=>q('#offerModal')?.classList.remove('open'),700);}});
+  async function loadOffers(){
+    const s=sup(),u=await getUser(),list=q('#offerList');
+    if(!s||!u||!list)return;
+    const {data,error}=await s.from('transfer_offers').select('id,from_user_id,to_user_id,amount,message,status,parent_offer_id,created_at').or(`from_user_id.eq.${u.id},to_user_id.eq.${u.id}`).order('created_at',{ascending:false}).limit(40);
+    if(error){list.innerHTML=`<div class="directoryEmpty">Teklifler okunamadı: ${esc(error.message)}</div>`;return;}
+    const ids=[...new Set((data||[]).flatMap(o=>[o.from_user_id,o.to_user_id]))];
+    const ps=ids.length?(await s.from('profiles').select('id,username').in('id',ids)).data||[]:[];
+    const nm=new Map(ps.map(x=>[x.id,x.username]));
+    list.innerHTML=data?.length?data.map(o=>{
+      const incoming=o.to_user_id===u.id;
+      const other=incoming?o.from_user_id:o.to_user_id;
+      const statusText=o.status==='pending'?'Bekliyor':o.status==='accepted'?'Kabul edildi':o.status==='rejected'?'Reddedildi':o.status==='countered'?'Karşı teklif gönderildi':o.status;
+      const actions=incoming&&o.status==='pending'?`<button class="accountBtn accountPrimary offerAccept" data-offer="${esc(o.id)}">KABUL</button><button class="accountBtn offerReject" data-offer="${esc(o.id)}">REDDET</button><input class="counterAmount" type="number" min="1" placeholder="Karşı teklif €"><button class="accountBtn counterSend" data-offer="${esc(o.id)}">KARŞI TEKLİF</button>`:`<span class="badge">${esc(statusText)}</span>`;
+      return `<article class="notificationItem" data-offer-id="${esc(o.id)}"><div class="notificationItemTop"><b>${incoming?'GELEN':'GÖNDERİLEN'} · ${esc(nm.get(other)||'Oyuncu')}</b><time>${new Date(o.created_at).toLocaleString('tr-TR')}</time></div><p><b>${fmt(o.amount)}</b> · ${esc(o.message||'')}</p><div class="offerActions">${actions}</div></article>`;
+    }).join(''):'<div class="directoryEmpty">Henüz transfer teklifi yok.</div>';
+  }
+
+  q('#offerList')?.addEventListener('click',async e=>{
+    const btn=e.target.closest('[data-offer]'); if(!btn)return;
+    const s=sup(),u=await getUser(),id=btn.dataset.offer; if(!s||!u)return;
+    const {data:old,error:oldError}=await s.from('transfer_offers').select('id,from_user_id,to_user_id,amount,status,parent_offer_id').eq('id',id).maybeSingle();
+    if(oldError||!old)return;
+    if(old.to_user_id!==u.id){return;}
+    if(btn.classList.contains('counterSend')){
+      const card=btn.closest('[data-offer-id]'),amount=Number(card?.querySelector('.counterAmount')?.value||0);
+      if(!amount||amount<=0)return alert('Geçerli bir karşı teklif gir.');
+      const a=await s.from('transfer_offers').update({status:'countered',updated_at:new Date().toISOString()}).eq('id',id).eq('to_user_id',u.id);
+      if(a.error)return alert(a.error.message);
+      const b=await s.from('transfer_offers').insert({from_user_id:u.id,to_user_id:old.from_user_id,amount,message:'Karşı teklif',status:'pending',parent_offer_id:id});
+      if(b.error)return alert(b.error.message);
+    }else{
+      const status=btn.classList.contains('offerAccept')?'accepted':'rejected';
+      const r=await s.from('transfer_offers').update({status,updated_at:new Date().toISOString()}).eq('id',id).eq('to_user_id',u.id);
+      if(r.error)return alert(r.error.message);
     }
-    if(typeof window.__mortaReloadPlayers==='function')window.__mortaReloadPlayers();
-  }catch(e){console.error(e)}},700));
+    await loadOffers(); await loadNotifications(); await loadHub();
+  });
 
-  // Players and teams directory.
-  const playerList=q('#playerList'), playerSearch=q('#playerSearch'), posFilter=q('#playerPositionFilter'), teamFilter=q('#playerTeamFilter'), teamList=q('#teamList');
-  let allPlayers=[], allTeams=[], compare=[] , selected=null;
-  function initial(u){return (u||'W').slice(0,1).toUpperCase()}
-  function renderPlayerCards(){const term=(playerSearch?.value||'').trim().toLocaleLowerCase('tr');const p=posFilter?.value||'',t=teamFilter?.value||'';const xs=allPlayers.filter(x=>(!term||`${x.username||''} ${x.team||''} ${x.position||''}`.toLocaleLowerCase('tr').includes(term))&&(!p||x.position===p)&&(!t||x.team===t));if(!xs.length){playerList.innerHTML='<div class="directoryEmpty">Eşleşen oyuncu bulunamadı.</div>';return;}playerList.innerHTML=xs.map(x=>{const im=x.avatar_url?`<img src="${esc(x.avatar_url)}" alt="">`:initial(x.username);return `<article class="directoryPlayer" data-new-player-id="${esc(x.id)}"><div class="directoryPlayerTop"><div class="directoryPlayerAvatar">${im}</div><div><b>${esc(x.username||'Oyuncu')}</b><small>${esc(x.position||'Mevki belirtilmedi')}</small></div></div><div class="directoryMeta"><div><span>TAKIM</span><strong>${esc(x.team||'Takımsız')}</strong></div><div><span>SOSYAL</span><strong>${esc(x.social_handle||'—')}</strong></div></div><div class="directoryValue">${fmt(x.player_value||1000000)}</div></article>`}).join('')}
-  async function reload(){if(!mortaSupabase)return;const {data}=await mortaSupabase.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,role').eq('role','player').order('username');allPlayers=data||[];const teams=[...new Set(allPlayers.map(x=>(x.team||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));if(teamFilter)teamFilter.innerHTML='<option value="">Tüm Takımlar</option>'+teams.map(x=>`<option>${esc(x)}</option>`).join('');renderPlayerCards();loadTeams();}
-  window.__mortaReloadPlayers=reload; playerSearch?.addEventListener('input',renderPlayerCards);posFilter?.addEventListener('change',renderPlayerCards);teamFilter?.addEventListener('change',renderPlayerCards);
-  playerList?.addEventListener('click',e=>{const c=e.target.closest('[data-new-player-id]');if(!c)return;const p=allPlayers.find(x=>x.id===c.dataset.newPlayerId);if(p)openPublic(p)});
-  async function loadTeams(){const {data}=await mortaSupabase.from('team_profiles').select('id,team_name,bio,logo_url,budget,training_level,stadium_level').order('team_name');allTeams=data||[];q('#teamCount').textContent=`${allTeams.length} TAKIM`;if(!teamList)return;teamList.innerHTML=allTeams.length?allTeams.map(t=>`<article class="directoryTeam" data-team-id="${esc(t.id)}"><div class="directoryPlayerTop"><div class="directoryTeamLogo">${t.logo_url?`<img src="${esc(t.logo_url)}" alt="">`:initial(t.team_name)}</div><div><b>${esc(t.team_name||'Takım')}</b><small>Takım Profili</small></div></div><div class="directoryMeta"><div><span>BÜTÇE</span><strong>${fmt(t.budget)}</strong></div><div><span>TESİS</span><strong>Seviye ${t.training_level}</strong></div></div><div class="directoryValue">Stadyum ${t.stadium_level}</div></article>`).join(''):'<div class="directoryEmpty">Henüz takım hesabı yok.</div>'}
-  teamList?.addEventListener('click',e=>{const c=e.target.closest('[data-team-id]');if(!c)return;const t=allTeams.find(x=>x.id===c.dataset.teamId);if(!t)return;const members=allPlayers.filter(p=>(p.team||'').toLowerCase()===String(t.team_name||'').toLowerCase());alert(`TAKIM: ${t.team_name}\nBütçe: ${fmt(t.budget)}\nOyuncu: ${members.length}\nAntrenman Tesisi: Seviye ${t.training_level}\nStadyum: Seviye ${t.stadium_level}`)});
+  /* =========================
+     NOTIFICATIONS / HUB
+     ========================= */
+  async function loadNotifications(){const s=sup(),u=await getUser();if(!s||!u)return;const {data}=await s.from('notifications').select('id,type,title,message,read_at,related_id,created_at').eq('user_id',u.id).order('created_at',{ascending:false}).limit(40);const unread=(data||[]).filter(n=>!n.read_at).length;q('#notificationBadge')&&(q('#notificationBadge').hidden=!unread,q('#notificationBadge').textContent=String(unread));q('#notificationList')&&(q('#notificationList').innerHTML=data?.length?data.map(n=>`<article class="notificationItem ${n.read_at?'':'unread'}"><div class="notificationItemTop"><b>${esc(n.title)}</b><time>${new Date(n.created_at).toLocaleString('tr-TR')}</time></div><p>${esc(n.message)}</p></article>`).join(''):'<div class="directoryEmpty">Yeni bildirimin yok.</div>');q('#hubNotifications')&&(q('#hubNotifications').textContent=String(unread));}
+  qa('[data-close-notifications]').forEach(e=>e.addEventListener('click',()=>{q('#notificationModal')?.classList.remove('open');q('#notificationModal')?.setAttribute('aria-hidden','true');}));
+  q('#notificationButton')?.addEventListener('click',async()=>{await loadNotifications();await loadOffers();q('#notificationModal')?.classList.add('open');q('#notificationModal')?.setAttribute('aria-hidden','false');});
+  q('#markNotificationsRead')?.addEventListener('click',async()=>{const s=sup(),u=await getUser();if(!s||!u)return;await s.from('notifications').update({read_at:new Date().toISOString()}).eq('user_id',u.id).is('read_at',null);loadNotifications();});
+  async function loadHub(){const s=sup(),u=await getUser();if(!s||!u){q('#hubStatus').textContent='GİRİŞ YAP';q('#hubUsername').textContent='MortaLeague';return}const {data:p}=await s.from('profiles').select('username,avatar_url,player_value,account_type,team,position').eq('id',u.id).maybeSingle();if(!p)return;q('#hubStatus').textContent='AKTİF';q('#hubUsername').textContent=p.username||'Oyuncu';q('#hubSubtitle').textContent=p.account_type==='team'?`Takım: ${p.team||'Takım adını tamamla'}`:`${p.team||'Takımsız'} · ${p.position||'Mevki belirtilmedi'}`;q('#hubValue').textContent=fmt(p.player_value||1000000);if(p.avatar_url){q('#hubAvatar').src=p.avatar_url;q('#hubAvatar').hidden=false;q('#hubAvatarFallback').textContent=''}const unread=(await s.from('notifications').select('id',{count:'exact',head:true}).eq('user_id',u.id).is('read_at',null)).count||0;const offers=(await s.from('transfer_offers').select('id',{count:'exact',head:true}).eq('to_user_id',u.id).eq('status','pending')).count||0;q('#hubNotifications').textContent=String(unread);q('#hubOffers').textContent=String(offers);q('#hubActivityText').textContent=`${offers} bekleyen transfer teklifin ve ${unread} okunmamış bildirimin var.`;}
+  q('#hubProfileButton')?.addEventListener('click',()=>window.__openMortaProfile?.());q('#hubNotificationButton')?.addEventListener('click',()=>q('#notificationButton')?.click());q('#hubPlayersButton')?.addEventListener('click',()=>document.querySelector('[data-scroll="players"]')?.click());q('#hubNewsButton')?.addEventListener('click',()=>q('#news')?.scrollIntoView({behavior:'smooth'}));q('#hubSystemsButton')?.addEventListener('click',()=>document.querySelector('[data-scroll="systems"]')?.click());
 
-  const publicModal=q('#publicProfileModal'), compareModal=q('#compareModal'), compareBar=q('#compareBar'), compareContent=q('#compareContent');
-  async function loadComments(pid){const box=q('#publicComments');if(!box)return;const {data:cs}=await mortaSupabase.from('profile_comments').select('id,author_id,comment,created_at').eq('profile_id',pid).order('created_at',{ascending:false}).limit(30);const ids=[...new Set((cs||[]).map(x=>x.author_id))];let ps=[];if(ids.length){const r=await mortaSupabase.from('profiles').select('id,username').in('id',ids);ps=r.data||[]}const nm=new Map(ps.map(x=>[x.id,x.username]));box.innerHTML=cs?.length?cs.map(c=>`<article class="commentItem"><b>${esc(nm.get(c.author_id)||'Oyuncu')}</b><small>${new Date(c.created_at).toLocaleString('tr-TR')}</small><p>${esc(c.comment)}</p></article>`).join(''):'<div class="directoryEmpty">Henüz yorum yok.</div>';}
-  async function openPublic(p){selected=p;q('#publicUsername').textContent=p.username||'Oyuncu';q('#publicSocial').textContent=p.social_handle||'Sosyal medya hesabı eklenmemiş.';q('#publicBio').textContent=p.bio||'Bu oyuncu henüz bio eklemedi.';q('#publicPosition').textContent=p.position||'—';q('#publicTeam').textContent=p.team||'—';q('#publicValue').textContent=fmt(p.player_value||1000000);const img=q('#publicAvatar'),fb=q('#publicAvatarFallback');if(p.avatar_url){img.src=p.avatar_url;img.hidden=false;fb.textContent=''}else{img.hidden=true;fb.textContent=initial(p.username)};publicModal.classList.add('open');publicModal.setAttribute('aria-hidden','false');const u=await getUser();if(u&&u.id!==p.id){await mortaSupabase.from('profile_visits').insert({profile_id:p.id,visitor_id:u.id});}const {count}=await mortaSupabase.from('profile_visits').select('id',{count:'exact',head:true}).eq('profile_id',p.id);q('#publicVisitCount').textContent=count||0;await loadComments(p.id);}
-  q('#submitPublicComment')?.addEventListener('click',async()=>{if(!selected)return;const u=await getUser();const txt=q('#publicCommentInput')?.value.trim();if(!u||!txt)return;const {error}=await mortaSupabase.from('profile_comments').insert({profile_id:selected.id,author_id:u.id,comment:txt});if(error)return alert(error.message);q('#publicCommentInput').value='';loadComments(selected.id)});
-  q('#reportPlayerButton')?.addEventListener('click',async()=>{if(!selected)return;const u=await getUser();if(!u)return;const reason=prompt('Rapor nedeni:');if(!reason)return;const details=prompt('Ek açıklama (opsiyonel):')||'';const {error}=await mortaSupabase.from('profile_reports').insert({profile_id:selected.id,reporter_id:u.id,reason,details});if(!error)alert('Rapor adminlere iletildi.');else alert(error.message)});
-  function updateCompareBar(){q('#compareBarCount').textContent=`${compare.length}/2`;compareBar.classList.toggle('show',compare.length>0)}
-  q('#comparePlayerButton')?.addEventListener('click',()=>{if(!selected)return;if(!compare.some(x=>x.id===selected.id)){if(compare.length>=2)compare.shift();compare.push(selected)}updateCompareBar()});
-  q('#openCompareBar')?.addEventListener('click',()=>{if(compare.length<2)return;compareContent.innerHTML=compare.map(p=>`<div class="compareCard"><h4>${esc(p.username)}</h4><div class="compareRow"><span>Mevki</span><b>${esc(p.position||'—')}</b></div><div class="compareRow"><span>Takım</span><b>${esc(p.team||'—')}</b></div><div class="compareRow"><span>Değer</span><b>${fmt(p.player_value)}</b></div><div class="compareRow"><span>Sosyal</span><b>${esc(p.social_handle||'—')}</b></div></div>`).join('');compareModal.classList.add('show')});
-  q('#clearCompareBar')?.addEventListener('click',()=>{compare=[];updateCompareBar()});document.querySelectorAll('[data-close-compare]').forEach(e=>e.addEventListener('click',()=>compareModal.classList.remove('show')));
+  /* =========================
+     MORTANEWS
+     ========================= */
+  async function loadNews(){const s=sup(),box=q('#newsGrid');if(!s||!box)return;const r=await s.from('news_posts').select('id,title,body,image_url,pinned,published_at').eq('is_published',true).order('pinned',{ascending:false}).order('published_at',{ascending:false}).limit(9);if(r.error){box.innerHTML=`<div class="directoryEmpty">Haberler yüklenemedi: ${esc(r.error.message)}</div>`;return}q('#newsCount')&&(q('#newsCount').textContent=`${(r.data||[]).length} HABER`);box.innerHTML=r.data?.length?r.data.map(n=>`<article class="newsCard"><div class="newsCardCover">${n.image_url?`<img src="${esc(n.image_url)}" alt="">`:''}</div><div class="newsCardBody"><h3>${esc(n.title)}</h3><p>${esc(n.body)}</p><div class="newsMeta"><span>${n.pinned?'📌 SABİT':'MORTANEWS'}</span><span>${n.published_at?new Date(n.published_at).toLocaleString('tr-TR'):''}</span></div></div></article>`).join(''):'<div class="directoryEmpty">Henüz MortaNews haberi yok.</div>';}
+  q('#adminNewsPublish')?.addEventListener('click',async()=>{const s=sup(),u=await getUser();if(!s||!u)return;const title=q('#adminNewsTitle').value.trim(),body=q('#adminNewsBody').value.trim(),image=q('#adminNewsImage').value.trim();if(!title||!body)return alert('Başlık ve haber metni gerekli.');const r=await s.from('news_posts').insert({author_id:u.id,title,body,image_url:image||null,is_published:true});if(r.error)alert(r.error.message);else{q('#adminNewsTitle').value='';q('#adminNewsBody').value='';q('#adminNewsImage').value='';loadNews();alert('MortaNews yayınlandı. ✓');}});
 
-  // Incoming/outgoing offer management in the notification center.
-  async function loadOffers(){const list=q('#offerList');if(!list||!mortaSupabase)return;const u=await getUser();if(!u)return;const {data:incoming}=await mortaSupabase.from('transfer_offers').select('id,from_user_id,amount,message,status,created_at').eq('to_user_id',u.id).order('created_at',{ascending:false}).limit(20);const ids=[...new Set((incoming||[]).map(x=>x.from_user_id))];let ps=[];if(ids.length){const r=await mortaSupabase.from('profiles').select('id,username').in('id',ids);ps=r.data||[]}const nm=new Map(ps.map(x=>[x.id,x.username]));list.innerHTML=incoming?.length?incoming.map(o=>`<article class="notificationItem"><div class="notificationItemTop"><b>${esc(nm.get(o.from_user_id)||'Oyuncu')}</b><time>${new Date(o.created_at).toLocaleString('tr-TR')}</time></div><p>${fmt(o.amount)} · ${esc(o.message||'')}</p><div style="display:flex;gap:8px"><button class="accountBtn accountPrimary offerAccept" data-offer="${o.id}">KABUL</button><button class="accountBtn offerReject" data-offer="${o.id}">REDDET</button></div></article>`).join(''):'<div class="directoryEmpty">Gelen teklif yok.</div>';}
-  q('#notificationButton')?.addEventListener('click',()=>setTimeout(loadOffers,100));q('#offerList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-offer]');if(!b)return;const u=await getUser();if(!u)return;const status=b.classList.contains('offerAccept')?'accepted':'rejected';const {error}=await mortaSupabase.from('transfer_offers').update({status,updated_at:new Date().toISOString()}).eq('id',b.dataset.offer).eq('to_user_id',u.id);if(error)alert(error.message);loadOffers();});
+  /* =========================
+     ADMIN REPORTS
+     ========================= */
+  async function loadReports(){const s=sup(),box=q('#adminReportList');if(!s||!box)return;const r=await s.from('profile_reports').select('id,profile_id,reporter_id,reason,details,status,created_at').order('created_at',{ascending:false}).limit(30);if(r.error){box.innerHTML=`<div class="adminEmpty">Raporlar okunamadı: ${esc(r.error.message)}</div>`;return}box.innerHTML=r.data?.length?r.data.map(x=>`<article class="adminMsg" data-report-id="${x.id}"><div class="adminMsgMeta"><b>${esc(x.reason)}</b><br>${new Date(x.created_at).toLocaleString('tr-TR')}</div><div class="adminMsgBody">${esc(x.details||'Açıklama yok')}</div><div class="adminMsgActions"><select class="reportStatus"><option value="pending" ${x.status==='pending'?'selected':''}>Bekliyor</option><option value="reviewing" ${x.status==='reviewing'?'selected':''}>İnceleniyor</option><option value="resolved" ${x.status==='resolved'?'selected':''}>Çözüldü</option><option value="dismissed" ${x.status==='dismissed'?'selected':''}>Reddedildi</option></select><button class="accountBtn accountPrimary reportSave">KAYDET</button></div></article>`).join(''):'<div class="adminEmpty">Henüz rapor yok.</div>';}
+  q('#adminReportList')?.addEventListener('click',async e=>{const b=e.target.closest('.reportSave');if(!b)return;const c=b.closest('[data-report-id]'),id=Number(c.dataset.reportId),status=c.querySelector('.reportStatus').value;const r=await sup().from('profile_reports').update({status}).eq('id',id);if(r.error)alert(r.error.message);else{b.textContent='KAYDEDİLDİ';setTimeout(()=>b.textContent='KAYDET',900);}});
+  async function loadAdminSummary(){
+    const s=sup(); if(!s)return;
+    const users=(await s.from('profiles').select('id',{count:'exact',head:true})).count||0;
+    const offers=(await s.from('transfer_offers').select('id',{count:'exact',head:true}).eq('status','pending')).count||0;
+    const reports=(await s.from('profile_reports').select('id',{count:'exact',head:true}).in('status',['pending','reviewing'])).count||0;
+    q('#adminUserCount')&&(q('#adminUserCount').textContent=String(users));
+    q('#adminOfferCount')&&(q('#adminOfferCount').textContent=String(offers));
+    q('#adminReportCount')&&(q('#adminReportCount').textContent=String(reports));
+  }
+  q('#adminRefresh')?.addEventListener('click',()=>{loadDirectory();loadNews();loadHub();loadNotifications();loadOffers();loadReports();loadAdminSummary();});
+  const existingAdmin=q('#adminInboxButton'); if(existingAdmin){existingAdmin.addEventListener('click',()=>setTimeout(loadReports,250));}
 
-  // Admin dashboard stats.
-  const adminButton=q('#adminInboxButton');adminButton?.addEventListener('click',async()=>{try{const [{count:users},{count:players},{count:teams},{count:pending}]=await Promise.all([
-      mortaSupabase.from('profiles').select('id',{count:'exact',head:true}),mortaSupabase.from('profiles').select('id',{count:'exact',head:true}).eq('role','player'),mortaSupabase.from('team_profiles').select('id',{count:'exact',head:true}),mortaSupabase.from('support_messages').select('id',{count:'exact',head:true}).eq('status','Bekliyor')]);q('#adminUserCount').textContent=users??0;q('#adminPlayerCount').textContent=players??0;q('#adminTeamCount').textContent=teams??0;q('#adminPendingCount').textContent=pending??0;}catch(e){console.error(e)}});
-
-  // Keep player value cards fresh after an edit.
-  setInterval(()=>{if(document.visibilityState==='visible')reload()},15000);
-  reload();
+  loadDirectory();loadNews();loadHub();loadNotifications();loadAdminSummary();setInterval(()=>{loadNotifications();loadHub();},12000);
 })();
 </script>
 </body>
