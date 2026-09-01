@@ -1639,7 +1639,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 
 
 <script>
-(() => {
+(async () => {
   const q = s => document.querySelector(s);
   const qa = s => [...document.querySelectorAll(s)];
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
