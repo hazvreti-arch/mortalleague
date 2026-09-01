@@ -2096,5 +2096,36 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
 })();
 </script>
 
+
+<style id="dmVisibilityFix">
+/* DM'yi sitede açıkça görünür yap */
+.mortaDesktopDM{
+  position:fixed;right:22px;bottom:22px;z-index:180;
+  border:1px solid #2c2c33;background:#17171c;color:#fff;
+  border-radius:999px;padding:13px 18px;font:700 14px Inter,system-ui,sans-serif;
+  display:flex;align-items:center;gap:9px;box-shadow:0 14px 40px rgba(0,0,0,.35);cursor:pointer
+}
+.mortaDesktopDM:hover{transform:translateY(-2px);background:#202027}
+.mortaDesktopDM span{width:9px;height:9px;background:#22c55e;border-radius:50%;display:block}
+@media(max-width:900px){.mortaDesktopDM{display:none!important}}
+</style>
+<button class="mortaDesktopDM" id="mortaDesktopDM" type="button"><span></span> Mesajlar</button>
+<script>
+document.getElementById('mortaDesktopDM')?.addEventListener('click',function(){
+ const dm=document.getElementById('openDMButton');
+ if(dm){dm.click();return;}
+ const modal=document.getElementById('dmModal');
+ if(modal){
+   modal.classList.add('open');
+   modal.setAttribute('aria-hidden','false');
+   if(typeof mortaSupabase!=='undefined'){
+     mortaSupabase.auth.getUser().then(({data})=>{
+       if(!data?.user) alert('Mesajları kullanmak için önce giriş yapmalısın.');
+     });
+   }
+ }
+});
+</script>
+
 </body>
 </html>
