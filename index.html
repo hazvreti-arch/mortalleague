@@ -7,7 +7,7 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; connect-src https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none';">
 
-<title>MORTALLEAGUE — Karanlığın Ligi</title>
+<title>MortaLeague — Futbolun Sosyal Evreni</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap');
 :root{
@@ -441,7 +441,7 @@ body { touch-action:pan-y; }
   <button class="accountBtn accountPrimary" id="openRegister">KAYIT OL</button>
 </div>
 <div class="userPanel" id="userPanel" hidden>
-  <button id="userMenuButton" class="userPill" type="button" onclick="window.__openMortaProfile && window.__openMortaProfile(event)"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button><button id="notificationButton" class="accountBtn notificationBell" type="button" aria-label="Bildirimler">🔔<span id="notificationBadge" class="notificationBadge" hidden>0</span></button>
+  <button id="userMenuButton" class="userPill" type="button" onclick="window.__openMortaProfile && window.__openMortaProfile(event)"><span class="userAvatarMini"><span id="userAvatarDot">●</span><img id="userAvatarThumb" alt="Profil" hidden></span><b id="currentUsername"></b></button><button id="openDMButton" class="accountBtn notificationBell" type="button" aria-label="Mesajlar">💬<span id="dmBadge" class="notificationBadge" hidden>0</span></button><button id="notificationButton" class="accountBtn notificationBell" type="button" aria-label="Bildirimler">🔔<span id="notificationBadge" class="notificationBadge" hidden>0</span></button>
 </div>
 <button class="navCta" data-open="rulesModal">Kuralları Gör →</button>
 </nav>
@@ -1927,5 +1927,174 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     loadDirectory();loadNews();loadHub();loadNotifications();loadAdminSummary();setInterval(()=>{loadNotifications();loadHub();},12000);
 })();
 </script>
+
+<style id="instagramLikeMorta">
+/* ===== MORTALLEAGUE SOCIAL REDESIGN ===== */
+:root{--igbg:#09090b;--igpanel:#111114;--igline:#26262b;--igsoft:#18181d;--igtext:#f5f5f7;--igmuted:#a1a1aa}
+body{background:var(--igbg)!important;color:var(--igtext)!important}
+#particles{display:none!important}
+header{background:rgba(9,9,11,.88)!important;border-bottom:1px solid var(--igline)!important;backdrop-filter:blur(18px)}
+.nav{max-width:1180px!important;height:66px!important}
+.logoMark{background:linear-gradient(135deg,#8b5cf6,#ec4899)!important;box-shadow:none!important}
+.logo div{font-family:Inter,system-ui!important;letter-spacing:-.6px!important;font-size:18px!important}
+.logo small{display:none!important}
+.navlinks{position:absolute;left:50%;transform:translateX(-50%);gap:2px!important}
+.navlinks button{font-family:Inter!important;text-transform:none!important;font-size:13px!important;letter-spacing:0!important;padding:9px 12px!important}
+.navlinks button:hover{background:var(--igsoft)!important;border-radius:9px!important}
+.navCta{display:none!important}
+main{max-width:1180px!important;padding-top:88px!important}
+.hero{display:none!important}
+section#news{display:none!important}
+section#mortaHub{display:none!important}
+.section{padding:28px 0!important}
+#mortahub{padding-top:8px!important}
+#mortahub>.sectionHead{display:none!important}
+.hubShell{margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
+.hubHero{display:none!important}
+.hubTabs{position:sticky;top:66px;z-index:20;background:rgba(9,9,11,.94);backdrop-filter:blur(18px);padding:10px 0 14px!important;border-bottom:1px solid var(--igline)!important;margin-bottom:18px}
+.hubTabs button{font-family:Inter!important;border:0!important;background:transparent!important;color:var(--igmuted)!important;padding:10px 14px!important;border-radius:8px!important;font-size:14px!important}
+.hubTabs button.active{background:var(--igsoft)!important;color:#fff!important}
+.hubLayout{grid-template-columns:minmax(0,650px) 290px!important;justify-content:center!important;gap:28px!important;padding:0!important}
+.hubCompose,.hubPost,.hubExploreCard{background:var(--igpanel)!important;border:1px solid var(--igline)!important;border-radius:14px!important;box-shadow:none!important}
+.hubCompose{padding:15px!important}
+.hubProfileStrip{font-family:Inter!important}
+.hubComposer{font-family:Inter!important;font-size:15px!important;min-height:82px!important;padding:14px 2px!important}
+.hubComposeActions{border-top:1px solid var(--igline)!important}
+.hubComposeActions .primary{border-radius:9px!important;padding:10px 18px!important;font-family:Inter!important;font-size:13px!important}
+.hubPost{padding:0!important;overflow:hidden!important;margin-top:18px!important}
+.hubPostHead{padding:14px 15px!important}
+.hubPostBody{padding:0 15px 14px!important;font-family:Inter!important;font-size:14px!important}
+.hubPostImage{max-height:620px!important;object-fit:cover!important;border-radius:0!important}
+.hubPostActions{padding:12px 15px!important;border-top:1px solid var(--igline)!important}
+.hubPostActions button{font-family:Inter!important}
+.hubAvatar,.hubAvatarFallback{border:1px solid var(--igline)!important}
+.hubAside{position:sticky;top:125px;height:max-content}
+.hubExploreCard{padding:16px!important}
+.hubSearch{background:var(--igsoft)!important;border:0!important;border-radius:9px!important;color:#fff!important}
+.hubSideTitle{font-family:Inter!important;font-size:13px!important;letter-spacing:0!important}
+#hubSuggested{max-height:420px;overflow:auto}
+#league,#playerCalculator,#systems{opacity:.98}
+.sectionHead h2{font-family:Inter!important;letter-spacing:-1px!important}
+.grid .card,.card,.panel,.calcPanel{background:var(--igpanel)!important;border-color:var(--igline)!important;border-radius:14px!important}
+.primary{font-family:Inter!important;border-radius:9px!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important}
+.secondary,.accountBtn{font-family:Inter!important;border-radius:9px!important}
+footer{border-top:1px solid var(--igline)!important;background:#09090b!important}
+
+/* Compact old systems: no longer dominate the social homepage */
+#league,#playerCalculator,#systems{margin-top:20px}
+.systemsDisclosure{border-radius:14px!important;border-color:var(--igline)!important}
+
+/* Social quick rail */
+.mortaSocialIntro{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 0 18px}
+.mortaSocialIntro h1{font:800 27px Inter,sans-serif!important;letter-spacing:-1px!important;margin:0!important}
+.mortaSocialIntro p{margin:4px 0 0!important;color:var(--igmuted)!important;font-size:13px!important}
+.mortaSocialStatus{display:flex;gap:8px;align-items:center;color:#b8b8c2;font-size:12px}
+.mortaSocialStatus i{width:8px;height:8px;background:#22c55e;border-radius:50%;display:block}
+
+/* Instagram-like mobile navigation */
+.mortaBottomNav{display:none}
+@media(max-width:900px){
+ main{padding:78px 12px 88px!important}
+ .nav{padding:0 14px!important}
+ .navlinks{display:none!important}
+ .nav .accountActions{margin-left:auto!important}
+ .hubLayout{grid-template-columns:1fr!important;display:block!important}
+ .hubAside{position:static!important;margin-top:18px}
+ .hubAside .hubExploreCard:nth-child(2){display:none}
+ .hubTabs{top:64px}
+ .mortaBottomNav{position:fixed;z-index:100;bottom:0;left:0;right:0;height:64px;background:rgba(9,9,11,.96);backdrop-filter:blur(16px);border-top:1px solid var(--igline);display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}
+ .mortaBottomNav button{background:none;border:0;color:#a1a1aa;font:600 10px Inter,sans-serif;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
+ .mortaBottomNav button b{font-size:19px;line-height:19px;font-weight:500}
+ .mortaBottomNav button.active{color:#fff}
+ #league,#playerCalculator,#systems{display:none!important}
+}
+@media(min-width:901px){
+ .mortaSocialIntro{margin-left:auto;margin-right:auto;max-width:968px}
+}
+</style>
+
+<div class="mortaBottomNav" id="mortaBottomNav">
+ <button class="active" data-scroll="mortahub"><b>⌂</b>Ana Akış</button>
+ <button data-hub-mobile="explore"><b>⌕</b>Keşfet</button>
+ <button data-scroll="players"><b>♟</b>Oyuncular</button>
+ <button id="mobileDMNav"><b>✉</b>Mesajlar</button>
+ <button id="mobileHubCompose"><b>＋</b>Paylaş</button>
+ <button id="mobileProfileNav"><b>◉</b>Profil</button>
+</div>
+
+<script>
+(function(){
+  const hub=document.getElementById('mortahub');
+  const main=document.querySelector('main');
+  if(hub&&main) main.insertBefore(hub,main.firstElementChild);
+
+  const shell=hub&&hub.querySelector('.hubShell');
+  if(shell&&!document.getElementById('mortaSocialIntro')){
+    const intro=document.createElement('div');
+    intro.id='mortaSocialIntro';
+    intro.className='mortaSocialIntro';
+    intro.innerHTML='<div><h1>MortaHub</h1><p>Takip et, paylaş ve futbol dünyanı keşfet.</p></div><div class="mortaSocialStatus"><i></i> MortaLeague topluluğu</div>';
+    shell.parentNode.insertBefore(intro,shell);
+  }
+
+  function activateTab(name){
+    const btn=document.querySelector('.hubTabs [data-hub-tab="'+name+'"]');
+    if(btn) btn.click();
+  }
+  document.querySelectorAll('[data-hub-mobile]').forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.hubMobile)));
+  const compose=document.getElementById('mobileHubCompose');
+  if(compose) compose.addEventListener('click',()=>{
+    document.getElementById('mortahub')?.scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>document.getElementById('hubPostText')?.focus(),450);
+  });
+  const prof=document.getElementById('mobileProfileNav');
+  if(prof) prof.addEventListener('click',()=>{
+    const x=document.getElementById('userMenuButton');
+    if(x) x.click(); else document.getElementById('openLogin')?.click();
+  });
+  document.querySelectorAll('.mortaBottomNav [data-scroll]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.mortaBottomNav button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  }));
+})();
+</script>
+
+
+<style id="mortaDMStyles">
+#dmModal{position:fixed;inset:0;z-index:500;display:none;background:rgba(0,0,0,.58);backdrop-filter:blur(8px)}
+#dmModal.open{display:flex;align-items:center;justify-content:center;padding:18px}
+.dmApp{width:min(1080px,100%);height:min(760px,calc(100vh - 36px));background:#0d0d10;border:1px solid #29292f;border-radius:18px;overflow:hidden;display:grid;grid-template-columns:340px 1fr;color:#fff;font-family:Inter,system-ui,sans-serif;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.dmSidebar{border-right:1px solid #29292f;display:flex;flex-direction:column;min-width:0}.dmSideHead{height:68px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #29292f}.dmSideHead b{font-size:17px}.dmIconBtn{border:0;background:transparent;color:#fff;font-size:23px;cursor:pointer;padding:8px}.dmSearch{margin:12px;background:#18181d;border:1px solid #26262b;border-radius:10px;padding:11px 12px;color:#fff;outline:none}.dmThreadList{overflow:auto;padding:0 8px 12px}.dmThread{width:100%;display:flex;align-items:center;gap:11px;background:transparent;border:0;border-radius:10px;padding:10px;text-align:left;color:#fff;cursor:pointer}.dmThread:hover,.dmThread.active{background:#18181d}.dmAvatar{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#25252c;display:grid;place-items:center;font-weight:800;flex:none}.dmThreadText{min-width:0;flex:1}.dmThreadText b,.dmThreadText span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dmThreadText span{font-size:12px;color:#a1a1aa;margin-top:3px}.dmMain{display:flex;flex-direction:column;min-width:0}.dmEmpty{margin:auto;text-align:center;color:#a1a1aa}.dmEmpty h3{color:#fff;margin:10px 0}.dmChatHead{height:68px;border-bottom:1px solid #29292f;padding:0 18px;display:flex;align-items:center;gap:11px}.dmChatHead .dmCloseMobile{display:none}.dmChatHeadText{display:flex;flex-direction:column}.dmChatHeadText b{font-size:14px}.dmChatHeadText span{font-size:11px;color:#a1a1aa;margin-top:2px}.dmMessages{flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:8px}.dmBubble{max-width:min(72%,580px);padding:10px 13px;border-radius:18px;background:#242429;color:#fff;line-height:1.4;font-size:14px;align-self:flex-start;word-break:break-word}.dmBubble.mine{align-self:flex-end;background:linear-gradient(135deg,#7c3aed,#db2777)}.dmMeta{font-size:10px;opacity:.65;margin-top:4px}.dmComposer{padding:14px 18px;border-top:1px solid #29292f;display:flex;gap:9px;align-items:center}.dmComposer input{flex:1;background:#18181d;border:1px solid #2b2b31;border-radius:22px;padding:12px 16px;color:#fff;outline:none}.dmComposer button{border:0;background:#7c3aed;color:#fff;border-radius:20px;padding:10px 17px;font-weight:700;cursor:pointer}.dmNew{position:absolute;inset:0;background:#0d0d10;display:none;flex-direction:column}.dmNew.open{display:flex}.dmNewHead{height:68px;padding:0 18px;border-bottom:1px solid #29292f;display:flex;align-items:center;gap:12px}.dmNewHead input{flex:1;background:transparent;border:0;color:#fff;outline:none;font-size:16px}.dmUserResults{overflow:auto;padding:8px 14px}.dmUserRow{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;cursor:pointer}.dmUserRow:hover{background:#18181d}.dmCreateGroup{padding:14px 18px;border-top:1px solid #29292f;display:none}.dmCreateGroup.show{display:block}.dmCreateGroup input{width:100%;box-sizing:border-box;background:#18181d;border:1px solid #29292f;border-radius:9px;padding:11px;color:#fff;margin-bottom:9px}.dmCreateGroup button{width:100%;border:0;border-radius:9px;padding:11px;background:#7c3aed;color:#fff;font-weight:800;cursor:pointer}.dmHint{padding:20px;color:#777;font-size:13px}
+@media(max-width:700px){#dmModal.open{padding:0}.dmApp{height:100vh;width:100%;border:0;border-radius:0;grid-template-columns:1fr}.dmApp.chatOpen .dmSidebar{display:none}.dmApp:not(.chatOpen) .dmMain{display:none}.dmChatHead .dmCloseMobile{display:block}.dmBubble{max-width:84%}.dmMessages{padding:15px}.dmComposer{padding:10px 12px}}
+</style>
+<div id="dmModal" aria-hidden="true">
+ <div class="dmApp" id="dmApp">
+  <aside class="dmSidebar"><div class="dmSideHead"><b>Mesajlar</b><div><button class="dmIconBtn" id="dmNewChat" title="Yeni mesaj">✎</button><button class="dmIconBtn" id="dmClose">×</button></div></div><input id="dmSearch" class="dmSearch" placeholder="Sohbetlerde ara..."><div id="dmThreadList" class="dmThreadList"></div><div class="dmNew" id="dmNewPanel"><div class="dmNewHead"><button class="dmIconBtn" id="dmBackNew">‹</button><input id="dmUserSearch" placeholder="Kişi ara..."></div><div class="dmHint">Bir kişi seçerek sohbet başlatabilir veya birden fazla kişi seçerek grup oluşturabilirsin.</div><div id="dmUserResults" class="dmUserResults"></div><div id="dmCreateGroup" class="dmCreateGroup"><input id="dmGroupName" placeholder="Grup adı"><button id="dmCreateGroupBtn">Grubu oluştur</button></div></div></aside>
+  <section class="dmMain"><div id="dmEmpty" class="dmEmpty"><div style="font-size:52px">✉</div><h3>Mesajların</h3><p>Bir sohbet seç veya yeni mesaj başlat.</p></div><div id="dmChat" style="display:none;height:100%;flex-direction:column"><div class="dmChatHead"><button class="dmIconBtn dmCloseMobile" id="dmBackChat">‹</button><div id="dmChatAvatar" class="dmAvatar">M</div><div class="dmChatHeadText"><b id="dmChatTitle">Sohbet</b><span id="dmChatSubtitle"></span></div></div><div id="dmMessages" class="dmMessages"></div><form id="dmComposer" class="dmComposer"><input id="dmMessageInput" maxlength="4000" autocomplete="off" placeholder="Mesaj yaz..."><button>Gönder</button></form></div></section>
+ </div>
+</div>
+<script id="mortaDMScript">
+(()=>{
+ const $=s=>document.querySelector(s); let currentUser=null,currentConv=null,realtime=null;
+ const modal=$('#dmModal'),app=$('#dmApp'),threads=$('#dmThreadList'),newPanel=$('#dmNewPanel'),userResults=$('#dmUserResults'),groupBox=$('#dmCreateGroup');
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const initials=n=>(n||'?').trim().slice(0,2).toUpperCase();
+ async function me(){const {data:{user}}=await mortaSupabase.auth.getUser();currentUser=user;return user}
+ function open(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');app.classList.remove('chatOpen');loadThreads()}
+ function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
+ async function profileMap(ids){if(!ids.length)return new Map();const {data}=await mortaSupabase.from('profiles').select('id,username,avatar_url,profile_type').in('id',ids);return new Map((data||[]).map(x=>[x.id,x]))}
+ async function loadThreads(){if(!await me()){alert('Mesajları kullanmak için giriş yapmalısın.');return}threads.innerHTML='<div class="dmHint">Sohbetler yükleniyor...</div>';const {data: memberships,error}=await mortaSupabase.from('conversation_members').select('conversation_id,conversations(id,type,name,avatar_url,updated_at,created_by)').eq('user_id',currentUser.id).order('joined_at',{ascending:false});if(error){threads.innerHTML='<div class="dmHint">Mesaj sistemi henüz kurulmadı. SQL dosyasını çalıştır.</div>';return}const convs=(memberships||[]).map(x=>x.conversations).filter(Boolean);if(!convs.length){threads.innerHTML='<div class="dmHint">Henüz hiç mesajın yok. Sağ üstteki ✎ ile yeni sohbet başlat.</div>';return}const ids=convs.map(x=>x.id);const {data:lasts}=await mortaSupabase.from('direct_messages').select('conversation_id,body,created_at').in('conversation_id',ids).order('created_at',{ascending:false});const last=new Map();(lasts||[]).forEach(m=>{if(!last.has(m.conversation_id))last.set(m.conversation_id,m)});const allMembers={};await Promise.all(convs.map(async c=>{const {data}=await mortaSupabase.from('conversation_members').select('user_id').eq('conversation_id',c.id);allMembers[c.id]=(data||[]).map(x=>x.user_id)}));const userIds=[...new Set(Object.values(allMembers).flat().filter(id=>id!==currentUser.id))];const pm=await profileMap(userIds);threads.innerHTML=convs.map(c=>{const other=pm.get(allMembers[c.id].find(id=>id!==currentUser.id));const title=c.type==='group'?(c.name||'İsimsiz grup'):(other?.username||'Kullanıcı');const av=c.avatar_url||other?.avatar_url;const l=last.get(c.id);return `<button class="dmThread ${currentConv?.id===c.id?'active':''}" data-id="${c.id}" data-title="${esc(title)}" data-type="${c.type}"><span class="dmAvatar">${av?`<img src="${esc(av)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:initials(title)}</span><span class="dmThreadText"><b>${esc(title)}</b><span>${esc(l?.body||'Henüz mesaj yok')}</span></span></button>`}).join('');}
+ async function openConversation(id,title,type){currentConv={id,title,type};$('#dmEmpty').style.display='none';$('#dmChat').style.display='flex';$('#dmChatTitle').textContent=title;$('#dmChatSubtitle').textContent=type==='group'?'Grup sohbeti':'Özel sohbet';$('#dmChatAvatar').textContent=initials(title);app.classList.add('chatOpen');await loadMessages();loadThreads();if(realtime){mortaSupabase.removeChannel(realtime)}realtime=mortaSupabase.channel('dm-'+id).on('postgres_changes',{event:'INSERT',schema:'public',table:'direct_messages',filter:'conversation_id=eq.'+id},p=>{if(p.new.sender_id!==currentUser.id)appendMessage(p.new,false)}).subscribe()}
+ async function loadMessages(){const box=$('#dmMessages');box.innerHTML='<div class="dmHint">Mesajlar yükleniyor...</div>';const {data,error}=await mortaSupabase.from('direct_messages').select('id,sender_id,body,created_at').eq('conversation_id',currentConv.id).is('deleted_at',null).order('created_at',{ascending:true});if(error){box.innerHTML='<div class="dmHint">Mesajlar yüklenemedi.</div>';return}box.innerHTML='';(data||[]).forEach(m=>appendMessage(m,false));box.scrollTop=box.scrollHeight}
+ function appendMessage(m,scroll=true){const box=$('#dmMessages');const mine=m.sender_id===currentUser.id;const d=document.createElement('div');d.className='dmBubble'+(mine?' mine':'');d.dataset.mid=m.id;d.innerHTML=`<div>${esc(m.body)}</div><div class="dmMeta">${new Date(m.created_at).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>`;box.appendChild(d);if(scroll)box.scrollTop=box.scrollHeight}
+ async function sendMessage(body){if(!currentConv||!body.trim())return;const {data,error}=await mortaSupabase.from('direct_messages').insert({conversation_id:currentConv.id,sender_id:currentUser.id,body:body.trim()}).select().single();if(error){alert(error.message);return}appendMessage(data);await mortaSupabase.from('conversations').update({updated_at:new Date().toISOString()}).eq('id',currentConv.id);loadThreads()}
+ let selected=[];
+ async function searchUsers(q=''){if(!await me())return;const {data}=await mortaSupabase.from('profiles').select('id,username,avatar_url,profile_type').neq('id',currentUser.id).ilike('username','%'+q+'%').limit(30);userResults.innerHTML=(data||[]).map(u=>`<div class="dmUserRow" data-user='${u.id}' data-name='${esc(u.username)}'><span class="dmAvatar">${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:initials(u.username)}</span><div><b>${esc(u.username)}</b><div style="font-size:11px;color:#999">${esc(u.profile_type||'Kullanıcı')}</div></div><span style="margin-left:auto">${selected.includes(u.id)?'✓':''}</span></div>`).join('')||'<div class="dmHint">Kullanıcı bulunamadı.</div>'}
+ async function chooseUser(id,name){if(selected.includes(id))selected=selected.filter(x=>x!==id);else selected.push(id);groupBox.classList.toggle('show',selected.length>1);if(selected.length===1){const key=[currentUser.id,id].sort().join(':');let {data:conv}=await mortaSupabase.from('conversations').select('id,type,name').eq('direct_key',key).maybeSingle();if(!conv){const {data:newc,error}=await mortaSupabase.from('conversations').insert({type:'direct',direct_key:key,created_by:currentUser.id}).select().single();if(error){alert(error.message);return}conv=newc;await mortaSupabase.from('conversation_members').insert([{conversation_id:conv.id,user_id:currentUser.id,role:'owner'},{conversation_id:conv.id,user_id:id,role:'member'}])}newPanel.classList.remove('open');selected=[];openConversation(conv.id,name,'direct')}else searchUsers($('#dmUserSearch').value)}
+ async function createGroup(){const name=$('#dmGroupName').value.trim();if(!name||selected.length<2)return alert('Grup için en az 2 kişi ve bir grup adı seç.');const {data:c,error}=await mortaSupabase.from('conversations').insert({type:'group',name,created_by:currentUser.id}).select().single();if(error)return alert(error.message);const rows=[{conversation_id:c.id,user_id:currentUser.id,role:'owner'},...selected.map(id=>({conversation_id:c.id,user_id:id,role:'member'}))];const {error:e}=await mortaSupabase.from('conversation_members').insert(rows);if(e)return alert(e.message);newPanel.classList.remove('open');selected=[];openConversation(c.id,name,'group')}
+ $('#openDMButton')?.addEventListener('click',open);$('#mobileDMNav')?.addEventListener('click',open);$('#dmClose')?.addEventListener('click',close);$('#dmBackChat')?.addEventListener('click',()=>app.classList.remove('chatOpen'));$('#dmNewChat')?.addEventListener('click',()=>{newPanel.classList.add('open');selected=[];groupBox.classList.remove('show');searchUsers()});$('#dmBackNew')?.addEventListener('click',()=>newPanel.classList.remove('open'));$('#dmUserSearch')?.addEventListener('input',e=>searchUsers(e.target.value));$('#dmThreadList')?.addEventListener('click',e=>{const b=e.target.closest('.dmThread');if(b)openConversation(b.dataset.id,b.dataset.title,b.dataset.type)});$('#dmUserResults')?.addEventListener('click',e=>{const r=e.target.closest('.dmUserRow');if(r)chooseUser(r.dataset.user,r.dataset.name)});$('#dmCreateGroupBtn')?.addEventListener('click',createGroup);$('#dmComposer')?.addEventListener('submit',e=>{e.preventDefault();const i=$('#dmMessageInput');const v=i.value;i.value='';sendMessage(v)});modal?.addEventListener('click',e=>{if(e.target===modal)close()});
+})();
+</script>
+
 </body>
 </html>
