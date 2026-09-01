@@ -390,6 +390,15 @@ body { touch-action:pan-y; }
   .profileModal .profileCard { position:relative !important; z-index:1 !important; width:100% !important; max-width:470px !important; max-height:none !important; height:auto !important; margin:0 auto 24px !important; overflow:visible !important; }
 }
 
+
+/* ========================= MORTAHUB ========================= */
+.hubShell{margin:26px 0 50px;border:1px solid rgba(168,85,247,.28);border-radius:28px;background:linear-gradient(145deg,rgba(27,13,43,.92),rgba(8,5,15,.94));overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.22)}
+.hubHero{padding:32px;display:flex;justify-content:space-between;gap:24px;align-items:end;background:radial-gradient(circle at 90% 10%,rgba(168,85,247,.22),transparent 32%)}
+.hubHero h2{font-family:Orbitron;margin:0;font-size:clamp(28px,5vw,52px);letter-spacing:-2px}.hubHero p{color:var(--muted);max-width:650px;margin:10px 0 0}
+.hubTabs{display:flex;gap:8px;padding:0 20px 18px;overflow-x:auto;border-bottom:1px solid var(--line)}.hubTabs button{white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#cbbfd7;padding:10px 15px;border-radius:12px;cursor:pointer}.hubTabs button.active{background:linear-gradient(135deg,#7d32dc,#b83bd0);color:#fff;border-color:transparent}
+.hubLayout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;padding:22px}.hubCompose,.hubPost,.hubExploreCard{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:20px;padding:18px}.hubComposeTop{display:flex;gap:12px}.hubAvatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#251333;flex:none}.hubAvatarFallback{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#2a153a;font-weight:800;flex:none}.hubComposer{width:100%;min-height:76px;resize:vertical;border:0;background:transparent;color:#fff;outline:none;font:inherit}.hubComposeActions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.hubImageInput{max-width:100%;font-size:12px;color:#b8aac7}.hubPost{margin-top:15px}.hubPostHead{display:flex;align-items:center;gap:11px}.hubPostHead b{display:block}.hubPostHead small{color:var(--muted)}.hubPostMenu{margin-left:auto;background:none;border:0;color:#a99eb5;cursor:pointer}.hubPostBody{white-space:pre-wrap;line-height:1.6;margin:14px 0}.hubPostImage{width:100%;max-height:520px;object-fit:cover;border-radius:15px;border:1px solid var(--line);margin:4px 0 12px}.hubPostStats{color:var(--muted);font-size:12px;margin:8px 0}.hubPostActions{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:11px}.hubPostActions button{flex:1;border:0;background:rgba(255,255,255,.035);color:#d6cadf;padding:9px;border-radius:10px;cursor:pointer}.hubPostActions button.liked{color:#ff91ba;background:rgba(255,80,150,.1)}.hubSideTitle{font:700 12px Orbitron;letter-spacing:1px;color:#cba8ee;margin:5px 0 12px}.hubUserRow{display:flex;align-items:center;gap:10px;padding:10px 0}.hubUserRow+.hubUserRow{border-top:1px solid rgba(255,255,255,.06)}.hubUserMeta{min-width:0;flex:1}.hubUserMeta b,.hubUserMeta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hubUserMeta span{font-size:12px;color:var(--muted);margin-top:3px}.hubFollowBtn{border:1px solid rgba(168,85,247,.45);background:rgba(139,61,255,.13);color:#d9bcff;padding:7px 10px;border-radius:9px;cursor:pointer;font-size:12px}.hubFollowBtn.following{background:rgba(255,255,255,.06);border-color:var(--line);color:#aaa}.hubEmpty{padding:35px 15px;text-align:center;color:var(--muted)}.hubSearch{width:100%;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;outline:none;margin-bottom:12px}.hubCount{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.hubCount span{font-size:12px;padding:7px 10px;border-radius:999px;background:rgba(168,85,247,.1);color:#d8b8f4}.hubCommentBox{display:none;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.hubCommentBox.open{display:block}.hubCommentRow{display:flex;gap:8px;margin-top:8px}.hubCommentRow input{flex:1;min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.04);color:#fff}.hubCommentRow button{padding:0 12px;border:0;border-radius:10px;background:#8137dc;color:#fff;cursor:pointer}.hubComment{padding:8px 0;font-size:13px}.hubComment b{margin-right:6px}.hubProfileStrip{display:flex;gap:12px;align-items:center;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+@media(max-width:850px){.hubLayout{grid-template-columns:1fr}.hubAside{display:none}.hubHero{padding:24px}.hubComposeActions{align-items:flex-start;flex-direction:column}.hubComposeActions .primary{width:100%}}
+
 </style>
 
 
@@ -425,7 +434,7 @@ body { touch-action:pan-y; }
 <div class="navlinks">
 <button data-scroll="home">Ana Sayfa</button>
 <button data-scroll="league">Lig</button>
-<button data-scroll="players">Oyuncular</button><button data-scroll="systems">Sistemler</button>
+<button data-scroll="players">Oyuncular</button><button data-scroll="mortahub">MortaHub</button><button data-scroll="systems">Sistemler</button>
 </div>
 <div class="accountActions" id="accountActions">
   <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
@@ -1204,6 +1213,33 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
 </details>
 </section>
+
+<section class="section" id="mortahub">
+  <div class="sectionHead"><div><h2>MORTAHUB</h2><p>MortaLeague'in sosyal merkezi. Takip et, paylaş ve keşfet.</p></div><span class="badge">SOCIAL ERA</span></div>
+  <div class="hubShell">
+    <div class="hubHero"><div><div class="eyebrow">🌐 MORTALLEAGUE SOCIAL</div><h2>MORTA<span class="gradient">HUB</span></h2><p>Oyuncuları ve takımları takip et. Futbol dünyandaki gelişmeleri kendi akışında gör.</p></div></div>
+    <div class="hubTabs">
+      <button class="active" data-hub-tab="feed">🏠 Ana Akış</button>
+      <button data-hub-tab="following">👥 Takip Edilenler</button>
+      <button data-hub-tab="explore">🔥 Keşfet</button>
+    </div>
+    <div class="hubLayout">
+      <div>
+        <div class="hubCompose" id="hubCompose">
+          <div class="hubProfileStrip"><div class="hubAvatarFallback" id="hubComposeFallback">M</div><img id="hubComposeAvatar" class="hubAvatar" hidden alt=""><div><b id="hubComposeName">MortaLeague</b><small style="color:var(--muted)">Toplulukla paylaş</small></div></div>
+          <textarea id="hubPostText" class="hubComposer" maxlength="1500" placeholder="Futbol dünyasında neler oluyor?"></textarea>
+          <div class="hubComposeActions"><input id="hubPostImage" class="hubImageInput" type="file" accept="image/*"><button id="hubPublish" class="primary" type="button">PAYLAŞ →</button></div>
+        </div>
+        <div id="hubFeed"></div>
+      </div>
+      <aside class="hubAside">
+        <div class="hubExploreCard"><div class="hubSideTitle">🔥 KEŞFET</div><input id="hubSearch" class="hubSearch" placeholder="Oyuncu veya takım ara..."><div id="hubSuggested"></div></div>
+        <div class="hubExploreCard" style="margin-top:15px"><div class="hubSideTitle">📈 MORTAHUB</div><div class="hubCount"><span id="hubPostCount">0 gönderi</span><span id="hubFollowingCount">0 takip</span></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
   <div class="cta"><div><h2>SAHAYA ÇIKMAYA HAZIR MISIN?</h2><p>MortalLeague'de her kararın bir sonucu var.</p></div><button class="primary" data-open="rulesModal">Kuralları Aç →</button></div>
 </main>
 
@@ -1778,7 +1814,117 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   q('#adminRefresh')?.addEventListener('click',()=>{loadDirectory();loadNews();loadHub();loadNotifications();loadOffers();loadReports();loadAdminSummary();});
   const existingAdmin=q('#adminInboxButton'); if(existingAdmin){existingAdmin.addEventListener('click',()=>setTimeout(loadReports,250));}
 
-  loadDirectory();loadNews();loadHub();loadNotifications();loadAdminSummary();setInterval(()=>{loadNotifications();loadHub();},12000);
+
+  /* =========================
+     MORTAHUB · FOLLOW + FEED + EXPLORE
+     ========================= */
+  let hubMode='feed';
+  let hubMe=null;
+  const hubAvatar=(p,cls='hubAvatar')=>p?.avatar_url?`<img class="${cls}" src="${esc(p.avatar_url)}" alt="">`:`<div class="hubAvatarFallback">${esc((p?.username||p?.team||'M').slice(0,1).toUpperCase())}</div>`;
+  const hubTime=t=>{const d=Math.max(0,Date.now()-new Date(t).getTime()),m=Math.floor(d/60000);if(m<1)return'şimdi';if(m<60)return`${m} dk`;const h=Math.floor(m/60);if(h<24)return`${h} sa`;return new Date(t).toLocaleDateString('tr-TR')};
+
+  async function loadHubIdentity(){
+    const s=sup(),u=await getUser(); if(!s||!u)return null;
+    const {data:p}=await s.from('profiles').select('id,username,avatar_url,account_type,team,position').eq('id',u.id).maybeSingle();
+    hubMe=p||{id:u.id,username:'MortaLeague'};
+    if(q('#hubComposeName'))q('#hubComposeName').textContent=hubMe.username||'MortaLeague';
+    if(hubMe.avatar_url){q('#hubComposeAvatar').src=hubMe.avatar_url;q('#hubComposeAvatar').hidden=false;q('#hubComposeFallback').style.display='none';}
+    else if(q('#hubComposeFallback'))q('#hubComposeFallback').textContent=(hubMe.username||'M').slice(0,1).toUpperCase();
+    return hubMe;
+  }
+
+  async function loadHubSuggested(search=''){
+    const s=sup(),u=await getUser(),box=q('#hubSuggested');if(!s||!box)return;
+    let r=s.from('profiles').select('id,username,avatar_url,account_type,team,position').order('username').limit(8);
+    if(search.trim())r=r.ilike('username',`%${search.trim()}%`);
+    const {data:profiles,error}=await r;if(error){box.innerHTML='<div class="hubEmpty">Kullanıcılar yüklenemedi.</div>';return}
+    const ids=(profiles||[]).filter(p=>p.id!==u?.id).map(p=>p.id);
+    let followed=new Set();
+    if(u&&ids.length){const {data:f}=await s.from('profile_follows').select('following_id').eq('follower_id',u.id).in('following_id',ids);followed=new Set((f||[]).map(x=>x.following_id));}
+    box.innerHTML=(profiles||[]).filter(p=>p.id!==u?.id).slice(0,6).map(p=>`<div class="hubUserRow">${hubAvatar(p)}<div class="hubUserMeta"><b>${esc(p.username||'Kullanıcı')}</b><span>${esc(p.account_type==='team'?(p.team||'Takım'):(p.position||p.team||'Oyuncu'))}</span></div>${u?`<button class="hubFollowBtn ${followed.has(p.id)?'following':''}" data-follow="${p.id}" data-following="${followed.has(p.id)}">${followed.has(p.id)?'Takipte':'Takip Et'}</button>`:''}</div>`).join('')||'<div class="hubEmpty">Burada gösterilecek kullanıcı yok.</div>';
+  }
+
+  async function toggleHubFollow(id,isFollowing){
+    const s=sup(),u=await getUser();if(!s||!u){alert('Takip etmek için giriş yapmalısın.');return}
+    if(isFollowing){const r=await s.from('profile_follows').delete().eq('follower_id',u.id).eq('following_id',id);if(r.error)return alert(r.error.message)}
+    else {const r=await s.from('profile_follows').insert({follower_id:u.id,following_id:id});if(r.error)return alert(r.error.message)}
+    loadHubSuggested(q('#hubSearch')?.value||'');loadHubFeed();
+  }
+
+  async function uploadHubImage(file,u){
+    if(!file)return null;
+    if(!file.type.startsWith('image/'))throw new Error('Sadece görsel dosyası yükleyebilirsin.');
+    if(file.size>8*1024*1024)throw new Error('Görsel en fazla 8 MB olabilir.');
+    const ext=(file.name.split('.').pop()||'jpg').replace(/[^a-z0-9]/gi,'');
+    const path=`${u.id}/feed/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const {error}=await sup().storage.from('avatars').upload(path,file,{upsert:false,contentType:file.type});
+    if(error)throw error;
+    return sup().storage.from('avatars').getPublicUrl(path).data.publicUrl;
+  }
+
+  async function publishHubPost(){
+    const s=sup(),u=await getUser();if(!s||!u){alert('Paylaşım yapmak için giriş yapmalısın.');return}
+    const body=q('#hubPostText').value.trim(),file=q('#hubPostImage').files?.[0];
+    if(!body&&!file){alert('Bir yazı veya görsel eklemelisin.');return}
+    const b=q('#hubPublish');b.disabled=true;b.textContent='PAYLAŞILIYOR...';
+    try{const image_url=await uploadHubImage(file,u);const r=await s.from('hub_posts').insert({author_id:u.id,body,image_url});if(r.error)throw r.error;q('#hubPostText').value='';q('#hubPostImage').value='';await loadHubFeed();}
+    catch(e){alert(e.message||'Gönderi paylaşılırken hata oluştu.')}
+    finally{b.disabled=false;b.textContent='PAYLAŞ →';}
+  }
+
+  async function loadHubFeed(){
+    const s=sup(),u=await getUser(),box=q('#hubFeed');if(!s||!box)return;
+    box.innerHTML='<div class="hubEmpty">Akış yükleniyor...</div>';
+    let query=s.from('hub_posts').select('id,author_id,body,image_url,created_at').order('created_at',{ascending:false}).limit(40);
+    if(hubMode==='following'){
+      if(!u){box.innerHTML='<div class="hubEmpty">Takip ettiklerini görmek için giriş yapmalısın.</div>';return}
+      const {data:f}=await s.from('profile_follows').select('following_id').eq('follower_id',u.id);
+      const ids=(f||[]).map(x=>x.following_id); if(!ids.length){box.innerHTML='<div class="hubEmpty">Henüz kimseyi takip etmiyorsun. Keşfet bölümünden yeni hesaplar bulabilirsin.</div>';return}
+      query=query.in('author_id',ids);
+    }
+    const {data:posts,error}=await query;if(error){box.innerHTML=`<div class="hubEmpty">${esc(error.message)}</div>`;return}
+    if(!posts?.length){box.innerHTML='<div class="hubEmpty">Henüz paylaşım yok. İlk paylaşımı sen yap! ⚽</div>';q('#hubPostCount').textContent='0 gönderi';return}
+    const ids=[...new Set(posts.map(p=>p.author_id))];
+    const {data:authors}=await s.from('profiles').select('id,username,avatar_url,account_type,team,position').in('id',ids);
+    const amap=new Map((authors||[]).map(x=>[x.id,x]));
+    const pids=posts.map(p=>p.id);
+    const [likesRes,commentsRes,myLikesRes]=await Promise.all([
+      s.from('hub_post_likes').select('post_id').in('post_id',pids),
+      s.from('hub_post_comments').select('id,post_id,author_id,comment,created_at').in('post_id',pids).order('created_at',{ascending:true}),
+      u?s.from('hub_post_likes').select('post_id').eq('user_id',u.id).in('post_id',pids):Promise.resolve({data:[]})
+    ]);
+    const likes={};(likesRes.data||[]).forEach(x=>likes[x.post_id]=(likes[x.post_id]||0)+1);
+    const myLikes=new Set((myLikesRes.data||[]).map(x=>x.post_id));
+    const comments={};(commentsRes.data||[]).forEach(x=>(comments[x.post_id]||(comments[x.post_id]=[])).push(x));
+    const cAuthorIds=[...new Set((commentsRes.data||[]).map(c=>c.author_id))];
+    let cmap=amap;if(cAuthorIds.length){const missing=cAuthorIds.filter(id=>!amap.has(id));if(missing.length){const {data:cp}=await s.from('profiles').select('id,username,avatar_url').in('id',missing);cmap=new Map([...amap,...(cp||[]).map(x=>[x.id,x])]);}}
+    box.innerHTML=posts.map(p=>{const a=amap.get(p.author_id)||{};const cs=comments[p.id]||[];return `<article class="hubPost"><div class="hubPostHead">${hubAvatar(a)}<div><b>${esc(a.username||'Kullanıcı')}</b><small>${esc(a.account_type==='team'?(a.team||'Takım'):(a.position||a.team||'Oyuncu'))} · ${hubTime(p.created_at)}</small></div></div>${p.body?`<div class="hubPostBody">${esc(p.body)}</div>`:''}${p.image_url?`<img class="hubPostImage" src="${esc(p.image_url)}" alt="MortaHub gönderisi">`:''}<div class="hubPostStats">${likes[p.id]||0} beğeni · ${cs.length} yorum</div><div class="hubPostActions"><button class="${myLikes.has(p.id)?'liked':''}" data-like="${p.id}" data-liked="${myLikes.has(p.id)}">♥ Beğen</button><button data-toggle-comments="${p.id}">💬 Yorum</button></div><div class="hubCommentBox" id="hubComments_${p.id}"><div id="hubCommentList_${p.id}">${cs.map(c=>`<div class="hubComment"><b>${esc(cmap.get(c.author_id)?.username||'Kullanıcı')}</b>${esc(c.comment)}</div>`).join('')}</div>${u?`<div class="hubCommentRow"><input maxlength="500" data-comment-input="${p.id}" placeholder="Yorum yaz..."><button data-send-comment="${p.id}">Gönder</button></div>`:'<div class="hubEmpty">Yorum yapmak için giriş yapmalısın.</div>'}</div></article>`}).join('');
+    q('#hubPostCount').textContent=`${posts.length} gönderi`;
+    if(u){const {count}=await s.from('profile_follows').select('*',{count:'exact',head:true}).eq('follower_id',u.id);q('#hubFollowingCount').textContent=`${count||0} takip`;}
+  }
+
+  async function toggleHubLike(postId,liked){
+    const s=sup(),u=await getUser();if(!s||!u){alert('Beğenmek için giriş yapmalısın.');return}
+    const r=liked?await s.from('hub_post_likes').delete().eq('post_id',postId).eq('user_id',u.id):await s.from('hub_post_likes').insert({post_id:postId,user_id:u.id});
+    if(r.error)alert(r.error.message);else loadHubFeed();
+  }
+  async function sendHubComment(postId){
+    const s=sup(),u=await getUser(),input=q(`[data-comment-input="${postId}"]`);if(!s||!u||!input)return;
+    const comment=input.value.trim();if(!comment)return;
+    const r=await s.from('hub_post_comments').insert({post_id:Number(postId),author_id:u.id,comment});
+    if(r.error)alert(r.error.message);else loadHubFeed();
+  }
+
+  qa('[data-hub-tab]').forEach(btn=>btn.addEventListener('click',async()=>{hubMode=btn.dataset.hubTab;qa('[data-hub-tab]').forEach(x=>x.classList.toggle('active',x===btn));await loadHubFeed();if(hubMode==='explore')q('#hubSearch')?.focus();}));
+  q('#hubPublish')?.addEventListener('click',publishHubPost);
+  q('#hubSearch')?.addEventListener('input',e=>loadHubSuggested(e.target.value));
+  q('#hubSuggested')?.addEventListener('click',e=>{const b=e.target.closest('[data-follow]');if(b)toggleHubFollow(b.dataset.follow,b.dataset.following==='true');});
+  q('#hubFeed')?.addEventListener('click',e=>{const like=e.target.closest('[data-like]');if(like)return toggleHubLike(like.dataset.like,like.dataset.liked==='true');const toggle=e.target.closest('[data-toggle-comments]');if(toggle)return q(`#hubComments_${toggle.dataset.toggleComments}`)?.classList.toggle('open');const send=e.target.closest('[data-send-comment]');if(send)return sendHubComment(send.dataset.sendComment);});
+  q('#hubFeed')?.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-comment-input]')){e.preventDefault();sendHubComment(e.target.dataset.commentInput);}});
+
+
+  await loadHubIdentity();await loadHubSuggested();await loadHubFeed();
+    loadDirectory();loadNews();loadHub();loadNotifications();loadAdminSummary();setInterval(()=>{loadNotifications();loadHub();},12000);
 })();
 </script>
 </body>
