@@ -168,6 +168,8 @@ if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
   });
 }
+// V5 modülleri ayrı dosyalarda çalıştığı için istemciyi açıkça paylaş.
+window.mortaSupabase = mortaSupabase;
 
 const accountModal = $("#accountsModal");
 const contactModal = $("#contactModal");

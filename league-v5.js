@@ -16,15 +16,34 @@
   function adminClose(){ $('#leagueAdminModal')?.classList.remove('open'); $('#leagueAdminModal')?.setAttribute('aria-hidden','true'); }
 
   async function loadAll(){
-    const client=sb(); if(!client) return;
+    const client=sb();
+    const loadingName=$('#activeSeasonName');
+    const loadingMeta=$('#activeSeasonMeta');
+    if(!client){
+      if(loadingName) loadingName.textContent='Bağlantı hazırlanıyor...';
+      if(loadingMeta) loadingMeta.textContent='Hesap ve lig sistemi başlatılamadı.';
+      console.error('[MortaLeague V5] Supabase istemcisi bulunamadı.');
+      return;
+    }
+    if(loadingName) loadingName.textContent='Sezon yükleniyor...';
+    if(loadingMeta) loadingMeta.textContent='Lig verileri hazırlanıyor.';
     const [s,l,t,m]=await Promise.all([
       client.from('seasons').select('*').order('created_at',{ascending:false}),
       client.from('leagues').select('*').order('name'),
       client.from('league_teams').select('*').order('name'),
       client.from('matches').select('*').order('played_at',{ascending:false})
     ]);
-    if(s.error||l.error||t.error||m.error){ console.warn('Lig verisi yüklenemedi',s.error||l.error||t.error||m.error); return; }
-    state.seasons=s.data||[]; state.leagues=l.data||[]; state.teams=t.data||[]; state.matches=m.data||[];
+    const firstError=s.error||l.error||t.error||m.error;
+    if(firstError){
+      console.error('[MortaLeague V5] Lig verisi yüklenemedi:',firstError);
+      if(loadingName) loadingName.textContent='Lig verileri yüklenemedi';
+      if(loadingMeta) loadingMeta.textContent=firstError.message || 'Supabase tablolarını ve V5 SQL kurulumunu kontrol et.';
+      return;
+    }
+    state.seasons=s.data||[];
+    state.leagues=l.data||[];
+    state.teams=t.data||[];
+    state.matches=m.data||[];
     render();
   }
   function activeSeason(){ return state.seasons.find(x=>x.is_active) || state.seasons[0] || null; }
@@ -84,10 +103,25 @@
     $('#matchForm')?.addEventListener('submit',async e=>{e.preventDefault();const h=$('#homeTeamSelect').value,a=$('#awayTeamSelect').value;if(!h||!a||h===a)return toast('İki farklı takım seç.');await save('matches',{league_id:$('#matchLeagueSelect').value,home_team_id:h,away_team_id:a,home_score:Number($('#homeScore').value)||0,away_score:Number($('#awayScore').value)||0,played_at:$('#matchDate').value||new Date().toISOString(),status:'played'},'Maç sonucu kaydedildi.');});
   }
   async function init(){
-    if(!sb()) return;
+    // Butonlar veri bağlantısından bağımsız olarak hemen çalışsın.
+    bind();
+
+    // script.js önce istemciyi oluştursa da tarayıcı/önbellek gecikmesine karşı kısa süre bekle.
+    let tries=0;
+    while(!sb() && tries<20){
+      await new Promise(r=>setTimeout(r,150));
+      tries++;
+    }
+
+    if(!sb()){
+      $('#activeSeasonName').textContent='Bağlantı kurulamadı';
+      $('#activeSeasonMeta').textContent='Supabase başlatılamadı. Sayfayı önbelleksiz yenileyip tekrar dene.';
+      return;
+    }
+
     state.profile=await currentProfile();
     if(state.profile?.is_admin) $('#openLeagueAdmin').hidden=false;
-    bind(); await loadAll();
+    await loadAll();
   }
   document.addEventListener('DOMContentLoaded',init);
 })();
