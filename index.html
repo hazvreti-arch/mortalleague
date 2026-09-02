@@ -1266,6 +1266,30 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </details>
 </section>
 
+
+<section class="section leagueV5" id="leaguecenter">
+  <div class="sectionHead">
+    <div><span class="eyebrow">SEASON CONTROL</span><h2>LİG MERKEZİ</h2><p>Sezonlar, ligler, takımlar ve maç sonuçları tek merkezde.</p></div>
+    <button id="openLeagueAdmin" class="primary leagueAdminBtn" hidden>⚙ LİGİ YÖNET</button>
+  </div>
+  <div class="leagueDashboard">
+    <div class="leagueHeroCard">
+      <div><span class="leagueLabel">AKTİF SEZON</span><h3 id="activeSeasonName">Sezon yükleniyor...</h3><p id="activeSeasonMeta">Lig verileri hazırlanıyor.</p></div>
+      <div class="leagueHeroActions"><button id="leagueRefresh" class="ghostBtn">↻ YENİLE</button></div>
+    </div>
+    <div class="leagueTabs">
+      <button class="active" data-league-view="standings">📊 Puan Durumu</button>
+      <button data-league-view="teams">🛡️ Takımlar</button>
+      <button data-league-view="matches">⚽ Maçlar</button>
+      <button data-league-view="archive">🗃️ Sezon Arşivi</button>
+    </div>
+    <div class="leagueView active" id="leagueView-standings"><div id="leagueStandings" class="leagueEmpty">Aktif bir lig seçildiğinde puan durumu burada görünür.</div></div>
+    <div class="leagueView" id="leagueView-teams"><div id="leagueTeams" class="teamDirectory"></div></div>
+    <div class="leagueView" id="leagueView-matches"><div id="leagueMatches" class="matchList"></div></div>
+    <div class="leagueView" id="leagueView-archive"><div id="seasonArchive" class="archiveGrid"></div></div>
+  </div>
+</section>
+
 <section class="section" id="mortahub">
   <div class="sectionHead"><div><h2>MORTAHUB</h2><p>MortaLeague'in sosyal merkezi. Takip et, paylaş ve keşfet.</p></div><span class="badge">SOCIAL ERA</span></div>
   <div class="hubShell">
@@ -1469,7 +1493,36 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
 
 
+
+<div class="leagueAdminModal" id="leagueAdminModal" aria-hidden="true">
+  <div class="leagueAdminBackdrop" data-close-league-admin></div>
+  <div class="leagueAdminCard" role="dialog" aria-modal="true" aria-label="Lig Yönetim Merkezi">
+    <div class="leagueAdminHead"><div><span class="accountEyebrow">YÖNETİM MERKEZİ</span><h3>Lig & Sezon Yönetimi</h3><p>Buradan sezonu, ligleri, takımları ve maç sonuçlarını yönetebilirsin.</p></div><button class="accountClose" data-close-league-admin>×</button></div>
+    <div class="adminMetricGrid"><div><small>SEZON</small><b id="adminSeasonCount">0</b></div><div><small>LİG</small><b id="adminLeagueCount">0</b></div><div><small>TAKIM</small><b id="adminTeamCount">0</b></div></div>
+    <div class="leagueAdminTabs">
+      <button class="active" data-admin-tab="seasons">SEZONLAR</button><button data-admin-tab="leagues">LİGLER</button><button data-admin-tab="teams">TAKIM EKLE</button><button data-admin-tab="matches">MAÇ SONUCU</button>
+    </div>
+    <div class="adminTabPane active" id="adminTab-seasons">
+      <form id="seasonForm" class="adminForm"><label>Sezon Adı<input id="seasonName" placeholder="2026/27 Sezonu" required></label><label>Başlangıç<input id="seasonStart" type="date"></label><label>Bitiş<input id="seasonEnd" type="date"></label><label class="checkLabel"><input id="seasonActive" type="checkbox" checked> Aktif sezon yap</label><button class="primary" type="submit">SEZON OLUŞTUR</button></form>
+      <div id="adminSeasons" class="adminDataList"></div>
+    </div>
+    <div class="adminTabPane" id="adminTab-leagues">
+      <form id="leagueForm" class="adminForm"><label>Sezon<select id="leagueSeasonSelect" required></select></label><label>Lig Adı<input id="leagueName" placeholder="MortaLeague A" required></label><label>Lig Kodu<input id="leagueCode" placeholder="MLA"></label><button class="primary" type="submit">LİG OLUŞTUR</button></form>
+      <div id="adminLeagues" class="adminDataList"></div>
+    </div>
+    <div class="adminTabPane" id="adminTab-teams">
+      <form id="teamForm" class="adminForm"><label>Lig<select id="teamLeagueSelect" required></select></label><label>Takım Adı<input id="teamName" placeholder="Juventus" required></label><label>Logo URL<input id="teamLogo" type="url" placeholder="https://..."></label><button class="primary" type="submit">TAKIMI LİGE EKLE</button></form>
+      <div id="adminTeams" class="adminDataList"></div>
+    </div>
+    <div class="adminTabPane" id="adminTab-matches">
+      <form id="matchForm" class="adminForm"><label>Lig<select id="matchLeagueSelect" required></select></label><label>Ev Sahibi<select id="homeTeamSelect" required></select></label><label>Deplasman<select id="awayTeamSelect" required></select></label><div class="scoreRow"><label>Ev Gol<input id="homeScore" type="number" min="0" value="0"></label><label>Dep Gol<input id="awayScore" type="number" min="0" value="0"></label></div><label>Maç Tarihi<input id="matchDate" type="datetime-local"></label><button class="primary" type="submit">SONUCU KAYDET</button></form>
+      <div id="adminMatches" class="adminDataList"></div>
+    </div>
+  </div>
+</div>
+
 <script src="script.js"></script>
+<script src="league-v5.js"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -2076,6 +2129,10 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 .mortaDesktopDM:hover{transform:translateY(-2px);background:#202027}
 .mortaDesktopDM span{width:9px;height:9px;background:#22c55e;border-radius:50%;display:block}
 @media(max-width:900px){.mortaDesktopDM{display:none!important}}
+
+/* ===== MortaLeague Professional V5: League & Season Center ===== */
+.leagueV5{scroll-margin-top:90px}.leagueDashboard{display:grid;gap:16px}.leagueHeroCard{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:24px;border:1px solid rgba(168,85,247,.28);border-radius:22px;background:linear-gradient(135deg,rgba(168,85,247,.14),rgba(14,8,22,.78));box-shadow:0 20px 60px rgba(0,0,0,.18)}.leagueHeroCard h3{margin:6px 0;font-size:clamp(22px,4vw,32px)}.leagueHeroCard p{margin:0;color:var(--muted)}.leagueLabel{font:800 10px Orbitron;letter-spacing:1.5px;color:#c4a4ee}.ghostBtn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:11px;padding:11px 14px;cursor:pointer;font:700 10px Orbitron}.leagueTabs,.leagueAdminTabs{display:flex;gap:8px;flex-wrap:wrap}.leagueTabs button,.leagueAdminTabs button{border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);border-radius:10px;padding:11px 13px;cursor:pointer;font:700 10px Orbitron}.leagueTabs button.active,.leagueAdminTabs button.active{color:#fff;border-color:rgba(168,85,247,.55);background:rgba(168,85,247,.14)}.leagueView{display:none}.leagueView.active{display:block}.leagueEmpty,.adminEmpty{padding:32px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}.standingsTable{width:100%;border-collapse:collapse;overflow:hidden;border-radius:15px;border-style:hidden;box-shadow:0 0 0 1px var(--line)}.standingsTable th,.standingsTable td{padding:13px 10px;border-bottom:1px solid var(--line);text-align:left}.standingsTable th{font:700 10px Orbitron;color:#aa98bb;background:rgba(255,255,255,.025)}.standingsTable td{font-size:13px}.teamCell{display:flex;align-items:center;gap:10px}.teamLogoMini{width:30px;height:30px;border-radius:8px;object-fit:cover;background:#21162b}.teamDirectory,.matchList,.archiveGrid{display:grid;gap:10px}.leagueTeamCard,.matchCard,.archiveCard,.adminDataItem{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:14px;padding:14px}.leagueTeamCard{display:flex;align-items:center;gap:12px}.leagueTeamCard img{width:45px;height:45px;border-radius:12px;object-fit:cover}.leagueTeamCard b{display:block}.leagueTeamCard small,.matchCard small,.archiveCard small{color:var(--muted)}.matchCard{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}.matchSide:last-child{text-align:right}.matchScore{font:800 18px Orbitron;color:#fff;padding:10px;border-radius:10px;background:rgba(168,85,247,.12)}.leagueAdminModal{display:none;position:fixed;inset:0;z-index:2000;place-items:center}.leagueAdminModal.open{display:grid}.leagueAdminBackdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}.leagueAdminCard{position:relative;z-index:1;width:min(960px,calc(100% - 24px));max-height:min(90vh,900px);overflow:auto;padding:24px;border:1px solid rgba(168,85,247,.35);border-radius:24px;background:#100a18;box-shadow:0 35px 100px rgba(0,0,0,.65)}.leagueAdminHead{display:flex;justify-content:space-between;gap:20px}.leagueAdminHead h3{margin:5px 0}.leagueAdminHead p{color:var(--muted);margin:0}.adminMetricGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.adminMetricGrid>div{padding:15px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}.adminMetricGrid small{display:block;color:var(--muted);font:700 9px Orbitron}.adminMetricGrid b{display:block;font:800 24px Orbitron;margin-top:7px}.adminTabPane{display:none;margin-top:16px}.adminTabPane.active{display:block}.adminForm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.018)}.adminForm label{display:grid;gap:7px;color:#b8a9c3;font-size:11px}.adminForm input,.adminForm select{min-width:0;width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#0c0811;color:#fff;outline:none}.adminForm button{grid-column:1/-1}.checkLabel{display:flex!important;align-items:center;gap:8px}.checkLabel input{width:auto}.scoreRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.adminDataList{display:grid;gap:8px;margin-top:14px}.adminDataItem{display:flex;justify-content:space-between;align-items:center;gap:10px}.adminDataItem b{display:block}.adminDataItem small{color:var(--muted)}.dangerBtn{border:1px solid rgba(240,100,120,.35);background:rgba(240,100,120,.08);color:#f2a7b4;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:10px}.leagueAdminBtn{white-space:nowrap}@media(max-width:700px){.leagueHeroCard{align-items:flex-start;flex-direction:column}.adminForm{grid-template-columns:1fr}.leagueAdminCard{padding:17px;width:min(100% - 12px,960px);max-height:94vh}.adminMetricGrid{grid-template-columns:repeat(3,1fr)}.adminMetricGrid b{font-size:18px}.matchCard{grid-template-columns:1fr auto 1fr;font-size:12px}.standingsTable{font-size:11px}.standingsTable th,.standingsTable td{padding:10px 6px}.leagueTabs button{flex:1;min-width:calc(50% - 5px)}}@media(max-width:420px){.leagueTabs button{min-width:100%}.adminMetricGrid{gap:6px}.adminMetricGrid>div{padding:10px}.leagueAdminHead{align-items:flex-start}.leagueAdminHead p{font-size:12px}}
+
 </style>
 <button class="mortaDesktopDM" id="mortaDesktopDM" type="button"><span></span> Mesajlar</button>
 <script>
