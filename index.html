@@ -2195,6 +2195,22 @@ document.getElementById('mortaDesktopDM')?.addEventListener('click',function(){
 });
 </script>
 
+
+
+<!-- MortaLeague Core Experience Restore: original background + opening systems -->
+<style id="mortaCoreExperienceRestore">
+/* V2 social redesign had hidden original MortaLeague systems. Restore them without removing new features. */
+body{background:var(--bg)!important;color:var(--text)!important}
+#particles{display:block!important}
+.hero{display:grid!important}
+.navCta{display:inline-flex!important}
+section#news,section#mortaHub{display:block!important}
+.hubHero{display:flex!important}
+@media(max-width:900px){
+  #league,#playerCalculator,#systems{display:block!important}
+}
+</style>
+
 <link rel="stylesheet" href="professional.css">
 <script src="professional-patch.js"></script>
 </body>
