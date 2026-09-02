@@ -66,7 +66,7 @@ footer{border-top:1px solid var(--line);padding:28px 22px;color:#756a80;text-ali
 .modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(3,1,7,.76);backdrop-filter:blur(10px)}.modal.show{display:grid}.modalBox{width:min(720px,100%);max-height:85vh;overflow:auto;border:1px solid rgba(190,130,255,.28);border-radius:22px;background:#10091a;box-shadow:0 30px 100px #000;padding:26px;animation:pop .25s ease}@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}.modalTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modalTop h2{font-family:Orbitron;margin:0}.close{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:9px;padding:8px 11px;cursor:pointer}
 .toast{position:fixed;right:20px;bottom:20px;z-index:120;padding:13px 17px;border:1px solid rgba(103,247,187,.25);background:rgba(7,20,16,.9);color:#aefbd9;border-radius:12px;transform:translateY(100px);opacity:0;transition:.3s}.toast.show{transform:none;opacity:1}
 
-.systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-items:start}.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.systemRule h3.accordionTrigger{border:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;background:transparent;cursor:pointer;transition:.25s}.systemRule h3.accordionTrigger:hover{background:rgba(168,85,247,.07)}.systemRule h3.accordionTrigger:after{content:"+";flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.3s}.systemRule.open h3.accordionTrigger{color:#fff;background:rgba(168,85,247,.07)}.systemRule.open h3.accordionTrigger:after{content:"−";transform:rotate(180deg);background:rgba(168,85,247,.12)}.ruleText{white-space:pre-wrap;padding:0 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,padding .35s ease,opacity .25s ease}.systemRule.open .ruleText{padding:20px 21px;max-height:9000px;overflow:auto;opacity:1}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
+.systemsIntro{display:flex;align-items:center;gap:15px;padding:18px 20px;margin-bottom:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(139,59,255,.10),rgba(255,255,255,.025))}.systemsIntro>span{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2);font-size:20px;color:#d5b5ff}.systemsIntro strong{display:block;font:800 13px Orbitron;letter-spacing:.8px}.systemsIntro small{display:block;color:#9588a2;margin-top:4px;line-height:1.5}.systemLibrary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px};align-items:start.systemRule{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(28,14,44,.82),rgba(12,7,20,.82));overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.2)}.systemRule h3{margin:0;padding:19px 21px;border-bottom:1px solid rgba(255,255,255,.06);font:800 16px Orbitron;color:#f6efff}.systemRule h3.accordionTrigger{border:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;background:transparent;cursor:pointer;transition:.25s}.systemRule h3.accordionTrigger:hover{background:rgba(168,85,247,.07)}.systemRule h3.accordionTrigger:after{content:"+";flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(183,122,255,.22);border-radius:9px;color:#cfa8ff;font:700 20px Inter;transition:.3s}.systemRule.open h3.accordionTrigger{color:#fff;background:rgba(168,85,247,.07)}.systemRule.open h3.accordionTrigger:after{content:"−";transform:rotate(180deg);background:rgba(168,85,247,.12)}.ruleText{white-space:pre-wrap;padding:0 21px;color:#c1b5ca;font-size:13px;line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,padding .35s ease,opacity .25s ease}.systemRule.open .ruleText{padding:20px 21px;max-height:9000px;overflow:auto;opacity:1}.ruleText::-webkit-scrollbar{width:7px}.ruleText::-webkit-scrollbar-thumb{background:rgba(168,85,247,.28);border-radius:10px}
 @media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:50px}.heroVisual{min-height:390px}.grid{grid-template-columns:repeat(2,1fr)}.players{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.navlinks{display:none}.rules,.calculator{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}}
 @media(max-width:560px){main{padding-left:15px;padding-right:15px}.nav{padding:0 15px}.logo{font-size:13px}.navCta{padding:9px 11px;font-size:12px}.grid,.players,.stats{grid-template-columns:1fr}.heroVisual{transform:scale(.82);margin:-30px 0}.section{padding:48px 0}h1{letter-spacing:-3px}.cta{padding:28px}.r1{width:330px;height:330px}}
 
@@ -399,41 +399,6 @@ body { touch-action:pan-y; }
 .hubLayout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;padding:22px}.hubCompose,.hubPost,.hubExploreCard{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:20px;padding:18px}.hubComposeTop{display:flex;gap:12px}.hubAvatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#251333;flex:none}.hubAvatarFallback{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#2a153a;font-weight:800;flex:none}.hubComposer{width:100%;min-height:76px;resize:vertical;border:0;background:transparent;color:#fff;outline:none;font:inherit}.hubComposeActions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.hubImageInput{max-width:100%;font-size:12px;color:#b8aac7}.hubPost{margin-top:15px}.hubPostHead{display:flex;align-items:center;gap:11px}.hubPostHead b{display:block}.hubPostHead small{color:var(--muted)}.hubPostMenu{margin-left:auto;background:none;border:0;color:#a99eb5;cursor:pointer}.hubPostBody{white-space:pre-wrap;line-height:1.6;margin:14px 0}.hubPostImage{width:100%;max-height:520px;object-fit:cover;border-radius:15px;border:1px solid var(--line);margin:4px 0 12px}.hubPostStats{color:var(--muted);font-size:12px;margin:8px 0}.hubPostActions{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:11px}.hubPostActions button{flex:1;border:0;background:rgba(255,255,255,.035);color:#d6cadf;padding:9px;border-radius:10px;cursor:pointer}.hubPostActions button.liked{color:#ff91ba;background:rgba(255,80,150,.1)}.hubSideTitle{font:700 12px Orbitron;letter-spacing:1px;color:#cba8ee;margin:5px 0 12px}.hubUserRow{display:flex;align-items:center;gap:10px;padding:10px 0}.hubUserRow+.hubUserRow{border-top:1px solid rgba(255,255,255,.06)}.hubUserMeta{min-width:0;flex:1}.hubUserMeta b,.hubUserMeta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hubUserMeta span{font-size:12px;color:var(--muted);margin-top:3px}.hubFollowBtn{border:1px solid rgba(168,85,247,.45);background:rgba(139,61,255,.13);color:#d9bcff;padding:7px 10px;border-radius:9px;cursor:pointer;font-size:12px}.hubFollowBtn.following{background:rgba(255,255,255,.06);border-color:var(--line);color:#aaa}.hubEmpty{padding:35px 15px;text-align:center;color:var(--muted)}.hubSearch{width:100%;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;outline:none;margin-bottom:12px}.hubCount{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.hubCount span{font-size:12px;padding:7px 10px;border-radius:999px;background:rgba(168,85,247,.1);color:#d8b8f4}.hubCommentBox{display:none;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.hubCommentBox.open{display:block}.hubCommentRow{display:flex;gap:8px;margin-top:8px}.hubCommentRow input{flex:1;min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.04);color:#fff}.hubCommentRow button{padding:0 12px;border:0;border-radius:10px;background:#8137dc;color:#fff;cursor:pointer}.hubComment{padding:8px 0;font-size:13px}.hubComment b{margin-right:6px}.hubProfileStrip{display:flex;gap:12px;align-items:center;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 @media(max-width:850px){.hubLayout{grid-template-columns:1fr}.hubAside{display:none}.hubHero{padding:24px}.hubComposeActions{align-items:flex-start;flex-direction:column}.hubComposeActions .primary{width:100%}}
 
-
-
-/* =========================================================
-   MortaLeague Professional Stabilization — UI/UX layer
-   ========================================================= */
-:focus-visible{outline:2px solid #c78aff;outline-offset:3px}
-button:disabled,input:disabled,select:disabled,textarea:disabled{opacity:.55;cursor:not-allowed}
-body{min-height:100dvh;overscroll-behavior-x:none}
-main{min-height:calc(100dvh - 78px)}
-img{content-visibility:auto}
-button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
-.modal,.accountModal,.contactModal,.profileModal,.publicProfileModal,.offerModal,.notificationModal,.adminModal{overscroll-behavior:contain}
-.modalBox,.accountCard,.adminCard{scrollbar-color:rgba(168,85,247,.35) transparent}
-.ml-toast-stack{position:fixed;right:18px;bottom:18px;z-index:99999;display:grid;gap:10px;width:min(380px,calc(100vw - 28px));pointer-events:none}
-.ml-toast{pointer-events:auto;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:rgba(16,10,24,.96);box-shadow:0 20px 60px rgba(0,0,0,.42);backdrop-filter:blur(16px);font-size:13px;line-height:1.45;animation:mlToastIn .24s ease both}
-.ml-toast b{display:block;font:800 11px Orbitron;margin-bottom:4px}.ml-toast.info b{color:#d8b7ff}.ml-toast.success{border-color:rgba(103,247,187,.32)}.ml-toast.success b{color:var(--good)}.ml-toast.error{border-color:rgba(255,102,143,.32)}.ml-toast.error b{color:var(--danger)}
-@keyframes mlToastIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
-.ml-loading{display:inline-flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.ml-loading:before{content:"";width:13px;height:13px;border:2px solid rgba(255,255,255,.12);border-top-color:#c78aff;border-radius:50%;animation:mlSpin .8s linear infinite}@keyframes mlSpin{to{transform:rotate(360deg)}}
-.ml-empty{padding:26px 18px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted);background:rgba(255,255,255,.015)}
-.systemRule{contain:layout paint}.systemRule h3{word-break:normal}.ruleText{overflow-wrap:anywhere}
-.newsCard,.directoryPlayerCard,.directoryTeamCard,.hubPost{contain:content}
-@media(max-width:768px){
- html,body{height:auto;min-height:100%;overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
- body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
- main{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
- .modal,.accountModal,.contactModal,.profileModal,.publicProfileModal,.offerModal,.notificationModal,.adminModal{position:fixed;inset:0;width:100%;min-height:100dvh;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;padding:10px 0 calc(22px + env(safe-area-inset-bottom))!important}
- .modalBox,.accountCard,.adminCard{max-height:none!important;overflow:visible!important;margin:0 auto 22px!important}
- input,select,textarea{font-size:16px!important}
- .sectionHead{gap:10px}.sectionHead .badge{max-width:100%}
- .profileActions,.offerActions{gap:8px}
- .systemSectionToggle{min-height:54px}
- .teamStatsGrid,.hubStats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:420px){.accountCard,.adminCard{padding:16px!important}.profileHero{gap:10px}.profileAvatarLarge{width:54px;height:54px}.hubWelcome h3{font-size:17px}.ml-toast-stack{right:14px;bottom:14px}}
-
 </style>
 
 
@@ -459,6 +424,36 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 <style>
 .commentList{display:grid;gap:8px;margin-top:10px}.commentItem{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:rgba(255,255,255,.02)}.commentItem b{font:800 11px Orbitron}.commentItem small{display:block;color:#756b80;margin-top:3px;font-size:8px}.commentItem p{margin:7px 0 0;color:#bdb1c8;font-size:12px;line-height:1.5}.commentForm{margin-top:10px}.commentForm textarea{width:100%;box-sizing:border-box;min-height:75px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff}.publicActions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}.publicActions>*{min-width:0}.modalBox{max-width:720px;width:calc(100% - 28px)}
 </style>
+
+<!-- MortaLeague Professional V4: non-destructive stabilization -->
+<meta name="description" content="MortaLeague — futbol topluluğu, oyuncular, takımlar ve sosyal futbol evreni.">
+<meta property="og:title" content="MortaLeague — Futbolun Sosyal Evreni">
+<meta property="og:description" content="Oyuncuları ve takımları keşfet, MortaHub'da paylaş ve MortaLeague evrenine katıl.">
+<meta name="color-scheme" content="dark">
+<style id="mortaProfessionalV4">
+/* V4: mevcut tasarımı yeniden yazmaz; yalnızca kararlılık ve kullanım kalitesini artırır. */
+html{min-height:100%;background:#07040d}
+body{min-height:100dvh;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,textarea,select{font:inherit}
+button{touch-action:manipulation}
+:focus-visible{outline:2px solid #c78aff;outline-offset:3px}
+img{height:auto}
+@media(max-width:900px){
+  header{position:sticky;top:0;z-index:900}
+  main{width:100%;max-width:100%;overflow:clip}
+  .modal,.accountModal,.adminModal,.dmModal{overscroll-behavior:contain}
+  .modalCard,.accountCard,.adminCard{max-height:calc(100dvh - 20px);overscroll-behavior:contain}
+}
+@media(max-width:600px){
+  body{padding-bottom:calc(env(safe-area-inset-bottom) + 8px)}
+  input,select,textarea{font-size:16px}
+  .modalCard,.accountCard,.adminCard{width:calc(100% - 16px);margin:8px;max-height:calc(100dvh - 16px)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+</style>
+
 </head>
 <body>
 <div id="particles"></div>
@@ -1452,39 +1447,6 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
 
 
-
-<script>
-/* MortaLeague Professional Runtime Guard */
-(() => {
-  const toastStack=()=>{let e=document.querySelector('.ml-toast-stack');if(!e){e=document.createElement('div');e.className='ml-toast-stack';e.setAttribute('aria-live','polite');document.body.appendChild(e)}return e};
-  window.MortaUI={
-    toast(message,type='info',title){
-      const e=document.createElement('div');e.className='ml-toast '+type;
-      e.innerHTML=`<b>${title||({success:'BAŞARILI',error:'BİR SORUN OLUŞTU',info:'MORTALEAGUE'}[type]||'MORTALEAGUE')}</b><span></span>`;
-      e.querySelector('span').textContent=String(message||'');toastStack().appendChild(e);
-      setTimeout(()=>{e.style.opacity='0';e.style.transform='translateY(8px)';setTimeout(()=>e.remove(),220)},4800);
-    },
-    busy(button,busy=true,text='İŞLENİYOR...'){
-      if(!button)return; if(busy){button.dataset.mlOriginalText=button.textContent;button.disabled=true;button.setAttribute('aria-busy','true');button.textContent=text}else{button.disabled=false;button.removeAttribute('aria-busy');button.textContent=button.dataset.mlOriginalText||button.textContent}
-    }
-  };
-  window.addEventListener('error',(ev)=>{console.error('[MortaLeague runtime]',ev.error||ev.message)});
-  window.addEventListener('unhandledrejection',(ev)=>{console.error('[MortaLeague async]',ev.reason)});
-  document.addEventListener('keydown',(ev)=>{
-    if(ev.key==='Escape'){
-      document.querySelectorAll('.modal.show,.accountModal.open,.contactModal.open,.profileModal.open,.publicProfileModal.open,.offerModal.open,.notificationModal.open,.adminModal.open').forEach(m=>{
-        const closer=m.querySelector('[data-close-profile],[data-close-account],[data-close-contact],.accountClose,.close');closer?.click();
-      });
-    }
-  });
-  document.addEventListener('DOMContentLoaded',()=>{
-    document.querySelectorAll('img').forEach(img=>{if(!img.hasAttribute('loading'))img.loading='lazy';img.addEventListener('error',()=>{img.style.display='none'},{once:true})});
-    // Prevent accidental repeated submissions on marked forms without changing existing handlers.
-    document.querySelectorAll('button[type="submit"]').forEach(btn=>btn.addEventListener('click',()=>setTimeout(()=>{if(btn.disabled)MortaUI.busy(btn,false)},12000),{once:false}));
-  });
-})();
-</script>
-
 <script src="script.js"></script>
 <script>
 (() => {
@@ -1996,90 +1958,6 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<style id="instagramLikeMorta">
-/* ===== MORTALLEAGUE SOCIAL REDESIGN ===== */
-:root{--igbg:#09090b;--igpanel:#111114;--igline:#26262b;--igsoft:#18181d;--igtext:#f5f5f7;--igmuted:#a1a1aa}
-body{background:var(--igbg)!important;color:var(--igtext)!important}
-#particles{display:none!important}
-header{background:rgba(9,9,11,.88)!important;border-bottom:1px solid var(--igline)!important;backdrop-filter:blur(18px)}
-.nav{max-width:1180px!important;height:66px!important}
-.logoMark{background:linear-gradient(135deg,#8b5cf6,#ec4899)!important;box-shadow:none!important}
-.logo div{font-family:Inter,system-ui!important;letter-spacing:-.6px!important;font-size:18px!important}
-.logo small{display:none!important}
-.navlinks{position:absolute;left:50%;transform:translateX(-50%);gap:2px!important}
-.navlinks button{font-family:Inter!important;text-transform:none!important;font-size:13px!important;letter-spacing:0!important;padding:9px 12px!important}
-.navlinks button:hover{background:var(--igsoft)!important;border-radius:9px!important}
-.navCta{display:none!important}
-main{max-width:1180px!important;padding-top:88px!important}
-.hero{display:none!important}
-section#news{display:none!important}
-section#mortaHub{display:none!important}
-.section{padding:28px 0!important}
-#mortahub{padding-top:8px!important}
-#mortahub>.sectionHead{display:none!important}
-.hubShell{margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
-.hubHero{display:none!important}
-.hubTabs{position:sticky;top:66px;z-index:20;background:rgba(9,9,11,.94);backdrop-filter:blur(18px);padding:10px 0 14px!important;border-bottom:1px solid var(--igline)!important;margin-bottom:18px}
-.hubTabs button{font-family:Inter!important;border:0!important;background:transparent!important;color:var(--igmuted)!important;padding:10px 14px!important;border-radius:8px!important;font-size:14px!important}
-.hubTabs button.active{background:var(--igsoft)!important;color:#fff!important}
-.hubLayout{grid-template-columns:minmax(0,650px) 290px!important;justify-content:center!important;gap:28px!important;padding:0!important}
-.hubCompose,.hubPost,.hubExploreCard{background:var(--igpanel)!important;border:1px solid var(--igline)!important;border-radius:14px!important;box-shadow:none!important}
-.hubCompose{padding:15px!important}
-.hubProfileStrip{font-family:Inter!important}
-.hubComposer{font-family:Inter!important;font-size:15px!important;min-height:82px!important;padding:14px 2px!important}
-.hubComposeActions{border-top:1px solid var(--igline)!important}
-.hubComposeActions .primary{border-radius:9px!important;padding:10px 18px!important;font-family:Inter!important;font-size:13px!important}
-.hubPost{padding:0!important;overflow:hidden!important;margin-top:18px!important}
-.hubPostHead{padding:14px 15px!important}
-.hubPostBody{padding:0 15px 14px!important;font-family:Inter!important;font-size:14px!important}
-.hubPostImage{max-height:620px!important;object-fit:cover!important;border-radius:0!important}
-.hubPostActions{padding:12px 15px!important;border-top:1px solid var(--igline)!important}
-.hubPostActions button{font-family:Inter!important}
-.hubAvatar,.hubAvatarFallback{border:1px solid var(--igline)!important}
-.hubAside{position:sticky;top:125px;height:max-content}
-.hubExploreCard{padding:16px!important}
-.hubSearch{background:var(--igsoft)!important;border:0!important;border-radius:9px!important;color:#fff!important}
-.hubSideTitle{font-family:Inter!important;font-size:13px!important;letter-spacing:0!important}
-#hubSuggested{max-height:420px;overflow:auto}
-#league,#playerCalculator,#systems{opacity:.98}
-.sectionHead h2{font-family:Inter!important;letter-spacing:-1px!important}
-.grid .card,.card,.panel,.calcPanel{background:var(--igpanel)!important;border-color:var(--igline)!important;border-radius:14px!important}
-.primary{font-family:Inter!important;border-radius:9px!important;background:linear-gradient(135deg,#7c3aed,#db2777)!important}
-.secondary,.accountBtn{font-family:Inter!important;border-radius:9px!important}
-footer{border-top:1px solid var(--igline)!important;background:#09090b!important}
-
-/* Compact old systems: no longer dominate the social homepage */
-#league,#playerCalculator,#systems{margin-top:20px}
-.systemsDisclosure{border-radius:14px!important;border-color:var(--igline)!important}
-
-/* Social quick rail */
-.mortaSocialIntro{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 0 18px}
-.mortaSocialIntro h1{font:800 27px Inter,sans-serif!important;letter-spacing:-1px!important;margin:0!important}
-.mortaSocialIntro p{margin:4px 0 0!important;color:var(--igmuted)!important;font-size:13px!important}
-.mortaSocialStatus{display:flex;gap:8px;align-items:center;color:#b8b8c2;font-size:12px}
-.mortaSocialStatus i{width:8px;height:8px;background:#22c55e;border-radius:50%;display:block}
-
-/* Instagram-like mobile navigation */
-.mortaBottomNav{display:none}
-@media(max-width:900px){
- main{padding:78px 12px 88px!important}
- .nav{padding:0 14px!important}
- .navlinks{display:none!important}
- .nav .accountActions{margin-left:auto!important}
- .hubLayout{grid-template-columns:1fr!important;display:block!important}
- .hubAside{position:static!important;margin-top:18px}
- .hubAside .hubExploreCard:nth-child(2){display:none}
- .hubTabs{top:64px}
- .mortaBottomNav{position:fixed;z-index:100;bottom:0;left:0;right:0;height:64px;background:rgba(9,9,11,.96);backdrop-filter:blur(16px);border-top:1px solid var(--igline);display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}
- .mortaBottomNav button{background:none;border:0;color:#a1a1aa;font:600 10px Inter,sans-serif;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
- .mortaBottomNav button b{font-size:19px;line-height:19px;font-weight:500}
- .mortaBottomNav button.active{color:#fff}
- #league,#playerCalculator,#systems{display:none!important}
-}
-@media(min-width:901px){
- .mortaSocialIntro{margin-left:auto;margin-right:auto;max-width:968px}
-}
-</style>
 
 <div class="mortaBottomNav" id="mortaBottomNav">
  <button class="active" data-scroll="mortahub"><b>⌂</b>Ana Akış</button>
@@ -2196,22 +2074,31 @@ document.getElementById('mortaDesktopDM')?.addEventListener('click',function(){
 </script>
 
 
+<script id="mortaProfessionalRuntimeV4">
+(()=>{
+  const once=new Set();
+  window.addEventListener('unhandledrejection',e=>{
+    const m=String(e.reason?.message||e.reason||'');
+    if(m && !once.has(m)){once.add(m);console.warn('[MortaLeague] İşlem tamamlanamadı:',m)}
+  });
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-loading-text]');
+    if(!b||b.disabled)return;
+    const old=b.textContent;
+    b.dataset.oldText=old;
+    b.textContent=b.dataset.loadingText;
+    setTimeout(()=>{if(b.dataset.oldText===old)b.textContent=old},4000);
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key!=='Escape')return;
+    const open=document.querySelector('.modal.open,.accountModal.open,.adminModal.open,.dmModal.open');
+    if(open){
+      const close=open.querySelector('[data-close],.close,.modalClose,#dmClose');
+      if(close instanceof HTMLElement)close.click();
+    }
+  });
+})();
+</script>
 
-<!-- MortaLeague Core Experience Restore: original background + opening systems -->
-<style id="mortaCoreExperienceRestore">
-/* V2 social redesign had hidden original MortaLeague systems. Restore them without removing new features. */
-body{background:var(--bg)!important;color:var(--text)!important}
-#particles{display:block!important}
-.hero{display:grid!important}
-.navCta{display:inline-flex!important}
-section#news,section#mortaHub{display:block!important}
-.hubHero{display:flex!important}
-@media(max-width:900px){
-  #league,#playerCalculator,#systems{display:block!important}
-}
-</style>
-
-<link rel="stylesheet" href="professional.css">
-<script src="professional-patch.js"></script>
 </body>
 </html>
