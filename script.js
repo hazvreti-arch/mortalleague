@@ -167,6 +167,9 @@ if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
   mortaSupabase = window.supabase.createClient(MORTA_SUPABASE_URL, MORTA_SUPABASE_ANON_KEY, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
   });
+  // Lig modülü ayrı bir dosyada çalıştığı için Supabase istemcisini açıkça paylaş.
+  window.mortaSupabase = mortaSupabase;
+  window.dispatchEvent(new Event("morta:supabase-ready"));
 }
 // V5 modülleri ayrı dosyalarda çalıştığı için istemciyi açıkça paylaş.
 window.mortaSupabase = mortaSupabase;

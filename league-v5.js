@@ -123,5 +123,11 @@
     if(state.profile?.is_admin) $('#openLeagueAdmin').hidden=false;
     await loadAll();
   }
-  document.addEventListener('DOMContentLoaded',init);
+  // Dosya dinamik/önbellekten geç yüklense bile başlatma kaçırılmasın.
+  window.addEventListener('morta:supabase-ready', () => {
+    if(!state.seasons.length && sb()) loadAll();
+  }, {once:true});
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
+  else init();
 })();
