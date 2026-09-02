@@ -49,10 +49,35 @@
   function activeSeason(){ return state.seasons.find(x=>x.is_active) || state.seasons[0] || null; }
   function leagueForActive(){ const s=activeSeason(); return state.leagues.find(x=>x.season_id===s?.id) || state.leagues[0] || null; }
   function team(id){ return state.teams.find(x=>x.id===id); }
-  function fillSelect(sel,items,label,empty='Seç...'){
+  function fillSelect(sel,items,label,empty='Seç...',preferredId=''){
     const el=$(sel); if(!el) return; const old=el.value;
     el.innerHTML=`<option value="">${empty}</option>`+items.map(x=>`<option value="${esc(x.id)}">${esc(label(x))}</option>`).join('');
-    if(items.some(x=>x.id===old)) el.value=old;
+    const target=preferredId || old;
+    if(items.some(x=>x.id===target)) el.value=target;
+  }
+
+  function leaguesForActiveSeason(){
+    const active=activeSeason();
+    return active ? state.leagues.filter(l=>l.season_id===active.id) : state.leagues;
+  }
+
+  async function ensureDefaultLeague(){
+    const client=sb(); if(!client) return null;
+    let season=activeSeason();
+    if(!season){
+      const year=new Date().getFullYear();
+      const {data,error}=await client.from('seasons').insert({name:`${year}/${String(year+1).slice(-2)} Sezonu`,is_active:true}).select('*').single();
+      if(error){ console.error(error); toast('Varsayılan sezon oluşturulamadı: '+error.message); return null; }
+      season=data;
+    }
+    let league=state.leagues.find(l=>l.season_id===season.id);
+    if(!league){
+      const {data,error}=await client.from('leagues').insert({season_id:season.id,name:'MortaLeague',code:'ML'}).select('*').single();
+      if(error){ console.error(error); toast('Varsayılan lig oluşturulamadı: '+error.message); return null; }
+      league=data;
+    }
+    await loadAll();
+    return state.leagues.find(l=>l.id===league.id)||league;
   }
   function standings(lid){
     const teams=state.teams.filter(t=>t.league_id===lid).map(t=>({team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}));
@@ -76,9 +101,10 @@
     const matches=league?state.matches.filter(m=>m.league_id===league.id):[];
     $('#leagueMatches').innerHTML=matches.map(m=>{const h=team(m.home_team_id),a=team(m.away_team_id);return `<article class="matchCard"><div class="matchSide"><b>${esc(h?.name||'Bilinmeyen')}</b></div><div class="matchScore">${m.status==='played'?`${m.home_score} - ${m.away_score}`:'VS'}</div><div class="matchSide"><b>${esc(a?.name||'Bilinmeyen')}</b><small>${m.played_at?new Date(m.played_at).toLocaleDateString('tr-TR'):''}</small></div></article>`}).join('')||'<div class="leagueEmpty">Henüz maç bulunmuyor.</div>';
     $('#seasonArchive').innerHTML=state.seasons.map(s=>`<article class="archiveCard"><b>${esc(s.name)}</b><small>${s.is_active?'AKTİF SEZON':'Arşiv'} · ${esc(s.start_date||'')} ${s.end_date?'— '+esc(s.end_date):''}</small></article>`).join('')||'<div class="leagueEmpty">Henüz sezon arşivi yok.</div>';
-    fillSelect('#leagueSeasonSelect',state.seasons,x=>x.name,'Sezon seç');
-    fillSelect('#teamLeagueSelect',state.leagues,x=>x.name,'Lig seç');
-    fillSelect('#matchLeagueSelect',state.leagues,x=>x.name,'Lig seç');
+    const currentActiveSeason=activeSeason(), currentLeague=leagueForActive();
+    fillSelect('#leagueSeasonSelect',state.seasons,x=>x.name,'Sezon seç',currentActiveSeason?.id||'');
+    fillSelect('#teamLeagueSelect',state.leagues,x=>x.name,'Lig seç',currentLeague?.id||'');
+    fillSelect('#matchLeagueSelect',state.leagues,x=>x.name,'Lig seç',currentLeague?.id||'');
     renderAdminLists();
   }
   function renderAdminLists(){
@@ -98,8 +124,43 @@
     $$('[data-admin-tab]').forEach(b=>b.addEventListener('click',()=>{$$('[data-admin-tab]').forEach(x=>x.classList.remove('active'));$$('.adminTabPane').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#adminTab-'+b.dataset.adminTab)?.classList.add('active')}));
     $('#matchLeagueSelect')?.addEventListener('change',e=>{const ts=state.teams.filter(t=>t.league_id===e.target.value);fillSelect('#homeTeamSelect',ts,x=>x.name,'Ev sahibi');fillSelect('#awayTeamSelect',ts,x=>x.name,'Deplasman');});
     $('#seasonForm')?.addEventListener('submit',async e=>{e.preventDefault();const name=$('#seasonName').value.trim();if(!name)return; if($('#seasonActive').checked){const c=sb();await c.from('seasons').update({is_active:false}).eq('is_active',true)}await save('seasons',{name,start_date:$('#seasonStart').value||null,end_date:$('#seasonEnd').value||null,is_active:$('#seasonActive').checked},'Sezon oluşturuldu.');e.target.reset();});
-    $('#leagueForm')?.addEventListener('submit',async e=>{e.preventDefault();await save('leagues',{season_id:$('#leagueSeasonSelect').value,name:$('#leagueName').value.trim(),code:$('#leagueCode').value.trim()||null},'Lig oluşturuldu.');e.target.reset();});
-    $('#teamForm')?.addEventListener('submit',async e=>{e.preventDefault();await save('league_teams',{league_id:$('#teamLeagueSelect').value,name:$('#teamName').value.trim(),logo_url:$('#teamLogo').value.trim()||null},'Takım lige eklendi.');e.target.reset();});
+    $('#quickSetupForm')?.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const seasonName=$('#quickSeasonName').value.trim() || `${new Date().getFullYear()}/${String(new Date().getFullYear()+1).slice(-2)} Sezonu`;
+      const leagueName=$('#quickLeagueName').value.trim();
+      if(!leagueName) return toast('Lig adını yaz.');
+      const client=sb(); if(!client) return toast('Supabase bağlantısı bulunamadı.');
+      await client.from('seasons').update({is_active:false}).eq('is_active',true);
+      const {data:season,error:se}=await client.from('seasons').insert({name:seasonName,is_active:true}).select('*').single();
+      if(se) return toast('Sezon oluşturulamadı: '+se.message);
+      const {data:league,error:le}=await client.from('leagues').insert({season_id:season.id,name:leagueName,code:$('#quickLeagueCode').value.trim()||null}).select('*').single();
+      if(le) return toast('Lig oluşturulamadı: '+le.message);
+      const raw=$('#quickTeams').value.split(/\n|,/).map(x=>x.trim()).filter(Boolean);
+      if(raw.length){
+        const rows=[...new Set(raw.map(name=>name.toLowerCase()))].map(name=>({league_id:league.id,name:raw.find(x=>x.toLowerCase()===name)}));
+        const {error:te}=await client.from('league_teams').insert(rows);
+        if(te) toast('Lig oluşturuldu ancak bazı takımlar eklenemedi: '+te.message);
+      }
+      toast('Lig kurulumu tamamlandı.'); e.target.reset(); await loadAll();
+    });
+    $('#leagueForm')?.addEventListener('submit',async e=>{
+      e.preventDefault();
+      let seasonId=$('#leagueSeasonSelect').value;
+      if(!seasonId){
+        const client=sb(); const existing=activeSeason();
+        if(existing) seasonId=existing.id;
+        else { const created=await ensureDefaultLeague(); if(created){ toast('Varsayılan sezon ve lig oluşturuldu. Lig adını tekrar seçebilirsin.'); return; } }
+      }
+      if(!seasonId) return toast('Önce bir sezon oluştur veya Hızlı Kurulum kullan.');
+      const ok=await save('leagues',{season_id:seasonId,name:$('#leagueName').value.trim(),code:$('#leagueCode').value.trim()||null},'Lig oluşturuldu.'); if(ok)e.target.reset();
+    });
+    $('#teamForm')?.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const name=$('#teamName').value.trim(); if(!name) return;
+      let leagueId=$('#teamLeagueSelect').value;
+      if(!leagueId){ const league=await ensureDefaultLeague(); if(!league) return; leagueId=league.id; }
+      const ok=await save('league_teams',{league_id:leagueId,name,logo_url:$('#teamLogo').value.trim()||null},'Takım lige eklendi.'); if(ok)e.target.reset();
+    });
     $('#matchForm')?.addEventListener('submit',async e=>{e.preventDefault();const h=$('#homeTeamSelect').value,a=$('#awayTeamSelect').value;if(!h||!a||h===a)return toast('İki farklı takım seç.');await save('matches',{league_id:$('#matchLeagueSelect').value,home_team_id:h,away_team_id:a,home_score:Number($('#homeScore').value)||0,away_score:Number($('#awayScore').value)||0,played_at:$('#matchDate').value||new Date().toISOString(),status:'played'},'Maç sonucu kaydedildi.');});
   }
   async function init(){
