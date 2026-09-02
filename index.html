@@ -16,7 +16,7 @@
  --line:rgba(180,120,255,.18);--glow:rgba(139,59,255,.35);--good:#67f7bb;--danger:#ff668f;
 }
 *{box-sizing:border-box}
-[hidden]{display:none !important}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+[hidden]{display:none !important}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;position:relative}
 body:before{content:"";position:fixed;inset:0;z-index:-5;background:
 radial-gradient(circle at 15% 15%,rgba(142,48,255,.22),transparent 30%),
 radial-gradient(circle at 88% 28%,rgba(217,70,239,.13),transparent 28%),
@@ -24,8 +24,9 @@ radial-gradient(circle at 50% 100%,rgba(81,25,160,.18),transparent 40%),
 linear-gradient(125deg,#050309,#0b0513 50%,#08040e)}
 body:after{content:"";position:fixed;inset:0;z-index:-4;opacity:.18;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
 a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}
-#particles{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden}.orb{position:absolute;width:5px;height:5px;border-radius:50%;background:#c78aff;box-shadow:0 0 16px #a855f7;opacity:.45;animation:float linear infinite}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}.orb{position:absolute;width:5px;height:5px;border-radius:50%;background:#c78aff;box-shadow:0 0 16px #a855f7;opacity:.45;animation:float linear infinite}
 @keyframes float{from{transform:translateY(110vh) translateX(0)}to{transform:translateY(-15vh) translateX(80px)}}
+main{position:relative;z-index:1}
 header{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(5,3,10,.68);backdrop-filter:blur(20px)}
 .nav{max-width:1240px;margin:auto;height:78px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .logo{display:flex;align-items:center;gap:12px;font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px}
@@ -457,6 +458,27 @@ img{height:auto}
 </head>
 <body>
 <div id="particles"></div>
+<script>
+(function(){
+  const layer=document.getElementById('particles');
+  if(!layer || layer.dataset.ready) return;
+  layer.dataset.ready='1';
+  const count=Math.min(55, Math.max(28, Math.floor(window.innerWidth/28)));
+  for(let i=0;i<count;i++){
+    const orb=document.createElement('span');
+    orb.className='orb';
+    const size=(Math.random()*4+2).toFixed(1);
+    orb.style.width=size+'px';
+    orb.style.height=size+'px';
+    orb.style.left=(Math.random()*100)+'%';
+    orb.style.top=(Math.random()*120-10)+'vh';
+    orb.style.opacity=(Math.random()*.45+.18).toFixed(2);
+    orb.style.animationDuration=(Math.random()*16+14).toFixed(1)+'s';
+    orb.style.animationDelay=(-Math.random()*25).toFixed(1)+'s';
+    layer.appendChild(orb);
+  }
+})();
+</script>
 
 <header>
 <nav class="nav">
