@@ -43,7 +43,8 @@ $$("[data-tab]").forEach(btn=>{
     $$("[data-tab]").forEach(x=>x.classList.remove("active"));
     $$(".contentPane").forEach(x=>x.classList.remove("active"));
     btn.classList.add("active");
-    $("#"+btn.dataset.tab).classList.add("active");
+    const target=$("#"+btn.dataset.tab);
+    if(target) target.classList.add("active");
   });
 });
 
@@ -97,12 +98,19 @@ function euro(n){
 }
 
 function calculateContribution(){
-  const tournament = $("#contributionTournament").value;
+  const tournamentEl = $("#contributionTournament");
+  const goalsEl = $("#contributionGoals");
+  const gymEl = $("#contributionGym");
+  const assistsEl = $("#contributionAssists");
+  const cupsEl = $("#contributionCups");
+  if(!tournamentEl || !goalsEl || !gymEl || !assistsEl || !cupsEl) return;
+  const tournament = tournamentEl.value;
   const rates = contributionRates[tournament];
-  const goals = Math.max(0, Number($("#contributionGoals").value) || 0);
-  const gym = Math.max(0, Number($("#contributionGym").value) || 0);
-  const assists = Math.max(0, Number($("#contributionAssists").value) || 0);
-  const cups = Math.max(0, Number($("#contributionCups").value) || 0);
+  if(!rates) return;
+  const goals = Math.max(0, Number(goalsEl.value) || 0);
+  const gym = Math.max(0, Number(gymEl.value) || 0);
+  const assists = Math.max(0, Number(assistsEl.value) || 0);
+  const cups = Math.max(0, Number(cupsEl.value) || 0);
 
   const base = 1000000;
   const goalValue = goals * rates.goal;
@@ -111,12 +119,12 @@ function calculateContribution(){
   const cupValue = cups * rates.cup;
   const total = base + goalValue + gymValue + assistValue + cupValue;
 
-  $("#contributionBase").textContent = euro(base);
-  $("#contributionGoalValue").textContent = "+" + euro(goalValue);
-  $("#contributionGymValue").textContent = "+" + euro(gymValue);
-  $("#contributionAssistValue").textContent = "+" + euro(assistValue);
-  $("#contributionCupValue").textContent = "+" + euro(cupValue);
-  $("#contributionTotal").textContent = euro(total);
+  $("#contributionBase") && ($("#contributionBase").textContent = euro(base));
+  $("#contributionGoalValue") && ($("#contributionGoalValue").textContent = "+" + euro(goalValue));
+  $("#contributionGymValue") && ($("#contributionGymValue").textContent = "+" + euro(gymValue));
+  $("#contributionAssistValue") && ($("#contributionAssistValue").textContent = "+" + euro(assistValue));
+  $("#contributionCupValue") && ($("#contributionCupValue").textContent = "+" + euro(cupValue));
+  $("#contributionTotal") && ($("#contributionTotal").textContent = euro(total));
 }
 
 $("#calculateContribution")?.addEventListener("click", calculateContribution);
@@ -141,8 +149,9 @@ window.addEventListener("scroll",()=>{
   });
 });
 
-// Sessiz güvenlik/kararlılık koruması: tek bir UI hatası tüm sayfayı kilitlemesin.
-window.addEventListener("error",()=>{}, {passive:true});
+// Hataları sessizce yutma: üretimde bile geliştirici konsolunda görünür kalsın.
+window.addEventListener("error",e=>console.error("[MortaLeague]",e.error||e.message));
+window.addEventListener("unhandledrejection",e=>console.error("[MortaLeague async]",e.reason));
 
 
 /* MortaLeague account system
@@ -200,12 +209,16 @@ async function registerMorta(){
   if(!/^[a-z0-9_]{3,24}$/.test(username)){ showAccountMessage("Kullanıcı adı 3-24 karakter olmalı; sadece a-z, 0-9 ve _ kullan.", true); return; }
   if(p1.length<8){ showAccountMessage("Şifre en az 8 karakter olmalı.", true); return; }
   if(p1!==p2){ showAccountMessage("Şifreler eşleşmiyor.", true); return; }
+  const accountType = $("#registerRole")?.value === "team" ? "team" : "player";
   const {data,error}=await mortaSupabase.auth.signUp({email:syntheticEmail(username),password:p1});
   if(error){ showAccountMessage(error.message, true); return; }
   if(data.user) {
-    await mortaSupabase.from("profiles").upsert({id:data.user.id,username},{onConflict:"id"});
+    const {error: profileError}=await mortaSupabase.from("profiles").upsert({id:data.user.id,username,account_type:accountType},{onConflict:"id"});
+    if(profileError && !data.session){
+      console.warn("Profil kaydı e-posta doğrulaması tamamlanınca oluşturulmalı:", profileError.message);
+    }else if(profileError){ showAccountMessage(`Hesap oluşturuldu fakat profil kaydı oluşturulamadı: ${profileError.message}`, true); return; }
   }
-  showAccountMessage("Hesabın oluşturuldu. Giriş yapabilirsin.");
+  showAccountMessage(data.session ? "Hesabın oluşturuldu. Giriş yapabilirsin." : "Hesabın oluşturuldu. E-posta doğrulaması gerekiyorsa önce onu tamamla.");
   setTimeout(()=>accountOpen("login"),700);
 }
 

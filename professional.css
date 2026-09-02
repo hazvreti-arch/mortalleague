@@ -1,0 +1,26 @@
+/* MortaLeague Professional UI Stability Layer */
+:root{color-scheme:dark}
+html{scroll-behavior:smooth;overflow-x:hidden;min-height:100%;background:#0b0612}
+body{max-width:100%;min-height:100%;overflow-x:hidden}
+img{max-width:100%;height:auto}
+button,input,select,textarea{font:inherit}
+button{touch-action:manipulation}
+:focus-visible{outline:2px solid #b16cff;outline-offset:3px}
+[hidden]{display:none!important}
+.ml-loading{opacity:.65;pointer-events:none}
+.ml-empty{padding:26px 18px;border:1px dashed rgba(168,85,247,.28);border-radius:16px;text-align:center;color:#a99bbd}
+.ml-toast-stack{position:fixed;right:18px;bottom:18px;z-index:10000;display:grid;gap:9px;width:min(360px,calc(100vw - 36px));pointer-events:none}
+.ml-toast{padding:14px 16px;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:rgba(18,10,29,.96);box-shadow:0 18px 55px rgba(0,0,0,.42);backdrop-filter:blur(12px);transition:.22s ease;pointer-events:auto}
+.ml-toast b{display:block;font-size:10px;letter-spacing:.08em;margin-bottom:5px}.ml-toast span{display:block;color:#d1c6da;font-size:12px;line-height:1.5}.ml-toast.success{border-color:rgba(74,222,128,.38)}.ml-toast.error{border-color:rgba(255,102,143,.4)}
+.systemRule h3{cursor:pointer;user-select:none}.systemRule h3::after{content:'+';float:right;color:#c7a2ff;transition:transform .2s}.systemRule.open h3::after{transform:rotate(45deg)}
+.systemRule.isHidden{display:none!important}
+@media(max-width:700px){
+  html,body{width:100%;min-height:100dvh;overflow-x:hidden}
+  .profileModal,.publicProfileModal,.offerModal,.notificationModal,.adminModal{position:fixed!important;inset:0!important;width:100%!important;height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important;padding:10px 0 32px!important;box-sizing:border-box!important}
+  .profileModal.open,.publicProfileModal.open,.offerModal.open,.notificationModal.open,.adminModal.open{display:block!important}
+  .profileModal .profileCard,.publicProfileModal .accountCard,.offerModal .accountCard,.notificationModal .accountCard,.adminModal .adminCard{position:relative!important;z-index:2!important;width:calc(100% - 20px)!important;max-width:560px!important;max-height:none!important;height:auto!important;overflow:visible!important;margin:0 auto 28px!important;box-sizing:border-box!important}
+  .profileModal .accountBackdrop{position:fixed!important;inset:0!important;z-index:1!important}
+  input,select,textarea{font-size:16px!important}
+  .ml-toast-stack{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));width:auto}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
