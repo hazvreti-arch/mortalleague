@@ -455,6 +455,7 @@ img{height:auto}
 }
 </style>
 
+<style>.matchDetailBtn{margin-top:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}.matchCenterCard{position:relative}.matchRound{font-size:10px;letter-spacing:1px;opacity:.6;margin-bottom:7px}.matchCenterHero{text-align:center;padding:24px 8px}.matchCenterHero small{letter-spacing:2px;opacity:.6}.matchCenterTeams{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:18px 0}.matchCenterTeams b{font-size:18px}.matchCenterTeams strong{font-size:30px}.matchCenterInfo{display:grid;grid-template-columns:1fr 1fr;gap:10px}.matchCenterInfo>div{padding:14px;border:1px solid var(--line);border-radius:12px}.matchCenterInfo span{display:block;font-size:10px;opacity:.55;margin-bottom:6px}.adminForm span{font-size:13px}@media(max-width:650px){.matchCenterTeams{gap:8px}.matchCenterTeams b{font-size:14px}.matchCenterTeams strong{font-size:24px}}</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -1500,13 +1501,14 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="leagueAdminHead"><div><span class="accountEyebrow">YÖNETİM MERKEZİ</span><h3>Lig & Sezon Yönetimi</h3><p>Buradan sezonu, ligleri, takımları ve maç sonuçlarını yönetebilirsin.</p></div><button class="accountClose" data-close-league-admin>×</button></div>
     <div class="adminMetricGrid"><div><small>SEZON</small><b id="adminSeasonCount">0</b></div><div><small>LİG</small><b id="adminLeagueCount">0</b></div><div><small>TAKIM</small><b id="adminTeamCount">0</b></div></div>
     <div class="leagueAdminTabs">
-      <button class="active" data-admin-tab="setup">⚡ HIZLI KURULUM</button><button data-admin-tab="seasons">SEZONLAR</button><button data-admin-tab="leagues">LİGLER</button><button data-admin-tab="teams">TAKIM EKLE</button><button data-admin-tab="matches">MAÇ SONUCU</button>
+      <button class="active" data-admin-tab="setup">⚡ HIZLI KURULUM</button><button data-admin-tab="fixture">🗓️ OTOMATİK FİKSTÜR</button><button data-admin-tab="seasons">SEZONLAR</button><button data-admin-tab="leagues">LİGLER</button><button data-admin-tab="teams">TAKIM EKLE</button><button data-admin-tab="matches">MAÇ SONUCU</button>
     </div>
     <div class="adminTabPane active" id="adminTab-setup">
       <div class="adminSetupIntro"><b>Ligini tek ekrandan kur.</b><small>Sezon + lig oluştur, ardından takım adlarını alt alta yaz. Sistem hepsini otomatik ekler.</small></div>
       <form id="quickSetupForm" class="adminForm quickSetupForm"><label>Sezon Adı<input id="quickSeasonName" placeholder="2026/27 Sezonu"></label><label>Lig Adı<input id="quickLeagueName" placeholder="MortaLeague Süper Lig" required></label><label>Lig Kodu<input id="quickLeagueCode" placeholder="MLS"></label><label class="wideField">Takımlar (her satıra bir takım)<textarea id="quickTeams" placeholder="Juventus&#10;Real Madrid&#10;Barcelona&#10;Beşiktaş"></textarea></label><button class="primary" type="submit">⚡ LİGİ VE TAKIMLARI OLUŞTUR</button></form>
     </div>
-    <div class="adminTabPane" id="adminTab-seasons">
+    <div class="adminTabPane" id="adminTab-fixture"><div class="adminSetupIntro"><b>🗓️ OTOMATİK FİKSTÜR</b><small>Takımları ekledikten sonra tek tuşla tüm sezonun maçlarını oluştur.</small></div><div class="adminForm"><label>Lig<select id="fixtureLeagueSelect"></select></label><label>İlk Maç Tarihi<input id="fixtureStartDate" type="datetime-local"></label><label class="wideField"><span><input id="fixtureDouble" type="checkbox" checked> Çift devre (ev/deplasman)</span></label><button id="fixtureCreate" class="primary" type="button">⚡ FİKSTÜRÜ OTOMATİK OLUŞTUR</button></div></div>
+<div class="adminTabPane" id="adminTab-seasons">
       <form id="seasonForm" class="adminForm"><label>Sezon Adı<input id="seasonName" placeholder="2026/27 Sezonu" required></label><label>Başlangıç<input id="seasonStart" type="date"></label><label>Bitiş<input id="seasonEnd" type="date"></label><label class="checkLabel"><input id="seasonActive" type="checkbox" checked> Aktif sezon yap</label><button class="primary" type="submit">SEZON OLUŞTUR</button></form>
       <div id="adminSeasons" class="adminDataList"></div>
     </div>
@@ -1526,7 +1528,8 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </div>
 
 <script src="script.js?v=5.3"></script>
-<script src="league-v5.js?v=5.3"></script>
+<div class="modal" id="matchCenterModal" aria-hidden="true"><div class="modalBox"><button class="modalClose" data-close-match-center>×</button><div id="matchCenterContent"></div></div></div>
+<script src="league-v5.js?v=6.0"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
