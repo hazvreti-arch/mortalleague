@@ -459,6 +459,19 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 <style>
 .commentList{display:grid;gap:8px;margin-top:10px}.commentItem{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:rgba(255,255,255,.02)}.commentItem b{font:800 11px Orbitron}.commentItem small{display:block;color:#756b80;margin-top:3px;font-size:8px}.commentItem p{margin:7px 0 0;color:#bdb1c8;font-size:12px;line-height:1.5}.commentForm{margin-top:10px}.commentForm textarea{width:100%;box-sizing:border-box;min-height:75px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff}.publicActions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}.publicActions>*{min-width:0}.modalBox{max-width:720px;width:calc(100% - 28px)}
 </style>
+<style>
+.standingsShell{border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(24,12,38,.84),rgba(11,7,16,.92));overflow:hidden;box-shadow:0 22px 70px rgba(0,0,0,.28)}
+.standingsTop{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;padding:22px 22px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.standingsTop h3{margin:6px 0 0;font:800 17px Orbitron;color:#f4edfb}
+.standingsLegend{display:flex;align-items:center;gap:14px;color:#81758c;font-size:10px;flex-wrap:wrap;justify-content:flex-end}
+.standingsLegend span{display:inline-flex;align-items:center;gap:7px}.standingsDot{width:7px;height:7px;border-radius:999px;background:#6f6578;display:inline-block}.standingsDot.active{background:#d946ef;box-shadow:0 0 14px rgba(217,70,239,.55)}
+.standingsTableWrap{overflow-x:auto}.standingsTable{width:100%;border-collapse:collapse;min-width:760px}.standingsTable th{padding:13px 12px;color:#756980;font:800 9px Orbitron;letter-spacing:.8px;text-align:center;background:rgba(255,255,255,.018);border-bottom:1px solid rgba(255,255,255,.06)}
+.standingsTable td{padding:13px 12px;color:#dcd3e4;text-align:center;font-size:12px;border-bottom:1px solid rgba(255,255,255,.055)}
+.standingsTable tbody tr{transition:.2s}.standingsTable tbody tr:hover{background:rgba(168,85,247,.045)}.standingsTable tbody tr:last-child td{border-bottom:0}.standingsTable .teamCol{text-align:left;width:34%}
+.standingsRank{font:800 12px Orbitron;color:#8f829b}.standingsTeam{display:flex;align-items:center;gap:11px;text-align:left}.standingsTeamLogo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;background:linear-gradient(135deg,#7c3aed,#ec4899);font:800 11px Orbitron;color:#fff;overflow:hidden}.standingsTeamLogo img{width:100%;height:100%;object-fit:cover}.standingsTeam b{display:block;font-size:12px;color:#fff}.standingsTeam small{display:block;color:#776b82;margin-top:3px;font-size:9px}.standingsPts{font:900 13px Orbitron;color:#d4acff}.standingsPositive{color:#9ce6bf!important}.standingsNegative{color:#f3a4b6!important}.standingsEmptyHint{padding:18px 22px;color:#8f839d;font-size:12px;border-top:1px solid rgba(255,255,255,.05)}
+.adminLeagueEditor{margin-top:18px;padding:16px;border:1px dashed var(--line);border-radius:15px;background:rgba(168,85,247,.035)}.adminLeagueEditor h4{margin:5px 0 4px;font:800 14px Orbitron}.adminLeagueToolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap}.adminLeagueToolbar .accountBtn{padding:9px 12px}.adminLeagueRows{display:grid;gap:8px;margin-top:13px}.adminLeagueRow{display:grid;grid-template-columns:34px minmax(150px,1.8fr) repeat(8,minmax(58px,72px)) 40px;gap:7px;align-items:center}.adminLeagueRow input{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;background:#0b0710;color:#fff;padding:9px 8px;outline:0}.adminLeagueRow input:focus{border-color:rgba(168,85,247,.55)}.adminLeagueRow .rowNo{color:#776b82;text-align:center;font:800 10px Orbitron}.adminLeagueHeader{display:grid;grid-template-columns:34px minmax(150px,1.8fr) repeat(8,minmax(58px,72px)) 40px;gap:7px;align-items:center;color:#756980;font:800 8px Orbitron;letter-spacing:.6px}.adminLeagueHeader span{text-align:center}.adminLeagueHeader span:nth-child(2){text-align:left}.adminLeagueDelete{border:1px solid rgba(255,100,130,.18);background:rgba(255,100,130,.06);color:#f2a4b5;border-radius:9px;padding:8px 0;cursor:pointer}.adminLeagueDelete:hover{background:rgba(255,100,130,.12)}
+@media(max-width:900px){.standingsTop{align-items:flex-start;flex-direction:column}.standingsLegend{justify-content:flex-start}.adminLeagueRow,.adminLeagueHeader{min-width:760px}.adminLeagueEditor{overflow-x:auto}}
+</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -520,12 +533,16 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 </section>
 
 <section class="section" id="league">
-<div class="sectionHead"><div><h2>LİGİN DNA'SI</h2><p>Basit kurallar. Derin rekabet. Her kararın bir bedeli var.</p></div><span class="badge">SEASON 01</span></div>
-<div class="grid">
-<div class="card"><div class="icon">⚔</div><h3>Rekabet</h3><p>Her maç puan, değer ve sıralama üzerinde gerçek etki yaratır.</p></div>
-<div class="card"><div class="icon">◈</div><h3>Strateji</h3><p>Antrenman ve oyuncu seçimleri yalnızca güç değil, denge ister.</p></div>
-<div class="card"><div class="icon">₺</div><h3>Ekonomi</h3><p>Bütçeni doğru kullan, oyuncu değerini yükselt ve kaynaklarını koru.</p></div>
-<div class="card"><div class="icon">★</div><h3>Şöhret</h3><p>Başarıların lig tarihine yazılır. Sezon sonunda sıralama her şeyi söyler.</p></div>
+<div class="sectionHead"><div><h2>PUAN DURUMU</h2><p>MortaLeague Season 01 · Güncel lig sıralaması ve takım performansları.</p></div><span class="badge" id="leagueSeasonBadge">SEASON 01</span></div>
+<div class="standingsShell">
+  <div class="standingsTop"><div><span class="accountEyebrow">MORTALEAGUE</span><h3>SEASON 01 · LİG TABLOSU</h3></div><div class="standingsLegend"><span><i class="standingsDot active"></i> Aktif Sezon</span><span id="standingsUpdated">Güncelleniyor...</span></div></div>
+  <div class="standingsTableWrap">
+    <table class="standingsTable" aria-label="MortaLeague puan durumu">
+      <thead><tr><th>S</th><th class="teamCol">TAKIM</th><th>O</th><th>G</th><th>B</th><th>M</th><th>AG</th><th>YG</th><th>AV</th><th>P</th></tr></thead>
+      <tbody id="leagueStandingsBody"><tr><td colspan="10"><div class="directoryEmpty">Puan durumu yükleniyor...</div></td></tr></tbody>
+    </table>
+  </div>
+  <div class="standingsEmptyHint" id="leagueStandingsHint" hidden>Henüz puan durumu eklenmedi.</div>
 </div>
 </section>
 
@@ -1425,6 +1442,13 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="hubStats" style="margin:14px 0"><div class="hubStat"><span>KULLANICI</span><strong id="adminUserCount">—</strong></div><div class="hubStat"><span>BEKLEYEN TEKLİF</span><strong id="adminOfferCount">—</strong></div><div class="hubStat"><span>BEKLEYEN RAPOR</span><strong id="adminReportCount">—</strong></div></div>
     <div class="adminList" id="adminList"></div>
     <div style="margin-top:18px"><span class="accountEyebrow">RAPORLAR</span><div class="adminList" id="adminReportList"><div class="adminEmpty">Raporlar yükleniyor...</div></div></div>
+    <div class="adminLeagueEditor">
+      <span class="accountEyebrow">LİG YÖNETİMİ</span><h4>PUAN DURUMU</h4>
+      <p style="margin:0;color:#8f839d;font-size:11px;line-height:1.5">Takımları, maç sonuçlarını ve puanları buradan düzenle. Sıralama otomatik olarak puan → averaj → atılan gol sırasına göre hesaplanır.</p>
+      <div class="adminLeagueToolbar"><input id="adminLeagueSeason" maxlength="40" value="Season 01" placeholder="Sezon adı" style="max-width:220px;border:1px solid var(--line);border-radius:9px;background:#0b0710;color:#fff;padding:9px 10px"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="accountBtn" id="adminAddLeagueRow">+ TAKIM EKLE</button><button class="accountBtn accountPrimary" id="adminSaveLeague">PUAN DURUMUNU KAYDET</button></div></div>
+      <div class="adminLeagueHeader"><span>#</span><span>TAKIM</span><span>O</span><span>G</span><span>B</span><span>M</span><span>AG</span><span>YG</span><span>AV</span><span>P</span><span></span></div>
+      <div class="adminLeagueRows" id="adminLeagueRows"><div class="adminEmpty">Puan durumu yükleniyor...</div></div>
+    </div>
     <div class="adminNewsForm"><span class="accountEyebrow">MORTANEWS YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">MORTANEWS YAYINLA</button></div>
     <div class="accountMessage" id="adminStatus"></div>
   </div>
@@ -2310,6 +2334,171 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
     if(hash) showView(hash,{history:false});
   });
   showView(alias[location.hash.slice(1)]||location.hash.slice(1)||'home',{history:false});
+})();
+</script>
+
+<script id="morta-league-standings-script">
+(() => {
+  const q = s => document.querySelector(s);
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const sup = () => (typeof mortaSupabase !== 'undefined' && mortaSupabase) ? mortaSupabase : null;
+  const fmt = v => new Intl.NumberFormat('tr-TR').format(Number(v || 0));
+  const initial = v => String(v || 'T').trim().slice(0,1).toUpperCase();
+
+  let currentSeason = 'Season 01';
+  let standings = [];
+
+  function sortRows(rows){
+    return [...rows].sort((a,b)=>{
+      const pd=(Number(b.points)||0)-(Number(a.points)||0); if(pd) return pd;
+      const gdB=(Number(b.goals_for)||0)-(Number(b.goals_against)||0);
+      const gdA=(Number(a.goals_for)||0)-(Number(a.goals_against)||0);
+      const gd=gdB-gdA; if(gd) return gd;
+      const gf=(Number(b.goals_for)||0)-(Number(a.goals_for)||0); if(gf) return gf;
+      return (Number(b.wins)||0)-(Number(a.wins)||0);
+    });
+  }
+
+  async function getCurrentSeason(){
+    const s=sup(); if(!s) return 'Season 01';
+    const {data,error}=await s.from('league_standings').select('season,updated_at').order('updated_at',{ascending:false}).limit(1);
+    if(error || !data?.length) return q('#adminLeagueSeason')?.value?.trim() || 'Season 01';
+    return data[0].season || 'Season 01';
+  }
+
+  async function loadStandings(){
+    const s=sup(), body=q('#leagueStandingsBody');
+    if(!body) return;
+    if(!s){body.innerHTML='<tr><td colspan="10"><div class="directoryEmpty">Puan durumu şu anda kullanılamıyor.</div></td></tr>';return;}
+    body.innerHTML='<tr><td colspan="10"><div class="directoryEmpty">Puan durumu yükleniyor...</div></td></tr>';
+    const season=await getCurrentSeason(); currentSeason=season;
+    const {data,error}=await s.from('league_standings').select('id,season,team_name,played,wins,draws,losses,goals_for,goals_against,points,logo_url,updated_at').eq('season',season).order('points',{ascending:false});
+    if(error){body.innerHTML=`<tr><td colspan="10"><div class="directoryEmpty">Puan durumu yüklenemedi: ${esc(error.message)}</div></td></tr>`;return;}
+    standings=sortRows(data||[]);
+    const names=[...new Set(standings.map(x=>x.team_name).filter(Boolean))];
+    let logos=new Map();
+    if(names.length){
+      const tr=await s.from('team_profiles').select('team_name,logo_url').in('team_name',names);
+      (tr.data||[]).forEach(x=>{if(x.team_name)logos.set(x.team_name,x.logo_url);});
+    }
+    q('#leagueSeasonBadge')&&(q('#leagueSeasonBadge').textContent=String(season).toUpperCase());
+    const badge=q('#leagueStandingsUpdated'); if(badge){ const latest=standings.map(x=>x.updated_at).filter(Boolean).sort().pop(); badge.textContent=latest?`Son güncelleme ${new Date(latest).toLocaleString('tr-TR')}`:'Henüz güncellenmedi'; }
+    const hint=q('#leagueStandingsHint');
+    if(!standings.length){
+      body.innerHTML='<tr><td colspan="10"><div class="directoryEmpty">Henüz puan durumu eklenmedi. Admin panelinden takımları ekleyebilirsin.</div></td></tr>';
+      if(hint) hint.hidden=true;
+      return;
+    }
+    if(hint) hint.hidden=true;
+    body.innerHTML=standings.map((r,i)=>{
+      const gd=(Number(r.goals_for)||0)-(Number(r.goals_against)||0);
+      const logo=r.logo_url||logos.get(r.team_name)||'';
+      const rankClass=i===0?' standingsTopRank':i===1?' standingsTopRank':i===2?' standingsTopRank':'';
+      const gdClass=gd>0?'standingsPositive':gd<0?'standingsNegative':'';
+      return `<tr><td><span class="standingsRank${rankClass}">${i+1}</span></td><td class="teamCol"><div class="standingsTeam"><span class="standingsTeamLogo">${logo?`<img src="${esc(logo)}" alt="">`:esc(initial(r.team_name))}</span><div><b>${esc(r.team_name)}</b><small>${Number(r.played||0)} maç</small></div></div></td><td>${fmt(r.played)}</td><td>${fmt(r.wins)}</td><td>${fmt(r.draws)}</td><td>${fmt(r.losses)}</td><td>${fmt(r.goals_for)}</td><td>${fmt(r.goals_against)}</td><td class="${gdClass}">${gd>0?'+':''}${fmt(gd)}</td><td class="standingsPts">${fmt(r.points)}</td></tr>`;
+    }).join('');
+  }
+
+  function adminRowHtml(r={}, index=0){
+    const gf=Number(r.goals_for||0), ga=Number(r.goals_against||0), gd=gf-ga;
+    return `<div class="adminLeagueRow" data-row-id="${esc(r.id||'new-'+Date.now()+'-'+index)}">
+      <span class="rowNo">${index+1}</span>
+      <input class="leagueTeamName" maxlength="60" value="${esc(r.team_name||'')}" placeholder="Takım adı">
+      <input class="leagueNum leaguePlayed" type="number" min="0" value="${Number(r.played||0)}" aria-label="Oynanan">
+      <input class="leagueNum leagueWins" type="number" min="0" value="${Number(r.wins||0)}" aria-label="Galibiyet">
+      <input class="leagueNum leagueDraws" type="number" min="0" value="${Number(r.draws||0)}" aria-label="Beraberlik">
+      <input class="leagueNum leagueLosses" type="number" min="0" value="${Number(r.losses||0)}" aria-label="Mağlubiyet">
+      <input class="leagueNum leagueGF" type="number" min="0" value="${gf}" aria-label="Atılan gol">
+      <input class="leagueNum leagueGA" type="number" min="0" value="${ga}" aria-label="Yenilen gol">
+      <span class="leagueGD" style="display:grid;place-items:center;font:800 11px Orbitron;color:${gd>=0?'#9ce6bf':'#f3a4b6'}">${gd>0?'+':''}${fmt(gd)}</span>
+      <input class="leagueNum leaguePoints" type="number" min="0" value="${Number(r.points||0)}" aria-label="Puan">
+      <button class="adminLeagueDelete" type="button" title="Takımı sil" aria-label="Takımı sil">×</button>
+    </div>`;
+  }
+
+  function renumberAdminRows(){
+    q('#adminLeagueRows')?.querySelectorAll('.adminLeagueRow').forEach((row,i)=>{const n=row.querySelector('.rowNo');if(n)n.textContent=String(i+1);});
+  }
+
+  function updateRowGD(row){
+    const gf=Math.max(0,Number(row.querySelector('.leagueGF')?.value||0));
+    const ga=Math.max(0,Number(row.querySelector('.leagueGA')?.value||0));
+    const gd=gf-ga, el=row.querySelector('.leagueGD');
+    if(el){el.textContent=(gd>0?'+':'')+fmt(gd);el.style.color=gd>=0?'#9ce6bf':'#f3a4b6';}
+  }
+
+  async function loadAdminStandings(){
+    const s=sup(), rows=q('#adminLeagueRows'); if(!s||!rows)return;
+    rows.innerHTML='<div class="adminEmpty">Puan durumu yükleniyor...</div>';
+    const season=await getCurrentSeason(); currentSeason=season;
+    if(q('#adminLeagueSeason')) q('#adminLeagueSeason').value=season;
+    const {data,error}=await s.from('league_standings').select('id,season,team_name,played,wins,draws,losses,goals_for,goals_against,points,logo_url,updated_at').eq('season',season).order('points',{ascending:false});
+    if(error){rows.innerHTML=`<div class="adminEmpty">Puan durumu okunamadı: ${esc(error.message)}</div>`;return;}
+    const list=sortRows(data||[]);
+    rows.innerHTML=list.length?list.map((r,i)=>adminRowHtml(r,i)).join(''):'<div class="adminEmpty">Henüz takım eklenmedi. “+ TAKIM EKLE” ile başla.</div>';
+    renumberAdminRows();
+  }
+
+  async function saveAdminStandings(){
+    const s=sup(); if(!s){alert('Supabase bağlantısı yok.');return;}
+    const btn=q('#adminSaveLeague'), rows=[...document.querySelectorAll('#adminLeagueRows .adminLeagueRow')];
+    const season=(q('#adminLeagueSeason')?.value||'Season 01').trim()||'Season 01';
+    const payload=[];
+    for(const row of rows){
+      const team=row.querySelector('.leagueTeamName')?.value.trim();
+      if(!team){alert('Takım adı boş bırakılamaz.');return;}
+      payload.push({
+        id:/^\d+$/.test(row.dataset.rowId||'')?Number(row.dataset.rowId):undefined,
+        season,
+        team_name:team,
+        played:Math.max(0,Number(row.querySelector('.leaguePlayed')?.value||0)),
+        wins:Math.max(0,Number(row.querySelector('.leagueWins')?.value||0)),
+        draws:Math.max(0,Number(row.querySelector('.leagueDraws')?.value||0)),
+        losses:Math.max(0,Number(row.querySelector('.leagueLosses')?.value||0)),
+        goals_for:Math.max(0,Number(row.querySelector('.leagueGF')?.value||0)),
+        goals_against:Math.max(0,Number(row.querySelector('.leagueGA')?.value||0)),
+        points:Math.max(0,Number(row.querySelector('.leaguePoints')?.value||0)),
+      });
+    }
+    btn&&(btn.disabled=true); q('#adminStatus')&&(q('#adminStatus').textContent='Puan durumu kaydediliyor...');
+    try{
+      // Mevcut sezondaki tabloyu güvenli biçimde senkronize et: silinen satırlar da kaldırılır.
+      const {data:existing,error:existingError}=await s.from('league_standings').select('id').eq('season',currentSeason);
+      if(existingError)throw existingError;
+      const keep=new Set(payload.filter(x=>x.id).map(x=>x.id));
+      const remove=(existing||[]).filter(x=>!keep.has(x.id)).map(x=>x.id);
+      if(remove.length){const del=await s.from('league_standings').delete().in('id',remove);if(del.error)throw del.error;}
+      if(payload.length){
+        const up=payload.map(x=>{const y={...x,updated_at:new Date().toISOString()};if(!y.id)delete y.id;return y;});
+        const r=await s.from('league_standings').upsert(up,{onConflict:'id'}); if(r.error)throw r.error;
+      }
+      currentSeason=season;
+      if(q('#adminStatus')) q('#adminStatus').textContent='Puan durumu başarıyla güncellendi. ✓';
+      await loadStandings();
+      await loadAdminStandings();
+    }catch(err){
+      console.error('Puan durumu kaydetme hatası:',err);
+      if(q('#adminStatus')) q('#adminStatus').textContent='Puan durumu kaydedilemedi: '+(err?.message||'Bilinmeyen hata');
+    }finally{btn&&(btn.disabled=false);}
+  }
+
+  q('#adminAddLeagueRow')?.addEventListener('click',()=>{
+    const box=q('#adminLeagueRows'); if(!box)return;
+    if(box.querySelector('.adminEmpty'))box.innerHTML='';
+    const i=box.querySelectorAll('.adminLeagueRow').length;
+    box.insertAdjacentHTML('beforeend',adminRowHtml({},i)); renumberAdminRows();
+    box.lastElementChild?.querySelector('.leagueTeamName')?.focus();
+  });
+  q('#adminLeagueRows')?.addEventListener('input',e=>{const row=e.target.closest('.adminLeagueRow');if(row&&(e.target.classList.contains('leagueGF')||e.target.classList.contains('leagueGA')))updateRowGD(row);});
+  q('#adminLeagueRows')?.addEventListener('click',e=>{const b=e.target.closest('.adminLeagueDelete');if(!b)return;b.closest('.adminLeagueRow')?.remove();renumberAdminRows();const box=q('#adminLeagueRows');if(box&&!box.querySelector('.adminLeagueRow'))box.innerHTML='<div class="adminEmpty">Henüz takım eklenmedi. “+ TAKIM EKLE” ile başla.</div>';});
+  q('#adminSaveLeague')?.addEventListener('click',saveAdminStandings);
+
+  const adminButton=q('#adminInboxButton');
+  adminButton?.addEventListener('click',()=>setTimeout(loadAdminStandings,250));
+  q('#adminRefresh')?.addEventListener('click',()=>setTimeout(loadAdminStandings,250));
+  document.addEventListener('morta:viewchange',e=>{if(e.detail?.view==='league')loadStandings();});
+  window.addEventListener('morta-profile-saved',()=>loadStandings());
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',loadStandings);else loadStandings();
 })();
 </script>
 
