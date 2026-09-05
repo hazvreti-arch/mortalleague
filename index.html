@@ -1773,7 +1773,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   adminList?.addEventListener('click',async e=>{const btn=e.target.closest('.adminReplyButton');if(!btn)return;const card=btn.closest('[data-message-id]');const id=card?.dataset.messageId;const reply=card?.querySelector('.adminReplyInput')?.value.trim();if(!id||!reply)return;btn.disabled=true;const {error}=await mortaSupabase.from('support_messages').update({admin_reply:reply,status:'Yanıtlandı'}).eq('id',id);btn.disabled=false;adminStatus.textContent=error?(error.message||'Yanıt gönderilemedi.'):'Yanıt gönderildi. ✓';if(!error)loadNotifications();});
   document.querySelectorAll('[data-close-admin]').forEach(el=>el.addEventListener('click',closeAdmin));
   adminButton?.addEventListener('click',openAdmin); adminRefresh?.addEventListener('click',loadMessages);
-  const showAdmin=async()=>{if(!adminButton||typeof mortaSupabase==='undefined'||!mortaSupabase)return;try{const {data:{user}}=await mortaSupabase.auth.getUser();if(!user){adminButton.hidden=true;return;}const {data:p}=await mortaSupabase.from('profiles').select('username').eq('id',user.id).maybeSingle();adminButton.hidden=String(p?.username||'').toLowerCase()!=='wexemir';}catch{adminButton.hidden=true;}};
+  const showAdmin=async()=>{if(!adminButton||typeof mortaSupabase==='undefined'||!mortaSupabase)return;try{const {data:{user}}=await mortaSupabase.auth.getUser();if(!user){adminButton.hidden=true;return;}const {data:p}=await mortaSupabase.from('profiles').select('is_admin').eq('id',user.id).maybeSingle();adminButton.hidden=!Boolean(p?.is_admin);}catch{adminButton.hidden=true;}};
   showAdmin(); setInterval(showAdmin,2000);
 })();
 </script>
