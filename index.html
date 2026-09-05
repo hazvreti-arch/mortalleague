@@ -560,6 +560,15 @@ header{box-shadow:0 10px 45px rgba(0,0,0,.18)}
 @media(max-width:680px){main{padding-bottom:95px}.v12CommandHero{padding:21px}.v12CommandHero h2{font-size:27px}.v12StatusCard b{font-size:14px}.v12PlayerToolbar{grid-template-columns:1fr}.v12FeaturedCard{min-height:250px}.v12FeaturedBody{padding:18px}.v12FeaturedBody h3{font-size:20px}.v12SectionTools{width:100%}.v12SectionTools .v12Tool{flex:1}.v12BottomNav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:10px;right:10px;bottom:10px;z-index:1200;padding:7px;border:1px solid rgba(168,85,247,.24);border-radius:17px;background:rgba(12,7,18,.88);backdrop-filter:blur(20px);box-shadow:0 18px 65px rgba(0,0,0,.55)}.v12BottomNav button{border:0;background:transparent;color:#85788f;padding:9px 2px;border-radius:12px;font-size:9px;font-weight:900;display:grid;gap:4px;place-items:center;cursor:pointer}.v12BottomNav button span{font-size:16px}.v12BottomNav button.active{color:#fff;background:rgba(168,85,247,.14)}.v12BottomNav button.active span{filter:drop-shadow(0 0 7px rgba(168,85,247,.6))}.detailsGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:390px){.v12Status{gap:6px}.v12StatusCard{padding:11px}.v12StatusCard b{font-size:12px}.v12CommandHero h2{font-size:24px}}
 </style>
+
+<style id="mortaBanCSS">
+/* MortaLeague Ban Center */
+.banCenter{margin-top:18px;padding:16px;border:1px solid rgba(255,90,120,.16);border-radius:16px;background:linear-gradient(145deg,rgba(52,10,22,.38),rgba(12,7,20,.72))}
+.banHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.banHead h4{margin:4px 0 0;font:800 16px Orbitron}.banHead p{margin:5px 0 0;color:#9d8fa8;font-size:11px}
+.banGrid{display:grid;grid-template-columns:1.25fr .8fr;gap:10px}.banGrid input,.banGrid select,.banGrid textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff;padding:10px;outline:0}.banGrid textarea{resize:vertical;min-height:78px}.banGrid label{display:block;color:#85798e;font-size:9px}.banGrid label span{display:block;margin-bottom:5px}
+.banActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.banList{display:grid;gap:8px;margin-top:12px}.banRow{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.025)}.banRowTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.banIdentity{font:800 12px Orbitron}.banMeta{color:#82758c;font-size:9px;line-height:1.45;margin-top:4px}.banReason{margin-top:7px;color:#d2c7da;font-size:11px;line-height:1.45}.banPill{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;border:1px solid rgba(255,90,120,.26);background:rgba(255,90,120,.08);color:#ff9eb1;font:800 8px Inter;text-transform:uppercase}.banRowActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.banLookup{display:flex;gap:8px;align-items:center}.banLookup input{flex:1}.banLookup button{flex:0 0 auto}
+@media(max-width:700px){.banGrid{grid-template-columns:1fr}.banHead{align-items:flex-start;flex-direction:column}.banLookup{flex-direction:column;align-items:stretch}}
+</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -1622,6 +1631,26 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="adminList" id="adminList"></div>
     <div style="margin-top:18px"><span class="accountEyebrow">RAPORLAR</span><div class="adminList" id="adminReportList"><div class="adminEmpty">Raporlar yükleniyor...</div></div></div>
     <div class="adminNewsForm"><span class="accountEyebrow">YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">YAYINLA</button></div>
+
+    <section class="banCenter" aria-label="Ban Merkezi">
+      <div class="banHead">
+        <div><span class="accountEyebrow">MODERASYON</span><h4>Ban Merkezi</h4><p>Yalnızca adminler kullanıcı hesaplarını süreli veya kalıcı olarak engelleyebilir.</p></div>
+        <button class="accountBtn" id="banRefresh" type="button">YENİLE</button>
+      </div>
+      <div class="banLookup">
+        <input id="banUserSearch" maxlength="80" placeholder="Kullanıcı adı ara...">
+        <button class="accountBtn" id="banSearchBtn" type="button">KULLANICI BUL</button>
+      </div>
+      <div id="banLookupResult" class="adminList" style="margin-top:10px"></div>
+      <div class="banGrid" style="margin-top:10px">
+        <label><span>HEDEF KULLANICI ID</span><input id="banTargetUser" readonly placeholder="Kullanıcı seç"></label>
+        <label><span>SÜRE</span><select id="banDuration"><option value="60">1 saat</option><option value="1440">1 gün</option><option value="10080">7 gün</option><option value="43200">30 gün</option><option value="0" selected>Kalıcı</option></select></label>
+        <label style="grid-column:1/-1"><span>SEBEP</span><textarea id="banReason" maxlength="500" placeholder="Ban sebebi..."></textarea></label>
+      </div>
+      <div class="banActions"><button class="accountBtn accountPrimary" id="banApply" type="button">BAN UYGULA</button><button class="accountBtn" id="banClear" type="button">TEMİZLE</button></div>
+      <div class="accountMessage" id="banStatus"></div>
+      <div class="banList" id="banList"><div class="adminEmpty">Aktif banlar yükleniyor...</div></div>
+    </section>
     <div class="accountMessage" id="adminStatus"></div>
   </div>
 </div>
@@ -2830,6 +2859,56 @@ button:hover{transform:translateY(-2px)!important}
 })();
 </script>
 
+
+<script id="mortaBanJS">
+(()=>{
+  const q=s=>document.querySelector(s); const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let selectedUser=null;
+  const sb=()=>window.mortaSupabase||null;
+  const fmtDate=x=>x?new Date(x).toLocaleString('tr-TR',{dateStyle:'short',timeStyle:'short'}):'—';
+  const renderSelected=()=>{const el=q('#banTargetUser'); if(el) el.value=selectedUser?`${selectedUser.id} · @${selectedUser.username||'kullanici'}`:''};
+  const renderBans=async()=>{
+    const s=sb(), box=q('#banList'); if(!s||!box)return;
+    box.innerHTML='<div class="adminEmpty">Banlar yükleniyor...</div>';
+    const {data,error}=await s.from('user_bans').select('id,user_id,reason,banned_by,created_at,expires_at,is_active').eq('is_active',true).order('created_at',{ascending:false}).limit(100);
+    if(error){box.innerHTML=`<div class="adminEmpty">Banlar okunamadı: ${esc(error.message)}</div>`;return;}
+    if(!data?.length){box.innerHTML='<div class="adminEmpty">Aktif ban bulunmuyor.</div>';return;}
+    const ids=[...new Set(data.map(x=>x.user_id).filter(Boolean))];
+    let profs=[]; if(ids.length){const r=await s.from('profiles').select('id,username,account_type').in('id',ids); profs=r.data||[];}
+    const map=new Map(profs.map(p=>[p.id,p]));
+    box.innerHTML=data.map(b=>{const p=map.get(b.user_id)||{}; const exp=b.expires_at?fmtDate(b.expires_at):'Kalıcı'; return `<article class="banRow" data-ban-id="${esc(b.id)}"><div class="banRowTop"><div><div class="banIdentity">@${esc(p.username||'bilinmeyen')}</div><div class="banMeta">${esc(p.account_type||'hesap')} · Başlangıç ${esc(fmtDate(b.created_at))} · Bitiş ${esc(exp)}</div></div><span class="banPill">AKTİF</span></div><div class="banReason">${esc(b.reason||'Sebep belirtilmedi.')}</div><div class="banRowActions"><button class="accountBtn unbanBtn" type="button">BAN KALDIR</button></div></article>`}).join('');
+  };
+  const adminReady=async()=>{const s=sb(); if(!s)return false; const {data:{user}}=await s.auth.getUser(); if(!user)return false; const {data:p}=await s.from('profiles').select('is_admin').eq('id',user.id).maybeSingle(); return !!p?.is_admin;};
+  const searchUser=async()=>{
+    const s=sb(), term=q('#banUserSearch')?.value.trim(), box=q('#banLookupResult'); if(!s||!box||!term)return;
+    box.innerHTML='<div class="adminEmpty">Kullanıcı aranıyor...</div>';
+    const {data,error}=await s.from('profiles').select('id,username,account_type,is_admin').ilike('username',`%${term}%`).order('username').limit(12);
+    if(error){box.innerHTML=`<div class="adminEmpty">Arama başarısız: ${esc(error.message)}</div>`;return;}
+    if(!data?.length){box.innerHTML='<div class="adminEmpty">Kullanıcı bulunamadı.</div>';return;}
+    box.innerHTML=data.map(u=>`<button type="button" class="banRow" data-user="${esc(u.id)}" style="text-align:left;cursor:pointer"><div class="banIdentity">@${esc(u.username||'kullanici')} ${u.is_admin?' · ADMIN':''}</div><div class="banMeta">${esc(u.account_type||'hesap')} · ${esc(u.id)}</div></button>`).join('');
+  };
+  const applyBan=async()=>{
+    const s=sb(), user=selectedUser, reason=q('#banReason')?.value.trim(), mins=Number(q('#banDuration')?.value||0), status=q('#banStatus'); if(!s||!user){status.textContent='Önce bir kullanıcı seç.';return;} if(!reason){status.textContent='Ban sebebi gerekli.';return;} if(user.is_admin){status.textContent='Admin hesabı banlanamaz.';return;}
+    const ok=confirm(`@${user.username||'kullanici'} hesabını banlamak istediğine emin misin?`); if(!ok)return;
+    const btn=q('#banApply'); if(btn)btn.disabled=true;
+    const expires=mins>0?new Date(Date.now()+mins*60000).toISOString():null;
+    const {error}=await s.rpc('mortal_admin_ban_user',{target_user_id:user.id, ban_reason:reason, expires_at:expires});
+    if(btn)btn.disabled=false;
+    status.textContent=error?(error.message||'Ban uygulanamadı.'):'Kullanıcı banlandı. ✓';
+    if(!error){selectedUser=null;renderSelected();q('#banReason').value='';await renderBans();}
+  };
+  const unban=async id=>{const s=sb(); if(!s)return; const {error}=await s.rpc('mortal_admin_unban_user',{ban_id:id}); const st=q('#banStatus'); st.textContent=error?(error.message||'Ban kaldırılamadı.'):'Ban kaldırıldı. ✓'; if(!error)renderBans();};
+  const wire=()=>{
+    q('#banSearchBtn')?.addEventListener('click',searchUser); q('#banUserSearch')?.addEventListener('keydown',e=>{if(e.key==='Enter')searchUser()});
+    q('#banLookupResult')?.addEventListener('click',e=>{const b=e.target.closest('[data-user]');if(!b)return; const id=b.dataset.user; const txt=b.textContent.trim(); selectedUser={id,username:(txt.match(/@([^\s]+)/)||[])[1]||'kullanici',is_admin:/ADMIN/.test(txt)}; renderSelected(); q('#banStatus').textContent='Kullanıcı seçildi.';});
+    q('#banApply')?.addEventListener('click',applyBan); q('#banRefresh')?.addEventListener('click',renderBans); q('#banClear')?.addEventListener('click',()=>{selectedUser=null;renderSelected();q('#banReason').value='';q('#banUserSearch').value='';q('#banLookupResult').innerHTML='';q('#banStatus').textContent='';});
+    q('#banList')?.addEventListener('click',e=>{const b=e.target.closest('.unbanBtn');if(!b)return; const card=b.closest('[data-ban-id]'); if(card)unban(card.dataset.banId);});
+  };
+  const checkBan=async()=>{const s=sb();if(!s)return; const {data:{user}}=await s.auth.getUser();if(!user)return; const {data:ban}=await s.from('user_bans').select('reason,expires_at').eq('user_id',user.id).eq('is_active',true).order('created_at',{ascending:false}).limit(1).maybeSingle(); if(!ban)return; if(ban.expires_at&&new Date(ban.expires_at)<=new Date()){await s.rpc('mortal_expire_own_ban');return;} alert('MortaLeague hesabın banlandı.\n\nSebep: '+(ban.reason||'Belirtilmedi')+'\nBitiş: '+(ban.expires_at?fmtDate(ban.expires_at):'Kalıcı')); await s.auth.signOut(); location.reload();};
+  window.mortaBanCenter={load:renderBans,check:checkBan,isAdmin:adminReady};
+  document.addEventListener('DOMContentLoaded',async()=>{wire(); const s=sb(); if(!s)return; setTimeout(async()=>{if(await adminReady())renderBans(); await checkBan();},1200);});
+})();
+</script>
 </body>
 </html>
 <!-- __TRAILING_CSS_REMOVED__ -->
