@@ -569,7 +569,7 @@ header{box-shadow:0 10px 45px rgba(0,0,0,.18)}
 .banActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.banList{display:grid;gap:8px;margin-top:12px}.banRow{padding:11px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.025)}.banRowTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.banIdentity{font:800 12px Orbitron}.banMeta{color:#82758c;font-size:9px;line-height:1.45;margin-top:4px}.banReason{margin-top:7px;color:#d2c7da;font-size:11px;line-height:1.45}.banPill{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;border:1px solid rgba(255,90,120,.26);background:rgba(255,90,120,.08);color:#ff9eb1;font:800 8px Inter;text-transform:uppercase}.banRowActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.banLookup{display:flex;gap:8px;align-items:center}.banLookup input{flex:1}.banLookup button{flex:0 0 auto}
 @media(max-width:700px){.banGrid{grid-template-columns:1fr}.banHead{align-items:flex-start;flex-direction:column}.banLookup{flex-direction:column;align-items:stretch}}
 </style>
-</head>
+<style>.adminPlayerAction{margin-top:10px;display:flex;justify-content:flex-end}.adminPlayerAction .accountDanger{border-color:rgba(239,68,68,.35);color:#ffb3b3;background:rgba(239,68,68,.08);padding:8px 10px;font-size:10px}</style></head>
 <body>
 <div id="particles"></div>
 <script>
@@ -2001,18 +2001,22 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     if(!playerList)return;
     const term=(playerSearch?.value||'').trim().toLocaleLowerCase('tr'),pos=posFilter?.value||'',tm=teamFilter?.value||'';
     const xs=players.filter(p=>(!term||`${p.username} ${p.team||''} ${p.position||''}`.toLocaleLowerCase('tr').includes(term))&&(!pos||p.position===pos)&&(!tm||p.team===tm));
-    playerList.innerHTML=xs.length?xs.map(p=>`<article class="directoryPlayer" data-player-id="${esc(p.id)}"><div class="directoryPlayerTop"><div class="directoryPlayerAvatar">${p.avatar_url?`<img src="${esc(p.avatar_url)}" alt="">`:esc(initial(p.username))}</div><div><b>${esc(p.username)}</b><small>${esc(p.position||'Mevki belirtilmedi')}</small></div></div><div class="directoryMeta"><div><span>TAKIM</span><strong>${esc(p.team||'Takımsız')}</strong></div><div><span>DEĞER</span><strong>${fmt(p.player_value)}</strong></div></div><div class="directoryValue">${esc(p.social_handle||'Sosyal medya yok')}</div></article>`).join(''):'<div class="directoryEmpty">Eşleşen oyuncu bulunamadı.</div>';
+    playerList.innerHTML=xs.length?xs.map(p=>`<article class="directoryPlayer" data-player-id="${esc(p.id)}"><div class="directoryPlayerTop"><div class="directoryPlayerAvatar">${p.avatar_url?`<img src="${esc(p.avatar_url)}" alt="">`:esc(initial(p.username))}</div><div><b>${esc(p.username)}</b><small>${esc(p.position||'Mevki belirtilmedi')}</small></div></div><div class="directoryMeta"><div><span>TAKIM</span><strong>${esc(p.team||'Takımsız')}</strong></div><div><span>DEĞER</span><strong>${fmt(p.player_value)}</strong></div></div><div class="directoryValue">${esc(p.social_handle||'Sosyal medya yok')}</div>${window.__mortaIsAdmin?`<div class="adminPlayerAction"><button type="button" class="accountBtn accountDanger" data-remove-player="${esc(p.id)}">OYUNCULARDAN KALDIR</button></div>`:''}</article>`).join(''):'<div class="directoryEmpty">Eşleşen oyuncu bulunamadı.</div>';
   }
   async function loadDirectory(){
     const s=sup();if(!s)return;
-    const {data:ps,error}=await s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,profile_theme,cover_url,account_type').eq('account_type','player').order('username');
+    const {data:ps,error}=await s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,profile_theme,cover_url,account_type,is_listed').eq('account_type','player').eq('is_listed',true).order('username');
     if(error){playerList&&(playerList.innerHTML=`<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message)}</div>`);return;}
     players=ps||[];q('#playerCount')&&(q('#playerCount').textContent=`${players.length} OYUNCU`);
     const teamNames=[...new Set(players.map(p=>(p.team||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));if(teamFilter){const keep=teamFilter.value;teamFilter.innerHTML='<option value="">Tüm Takımlar</option>'+teamNames.map(t=>`<option>${esc(t)}</option>`).join('');if(teamNames.includes(keep))teamFilter.value=keep;}renderPlayers();await loadTeams();
   }
   async function loadTeams(){const s=sup();if(!s||!teamList)return;const {data,error}=await s.from('team_profiles').select('user_id,team_name,bio,logo_url,budget,player_count,training_level,stadium_level').order('team_name');if(error){teamList.innerHTML=`<div class="directoryEmpty">Takımlar yüklenemedi: ${esc(error.message)}</div>`;return;}teams=data||[];q('#teamCount')&&(q('#teamCount').textContent=`${teams.length} TAKIM`);teamList.innerHTML=teams.length?teams.map(t=>`<article class="directoryTeamCard" data-team-id="${esc(t.user_id)}"><div class="teamMini"><div class="teamMiniLogo">${t.logo_url?`<img src="${esc(t.logo_url)}" alt="">`:esc(initial(t.team_name))}</div><div><b>${esc(t.team_name||'Takım')}</b><small>Takım Profili</small></div></div><div class="teamCardStats"><div><span>BÜTÇE</span><b>${fmt(t.budget)}</b></div><div><span>OYUNCU</span><b>${Number(t.player_count||0)}</b></div></div></article>`).join(''):'<div class="directoryEmpty">Henüz takım hesabı yok.</div>';}
   playerSearch?.addEventListener('input',renderPlayers);posFilter?.addEventListener('change',renderPlayers);teamFilter?.addEventListener('change',renderPlayers);
-  playerList?.addEventListener('click',e=>{const c=e.target.closest('[data-player-id]');if(!c)return;const p=players.find(x=>x.id===c.dataset.playerId);if(p)openPublic(p);});
+  playerList?.addEventListener('click',async e=>{
+    const rm=e.target.closest('[data-remove-player]');
+    if(rm){e.stopPropagation();if(!window.__mortaIsAdmin)return;const p=players.find(x=>x.id===rm.dataset.removePlayer);if(!p)return;if(!confirm(`${p.username} oyuncusunu Oyuncular listesinden kaldırmak istiyor musun?`))return;rm.disabled=true;rm.textContent='KALDIRILIYOR...';const r=await sup().rpc('mortal_admin_remove_player',{target_user_id:p.id});if(r.error){alert(r.error.message||'Oyuncu kaldırılamadı.');rm.disabled=false;rm.textContent='OYUNCULARDAN KALDIR';return;}players=players.filter(x=>x.id!==p.id);renderPlayers();q('#playerCount')&&(q('#playerCount').textContent=`${players.length} OYUNCU`);toast('Oyuncu listeden kaldırıldı ✓');return;}
+    const c=e.target.closest('[data-player-id]');if(!c)return;const p=players.find(x=>x.id===c.dataset.playerId);if(p)openPublic(p);
+  });
   teamList?.addEventListener('click',e=>{const c=e.target.closest('[data-team-id]');if(c)openTeam(c.dataset.teamId);});
 
   const teamPublic=q('#teamPublicModal');
@@ -2878,7 +2882,7 @@ button:hover{transform:translateY(-2px)!important}
     const map=new Map(profs.map(p=>[p.id,p]));
     box.innerHTML=data.map(b=>{const p=map.get(b.user_id)||{}; const exp=b.expires_at?fmtDate(b.expires_at):'Kalıcı'; return `<article class="banRow" data-ban-id="${esc(b.id)}"><div class="banRowTop"><div><div class="banIdentity">@${esc(p.username||'bilinmeyen')}</div><div class="banMeta">${esc(p.account_type||'hesap')} · Başlangıç ${esc(fmtDate(b.created_at))} · Bitiş ${esc(exp)}</div></div><span class="banPill">AKTİF</span></div><div class="banReason">${esc(b.reason||'Sebep belirtilmedi.')}</div><div class="banRowActions"><button class="accountBtn unbanBtn" type="button">BAN KALDIR</button></div></article>`}).join('');
   };
-  const adminReady=async()=>{const s=sb(); if(!s)return false; const {data:{user}}=await s.auth.getUser(); if(!user)return false; const {data:p}=await s.from('profiles').select('is_admin').eq('id',user.id).maybeSingle(); return !!p?.is_admin;};
+  const adminReady=async()=>{const s=sb();if(!s){window.__mortaIsAdmin=false;return false;}const {data:{user}}=await s.auth.getUser();if(!user){window.__mortaIsAdmin=false;return false;}const {data:p}=await s.from('profiles').select('is_admin').eq('id',user.id).maybeSingle();window.__mortaIsAdmin=!!p?.is_admin;return window.__mortaIsAdmin;};
   const searchUser=async()=>{
     const s=sb(), term=q('#banUserSearch')?.value.trim(), box=q('#banLookupResult'); if(!s||!box||!term)return;
     box.innerHTML='<div class="adminEmpty">Kullanıcı aranıyor...</div>';
@@ -2906,7 +2910,7 @@ button:hover{transform:translateY(-2px)!important}
   };
   const checkBan=async()=>{const s=sb();if(!s)return; const {data:{user}}=await s.auth.getUser();if(!user)return; const {data:ban}=await s.from('user_bans').select('reason,expires_at').eq('user_id',user.id).eq('is_active',true).order('created_at',{ascending:false}).limit(1).maybeSingle(); if(!ban)return; if(ban.expires_at&&new Date(ban.expires_at)<=new Date()){await s.rpc('mortal_expire_own_ban');return;} alert('MortaLeague hesabın banlandı.\n\nSebep: '+(ban.reason||'Belirtilmedi')+'\nBitiş: '+(ban.expires_at?fmtDate(ban.expires_at):'Kalıcı')); await s.auth.signOut(); location.reload();};
   window.mortaBanCenter={load:renderBans,check:checkBan,isAdmin:adminReady};
-  document.addEventListener('DOMContentLoaded',async()=>{wire(); const s=sb(); if(!s)return; setTimeout(async()=>{if(await adminReady())renderBans(); await checkBan();},1200);});
+  document.addEventListener('DOMContentLoaded',async()=>{wire(); const s=sb(); if(!s)return; setTimeout(async()=>{if(await adminReady()){renderBans();renderPlayers();} await checkBan();},1200);});
 })();
 </script>
 </body>
