@@ -140,7 +140,6 @@ const observer=new IntersectionObserver(entries=>{
 $$(".card,.panel,.cta,.sectionHead").forEach(x=>observer.observe(x));
 
 window.addEventListener("scroll",()=>{
-  if(document.body.classList.contains("morta-view-mode")) return;
   const y=scrollY;
   $$(".navlinks button").forEach(b=>{
     const id=b.dataset.scroll, el=$("#"+id);
@@ -204,25 +203,51 @@ function normalizeUsername(v){ return v.trim().toLowerCase(); }
 
 async function registerMorta(){
   if(!mortaSupabase){ showAccountMessage("Hesap sistemi henüz bağlantı bilgileriyle etkinleştirilmedi.", true); return; }
+  const submit=$("#registerSubmit");
+  if(submit?.disabled) return;
   const username=normalizeUsername($("#registerUsername").value);
   const p1=$("#registerPassword").value;
   const p2=$("#registerPassword2").value;
+  const accountType = $("#registerRole")?.value === "team" ? "team" : "player";
   if(!/^[a-z0-9_]{3,24}$/.test(username)){ showAccountMessage("Kullanıcı adı 3-24 karakter olmalı; sadece a-z, 0-9 ve _ kullan.", true); return; }
   if(p1.length<8){ showAccountMessage("Şifre en az 8 karakter olmalı.", true); return; }
   if(p1!==p2){ showAccountMessage("Şifreler eşleşmiyor.", true); return; }
-  const accountType = $("#registerRole")?.value === "team" ? "team" : "player";
-  const {data,error}=await mortaSupabase.auth.signUp({email:syntheticEmail(username),password:p1});
-  if(error){ showAccountMessage(error.message, true); return; }
-  if(data.user) {
-    const {error: profileError}=await mortaSupabase.from("profiles").upsert({id:data.user.id,username,account_type:accountType},{onConflict:"id"});
-    if(profileError && !data.session){
-      console.warn("Profil kaydı e-posta doğrulaması tamamlanınca oluşturulmalı:", profileError.message);
-    }else if(profileError){ showAccountMessage(`Hesap oluşturuldu fakat profil kaydı oluşturulamadı: ${profileError.message}`, true); return; }
-  }
-  showAccountMessage(data.session ? "Hesabın oluşturuldu. Giriş yapabilirsin." : "Hesabın oluşturuldu. E-posta doğrulaması gerekiyorsa önce onu tamamla.");
-  setTimeout(()=>accountOpen("login"),700);
-}
+  try{
+    submit && (submit.disabled=true);
+    showAccountMessage("Hesap oluşturuluyor...");
+    // Aynı kullanıcı adını daha anlaşılır biçimde engelle.
+    const {data:existing,error:checkError}=await mortaSupabase.from("profiles").select("id").eq("username",username).maybeSingle();
+    if(checkError) console.warn("Kullanıcı adı kontrolü:",checkError.message);
+    if(existing){ showAccountMessage("Bu kullanıcı adı zaten kullanılıyor.", true); return; }
 
+    const {data,error}=await mortaSupabase.auth.signUp({
+      email:syntheticEmail(username),
+      password:p1,
+      options:{data:{username,account_type:accountType}}
+    });
+    if(error){
+      const msg=/already|registered|exists/i.test(error.message||'') ? "Bu kullanıcı adı zaten kullanılıyor." : error.message;
+      showAccountMessage(msg, true); return;
+    }
+    if(!data.user){ showAccountMessage("Hesap oluşturulamadı. Lütfen tekrar dene.", true); return; }
+
+    // Oturum varsa profil kaydını hemen ve eksiksiz oluştur.
+    if(data.session){
+      const {error:profileError}=await mortaSupabase.from("profiles").upsert({
+        id:data.user.id, username, account_type:accountType,
+        player_value:1000000, position:'', team:'', bio:'', social_handle:''
+      },{onConflict:"id"});
+      if(profileError) throw profileError;
+      showAccountMessage("Hesabın başarıyla oluşturuldu. Şimdi giriş yapabilirsin.");
+      setTimeout(()=>accountOpen("login"),700);
+    }else{
+      showAccountMessage("Hesap oluşturuldu ancak e-posta doğrulaması gerekiyor. Doğrulama ayarını kontrol et.", true);
+    }
+  }catch(err){
+    console.error("Hesap oluşturma hatası:",err);
+    showAccountMessage(`Hesap oluşturulamadı: ${err?.message||'Bilinmeyen hata'}`,true);
+  }finally{ submit && (submit.disabled=false); }
+}
 async function loginMorta(){
   if(!mortaSupabase){ showAccountMessage("Hesap sistemi henüz bağlantı bilgileriyle etkinleştirilmedi.", true); return; }
   const username=normalizeUsername($("#loginUsername").value);
@@ -238,7 +263,14 @@ async function refreshMortaUser(){
   if(!mortaSupabase) return;
   const {data:{session}}=await mortaSupabase.auth.getSession();
   if(session?.user){
-    const {data:profile}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).single();
+    let {data:profile,error:profileError}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).maybeSingle();
+    if(profileError) console.warn("Profil okunamadı:",profileError.message);
+    if(!profile){
+      const username=normalizeUsername(session.user.user_metadata?.username || session.user.email.split("@")[0]);
+      const accountType=session.user.user_metadata?.account_type === "team" ? "team" : "player";
+      const {data:created,error:createError}=await mortaSupabase.from("profiles").upsert({id:session.user.id,username,account_type:accountType,player_value:1000000},{onConflict:"id"}).select("username").maybeSingle();
+      if(!createError) profile=created;
+    }
     $("#currentUsername").textContent=profile?.username || session.user.email.split("@")[0];
     userPanel.hidden=false; accountActions.hidden=true;
   }else{

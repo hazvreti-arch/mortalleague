@@ -1590,15 +1590,30 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   });
 
   $('#saveProfile')?.addEventListener('click', async () => {
-    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) return;
+    if (typeof mortaSupabase === 'undefined' || !mortaSupabase) {
+      status.textContent = 'Bağlantı hazır değil. Sayfayı yenileyip tekrar dene.';
+      return;
+    }
+    const saveBtn = $('#saveProfile');
+    if (saveBtn?.disabled) return;
     try {
+      saveBtn && (saveBtn.disabled = true);
       const { data: { user } } = await mortaSupabase.auth.getUser();
-      if (!user) { status.textContent = 'Oturum bulunamadı.'; return; }
+      if (!user) { status.textContent = 'Önce hesabına giriş yapmalısın.'; return; }
 
-      status.textContent = 'Kaydediliyor...';
+      status.textContent = 'Profil kaydediliyor...';
+      const accountType = $('#profileAccountType')?.value === 'team' ? 'team' : 'player';
+      const position = accountType === 'player' ? ($('#profilePosition')?.value || '') : '';
+      const team = accountType === 'player'
+        ? ($('#profileTeam')?.value?.trim() || '')
+        : ($('#teamName')?.value?.trim() || '');
+      const rawValue = Number($('#profileValue')?.value);
+      const playerValue = accountType === 'player' && Number.isFinite(rawValue) && rawValue >= 0
+        ? rawValue : 1000000;
+      const socialHandle = accountType === 'player' ? ($('#profileSocial')?.value?.trim() || '') : '';
+
       let avatarUrl = null;
       const file = avatarInput?.files?.[0];
-
       if (file) {
         const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
         const path = `${user.id}/avatar.${ext}`;
@@ -1608,38 +1623,70 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
         avatarUrl = mortaSupabase.storage.from('avatars').getPublicUrl(path).data.publicUrl + `?v=${Date.now()}`;
       } else {
         const { data: existing, error: existingError } = await mortaSupabase
-          .from('profiles').select('avatar_url').eq('id', user.id).maybeSingle();
+          .from('profiles').select('username,avatar_url').eq('id', user.id).maybeSingle();
         if (existingError) throw existingError;
         avatarUrl = existing?.avatar_url || null;
       }
 
-      const { data: current, error: currentError } = await mortaSupabase
+      const { data: existingProfile, error: existingProfileError } = await mortaSupabase
         .from('profiles').select('username').eq('id', user.id).maybeSingle();
-      if (currentError) throw currentError;
+      if (existingProfileError) throw existingProfileError;
+      const username = existingProfile?.username || user.user_metadata?.username || user.email?.split('@')[0] || '';
 
-      const username = current?.username || user.email?.split('@')[0] || '';
-      const { data: updatedProfile, error: saveError } = await mortaSupabase
-        .from('profiles')
-        .update({
-          username,
-          bio: bioEl.value.trim(),
-          avatar_url: avatarUrl
-        })
-        .eq('id', user.id)
-        .select('id')
-        .maybeSingle();
-      if (!saveError && !updatedProfile) {
-        throw new Error('Profil kaydı bulunamadı. Önce hesabın profil kaydı oluşturulmalı.');
-      }
+      // Tüm profil alanları TEK bir yazma işleminde kaydedilir.
+      // Böylece eski iki ayrı kaydetme olayı birbirini ezmez.
+      const profilePayload = {
+        id: user.id,
+        username,
+        bio: bioEl?.value?.trim() || '',
+        avatar_url: avatarUrl,
+        account_type: accountType,
+        position,
+        team,
+        player_value: playerValue,
+        social_handle: socialHandle
+      };
+      const { error: saveError } = await mortaSupabase
+        .from('profiles').upsert(profilePayload, { onConflict: 'id' });
       if (saveError) throw saveError;
+
+      if (accountType === 'team') {
+        let logoUrl = (await mortaSupabase.from('team_profiles').select('logo_url').eq('user_id', user.id).maybeSingle()).data?.logo_url || null;
+        const teamLogoInput = $('#teamLogoInput');
+        const logoFile = teamLogoInput?.files?.[0];
+        if (logoFile) {
+          const ext = (logoFile.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+          const path = `${user.id}/team-logo.${ext}`;
+          const r = await mortaSupabase.storage.from('avatars').upload(path, logoFile, { upsert: true, contentType: logoFile.type || 'image/jpeg' });
+          if (r.error) throw r.error;
+          logoUrl = mortaSupabase.storage.from('avatars').getPublicUrl(path).data.publicUrl + `?v=${Date.now()}`;
+        }
+        const { error: teamError } = await mortaSupabase.from('team_profiles').upsert({
+          user_id: user.id,
+          team_name: $('#teamName')?.value?.trim() || '',
+          bio: $('#teamBio')?.value?.trim() || '',
+          logo_url: logoUrl,
+          budget: Number($('#teamBudget')?.value || 0),
+          player_count: Number($('#teamPlayerCount')?.value || 0),
+          training_level: Number($('#teamTraining')?.value || 1),
+          stadium_level: Number($('#teamStadium')?.value || 1),
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'user_id' });
+        if (teamError) throw teamError;
+      }
 
       usernameEl.textContent = username;
       fallback.textContent = initial(username);
       if (avatarUrl) { avatar.src = avatarUrl; avatar.hidden = false; }
-      status.textContent = 'Profil kaydedildi. ✓';
+      const live = $('#profileValueLive');
+      if (live) live.textContent = '€' + new Intl.NumberFormat('tr-TR').format(playerValue);
+      status.textContent = 'Profil başarıyla kaydedildi. ✓';
+      window.dispatchEvent(new CustomEvent('morta-profile-saved'));
     } catch (err) {
-      console.error(err);
-      status.textContent = `Profil kaydedilemedi: ${err.message || err}`;
+      console.error('Profil kaydetme hatası:', err);
+      status.textContent = `Profil kaydedilemedi: ${err?.message || 'Bilinmeyen hata'}`;
+    } finally {
+      saveBtn && (saveBtn.disabled = false);
     }
   });
 
@@ -1746,24 +1793,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   q('#profileModal')?.addEventListener('click',e=>{if(e.target===q('#profileModal'))hydrateProfile();});
   const pm=q('#profileModal'); if(pm)new MutationObserver(()=>{if(pm.classList.contains('open'))hydrateProfile();}).observe(pm,{attributes:true,attributeFilter:['class']});
 
-  // Registration choice gets persisted immediately after the existing registration flow creates the profile.
-  q('#registerSubmit')?.addEventListener('click',()=>setTimeout(async()=>{const s=sup(),u=await getUser();if(!s||!u)return;const chosen=q('#registerRole')?.value==='team'?'team':'player';await s.from('profiles').update({account_type:chosen}).eq('id',u.id);},1500));
 
-  // Supplement the already-working avatar/bio save with the new fields and team record.
-  q('#saveProfile')?.addEventListener('click',()=>setTimeout(async()=>{
-    const s=sup(),u=await getUser();if(!s||!u)return;
-    try{
-      const accountType=roleEl?.value==='team'?'team':'player';
-      const update={account_type:accountType,position:accountType==='player'?(q('#profilePosition')?.value||''):'',team:accountType==='player'?(q('#profileTeam')?.value?.trim()||''):(q('#teamName')?.value?.trim()||''),player_value:accountType==='player'?Number(q('#profileValue')?.value||1000000):1000000,social_handle:accountType==='player'?(q('#profileSocial')?.value?.trim()||''):' '};
-      const r1=await s.from('profiles').update(update).eq('id',u.id);if(r1.error)throw r1.error;
-      if(accountType==='team'){
-        let logoUrl=(await s.from('team_profiles').select('logo_url').eq('user_id',u.id).maybeSingle()).data?.logo_url||null;
-        if(teamLogoFile){const ext=(teamLogoFile.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=`${u.id}/team-logo.${ext}`;const r=await s.storage.from('avatars').upload(path,teamLogoFile,{upsert:true,contentType:teamLogoFile.type||'image/jpeg'});if(r.error)throw r.error;logoUrl=s.storage.from('avatars').getPublicUrl(path).data.publicUrl+`?v=${Date.now()}`;}
-        const r2=await s.from('team_profiles').upsert({user_id:u.id,team_name:q('#teamName').value.trim(),bio:q('#teamBio').value.trim(),logo_url:logoUrl,budget:Number(q('#teamBudget').value||0),player_count:Number(q('#teamPlayerCount').value||0),training_level:Number(q('#teamTraining').value||1),stadium_level:Number(q('#teamStadium').value||1),updated_at:new Date().toISOString()},{onConflict:'user_id'});if(r2.error)throw r2.error;
-      }
-      teamLogoFile=null;setTimeout(()=>{loadDirectory();loadHub();},400);
-    }catch(err){console.error('profile extras save',err);}
-  },800));
 
   /* =========================
      PLAYER + TEAM DIRECTORY
