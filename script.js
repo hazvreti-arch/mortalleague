@@ -2,19 +2,20 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
 function makeParticles(){
   const box=$("#particles");
-  if(!box) return;
+  if(!box || box.dataset.ready) return;
+  box.dataset.ready="1";
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const mobile=window.matchMedia("(max-width: 700px)").matches;
-  const count=reduce ? 0 : (mobile ? 18 : 30);
+  const width=window.innerWidth;
+  const count=reduce ? 0 : (width<=700 ? 6 : width<=1100 ? 10 : 18);
   const frag=document.createDocumentFragment();
   for(let i=0;i<count;i++){
     const o=document.createElement("i"); o.className="orb";
-    const size=Math.random()*4+2;
+    const size=Math.random()*3+2;
     o.style.width=o.style.height=size+"px";
     o.style.left=Math.random()*100+"%";
-    o.style.animationDuration=(Math.random()*18+12)+"s";
+    o.style.animationDuration=(Math.random()*22+18)+"s";
     o.style.animationDelay=(-Math.random()*25)+"s";
-    o.style.opacity=(Math.random()*.45+.12);
+    o.style.opacity=(Math.random()*.30+.08);
     frag.appendChild(o);
   }
   box.appendChild(frag);
@@ -139,15 +140,20 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:.12});
 $$(".card,.panel,.cta,.sectionHead").forEach(x=>observer.observe(x));
 
+let navTick=0;
 window.addEventListener("scroll",()=>{
-  const y=scrollY;
-  $$(".navlinks button").forEach(b=>{
-    const id=b.dataset.scroll, el=$("#"+id);
-    if(el && y>=el.offsetTop-150 && y<el.offsetTop+el.offsetHeight-150){
-      $$(".navlinks button").forEach(x=>x.classList.remove("active")); b.classList.add("active");
-    }
+  if(navTick) return;
+  navTick=requestAnimationFrame(()=>{
+    navTick=0;
+    const y=scrollY;
+    $$(".navlinks button").forEach(b=>{
+      const id=b.dataset.scroll, el=$("#"+id);
+      if(el && y>=el.offsetTop-150 && y<el.offsetTop+el.offsetHeight-150){
+        $$(".navlinks button").forEach(x=>x.classList.remove("active")); b.classList.add("active");
+      }
+    });
   });
-});
+},{passive:true});
 
 // Hataları sessizce yutma: üretimde bile geliştirici konsolunda görünür kalsın.
 window.addEventListener("error",e=>console.error("[MortaLeague]",e.error||e.message));
