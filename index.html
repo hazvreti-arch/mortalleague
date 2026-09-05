@@ -570,7 +570,7 @@ input:focus,textarea:focus,select:focus{border-color:rgba(180,107,255,.68)!impor
 </section>
 
 <section class="section" id="mortaHub">
-  <div class="sectionHead"><div><h2>MORTA HUB</h2><p>Hesabın, transferlerin ve MortaLeague'deki hareketlerin tek yerde.</p></div><span class="badge" id="hubStatus">ÇEVRİMDIŞI</span></div>
+  <div class="sectionHead"><div><h2>KİŞİSEL MERKEZ</h2><p>Hesabın, bildirimlerin ve transfer hareketlerin tek yerde.</p></div><span class="badge" id="hubStatus">ÇEVRİMDIŞI</span></div>
   <div class="hubGrid">
     <div class="hubPanel">
       <div class="hubWelcome"><div class="hubAvatar"><span id="hubAvatarFallback">M</span><img id="hubAvatar" hidden alt=""></div><div><h3 id="hubUsername">MortaLeague</h3><p id="hubSubtitle">Giriş yaparak kişisel merkezinizi kullan.</p></div></div>
@@ -705,7 +705,7 @@ input:focus,textarea:focus,select:focus{border-color:rgba(180,107,255,.68)!impor
   <span class="systemCount" id="systemCount">16 sistem</span>
 </div>
 
-<div class="systemsIntro"><span>◈</span><div><strong>TÜM SİSTEMLER</strong><small>Gönderdiğin metinler, tekrarlar ayıklanarak ve yeni ek bilgiler ilgili başlıkların devamına işlenerek burada yer alıyor.</small></div></div>
+<div class="systemsIntro"><span>◈</span><div><strong>TÜM SİSTEMLER</strong></div></div>
 <div class="systemNoResults" id="systemNoResults">Aramanla eşleşen sistem bulunamadı.</div>
 <div class="systemLibrary">
 <article class="systemRule"><h3>MortaLeague Yayın Geliri Sistemi</h3><div class="ruleText">Takımlar sezon içerisinde gösterdiği performansa para kazanırlar. Bu paralar devrede veya sezon sonunda eklenebilir.
@@ -1343,7 +1343,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 <section class="section" id="mortahub">
   <div class="sectionHead"><div><h2>MORTAHUB</h2><p>MortaLeague'in sosyal merkezi. Takip et, paylaş ve keşfet.</p></div><span class="badge">SOCIAL ERA</span></div>
   <div class="hubShell">
-    <div class="hubHero"><div><div class="eyebrow">🌐 MORTALLEAGUE SOCIAL</div><h2>MORTA<span class="gradient">HUB</span></h2><p>Oyuncuları ve takımları takip et. Futbol dünyandaki gelişmeleri kendi akışında gör.</p></div></div>
+    <div class="hubHero"><div><div class="eyebrow">🌐 MORTALLEAGUE SOCIAL</div><p>Oyuncuları ve takımları takip et. Futbol dünyandaki gelişmeleri kendi akışında gör.</p></div></div>
     <div class="hubTabs">
       <button class="active" data-hub-tab="feed">🏠 Ana Akış</button>
       <button data-hub-tab="following">👥 Takip Edilenler</button>
@@ -1360,13 +1360,13 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       </div>
       <aside class="hubAside">
         <div class="hubExploreCard"><div class="hubSideTitle">🔥 KEŞFET</div><input id="hubSearch" class="hubSearch" placeholder="Oyuncu veya takım ara..."><div id="hubSuggested"></div></div>
-        <div class="hubExploreCard" style="margin-top:15px"><div class="hubSideTitle">📈 MORTAHUB</div><div class="hubCount"><span id="hubPostCount">0 gönderi</span><span id="hubFollowingCount">0 takip</span></div></div>
+        <div class="hubExploreCard" style="margin-top:15px"><div class="hubSideTitle">📈 AKIŞ İSTATİSTİKLERİ</div><div class="hubCount"><span id="hubPostCount">0 gönderi</span><span id="hubFollowingCount">0 takip</span></div></div>
       </aside>
     </div>
   </div>
 </section>
 
-  <div class="cta"><div><h2>SAHAYA ÇIKMAYA HAZIR MISIN?</h2><p>MortalLeague'de her kararın bir sonucu var.</p></div><button class="primary" data-open="rulesModal">Kuralları Aç →</button></div>
+  <div class="cta"><div><h2>SAHAYA ÇIKMAYA HAZIR MISIN?</h2><p>MortaLeague'de her kararın bir sonucu var.</p></div><button class="primary" data-open="rulesModal">Kuralları Aç →</button></div>
 </main>
 
 <footer>MORTALLEAGUE · SEASON 01 · Built for the league · © 2026</footer>
@@ -1516,7 +1516,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="hubStats" style="margin:14px 0"><div class="hubStat"><span>KULLANICI</span><strong id="adminUserCount">—</strong></div><div class="hubStat"><span>BEKLEYEN TEKLİF</span><strong id="adminOfferCount">—</strong></div><div class="hubStat"><span>BEKLEYEN RAPOR</span><strong id="adminReportCount">—</strong></div></div>
     <div class="adminList" id="adminList"></div>
     <div style="margin-top:18px"><span class="accountEyebrow">RAPORLAR</span><div class="adminList" id="adminReportList"><div class="adminEmpty">Raporlar yükleniyor...</div></div></div>
-    <div class="adminNewsForm"><span class="accountEyebrow">MORTANEWS YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">MORTANEWS YAYINLA</button></div>
+    <div class="adminNewsForm"><span class="accountEyebrow">MORTANEWS YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">YAYINLA</button></div>
     <div class="accountMessage" id="adminStatus"></div>
   </div>
 </div>
