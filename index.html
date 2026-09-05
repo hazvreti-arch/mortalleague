@@ -434,6 +434,8 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 }
 @media(max-width:420px){.accountCard,.adminCard{padding:16px!important}.profileHero{gap:10px}.profileAvatarLarge{width:54px;height:54px}.hubWelcome h3{font-size:17px}.ml-toast-stack{right:14px;bottom:14px}}
 
+
+.calcTrainingInfo{grid-column:1/-1;padding:13px 14px;border:1px solid rgba(155,77,255,.32);border-radius:13px;background:rgba(155,77,255,.06);display:flex;flex-direction:column;gap:5px}.calcTrainingInfo span{font-size:9px;letter-spacing:1px;color:#a98ac7;font-weight:800}.calcTrainingInfo strong{font:800 14px Orbitron,Arial,sans-serif;color:#efe7ff}.calcTrainingInfo small{color:#9f94aa;font-size:11px;line-height:1.45}.calcTrainingInfo.is-warning{border-color:rgba(255,180,80,.28);background:rgba(255,180,80,.04)}
 </style>
 
 
@@ -534,7 +536,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 <div class="sectionHead">
   <div>
     <h2>OYUNCU KATKI DEĞERİ HESAPLAMA</h2>
-    <p>Devre veya dönem sonunda oyuncunun gol, asist ve kupa katkısını MortaLeague kurallarına göre hesapla.</p>
+    <p>Devre veya dönem sonunda oyuncunun performansını ve bulunduğu takımın antrenman tesisini birlikte hesapla.</p>
   </div>
   <span class="badge">BAŞLANGIÇ €1M</span>
 </div>
@@ -572,8 +574,19 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
       </div>
 
       <div class="field">
-        <label for="contributionGym">Gym</label>
-        <input id="contributionGym" type="number" min="0" step="1" value="0" placeholder="Örn. 20">
+        <label for="contributionGym">Gym (Gol Yemeyen Maç)</label>
+        <input id="contributionGym" type="number" min="0" step="1" value="0" placeholder="Örn. 10">
+      </div>
+
+      <div class="field">
+        <label for="contributionTraining">Antrenman Sayısı</label>
+        <input id="contributionTraining" type="number" min="0" step="1" value="0" placeholder="Örn. 20">
+      </div>
+
+      <div class="calcTrainingInfo" id="contributionTeamInfo" aria-live="polite">
+        <span>🏟️ TAKIM BİLGİSİ</span>
+        <strong id="contributionTeamName">Takım bilgisi yükleniyor...</strong>
+        <small id="contributionTrainingInfo">Antrenman katkısı takımının tesis seviyesine göre otomatik belirlenir.</small>
       </div>
 
       <div class="field">
@@ -596,7 +609,8 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
     <div class="contributionBreakdown">
       <div><small>Başlangıç</small><b id="contributionBase">€1.000.000</b></div>
       <div><small>Gol katkısı</small><b id="contributionGoalValue">+€0</b></div>
-      <div><small>Gym katkısı</small><b id="contributionGymValue">+€0</b></div>
+      <div><small>Gym (gol yemeyen maç)</small><b id="contributionGymValue">+€0</b></div>
+      <div><small>Antrenman katkısı</small><b id="contributionTrainingValue">+€0</b></div>
       <div><small>Asist katkısı</small><b id="contributionAssistValue">+€0</b></div>
       <div><small>Kupa katkısı</small><b id="contributionCupValue">+€0</b></div>
     </div>

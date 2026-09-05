@@ -93,46 +93,115 @@ const contributionRates = {
   nations: {goal: 40000, assist: 30000, cup: 2500000}
 };
 
+// Mevcut MortaLeague kurallarına göre takım tesis seviyesi antrenman başına katkıyı belirler.
+const trainingRates = {1:75000, 2:100000, 3:125000, 4:150000, 5:200000};
+const baseTrainingRate = 50000;
+let contributionTeam = {name:'', trainingLevel:0, rate:baseTrainingRate, ready:false};
+
 function euro(n){
   return "€" + new Intl.NumberFormat("tr-TR",{maximumFractionDigits:0}).format(n);
+}
+
+function renderContributionTeamInfo(message, warning=false){
+  const box=$("#contributionTeamInfo");
+  const name=$("#contributionTeamName");
+  const info=$("#contributionTrainingInfo");
+  if(box) box.classList.toggle('is-warning', warning);
+  if(name) name.textContent=message || 'Takım bilgisi bulunamadı';
+  if(info){
+    info.textContent=contributionTeam.ready
+      ? contributionTeam.ready
+      ? `Antrenman tesisi: Seviye ${contributionTeam.trainingLevel} · Antrenman başına katkı: ${euro(contributionTeam.rate)}`
+      : `Antrenman sahası olmadan antrenman başına katkı: ${euro(baseTrainingRate)}`;
+  }
+}
+
+async function loadContributionTeam(){
+  contributionTeam={name:'',trainingLevel:0,rate:baseTrainingRate,ready:false};
+  renderContributionTeamInfo('Takım bilgisi yükleniyor...');
+  if(!mortaSupabase){
+    renderContributionTeamInfo('Takım bilgisi için giriş yapmalısın.', true);
+    calculateContribution();
+    return;
+  }
+  try{
+    const {data:{user},error:userError}=await mortaSupabase.auth.getUser();
+    if(userError || !user){
+      renderContributionTeamInfo('Takım bilgisi için giriş yapmalısın.', true);
+      calculateContribution();
+      return;
+    }
+    const {data:profile,error:profileError}=await mortaSupabase
+      .from('profiles').select('team,account_type').eq('id',user.id).maybeSingle();
+    if(profileError) throw profileError;
+    const teamName=(profile?.team||'').trim();
+    if(!teamName){
+      renderContributionTeamInfo('Takımın bulunmuyor', true);
+      calculateContribution();
+      return;
+    }
+    const {data:team,error:teamError}=await mortaSupabase
+      .from('team_profiles').select('team_name,training_level').eq('team_name',teamName).maybeSingle();
+    if(teamError) throw teamError;
+    if(!team){
+      contributionTeam.name=teamName;
+      renderContributionTeamInfo(`${teamName} · Tesis bilgisi bulunamadı`, true);
+      calculateContribution();
+      return;
+    }
+    const level=Math.min(5,Math.max(1,Number(team.training_level)||1));
+    contributionTeam={name:team.team_name||teamName,trainingLevel:level,rate:trainingRates[level]||0,ready:true};
+    renderContributionTeamInfo(contributionTeam.name);
+  }catch(err){
+    console.warn('Antrenman tesisi bilgisi yüklenemedi:',err?.message||err);
+    renderContributionTeamInfo('Takım tesisi yüklenemedi', true);
+  }
+  calculateContribution();
 }
 
 function calculateContribution(){
   const tournamentEl = $("#contributionTournament");
   const goalsEl = $("#contributionGoals");
   const gymEl = $("#contributionGym");
+  const trainingEl = $("#contributionTraining");
   const assistsEl = $("#contributionAssists");
   const cupsEl = $("#contributionCups");
-  if(!tournamentEl || !goalsEl || !gymEl || !assistsEl || !cupsEl) return;
+  if(!tournamentEl || !goalsEl || !gymEl || !trainingEl || !assistsEl || !cupsEl) return;
   const tournament = tournamentEl.value;
   const rates = contributionRates[tournament];
   if(!rates) return;
   const goals = Math.max(0, Number(goalsEl.value) || 0);
   const gym = Math.max(0, Number(gymEl.value) || 0);
+  const training = Math.max(0, Number(trainingEl.value) || 0);
   const assists = Math.max(0, Number(assistsEl.value) || 0);
   const cups = Math.max(0, Number(cupsEl.value) || 0);
 
   const base = 1000000;
   const goalValue = goals * rates.goal;
+  // Gym = gol yemeden tamamlanan maç; mevcut kurallardaki Gol x Gym oranını kullanır.
   const gymValue = gym * rates.goal;
+  const trainingValue = training * (contributionTeam.ready ? contributionTeam.rate : baseTrainingRate);
   const assistValue = assists * rates.assist;
   const cupValue = cups * rates.cup;
-  const total = base + goalValue + gymValue + assistValue + cupValue;
+  const total = base + goalValue + gymValue + trainingValue + assistValue + cupValue;
 
   $("#contributionBase") && ($("#contributionBase").textContent = euro(base));
   $("#contributionGoalValue") && ($("#contributionGoalValue").textContent = "+" + euro(goalValue));
   $("#contributionGymValue") && ($("#contributionGymValue").textContent = "+" + euro(gymValue));
+  $("#contributionTrainingValue") && ($("#contributionTrainingValue").textContent = "+" + euro(trainingValue));
   $("#contributionAssistValue") && ($("#contributionAssistValue").textContent = "+" + euro(assistValue));
   $("#contributionCupValue") && ($("#contributionCupValue").textContent = "+" + euro(cupValue));
   $("#contributionTotal") && ($("#contributionTotal").textContent = euro(total));
 }
 
 $("#calculateContribution")?.addEventListener("click", calculateContribution);
-["contributionTournament","contributionGoals","contributionGym","contributionAssists","contributionCups"].forEach(id=>{
+["contributionTournament","contributionGoals","contributionGym","contributionTraining","contributionAssists","contributionCups"].forEach(id=>{
   $("#"+id)?.addEventListener("input", calculateContribution);
   $("#"+id)?.addEventListener("change", calculateContribution);
 });
-calculateContribution();
+window.addEventListener('morta-profile-saved', loadContributionTeam);
+if(mortaSupabase) mortaSupabase.auth.onAuthStateChange(()=>setTimeout(loadContributionTeam,0));
+loadContributionTeam();
 
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation="fade .6s ease both"});
