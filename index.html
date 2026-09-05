@@ -591,7 +591,7 @@ header{box-shadow:0 10px 45px rgba(0,0,0,.18)}
 <div class="navlinks">
 <button data-scroll="home">Ana Sayfa</button>
 <button data-scroll="league">Lig</button>
-<button data-scroll="players">Oyuncular</button><button data-scroll="mortahub">MortaHub</button><button data-scroll="systems">Sistemler</button>
+<button data-scroll="players">Oyuncular</button><button data-scroll="mortahub">MortaHub</button><button data-scroll="systems">Sistemler</button><button data-scroll="mortaEngine">Morta Engine</button>
 </div>
 <div class="accountActions" id="accountActions">
   <button class="accountBtn" id="openLogin">GİRİŞ YAP</button>
@@ -2651,6 +2651,185 @@ button:hover{transform:translateY(-2px)!important}
   window.mortaV12Toast=toast;
 })();
 </script>
+
+<style id="morta-v14-engine-css">
+  :root{--v14-bg:#08050d;--v14-panel:rgba(17,10,28,.9);--v14-panel2:rgba(26,15,41,.86);--v14-line:rgba(190,132,255,.18);--v14-accent:#a855f7;--v14-accent2:#ec4899;--v14-muted:#aa9cb7}
+  .v14-section{position:relative;margin:28px auto 80px;max-width:1220px;padding:0 20px;scroll-margin-top:110px}
+  .v14-shell{border:1px solid var(--v14-line);border-radius:30px;background:linear-gradient(145deg,rgba(20,10,32,.96),rgba(7,4,12,.97));box-shadow:0 30px 100px rgba(0,0,0,.35);overflow:hidden}
+  .v14-head{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:28px 28px 22px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .v14-head h2{margin:4px 0 6px;font-size:clamp(24px,3vw,36px);letter-spacing:-.03em}.v14-head p{margin:0;color:var(--v14-muted)}
+  .v14-live{display:flex;align-items:center;gap:8px;font:800 10px Orbitron;letter-spacing:.12em;color:#d7c3e7}.v14-live i{width:8px;height:8px;border-radius:50%;background:#6ee7b7;box-shadow:0 0 14px #6ee7b7;animation:v14pulse 1.8s infinite}.v14-live em{font-style:normal}
+  .v14-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;padding:22px}.v14-card{grid-column:span 3;padding:18px;border:1px solid rgba(255,255,255,.06);background:linear-gradient(145deg,rgba(28,16,43,.86),rgba(12,7,18,.92));border-radius:20px;min-width:0}.v14-card.wide{grid-column:span 6}.v14-card.full{grid-column:1/-1}
+  .v14-kicker{font:800 9px Orbitron;letter-spacing:.14em;color:#a98dc2}.v14-number{font:900 29px Inter;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v14-sub{font-size:12px;color:#9d90a7;margin-top:5px;line-height:1.55}
+  .v14-bar{height:8px;border-radius:999px;background:#100918;overflow:hidden;margin-top:12px}.v14-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--v14-accent),var(--v14-accent2));border-radius:inherit;transition:width .7s ease}
+  .v14-toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.v14-input,.v14-select{min-height:44px;border:1px solid var(--v14-line);border-radius:13px;background:#0d0714;color:#fff;padding:0 13px;outline:none}.v14-input{flex:1;min-width:180px}.v14-select{min-width:150px}.v14-btn{border:1px solid var(--v14-line);background:#140c1d;color:#eee;border-radius:12px;padding:10px 13px;font:800 10px Orbitron;cursor:pointer}.v14-btn.primary{background:linear-gradient(135deg,var(--v14-accent),var(--v14-accent2));border-color:transparent}.v14-btn:hover{transform:translateY(-1px)}
+  .v14-table{width:100%;border-collapse:collapse;margin-top:12px}.v14-table th,.v14-table td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.05);text-align:left;font-size:12px}.v14-table th{font:800 9px Orbitron;color:#9d8da9;letter-spacing:.1em}.v14-table tr:last-child td{border-bottom:0}.v14-rowname{display:flex;align-items:center;gap:10px}.v14-avatar{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#ec4899);font:900 11px Inter}.v14-avatar img{width:100%;height:100%;object-fit:cover}.v14-tag{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;background:rgba(168,85,247,.11);border:1px solid rgba(168,85,247,.18);font:800 9px Orbitron;color:#dbc6ec}
+  .v14-market{max-height:430px;overflow:auto;border:1px solid rgba(255,255,255,.05);border-radius:15px}.v14-market::-webkit-scrollbar{width:8px}.v14-market::-webkit-scrollbar-thumb{background:#2a1839;border-radius:20px}
+  .v14-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.v14-mini{padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:14px;background:rgba(255,255,255,.02)}.v14-mini b{display:block}.v14-mini span{font-size:11px;color:#9f90a8}
+  .v14-modal{position:fixed;inset:0;z-index:12000;display:none;place-items:center;background:rgba(3,2,6,.72);backdrop-filter:blur(14px);padding:16px}.v14-modal.open{display:grid}.v14-dialog{width:min(920px,100%);max-height:min(88vh,860px);overflow:auto;border:1px solid rgba(190,132,255,.2);border-radius:24px;background:linear-gradient(145deg,#170d21,#09050d);box-shadow:0 40px 120px rgba(0,0,0,.6)}.v14-dialog-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(12,7,17,.94);backdrop-filter:blur(12px)}.v14-dialog-body{padding:20px}.v14-close{border:0;background:#1b0d24;color:#fff;width:36px;height:36px;border-radius:11px;cursor:pointer;font-size:20px}
+  .v14-card-preview{max-width:640px;margin:0 auto;padding:24px;border-radius:26px;background:radial-gradient(circle at 88% 0,rgba(236,72,153,.24),transparent 32%),radial-gradient(circle at 10% 100%,rgba(168,85,247,.24),transparent 32%),#100818;border:1px solid rgba(255,255,255,.08)}.v14-card-top{display:flex;justify-content:space-between;align-items:start;gap:15px}.v14-card-player{display:flex;gap:14px;align-items:center}.v14-card-photo{width:74px;height:74px;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font:900 24px Inter}.v14-card-photo img{width:100%;height:100%;object-fit:cover}.v14-card-name{font:900 22px Orbitron}.v14-card-meta{color:#aa99b3;font-size:12px;margin-top:4px}.v14-rating{font:900 44px Inter;background:linear-gradient(135deg,#fff,#d7a8ff);-webkit-background-clip:text;background-clip:text;color:transparent}.v14-card-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}.v14-card-stat{padding:11px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.02)}.v14-card-stat small{display:block;color:#9e90a8;font-size:9px}.v14-card-stat b{display:block;margin-top:4px;font-size:15px}
+  .v14-scout{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.v14-scout .v14-input,.v14-scout .v14-select{width:100%}.v14-scout-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .v14-formation{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px;min-height:300px;padding:18px;border-radius:20px;background:linear-gradient(180deg,rgba(25,83,45,.18),rgba(12,63,32,.08));border:1px solid rgba(110,231,183,.13);position:relative}.v14-formation:before{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.1);border-radius:10px}.v14-pdot{position:relative;z-index:1;display:grid;place-items:center;align-self:center;justify-self:center;width:58px;height:58px;border-radius:50%;border:2px solid rgba(255,255,255,.34);background:radial-gradient(circle,#7c3aed,#3b185a);box-shadow:0 8px 26px rgba(0,0,0,.25);font:800 9px Inter;text-align:center}.v14-pdot[data-slot="gk"]{grid-column:3;grid-row:5}.v14-pdot[data-slot="df1"]{grid-column:2;grid-row:4}.v14-pdot[data-slot="df2"]{grid-column:3;grid-row:4}.v14-pdot[data-slot="df3"]{grid-column:4;grid-row:4}.v14-pdot[data-slot="mid1"]{grid-column:2;grid-row:3}.v14-pdot[data-slot="mid2"]{grid-column:3;grid-row:3}.v14-pdot[data-slot="mid3"]{grid-column:4;grid-row:3}.v14-pdot[data-slot="att1"]{grid-column:2;grid-row:2}.v14-pdot[data-slot="att2"]{grid-column:3;grid-row:2}.v14-pdot[data-slot="att3"]{grid-column:4;grid-row:2}
+  .v14-empty{padding:25px;text-align:center;color:#9e90a8;font-size:12px;border:1px dashed rgba(255,255,255,.08);border-radius:15px}
+  .v14-toast{position:fixed;right:20px;bottom:20px;z-index:13000;transform:translateY(20px);opacity:0;pointer-events:none;padding:12px 15px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#140a1c;color:#fff;font:700 11px Inter;transition:.25s}.v14-toast.show{transform:translateY(0);opacity:1}
+  .v14-focus{outline:2px solid rgba(236,72,153,.5)!important;box-shadow:0 0 0 7px rgba(236,72,153,.08)!important}
+  @keyframes v14pulse{0%,100%{opacity:.45;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+  @media(max-width:900px){.v14-card,.v14-card.wide{grid-column:span 6}.v14-scout{grid-template-columns:1fr 1fr}.v14-card-stats{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.v14-section{padding:0 12px;margin-top:18px}.v14-head{padding:21px 18px 18px;display:block}.v14-live{margin-top:12px}.v14-grid{grid-template-columns:1fr;padding:13px}.v14-card,.v14-card.wide,.v14-card.full{grid-column:1/-1}.v14-scout{grid-template-columns:1fr}.v14-toolbar{display:grid;grid-template-columns:1fr}.v14-input,.v14-select{width:100%;min-width:0}.v14-result-grid{grid-template-columns:1fr}.v14-table th,.v14-table td{padding:10px 8px;font-size:11px}.v14-table th:nth-child(4),.v14-table td:nth-child(4){display:none}.v14-dialog-body{padding:14px}.v14-formation{min-height:250px}.v14-pdot{width:48px;height:48px;font-size:8px}}
+</style>
+
+<section class="v14-section" id="mortaEngine">
+  <div class="v14-shell">
+    <div class="v14-head">
+      <div><div class="eyebrow"><span class="dot"></span> MORTA ENGINE · REAL DATA</div><h2>MORTA COMMAND CENTER</h2><p>Artık vitrin değil: mevcut Supabase verisini okuyup gerçek araçlara dönüştüren çalışma alanı.</p></div>
+      <div class="v14-live"><i></i><em id="v14Status">VERİ BAĞLANTISI KONTROL EDİLİYOR</em></div>
+    </div>
+    <div class="v14-grid">
+      <div class="v14-card"><div class="v14-kicker">OYUNCULAR</div><div class="v14-number" id="v14Players">—</div><div class="v14-sub">Kayıtlı oyuncu</div></div>
+      <div class="v14-card"><div class="v14-kicker">TAKIMLAR</div><div class="v14-number" id="v14Teams">—</div><div class="v14-sub">Takım profili</div></div>
+      <div class="v14-card"><div class="v14-kicker">BEKLEYEN TEKLİF</div><div class="v14-number" id="v14Offers">—</div><div class="v14-sub">Hesabına gelen</div></div>
+      <div class="v14-card"><div class="v14-kicker">BİLDİRİM</div><div class="v14-number" id="v14Notifs">—</div><div class="v14-sub">Okunmamış olay</div></div>
+      <div class="v14-card wide">
+        <div class="v14-kicker">GLOBAL ARAMA</div><div class="v14-toolbar" style="margin-top:10px"><input id="v14Search" class="v14-input" placeholder="Oyuncu, takım veya mevki ara..."><button class="v14-btn primary" id="v14SearchBtn">ARA</button></div>
+        <div id="v14SearchResults" class="v14-result-grid"></div>
+      </div>
+      <div class="v14-card wide">
+        <div class="v14-kicker">HESAP / KULÜP ÖZETİ</div><div id="v14AccountSummary" class="v14-sub" style="margin-top:10px">Giriş yapıldığında gerçek hesap verileri burada.</div>
+        <div class="v14-result-grid"><div class="v14-mini"><span>Oyuncu değeri</span><b id="v14MyValue">€—</b></div><div class="v14-mini"><span>Takım bütçesi</span><b id="v14MyBudget">€—</b></div><div class="v14-mini"><span>XP</span><b id="v14XP">0 / 1000</b></div><div class="v14-mini"><span>Seviye</span><b id="v14Level">1</b></div></div>
+        <div class="v14-bar"><i id="v14XPBar"></i></div>
+      </div>
+      <div class="v14-card full">
+        <div class="v14-kicker">GERÇEK OYUNCU PAZARI</div>
+        <div class="v14-toolbar" style="margin-top:10px"><input id="v14MarketSearch" class="v14-input" placeholder="Oyuncu / takım / mevki"><select id="v14MarketPosition" class="v14-select"><option value="">Tüm mevkiler</option><option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option></select><select id="v14MarketSort" class="v14-select"><option value="valueDesc">Değer ↓</option><option value="valueAsc">Değer ↑</option><option value="name">İsim A-Z</option></select><button class="v14-btn" id="v14Refresh">YENİLE</button></div>
+        <div id="v14Market" class="v14-market" style="margin-top:12px"><div class="v14-empty">Piyasa hazırlanıyor...</div></div>
+      </div>
+      <div class="v14-card wide">
+        <div class="v14-kicker">OYUNCU KARŞILAŞTIRMA</div><div class="v14-sub">Gerçek profillerden iki oyuncu seç ve değer / mevki / takım verilerini yan yana gör.</div>
+        <div class="v14-toolbar" style="margin-top:10px"><select id="v14CompareA" class="v14-select" style="flex:1"><option value="">Oyuncu A</option></select><select id="v14CompareB" class="v14-select" style="flex:1"><option value="">Oyuncu B</option></select><button class="v14-btn primary" id="v14CompareBtn">KARŞILAŞTIR</button></div><div id="v14CompareOut" class="v14-result-grid"></div>
+      </div>
+      <div class="v14-card wide">
+        <div class="v14-kicker">SCOUT NETWORK</div><div class="v14-sub">Filtrele, otomatik scout skoru oluştur ve kısa listeyi cihazında sakla.</div>
+        <div class="v14-scout" style="margin-top:10px"><select id="v14ScoutPos" class="v14-select"><option value="">Mevki</option><option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option></select><input id="v14ScoutMax" class="v14-input" type="number" min="0" placeholder="Max € değer"><input id="v14ScoutTeam" class="v14-input" placeholder="Takım"><input id="v14ScoutTerm" class="v14-input" placeholder="İsim / anahtar kelime"></div>
+        <div class="v14-scout-actions"><button class="v14-btn primary" id="v14ScoutBtn">SCOUT TARAMASI</button><button class="v14-btn" id="v14ShortlistBtn">KISA LİSTEYİ AÇ</button></div><div id="v14ScoutOut" style="margin-top:12px"></div>
+      </div>
+      <div class="v14-card wide">
+        <div class="v14-kicker">MORTA TACTIC BOARD</div><div class="v14-sub">Formasyon seç, gerçek oyunculardan bir kadro planı oluştur.</div>
+        <div class="v14-toolbar" style="margin-top:10px"><select id="v14FormationSelect" class="v14-select"><option>4-3-3</option><option>4-2-3-1</option><option>3-5-2</option></select><button class="v14-btn" id="v14AutoLineup">OTOMATİK DOLDUR</button><button class="v14-btn" id="v14ClearLineup">TEMİZLE</button></div><div id="v14Formation" class="v14-formation"></div>
+      </div>
+      <div class="v14-card wide">
+        <div class="v14-kicker">MORTA CARD</div><div class="v14-sub">Seçtiğin oyuncudan paylaşılabilir profesyonel kart oluştur.</div>
+        <div class="v14-toolbar" style="margin-top:10px"><select id="v14CardPlayer" class="v14-select" style="flex:1"><option value="">Oyuncu seç</option></select><button class="v14-btn primary" id="v14CardBtn">KARTI OLUŞTUR</button></div><div id="v14CardInline" style="margin-top:12px"></div>
+      </div>
+      <div class="v14-card full">
+        <div class="v14-kicker">KISAYOLLAR</div><div class="v14-toolbar" style="margin-top:10px"><button class="v14-btn" data-v14-go="players">OYUNCULAR</button><button class="v14-btn" data-v14-go="league">LİGLER</button><button class="v14-btn" data-v14-go="mortahub">MORTA HUB</button><button class="v14-btn" id="v14OpenOS">MORTA OS</button><button class="v14-btn" id="v14Compact">KOMPAKT MOD</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="v14-modal" id="v14CardModal" aria-hidden="true"><div class="v14-dialog"><div class="v14-dialog-head"><div><strong>MortaCard</strong><small style="display:block;color:#9d90a8;margin-top:3px">Oyuncu kartı önizleme</small></div><button class="v14-close" id="v14CardClose">×</button></div><div class="v14-dialog-body" id="v14CardModalBody"></div></div></div>
+<div class="v14-toast" id="v14Toast"></div>
+
+<script id="morta-v14-engine-runtime">
+(()=>{
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const sb=()=>window.mortaSupabase||window.supabaseClient||null;
+  const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const initial=v=>(String(v||'?').trim()[0]||'?').toUpperCase();
+  const fmt=v=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(v||0));
+  const toast=m=>{const t=$('#v14Toast');if(!t)return;t.textContent=m;t.classList.add('show');clearTimeout(window.__v14t);window.__v14t=setTimeout(()=>t.classList.remove('show'),1900)};
+  const state={players:[],teams:[],me:null,watch:new Set(JSON.parse(localStorage.getItem('morta_v14_watch')||'[]')),shortlist:new Set(JSON.parse(localStorage.getItem('morta_v14_shortlist')||'[]')),lineup:JSON.parse(localStorage.getItem('morta_v14_lineup')||'[]')};
+  const saveLocal=()=>{localStorage.setItem('morta_v14_watch',JSON.stringify([...state.watch]));localStorage.setItem('morta_v14_shortlist',JSON.stringify([...state.shortlist]));localStorage.setItem('morta_v14_lineup',JSON.stringify(state.lineup));};
+  const jump=id=>{document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});};
+  $$('[data-v14-go]').forEach(b=>b.addEventListener('click',()=>jump(b.dataset.v14Go)));
+  $('#v14OpenOS')?.addEventListener('click',()=>$('#openMortaOS')?.click());
+  $('#v14Compact')?.addEventListener('click',()=>{document.body.classList.toggle('mortaCompact');toast('Kompakt mod '+(document.body.classList.contains('mortaCompact')?'açıldı':'kapandı'));});
+
+  const xpData=()=>{const x=Number(localStorage.getItem('morta_v14_xp')||0);const lv=Math.floor(x/1000)+1;return {x,lv,into:x%1000}};
+  const renderXP=()=>{const z=xpData();$('#v14XP').textContent=`${z.into} / 1000`;$('#v14Level').textContent=z.lv;$('#v14XPBar').style.width=(z.into/10)+'%';};
+  const teamForPlayer=p=>String(p?.team||'').trim();
+  const playerSearchFilter=(list,term,pos)=>list.filter(p=>{const hay=`${p.username||''} ${p.team||''} ${p.position||''}`.toLocaleLowerCase('tr');return(!term||hay.includes(term.toLocaleLowerCase('tr')))&&(!pos||p.position===pos)});
+
+  function marketRows(){
+    const term=$('#v14MarketSearch')?.value.trim()||'', pos=$('#v14MarketPosition')?.value||'', sort=$('#v14MarketSort')?.value||'valueDesc';
+    let xs=playerSearchFilter(state.players,term,pos);
+    xs.sort((a,b)=>sort==='name'?String(a.username||'').localeCompare(String(b.username||''),'tr'):sort==='valueAsc'?Number(a.player_value||0)-Number(b.player_value||0):Number(b.player_value||0)-Number(a.player_value||0));
+    return xs;
+  }
+  function renderMarket(){
+    const el=$('#v14Market'); if(!el)return; const xs=marketRows();
+    if(!xs.length){el.innerHTML='<div class="v14-empty">Eşleşen oyuncu bulunamadı.</div>';return;}
+    el.innerHTML='<table class="v14-table"><thead><tr><th>OYUNCU</th><th>MEVKİ</th><th>TAKIM</th><th>DEĞER</th><th></th></tr></thead><tbody>'+xs.map(p=>`<tr data-market-player="${esc(p.id)}"><td><div class="v14-rowname"><div class="v14-avatar">${p.avatar_url?`<img src="${esc(p.avatar_url)}" alt="">`:initial(p.username)}</div><div><b>${esc(p.username)}</b><small style="display:block;color:#9d90a8;margin-top:2px">${esc(p.social_handle||'')}</small></div></div></td><td>${esc(p.position||'—')}</td><td>${esc(p.team||'Takımsız')}</td><td><b>${fmt(p.player_value)}</b></td><td><div class="v14-toolbar"><button class="v14-btn" data-watch="${esc(p.id)}">${state.watch.has(p.id)?'★':'☆'}</button><button class="v14-btn" data-card="${esc(p.id)}">CARD</button><button class="v14-btn" data-profile="${esc(p.id)}">PROFİL</button></div></td></tr>`).join('')+'</tbody></table>';
+  }
+  function fillPlayerSelects(){
+    const opts='<option value="">Oyuncu seç</option>'+state.players.map(p=>`<option value="${esc(p.id)}">${esc(p.username)} · ${esc(p.position||'Mevki yok')}</option>`).join('');
+    ['v14CompareA','v14CompareB','v14CardPlayer'].forEach(id=>{const el=$('#'+id);if(el){const keep=el.value;el.innerHTML=opts;if(state.players.some(p=>p.id===keep))el.value=keep;}});
+  }
+  function calcScore(p){
+    const value=Math.max(0,Number(p.player_value||0));
+    const valueScore=Math.min(95,45+Math.log10(Math.max(value,1))*5.1);
+    const posBonus={Forvet:4,'Orta Saha':3,Defans:2,Kaleci:1}[p.position]||0;
+    return Math.max(50,Math.min(99,Math.round(valueScore+posBonus)));
+  }
+  function compare(){
+    const a=state.players.find(x=>x.id===$('#v14CompareA')?.value),b=state.players.find(x=>x.id===$('#v14CompareB')?.value),out=$('#v14CompareOut'); if(!out)return;
+    if(!a||!b){out.innerHTML='<div class="v14-empty">İki oyuncu seç.</div>';return;}
+    const sA=calcScore(a),sB=calcScore(b); out.innerHTML=[a,b].map((p,i)=>`<div class="v14-mini"><span>${esc(p.username)}</span><b>${i===0?sA:sB}/99</b><small style="display:block;color:#9d90a8;margin-top:4px">${esc(p.position||'—')} · ${esc(p.team||'Takımsız')} · ${fmt(p.player_value)}</small></div>`).join('')+`<div class="v14-mini" style="grid-column:1/-1"><span>Sonuç</span><b>${sA===sB?'Dengede':sA>sB?esc(a.username)+' önde':esc(b.username)+' önde'}</b><small style="display:block;color:#9d90a8;margin-top:4px">Morta score; resmi futbol ratingi değil, MortaLeague içi karşılaştırma metriği.</small></div>`;
+  }
+  function scout(){
+    const pos=$('#v14ScoutPos')?.value||'', max=Number($('#v14ScoutMax')?.value||0), tm=($('#v14ScoutTeam')?.value||'').trim().toLocaleLowerCase('tr'), term=($('#v14ScoutTerm')?.value||'').trim().toLocaleLowerCase('tr');
+    let xs=state.players.filter(p=>(!pos||p.position===pos)&&(!max||Number(p.player_value||0)<=max)&&(!tm||String(p.team||'').toLocaleLowerCase('tr').includes(tm))&&(!term||`${p.username||''} ${p.team||''} ${p.position||''}`.toLocaleLowerCase('tr').includes(term)));
+    xs=xs.map(p=>({...p,_score:calcScore(p)+(state.shortlist.has(p.id)?2:0)})).sort((a,b)=>b._score-a._score).slice(0,20);
+    const out=$('#v14ScoutOut');if(!out)return;if(!xs.length){out.innerHTML='<div class="v14-empty">Kriterlere uyan oyuncu bulunamadı.</div>';return;}
+    out.innerHTML='<div class="v14-result-grid">'+xs.map(p=>`<div class="v14-mini"><div style="display:flex;justify-content:space-between;gap:10px"><span>${esc(p.username)}</span><span class="v14-tag">${p._score}/99</span></div><b style="margin-top:6px">${fmt(p.player_value)}</b><small style="display:block;color:#9d90a8;margin-top:4px">${esc(p.position||'—')} · ${esc(p.team||'Takımsız')}</small><div class="v14-toolbar" style="margin-top:8px"><button class="v14-btn" data-shortlist="${esc(p.id)}">${state.shortlist.has(p.id)?'KISA LİSTEDE':'KISA LİSTEYE EKLE'}</button><button class="v14-btn" data-card="${esc(p.id)}">CARD</button></div></div>`).join('')+'</div>';
+  }
+  function renderLineup(){
+    const el=$('#v14Formation'); if(!el)return; const ids=state.lineup; const names=ids.map(id=>state.players.find(p=>p.id===id)?.username||'—');
+    const slots=['gk','df1','df2','df3','mid1','mid2','mid3','att1','att2','att3'];el.innerHTML=slots.map((slot,i)=>`<div class="v14-pdot" data-slot="${slot}" title="${esc(names[i]||'Boş')}">${esc((names[i]||'BOŞ').slice(0,11))}</div>`).join('');
+  }
+  function autoLineup(){
+    const order={Kaleci:0,Defans:1,'Orta Saha':2,Forvet:3};
+    const sorted=[...state.players].sort((a,b)=>calcScore(b)-calcScore(a));
+    const pick=[]; for(const cat of ['Kaleci','Defans','Orta Saha','Forvet']){const n=cat==='Kaleci'?1:cat==='Defans'?3:3;pick.push(...sorted.filter(p=>p.position===cat).slice(0,n).map(p=>p.id));} 
+    while(pick.length<10){for(const p of sorted){if(!pick.includes(p.id)){pick.push(p.id);if(pick.length===10)break;}}}
+    state.lineup=pick.slice(0,10);saveLocal();renderLineup();toast('En iyi 10 oyuncuyla kadro dolduruldu');
+  }
+  const cardHtml=p=>`<div class="v14-card-preview"><div class="v14-card-top"><div class="v14-card-player"><div class="v14-card-photo">${p.avatar_url?`<img src="${esc(p.avatar_url)}" alt="">`:initial(p.username)}</div><div><div class="v14-card-name">${esc(p.username)}</div><div class="v14-card-meta">${esc(p.position||'MEVKİ BELİRSİZ')} · ${esc(p.team||'TAKIMSIZ')}</div></div></div><div class="v14-rating">${calcScore(p)}</div></div><div class="v14-card-stats"><div class="v14-card-stat"><small>DEĞER</small><b>${fmt(p.player_value)}</b></div><div class="v14-card-stat"><small>TAKIM</small><b>${esc(p.team||'—')}</b></div><div class="v14-card-stat"><small>MEVKİ</small><b>${esc(p.position||'—')}</b></div><div class="v14-card-stat"><small>İZLENME</small><b>${state.watch.has(p.id)?'★ AKTİF':'—'}</b></div></div></div>`;
+  function openCard(id){const p=state.players.find(x=>x.id===id);if(!p)return;const body=$('#v14CardModalBody');body.innerHTML=cardHtml(p)+'<div class="v14-toolbar" style="justify-content:center;margin-top:14px"><button class="v14-btn" id="v14CopyCard">KART METNİNİ KOPYALA</button></div>';const m=$('#v14CardModal');m.classList.add('open');m.setAttribute('aria-hidden','false');$('#v14CopyCard').onclick=()=>navigator.clipboard?.writeText(`${p.username} · ${p.position||'—'} · ${p.team||'Takımsız'} · ${fmt(p.player_value)} · MortaScore ${calcScore(p)}/99`).then(()=>toast('Kart bilgisi kopyalandı')).catch(()=>toast('Kopyalama kullanılamıyor'));}
+  function inlineCard(){const id=$('#v14CardPlayer')?.value;$('#v14CardInline').innerHTML=id?(cardHtml(state.players.find(p=>p.id===id))||''):'';}
+  function renderAccount(){
+    const me=state.me;if(!me){$('#v14AccountSummary').textContent='Ziyaretçi · Giriş yapınca kişisel veriler görünür.';return;}
+    const ownPlayer=state.players.find(p=>p.id===me.id); const ownTeam=state.teams.find(t=>t.user_id===me.id);
+    $('#v14AccountSummary').textContent=`${me.username||'Kullanıcı'} · ${me.account_type==='team'?'Takım hesabı':'Oyuncu hesabı'}`;
+    $('#v14MyValue').textContent=ownPlayer?fmt(ownPlayer.player_value):'€—';$('#v14MyBudget').textContent=ownTeam?fmt(ownTeam.budget):'€—';
+  }
+  function search(){const term=($('#v14Search')?.value||'').trim().toLocaleLowerCase('tr');const out=$('#v14SearchResults');if(!term){out.innerHTML='';return;}const ps=state.players.filter(p=>`${p.username} ${p.position||''} ${p.team||''}`.toLocaleLowerCase('tr').includes(term)).slice(0,6);const ts=state.teams.filter(t=>`${t.team_name}`.toLocaleLowerCase('tr').includes(term)).slice(0,4);const html=[...ps.map(p=>`<button class="v14-mini" data-focus-player="${esc(p.id)}"><span>OYUNCU</span><b>${esc(p.username)}</b><small>${esc(p.position||'—')} · ${esc(p.team||'Takımsız')}</small></button>`),...ts.map(t=>`<button class="v14-mini" data-focus-team="${esc(t.user_id)}"><span>TAKIM</span><b>${esc(t.team_name)}</b><small>${Number(t.player_count||0)} oyuncu · ${fmt(t.budget)}</small></button>`)];out.innerHTML=html.length?html.join(''):'<div class="v14-empty" style="grid-column:1/-1">Sonuç bulunamadı.</div>';}
+  async function fetchData(){
+    const s=sb(); if(!s){$('#v14Status').textContent='SUPABASE YOK';return;}
+    try{
+      const [pr,tr,meq]=await Promise.all([s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,account_type').eq('account_type','player').order('username'),s.from('team_profiles').select('user_id,team_name,bio,logo_url,budget,player_count,training_level,stadium_level').order('team_name'),s.auth.getUser()]);
+      if(pr.error)throw pr.error;if(tr.error)throw tr.error;state.players=pr.data||[];state.teams=tr.data||[];state.me=meq.data?.user?null:null;
+      if(meq.data?.user){const {data:meProfile}=await s.from('profiles').select('id,username,account_type,player_value,team').eq('id',meq.data.user.id).maybeSingle();state.me=meProfile||{id:meq.data.user.id,username:'Kullanıcı'};
+        const [{count:offersCount},{count:notifCount},teamRes]=await Promise.all([s.from('transfer_offers').select('id',{count:'exact',head:true}).eq('to_user_id',meq.data.user.id).eq('status','pending'),s.from('notifications').select('id',{count:'exact',head:true}).eq('user_id',meq.data.user.id).is('read_at',null),s.from('team_profiles').select('budget').eq('user_id',meq.data.user.id).maybeSingle()]);
+        $('#v14Offers').textContent=String(offersCount||0);$('#v14Notifs').textContent=String(notifCount||0);$('#v14MyBudget').textContent=teamRes.data?fmt(teamRes.data.budget):'€—';
+      }else{$('#v14Offers').textContent='0';$('#v14Notifs').textContent='0';}
+      $('#v14Players').textContent=state.players.length;$('#v14Teams').textContent=state.teams.length;$('#v14Status').textContent='CANLI VERİ · BAĞLI';renderAccount();renderMarket();fillPlayerSelects();renderLineup();renderXP();
+    }catch(err){console.error('Morta Engine',err);$('#v14Status').textContent='VERİ HATASI';$('#v14Market').innerHTML=`<div class="v14-empty">Veri okunamadı: ${esc(err.message||err)}</div>`;}
+  }
+  $('#v14MarketSearch')?.addEventListener('input',renderMarket);$('#v14MarketPosition')?.addEventListener('change',renderMarket);$('#v14MarketSort')?.addEventListener('change',renderMarket);$('#v14Refresh')?.addEventListener('click',fetchData);
+  $('#v14SearchBtn')?.addEventListener('click',search);$('#v14Search')?.addEventListener('keydown',e=>{if(e.key==='Enter')search();});
+  $('#v14CompareBtn')?.addEventListener('click',compare);$('#v14ScoutBtn')?.addEventListener('click',scout);$('#v14CardBtn')?.addEventListener('click',()=>{const id=$('#v14CardPlayer')?.value;if(id)openCard(id);else toast('Önce oyuncu seç');});$('#v14CardPlayer')?.addEventListener('change',inlineCard);
+  $('#v14AutoLineup')?.addEventListener('click',autoLineup);$('#v14ClearLineup')?.addEventListener('click',()=>{state.lineup=[];saveLocal();renderLineup();toast('Taktik temizlendi');});$('#v14FormationSelect')?.addEventListener('change',()=>toast('Formasyon görünümü güncellendi: '+$('#v14FormationSelect').value));
+  $('#v14ScoutOut')?.addEventListener('click',e=>{const b=e.target.closest('[data-shortlist]');if(b){const id=b.dataset.shortlist;state.shortlist.has(id)?state.shortlist.delete(id):state.shortlist.add(id);saveLocal();scout();toast(state.shortlist.has(id)?'Kısa listeye eklendi':'Kısa listeden çıkarıldı');}const c=e.target.closest('[data-card]');if(c)openCard(c.dataset.card);});
+  $('#v14Market')?.addEventListener('click',e=>{const w=e.target.closest('[data-watch]');if(w){const id=w.dataset.watch;state.watch.has(id)?state.watch.delete(id):state.watch.add(id);saveLocal();renderMarket();toast(state.watch.has(id)?'İzleme listesine eklendi':'İzlemeden çıkarıldı');}const c=e.target.closest('[data-card]');if(c)openCard(c.dataset.card);const p=e.target.closest('[data-profile]');if(p){const player=state.players.find(x=>x.id===p.dataset.profile);if(player){jump('players');setTimeout(()=>document.querySelector(`[data-player-id="${CSS.escape(player.id)}"]`)?.classList.add('v14-focus'),250);setTimeout(()=>document.querySelector(`[data-player-id="${CSS.escape(player.id)}"]`)?.classList.remove('v14-focus'),2000);}}});
+  $('#v14SearchResults')?.addEventListener('click',e=>{const p=e.target.closest('[data-focus-player]');if(p){const id=p.dataset.focusPlayer;openCard(id);}const t=e.target.closest('[data-focus-team]');if(t){jump('players');toast('Takım dizininde ilgili ekip seçilebilir');}});
+  $('#v14CardClose')?.addEventListener('click',()=>{$('#v14CardModal')?.classList.remove('open');$('#v14CardModal')?.setAttribute('aria-hidden','true');});$('#v14CardModal')?.addEventListener('click',e=>{if(e.target.id==='v14CardModal')$('#v14CardClose').click();});
+  window.addEventListener('morta-auth-changed',fetchData);
+  fetchData();
+  // keep the existing directory in sync without replacing its implementation
+  setInterval(()=>{if(document.visibilityState==='visible')fetchData()},60000);
+})();
+</script>
+
 </body>
 </html>
 <!-- __TRAILING_CSS_REMOVED__ -->
