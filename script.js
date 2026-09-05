@@ -179,7 +179,7 @@ const MORTA_SUPABASE_ANON_KEY = "sb_publishable_SDen1VfLk6M3V5V62lH9xw__p-ulv5O"
 let mortaSupabase = null;
 if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
   mortaSupabase = window.supabase.createClient(MORTA_SUPABASE_URL, MORTA_SUPABASE_ANON_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, flowType: "pkce" }
   });
 }
 
@@ -245,17 +245,18 @@ async function registerMorta(){
     }
     if(!data.user){ showAccountMessage("Hesap oluşturulamadı. Lütfen tekrar dene.", true); return; }
 
-    // Oturum varsa profil kaydını hemen ve eksiksiz oluştur.
+    // Auth hesabı başarıyla oluştuysa profil kaydındaki ayrı bir RLS hatası hesabı geçersiz göstermemeli.
     if(data.session){
       const {error:profileError}=await mortaSupabase.from("profiles").upsert({
         id:data.user.id, username, account_type:accountType,
         player_value:1000000, position:'', team:'', bio:'', social_handle:''
       },{onConflict:"id"});
-      if(profileError) throw profileError;
-      showAccountMessage("Hesabın başarıyla oluşturuldu. Şimdi giriş yapabilirsin.");
-      setTimeout(()=>accountOpen("login"),700);
+      if(profileError) console.warn('Profil ilk kayıt uyarısı:', profileError.message);
+      showAccountMessage(profileError ? 'Hesap oluşturuldu. Giriş yapabilirsin; profil kaydı daha sonra tamamlanacak.' : 'Hesabın başarıyla oluşturuldu. Şimdi giriş yapabilirsin.');
+      await refreshMortaUser();
+      setTimeout(()=>accountClose(),700);
     }else{
-      showAccountMessage("Hesap oluşturuldu ancak e-posta doğrulaması gerekiyor. Doğrulama ayarını kontrol et.", true);
+      showAccountMessage("Hesap oluşturuldu ancak oturum açılamadı. Giriş Yap bölümünden kullanıcı adın ve şifrenle giriş yap.", true);
     }
   }catch(err){
     console.error("Hesap oluşturma hatası:",err);
@@ -275,22 +276,41 @@ async function loginMorta(){
 
 async function refreshMortaUser(){
   if(!mortaSupabase) return;
-  const {data:{session}}=await mortaSupabase.auth.getSession();
-  if(session?.user){
-    let {data:profile,error:profileError}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).maybeSingle();
-    if(profileError) console.warn("Profil okunamadı:",profileError.message);
-    if(!profile){
-      const username=normalizeUsername(session.user.user_metadata?.username || session.user.email.split("@")[0]);
-      const accountType=session.user.user_metadata?.account_type === "team" ? "team" : "player";
-      const {data:created,error:createError}=await mortaSupabase.from("profiles").upsert({id:session.user.id,username,account_type:accountType,player_value:1000000},{onConflict:"id"}).select("username").maybeSingle();
-      if(!createError) profile=created;
+  try{
+    const {data:{session},error:sessionError}=await mortaSupabase.auth.getSession();
+    if(sessionError) console.warn("Oturum okunamadı:",sessionError.message);
+    if(session?.user){
+      const fallbackName=normalizeUsername(session.user.user_metadata?.username || session.user.email?.split("@")[0] || "oyuncu");
+      let profile=null;
+      const {data,error:profileError}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).maybeSingle();
+      if(profileError) console.warn("Profil okunamadı:",profileError.message);
+      profile=data;
+      // Profil tablosu izin yüzünden okunamasa bile kullanıcı oturumunu kaybetmiş gibi gösterme.
+      if(!profile && !profileError){
+        const accountType=session.user.user_metadata?.account_type === "team" ? "team" : "player";
+        const {data:created,error:createError}=await mortaSupabase.from("profiles").upsert({id:session.user.id,username:fallbackName,account_type:accountType,player_value:1000000},{onConflict:"id"}).select("username").maybeSingle();
+        if(createError) console.warn("Profil oluşturulamadı:",createError.message);
+        else profile=created;
+      }
+      const current=$("#currentUsername"); if(current) current.textContent=profile?.username || fallbackName;
+      if(userPanel) userPanel.hidden=false;
+      if(accountActions) accountActions.hidden=true;
+    }else{
+      if(userPanel) userPanel.hidden=true;
+      if(accountActions) accountActions.hidden=false;
     }
-    $("#currentUsername").textContent=profile?.username || session.user.email.split("@")[0];
-    userPanel.hidden=false; accountActions.hidden=true;
-  }else{
-    userPanel.hidden=true; accountActions.hidden=false;
+  }catch(err){
+    console.error("Oturum yenileme hatası:",err);
+    // Gerçek bir hata olsa bile giriş/kayıt düğmelerini erişilebilir bırak.
+    if(userPanel) userPanel.hidden=true;
+    if(accountActions) accountActions.hidden=false;
   }
 }
+
+
+// Hesap ekranında Enter ve tıklama davranışlarını tek yerde kontrol et.
+["loginUsername","loginPassword"].forEach(id=>$("#"+id)?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loginMorta();}}));
+["registerUsername","registerPassword","registerPassword2"].forEach(id=>$("#"+id)?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();registerMorta();}}));
 
 $("#openLogin")?.addEventListener("click",()=>accountOpen("login"));
 $("#openRegister")?.addEventListener("click",()=>accountOpen("register"));
