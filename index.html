@@ -434,8 +434,6 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 }
 @media(max-width:420px){.accountCard,.adminCard{padding:16px!important}.profileHero{gap:10px}.profileAvatarLarge{width:54px;height:54px}.hubWelcome h3{font-size:17px}.ml-toast-stack{right:14px;bottom:14px}}
 
-
-.calcTrainingInfo{grid-column:1/-1;padding:13px 14px;border:1px solid rgba(155,77,255,.32);border-radius:13px;background:rgba(155,77,255,.06);display:flex;flex-direction:column;gap:5px}.calcTrainingInfo span{font-size:9px;letter-spacing:1px;color:#a98ac7;font-weight:800}.calcTrainingInfo strong{font:800 14px Orbitron,Arial,sans-serif;color:#efe7ff}.calcTrainingInfo small{color:#9f94aa;font-size:11px;line-height:1.45}.calcTrainingInfo.is-warning{border-color:rgba(255,180,80,.28);background:rgba(255,180,80,.04)}
 </style>
 
 
@@ -536,7 +534,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 <div class="sectionHead">
   <div>
     <h2>OYUNCU KATKI DEĞERİ HESAPLAMA</h2>
-    <p>Devre veya dönem sonunda oyuncunun performansını ve seçtiğin antrenman katkısını birlikte hesapla.</p>
+    <p>Devre veya dönem sonunda oyuncunun gol, asist ve kupa katkısını MortaLeague kurallarına göre hesapla.</p>
   </div>
   <span class="badge">BAŞLANGIÇ €1M</span>
 </div>
@@ -574,25 +572,8 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
       </div>
 
       <div class="field">
-        <label for="contributionGym">Gym (Gol Yemeyen Maç)</label>
-        <input id="contributionGym" type="number" min="0" step="1" value="0" placeholder="Örn. 10">
-      </div>
-
-      <div class="field">
-        <label for="contributionTraining">Antrenman Sayısı</label>
-        <input id="contributionTraining" type="number" min="0" step="1" value="0" placeholder="Örn. 20">
-      </div>
-
-      <div class="field full">
-        <label for="contributionTrainingRate">Antrenman Başına Değer Katkısı</label>
-        <select id="contributionTrainingRate">
-          <option value="50000">€50.000</option>
-          <option value="75000">€75.000</option>
-          <option value="100000" selected>€100.000</option>
-          <option value="125000">€125.000</option>
-          <option value="150000">€150.000</option>
-          <option value="200000">€200.000</option>
-        </select>
+        <label for="contributionGym">Gym</label>
+        <input id="contributionGym" type="number" min="0" step="1" value="0" placeholder="Örn. 20">
       </div>
 
       <div class="field">
@@ -615,8 +596,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
     <div class="contributionBreakdown">
       <div><small>Başlangıç</small><b id="contributionBase">€1.000.000</b></div>
       <div><small>Gol katkısı</small><b id="contributionGoalValue">+€0</b></div>
-      <div><small>Gym (gol yemeyen maç)</small><b id="contributionGymValue">+€0</b></div>
-      <div><small>Antrenman katkısı</small><b id="contributionTrainingValue">+€0</b></div>
+      <div><small>Gym katkısı</small><b id="contributionGymValue">+€0</b></div>
       <div><small>Asist katkısı</small><b id="contributionAssistValue">+€0</b></div>
       <div><small>Kupa katkısı</small><b id="contributionCupValue">+€0</b></div>
     </div>
@@ -1331,7 +1311,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <p>Hesabına kullanıcı adın ve şifren ile giriş yap.</p>
       <label>Kullanıcı Adı<input id="loginUsername" autocomplete="username" maxlength="24"></label>
       <label>Şifre<input id="loginPassword" type="password" autocomplete="current-password"></label>
-      <button type="button" class="accountSubmit" id="loginSubmit">GİRİŞ YAP</button>
+      <button class="accountSubmit" id="loginSubmit">GİRİŞ YAP</button>
     </div>
 
     <div id="registerForm" hidden>
@@ -1342,7 +1322,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <label>Şifre<input id="registerPassword" type="password" autocomplete="new-password"></label>
       <label>Hesap Türü<select id="registerRole"><option value="player">⚽ Oyuncu</option><option value="team">🏟️ Takım</option></select></label>
     <label>Şifre Tekrar<input id="registerPassword2" type="password" autocomplete="new-password"></label>
-      <button type="button" class="accountSubmit" id="registerSubmit">HESAP OLUŞTUR</button>
+      <button class="accountSubmit" id="registerSubmit">HESAP OLUŞTUR</button>
     </div>
 
     <div class="accountMessage" id="accountMessage" role="status"></div>
@@ -1795,7 +1775,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 
   async function hydrateProfile(){
     const s=sup(),u=await getUser(); if(!s||!u)return;
-    const {data:p}=await s.from('profiles').select('account_type,position,team,player_value,social_handle').eq('id',u.id).maybeSingle();
+    const {data:p}=await s.from('profiles').select('account_type,profile_theme,cover_url,position,team,player_value,social_handle').eq('id',u.id).maybeSingle();
     if(!p)return;
     if(roleEl){roleEl.value=p.account_type||'player';syncRole();}
     q('#profilePosition')&&(q('#profilePosition').value=p.position||'');
@@ -1828,14 +1808,9 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   }
   async function loadDirectory(){
     const s=sup();if(!s)return;
-    const {data:ps,error}=await s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,account_type').order('username');
-    if(error){
-      playerList&&(playerList.innerHTML=`<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message)}</div>`);
-      console.error('[MortaLeague] Oyuncu listesi:', error);
-      return;
-    }
-    // Eski hesaplarda account_type boş olabilir. Bunları kaybetmemek için yalnızca açıkça takım olanları dışarıda bırak.
-    players=(ps||[]).filter(p=>String(p.account_type||'player').toLowerCase()!=='team');q('#playerCount')&&(q('#playerCount').textContent=`${players.length} OYUNCU`);
+    const {data:ps,error}=await s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,profile_theme,cover_url,account_type').eq('account_type','player').order('username');
+    if(error){playerList&&(playerList.innerHTML=`<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message)}</div>`);return;}
+    players=ps||[];q('#playerCount')&&(q('#playerCount').textContent=`${players.length} OYUNCU`);
     const teamNames=[...new Set(players.map(p=>(p.team||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));if(teamFilter){const keep=teamFilter.value;teamFilter.innerHTML='<option value="">Tüm Takımlar</option>'+teamNames.map(t=>`<option>${esc(t)}</option>`).join('');if(teamNames.includes(keep))teamFilter.value=keep;}renderPlayers();await loadTeams();
   }
   async function loadTeams(){const s=sup();if(!s||!teamList)return;const {data,error}=await s.from('team_profiles').select('user_id,team_name,bio,logo_url,budget,player_count,training_level,stadium_level').order('team_name');if(error){teamList.innerHTML=`<div class="directoryEmpty">Takımlar yüklenemedi: ${esc(error.message)}</div>`;return;}teams=data||[];q('#teamCount')&&(q('#teamCount').textContent=`${teams.length} TAKIM`);teamList.innerHTML=teams.length?teams.map(t=>`<article class="directoryTeamCard" data-team-id="${esc(t.user_id)}"><div class="teamMini"><div class="teamMiniLogo">${t.logo_url?`<img src="${esc(t.logo_url)}" alt="">`:esc(initial(t.team_name))}</div><div><b>${esc(t.team_name||'Takım')}</b><small>Takım Profili</small></div></div><div class="teamCardStats"><div><span>BÜTÇE</span><b>${fmt(t.budget)}</b></div><div><span>OYUNCU</span><b>${Number(t.player_count||0)}</b></div></div></article>`).join(''):'<div class="directoryEmpty">Henüz takım hesabı yok.</div>';}
@@ -2205,14 +2180,14 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
  async function me(){const {data:{user}}=await mortaSupabase.auth.getUser();currentUser=user;return user}
  function open(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');app.classList.remove('chatOpen');loadThreads()}
  function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
- async function profileMap(ids){if(!ids.length)return new Map();const {data}=await mortaSupabase.from('profiles').select('id,username,avatar_url,account_type').in('id',ids);return new Map((data||[]).map(x=>[x.id,x]))}
+ async function profileMap(ids){if(!ids.length)return new Map();const {data}=await mortaSupabase.from('profiles').select('id,username,avatar_url,profile_type').in('id',ids);return new Map((data||[]).map(x=>[x.id,x]))}
  async function loadThreads(){if(!await me()){alert('Mesajları kullanmak için giriş yapmalısın.');return}threads.innerHTML='<div class="dmHint">Sohbetler yükleniyor...</div>';const {data: memberships,error}=await mortaSupabase.from('conversation_members').select('conversation_id,conversations(id,type,name,avatar_url,updated_at,created_by)').eq('user_id',currentUser.id).order('joined_at',{ascending:false});if(error){threads.innerHTML='<div class="dmHint">Mesaj sistemi henüz kurulmadı. SQL dosyasını çalıştır.</div>';return}const convs=(memberships||[]).map(x=>x.conversations).filter(Boolean);if(!convs.length){threads.innerHTML='<div class="dmHint">Henüz hiç mesajın yok. Sağ üstteki ✎ ile yeni sohbet başlat.</div>';return}const ids=convs.map(x=>x.id);const {data:lasts}=await mortaSupabase.from('direct_messages').select('conversation_id,body,created_at').in('conversation_id',ids).order('created_at',{ascending:false});const last=new Map();(lasts||[]).forEach(m=>{if(!last.has(m.conversation_id))last.set(m.conversation_id,m)});const allMembers={};await Promise.all(convs.map(async c=>{const {data}=await mortaSupabase.from('conversation_members').select('user_id').eq('conversation_id',c.id);allMembers[c.id]=(data||[]).map(x=>x.user_id)}));const userIds=[...new Set(Object.values(allMembers).flat().filter(id=>id!==currentUser.id))];const pm=await profileMap(userIds);threads.innerHTML=convs.map(c=>{const other=pm.get(allMembers[c.id].find(id=>id!==currentUser.id));const title=c.type==='group'?(c.name||'İsimsiz grup'):(other?.username||'Kullanıcı');const av=c.avatar_url||other?.avatar_url;const l=last.get(c.id);return `<button class="dmThread ${currentConv?.id===c.id?'active':''}" data-id="${c.id}" data-title="${esc(title)}" data-type="${c.type}"><span class="dmAvatar">${av?`<img src="${esc(av)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:initials(title)}</span><span class="dmThreadText"><b>${esc(title)}</b><span>${esc(l?.body||'Henüz mesaj yok')}</span></span></button>`}).join('');}
  async function openConversation(id,title,type){currentConv={id,title,type};$('#dmEmpty').style.display='none';$('#dmChat').style.display='flex';$('#dmChatTitle').textContent=title;$('#dmChatSubtitle').textContent=type==='group'?'Grup sohbeti':'Özel sohbet';$('#dmChatAvatar').textContent=initials(title);app.classList.add('chatOpen');await loadMessages();loadThreads();if(realtime){mortaSupabase.removeChannel(realtime)}realtime=mortaSupabase.channel('dm-'+id).on('postgres_changes',{event:'INSERT',schema:'public',table:'direct_messages',filter:'conversation_id=eq.'+id},p=>{if(p.new.sender_id!==currentUser.id)appendMessage(p.new,false)}).subscribe()}
  async function loadMessages(){const box=$('#dmMessages');box.innerHTML='<div class="dmHint">Mesajlar yükleniyor...</div>';const {data,error}=await mortaSupabase.from('direct_messages').select('id,sender_id,body,created_at').eq('conversation_id',currentConv.id).is('deleted_at',null).order('created_at',{ascending:true});if(error){box.innerHTML='<div class="dmHint">Mesajlar yüklenemedi.</div>';return}box.innerHTML='';(data||[]).forEach(m=>appendMessage(m,false));box.scrollTop=box.scrollHeight}
  function appendMessage(m,scroll=true){const box=$('#dmMessages');const mine=m.sender_id===currentUser.id;const d=document.createElement('div');d.className='dmBubble'+(mine?' mine':'');d.dataset.mid=m.id;d.innerHTML=`<div>${esc(m.body)}</div><div class="dmMeta">${new Date(m.created_at).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div>`;box.appendChild(d);if(scroll)box.scrollTop=box.scrollHeight}
  async function sendMessage(body){if(!currentConv||!body.trim())return;const {data,error}=await mortaSupabase.from('direct_messages').insert({conversation_id:currentConv.id,sender_id:currentUser.id,body:body.trim()}).select().single();if(error){alert(error.message);return}appendMessage(data);await mortaSupabase.from('conversations').update({updated_at:new Date().toISOString()}).eq('id',currentConv.id);loadThreads()}
  let selected=[];
- async function searchUsers(q=''){if(!await me())return;const {data}=await mortaSupabase.from('profiles').select('id,username,avatar_url,account_type').neq('id',currentUser.id).ilike('username','%'+q+'%').limit(30);userResults.innerHTML=(data||[]).map(u=>`<div class="dmUserRow" data-user='${u.id}' data-name='${esc(u.username)}'><span class="dmAvatar">${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:initials(u.username)}</span><div><b>${esc(u.username)}</b><div style="font-size:11px;color:#999">${esc(u.account_type||'Kullanıcı')}</div></div><span style="margin-left:auto">${selected.includes(u.id)?'✓':''}</span></div>`).join('')||'<div class="dmHint">Kullanıcı bulunamadı.</div>'}
+ async function searchUsers(q=''){if(!await me())return;const {data}=await mortaSupabase.from('profiles').select('id,username,avatar_url,profile_type').neq('id',currentUser.id).ilike('username','%'+q+'%').limit(30);userResults.innerHTML=(data||[]).map(u=>`<div class="dmUserRow" data-user='${u.id}' data-name='${esc(u.username)}'><span class="dmAvatar">${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:initials(u.username)}</span><div><b>${esc(u.username)}</b><div style="font-size:11px;color:#999">${esc(u.profile_type||'Kullanıcı')}</div></div><span style="margin-left:auto">${selected.includes(u.id)?'✓':''}</span></div>`).join('')||'<div class="dmHint">Kullanıcı bulunamadı.</div>'}
  async function chooseUser(id,name){if(selected.includes(id))selected=selected.filter(x=>x!==id);else selected.push(id);groupBox.classList.toggle('show',selected.length>1);if(selected.length===1){const key=[currentUser.id,id].sort().join(':');let {data:conv}=await mortaSupabase.from('conversations').select('id,type,name').eq('direct_key',key).maybeSingle();if(!conv){const {data:newc,error}=await mortaSupabase.from('conversations').insert({type:'direct',direct_key:key,created_by:currentUser.id}).select().single();if(error){alert(error.message);return}conv=newc;await mortaSupabase.from('conversation_members').insert([{conversation_id:conv.id,user_id:currentUser.id,role:'owner'},{conversation_id:conv.id,user_id:id,role:'member'}])}newPanel.classList.remove('open');selected=[];openConversation(conv.id,name,'direct')}else searchUsers($('#dmUserSearch').value)}
  async function createGroup(){const name=$('#dmGroupName').value.trim();if(!name||selected.length<2)return alert('Grup için en az 2 kişi ve bir grup adı seç.');const {data:c,error}=await mortaSupabase.from('conversations').insert({type:'group',name,created_by:currentUser.id}).select().single();if(error)return alert(error.message);const rows=[{conversation_id:c.id,user_id:currentUser.id,role:'owner'},...selected.map(id=>({conversation_id:c.id,user_id:id,role:'member'}))];const {error:e}=await mortaSupabase.from('conversation_members').insert(rows);if(e)return alert(e.message);newPanel.classList.remove('open');selected=[];openConversation(c.id,name,'group')}
  $('#openDMButton')?.addEventListener('click',open);$('#mobileDMNav')?.addEventListener('click',open);$('#dmClose')?.addEventListener('click',close);$('#dmBackChat')?.addEventListener('click',()=>app.classList.remove('chatOpen'));$('#dmNewChat')?.addEventListener('click',()=>{newPanel.classList.add('open');selected=[];groupBox.classList.remove('show');searchUsers()});$('#dmBackNew')?.addEventListener('click',()=>newPanel.classList.remove('open'));$('#dmUserSearch')?.addEventListener('input',e=>searchUsers(e.target.value));$('#dmThreadList')?.addEventListener('click',e=>{const b=e.target.closest('.dmThread');if(b)openConversation(b.dataset.id,b.dataset.title,b.dataset.type)});$('#dmUserResults')?.addEventListener('click',e=>{const r=e.target.closest('.dmUserRow');if(r)chooseUser(r.dataset.user,r.dataset.name)});$('#dmCreateGroupBtn')?.addEventListener('click',createGroup);$('#dmComposer')?.addEventListener('submit',e=>{e.preventDefault();const i=$('#dmMessageInput');const v=i.value;i.value='';sendMessage(v)});modal?.addEventListener('click',e=>{if(e.target===modal)close()});
@@ -2251,7 +2226,7 @@ document.getElementById('mortaDesktopDM')?.addEventListener('click',function(){
 </script>
 
 <link rel="stylesheet" href="professional.css">
-
+<script src="professional-patch.js"></script>
 
 <!-- MortaLeague View Navigation: sade tek-ekran arayüz -->
 <style id="morta-view-navigation">

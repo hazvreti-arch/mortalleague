@@ -93,59 +93,45 @@ const contributionRates = {
   nations: {goal: 40000, assist: 30000, cup: 2500000}
 };
 
-// Antrenman katkısı hesaplama ekranında manuel olarak seçilir.
-// Takım tesis sistemi ayrı kalır; burada hesaplama için geçerli katkı değeri seçilir.
-const trainingRates = {50000:50000,75000:75000,100000:100000,125000:125000,150000:150000,200000:200000};
-
-function getSelectedTrainingRate(){
-  const rateEl = $("#contributionTrainingRate");
-  const rate = Number(rateEl?.value || 50000);
-  return trainingRates[rate] || 50000;
+function euro(n){
+  return "€" + new Intl.NumberFormat("tr-TR",{maximumFractionDigits:0}).format(n);
 }
 
 function calculateContribution(){
   const tournamentEl = $("#contributionTournament");
   const goalsEl = $("#contributionGoals");
   const gymEl = $("#contributionGym");
-  const trainingEl = $("#contributionTraining");
-  const trainingRateEl = $("#contributionTrainingRate");
   const assistsEl = $("#contributionAssists");
   const cupsEl = $("#contributionCups");
-  if(!tournamentEl || !goalsEl || !gymEl || !trainingEl || !trainingRateEl || !assistsEl || !cupsEl) return;
+  if(!tournamentEl || !goalsEl || !gymEl || !assistsEl || !cupsEl) return;
   const tournament = tournamentEl.value;
   const rates = contributionRates[tournament];
   if(!rates) return;
   const goals = Math.max(0, Number(goalsEl.value) || 0);
   const gym = Math.max(0, Number(gymEl.value) || 0);
-  const training = Math.max(0, Number(trainingEl.value) || 0);
   const assists = Math.max(0, Number(assistsEl.value) || 0);
   const cups = Math.max(0, Number(cupsEl.value) || 0);
 
   const base = 1000000;
   const goalValue = goals * rates.goal;
-  // Gym = gol yemeden tamamlanan maç; mevcut kurallardaki Gol x Gym oranını kullanır.
   const gymValue = gym * rates.goal;
-  const trainingRate = getSelectedTrainingRate();
-  const trainingValue = training * trainingRate;
   const assistValue = assists * rates.assist;
   const cupValue = cups * rates.cup;
-  const total = base + goalValue + gymValue + trainingValue + assistValue + cupValue;
+  const total = base + goalValue + gymValue + assistValue + cupValue;
 
   $("#contributionBase") && ($("#contributionBase").textContent = euro(base));
   $("#contributionGoalValue") && ($("#contributionGoalValue").textContent = "+" + euro(goalValue));
   $("#contributionGymValue") && ($("#contributionGymValue").textContent = "+" + euro(gymValue));
-  $("#contributionTrainingValue") && ($("#contributionTrainingValue").textContent = "+" + euro(trainingValue));
   $("#contributionAssistValue") && ($("#contributionAssistValue").textContent = "+" + euro(assistValue));
   $("#contributionCupValue") && ($("#contributionCupValue").textContent = "+" + euro(cupValue));
   $("#contributionTotal") && ($("#contributionTotal").textContent = euro(total));
 }
 
 $("#calculateContribution")?.addEventListener("click", calculateContribution);
-["contributionTournament","contributionGoals","contributionGym","contributionTraining","contributionTrainingRate","contributionAssists","contributionCups"].forEach(id=>{
+["contributionTournament","contributionGoals","contributionGym","contributionAssists","contributionCups"].forEach(id=>{
   $("#"+id)?.addEventListener("input", calculateContribution);
   $("#"+id)?.addEventListener("change", calculateContribution);
 });
-// Antrenman değeri artık hesaplama ekranındaki seçimden gelir.
 calculateContribution();
 
 const observer=new IntersectionObserver(entries=>{
@@ -179,7 +165,7 @@ const MORTA_SUPABASE_ANON_KEY = "sb_publishable_SDen1VfLk6M3V5V62lH9xw__p-ulv5O"
 let mortaSupabase = null;
 if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
   mortaSupabase = window.supabase.createClient(MORTA_SUPABASE_URL, MORTA_SUPABASE_ANON_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, flowType: "pkce" }
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
   });
 }
 
@@ -245,18 +231,17 @@ async function registerMorta(){
     }
     if(!data.user){ showAccountMessage("Hesap oluşturulamadı. Lütfen tekrar dene.", true); return; }
 
-    // Auth hesabı başarıyla oluştuysa profil kaydındaki ayrı bir RLS hatası hesabı geçersiz göstermemeli.
+    // Oturum varsa profil kaydını hemen ve eksiksiz oluştur.
     if(data.session){
       const {error:profileError}=await mortaSupabase.from("profiles").upsert({
         id:data.user.id, username, account_type:accountType,
         player_value:1000000, position:'', team:'', bio:'', social_handle:''
       },{onConflict:"id"});
-      if(profileError) console.warn('Profil ilk kayıt uyarısı:', profileError.message);
-      showAccountMessage(profileError ? 'Hesap oluşturuldu. Giriş yapabilirsin; profil kaydı daha sonra tamamlanacak.' : 'Hesabın başarıyla oluşturuldu. Şimdi giriş yapabilirsin.');
-      await refreshMortaUser();
-      setTimeout(()=>accountClose(),700);
+      if(profileError) throw profileError;
+      showAccountMessage("Hesabın başarıyla oluşturuldu. Şimdi giriş yapabilirsin.");
+      setTimeout(()=>accountOpen("login"),700);
     }else{
-      showAccountMessage("Hesap oluşturuldu ancak oturum açılamadı. Giriş Yap bölümünden kullanıcı adın ve şifrenle giriş yap.", true);
+      showAccountMessage("Hesap oluşturuldu ancak e-posta doğrulaması gerekiyor. Doğrulama ayarını kontrol et.", true);
     }
   }catch(err){
     console.error("Hesap oluşturma hatası:",err);
@@ -276,41 +261,22 @@ async function loginMorta(){
 
 async function refreshMortaUser(){
   if(!mortaSupabase) return;
-  try{
-    const {data:{session},error:sessionError}=await mortaSupabase.auth.getSession();
-    if(sessionError) console.warn("Oturum okunamadı:",sessionError.message);
-    if(session?.user){
-      const fallbackName=normalizeUsername(session.user.user_metadata?.username || session.user.email?.split("@")[0] || "oyuncu");
-      let profile=null;
-      const {data,error:profileError}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).maybeSingle();
-      if(profileError) console.warn("Profil okunamadı:",profileError.message);
-      profile=data;
-      // Profil tablosu izin yüzünden okunamasa bile kullanıcı oturumunu kaybetmiş gibi gösterme.
-      if(!profile && !profileError){
-        const accountType=session.user.user_metadata?.account_type === "team" ? "team" : "player";
-        const {data:created,error:createError}=await mortaSupabase.from("profiles").upsert({id:session.user.id,username:fallbackName,account_type:accountType,player_value:1000000},{onConflict:"id"}).select("username").maybeSingle();
-        if(createError) console.warn("Profil oluşturulamadı:",createError.message);
-        else profile=created;
-      }
-      const current=$("#currentUsername"); if(current) current.textContent=profile?.username || fallbackName;
-      if(userPanel) userPanel.hidden=false;
-      if(accountActions) accountActions.hidden=true;
-    }else{
-      if(userPanel) userPanel.hidden=true;
-      if(accountActions) accountActions.hidden=false;
+  const {data:{session}}=await mortaSupabase.auth.getSession();
+  if(session?.user){
+    let {data:profile,error:profileError}=await mortaSupabase.from("profiles").select("username").eq("id",session.user.id).maybeSingle();
+    if(profileError) console.warn("Profil okunamadı:",profileError.message);
+    if(!profile){
+      const username=normalizeUsername(session.user.user_metadata?.username || session.user.email.split("@")[0]);
+      const accountType=session.user.user_metadata?.account_type === "team" ? "team" : "player";
+      const {data:created,error:createError}=await mortaSupabase.from("profiles").upsert({id:session.user.id,username,account_type:accountType,player_value:1000000},{onConflict:"id"}).select("username").maybeSingle();
+      if(!createError) profile=created;
     }
-  }catch(err){
-    console.error("Oturum yenileme hatası:",err);
-    // Gerçek bir hata olsa bile giriş/kayıt düğmelerini erişilebilir bırak.
-    if(userPanel) userPanel.hidden=true;
-    if(accountActions) accountActions.hidden=false;
+    $("#currentUsername").textContent=profile?.username || session.user.email.split("@")[0];
+    userPanel.hidden=false; accountActions.hidden=true;
+  }else{
+    userPanel.hidden=true; accountActions.hidden=false;
   }
 }
-
-
-// Hesap ekranında Enter ve tıklama davranışlarını tek yerde kontrol et.
-["loginUsername","loginPassword"].forEach(id=>$("#"+id)?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();loginMorta();}}));
-["registerUsername","registerPassword","registerPassword2"].forEach(id=>$("#"+id)?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();registerMorta();}}));
 
 $("#openLogin")?.addEventListener("click",()=>accountOpen("login"));
 $("#openRegister")?.addEventListener("click",()=>accountOpen("register"));
@@ -351,10 +317,6 @@ $("#contactSubmit")?.addEventListener("click",async()=>{
 });
 
 if(mortaSupabase){
-  // Supabase auth callback içinde tekrar Supabase çağrısı yapma; auth lock/deadlock oluşabilir.
-  mortaSupabase.auth.onAuthStateChange((event)=>{
-    console.debug('[MortaLeague auth]', event);
-    setTimeout(()=>refreshMortaUser(), 0);
-  });
-  setTimeout(()=>refreshMortaUser(), 0);
+  mortaSupabase.auth.onAuthStateChange(()=>refreshMortaUser());
+  refreshMortaUser();
 }
