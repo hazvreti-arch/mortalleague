@@ -505,6 +505,61 @@ input:focus,textarea:focus,select:focus{border-color:rgba(180,107,255,.68)!impor
 <style id="mortaverse-v1">
 .mortaVerseLaunch{position:fixed;right:22px;bottom:22px;z-index:9998;border:0;border-radius:18px;padding:14px 19px;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;font-weight:900;letter-spacing:.8px;box-shadow:0 15px 50px rgba(139,92,246,.45);cursor:pointer}.mortaVerse{position:fixed;inset:0;z-index:10000;background:radial-gradient(circle at 50% 45%,#21113d 0,#090611 45%,#030207 100%);display:none;overflow:hidden}.mortaVerse.open{display:block;animation:mvIn .5s ease}.mvStars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:46px 46px;opacity:.16}.mvTop{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:24px 5vw}.mvTitle{font-size:clamp(25px,5vw,60px);font-weight:1000;letter-spacing:3px;background:linear-gradient(90deg,#fff,#a78bfa,#f472b6);-webkit-background-clip:text;color:transparent}.mvClose{width:46px;height:46px;border-radius:50%;border:1px solid #ffffff33;background:#ffffff12;color:white;font-size:25px;cursor:pointer}.mvMap{position:relative;width:min(1000px,94vw);height:min(650px,72vh);margin:auto}.mvCore{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:180px;height:180px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,#a78bfa,#4c1d95 55%,#160b2e);box-shadow:0 0 40px #8b5cf6,0 0 120px #8b5cf666;color:#fff;font-weight:1000;z-index:2}.mvCore small{display:block;font-size:11px;opacity:.7}.mvNode{position:absolute;width:150px;min-height:88px;padding:14px;border:1px solid #ffffff26;border-radius:20px;background:#100b1ddd;backdrop-filter:blur(14px);color:#fff;cursor:pointer;transition:.25s;text-align:left;box-shadow:0 10px 35px #0006}.mvNode:hover{transform:scale(1.08);border-color:#c084fc;box-shadow:0 0 35px #a855f755}.mvNode b{display:block;font-size:15px}.mvNode span{font-size:11px;opacity:.65}.n1{left:4%;top:12%}.n2{right:4%;top:12%}.n3{left:1%;bottom:12%}.n4{right:1%;bottom:12%}.n5{left:42%;bottom:0}.mvLine{position:absolute;left:50%;top:50%;width:42%;height:1px;background:linear-gradient(90deg,#8b5cf6,transparent);transform-origin:left;opacity:.55}.l1{transform:rotate(-145deg)}.l2{transform:rotate(-35deg)}.l3{transform:rotate(145deg)}.l4{transform:rotate(35deg)}.l5{transform:rotate(90deg);width:34%}.mvPanel{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);width:min(620px,90vw);padding:18px 22px;border:1px solid #ffffff1c;background:#090611e8;border-radius:18px;color:#fff;text-align:center;z-index:5}.mvPanel h3{margin:0 0 7px}.mvPanel p{margin:0;opacity:.72;font-size:13px}@keyframes mvIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}@media(max-width:700px){.mvMap{height:72vh}.mvNode{width:105px;min-height:65px;padding:10px;border-radius:15px}.mvNode b{font-size:12px}.mvNode span{font-size:9px}.mvCore{width:125px;height:125px}.n1{left:0;top:8%}.n2{right:0;top:8%}.n3{left:0;bottom:18%}.n4{right:0;bottom:18%}.n5{left:50%;transform:translateX(-50%);bottom:2%}.mvLine{display:none}.mortaVerseLaunch{right:14px;bottom:14px}}
 </style>
+
+<style id="morta-professional-v12">
+:root{--v12-accent:#a855f7;--v12-accent2:#ec4899;--v12-surface:rgba(17,10,28,.78);--v12-border:rgba(177,111,255,.20)}
+body{letter-spacing:-.005em}
+header{box-shadow:0 10px 45px rgba(0,0,0,.18)}
+.navlinks button{font-size:11px;font-weight:800;letter-spacing:.35px}
+.navCta{font-size:11px;font-weight:900;letter-spacing:.55px}
+.v12Command{display:grid;grid-template-columns:1.4fr .9fr;gap:16px;margin:8px 0 24px}
+.v12CommandHero,.v12MiniPanel{border:1px solid var(--v12-border);background:linear-gradient(145deg,rgba(29,16,46,.92),rgba(10,6,18,.86));border-radius:24px;box-shadow:0 24px 70px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.04)}
+.v12CommandHero{padding:28px;position:relative;overflow:hidden}
+.v12CommandHero:after{content:"";position:absolute;width:280px;height:280px;right:-85px;top:-100px;background:radial-gradient(circle,rgba(168,85,247,.22),transparent 68%);pointer-events:none}
+.v12Kicker{font:800 10px Orbitron;letter-spacing:1.6px;color:#b99ad8}
+.v12CommandHero h2{margin:8px 0 7px;font:900 clamp(24px,4vw,38px) Orbitron;letter-spacing:-1.4px}
+.v12CommandHero p{margin:0;color:#a99bb7;line-height:1.65;font-size:13px;max-width:720px}
+.v12Quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:19px}
+.v12Quick button{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);color:#efe7f7;border-radius:11px;padding:10px 12px;cursor:pointer;font-size:10px;font-weight:900;letter-spacing:.45px}
+.v12Quick button.primaryQuick{background:linear-gradient(135deg,#7c3aed,#ec4899);border-color:transparent;box-shadow:0 10px 28px rgba(139,92,246,.25)}
+.v12Status{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.v12StatusCard{padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:15px;background:rgba(255,255,255,.025)}
+.v12StatusCard span{display:block;color:#887a97;font:800 8px Orbitron;letter-spacing:1.3px}
+.v12StatusCard b{display:block;margin-top:7px;color:#fff;font:800 16px Orbitron;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v12MiniPanel{padding:21px}
+.v12MiniPanel h3{margin:7px 0 10px;font:800 16px Orbitron}
+.v12MiniPanel p{margin:0;color:#9e91a9;line-height:1.65;font-size:12px}
+.v12Pulse{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;border:1px solid rgba(103,247,187,.18);background:rgba(103,247,187,.05);color:#9ff4d0;font:800 9px Orbitron;letter-spacing:1px}
+.v12Pulse i{width:6px;height:6px;border-radius:50%;background:#67f7bb;box-shadow:0 0 12px #67f7bb;display:block;animation:v12blink 1.8s ease-in-out infinite}
+@keyframes v12blink{0%,100%{opacity:.45}50%{opacity:1}}
+.v12SectionTools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.v12SectionTools .v12Tool{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#cfc2d8;border-radius:10px;padding:9px 11px;cursor:pointer;font-size:10px;font-weight:900}
+.v12FeaturedNews{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:14px}
+.v12FeaturedCard{min-height:300px;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(168,85,247,.24);background:#110a1c}
+.v12FeaturedCard img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.58}
+.v12FeaturedCard:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 28%,rgba(8,4,14,.93) 100%)}
+.v12FeaturedBody{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:24px}
+.v12FeaturedBody span{font:800 9px Orbitron;color:#d3b6ef;letter-spacing:1.2px}
+.v12FeaturedBody h3{margin:9px 0 7px;font:900 24px Orbitron}
+.v12FeaturedBody p{margin:0;color:#c0b4cb;line-height:1.6;font-size:12px;max-width:700px}
+.v12NewsSide{display:grid;gap:10px}
+.v12NewsMini{padding:17px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(26,14,40,.9),rgba(11,7,17,.85));cursor:pointer;transition:.25s}
+.v12NewsMini:hover{transform:translateY(-3px);border-color:rgba(236,72,153,.34)}
+.v12NewsMini small{font:800 8px Orbitron;color:#9d87af;letter-spacing:1px}.v12NewsMini b{display:block;margin-top:7px;font-size:13px;line-height:1.35}.v12NewsMini p{margin:6px 0 0;color:#8f829b;font-size:11px;line-height:1.45}
+.v12PlayerToolbar{display:grid;grid-template-columns:minmax(220px,1.2fr) .55fr .55fr auto;gap:10px;margin-bottom:15px}
+.v12PlayerToolbar>*{min-height:44px}
+.v12MarketPill{display:flex;align-items:center;justify-content:center;padding:0 14px;border:1px solid rgba(168,85,247,.2);border-radius:12px;background:rgba(168,85,247,.07);color:#ceb9e1;font:800 9px Orbitron;letter-spacing:1px;white-space:nowrap}
+.v12Workspace{display:grid;grid-template-columns:1.05fr .95fr;gap:15px;margin-top:17px}
+.v12WorkspaceCard{padding:20px;border-radius:19px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(29,15,45,.83),rgba(11,6,18,.86))}
+.v12WorkspaceHead{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:14px}.v12WorkspaceHead h3{margin:0;font:800 16px Orbitron}.v12WorkspaceHead span{font:800 8px Orbitron;color:#9e8eaa;letter-spacing:1px}
+.v12Timeline{display:grid;gap:9px}.v12TimelineItem{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid rgba(255,255,255,.055);border-radius:12px;background:rgba(255,255,255,.018)}.v12TimelineDot{width:8px;height:8px;border-radius:50%;background:#b279ff;box-shadow:0 0 13px rgba(178,121,255,.55);margin-top:4px;flex:0 0 auto}.v12TimelineItem b{font-size:11px}.v12TimelineItem small{display:block;color:#877992;margin-top:3px;font-size:10px}
+.v12BottomNav{display:none}
+.v12Toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,25px);opacity:0;pointer-events:none;z-index:3000;padding:12px 16px;border:1px solid rgba(168,85,247,.32);background:rgba(13,7,21,.94);backdrop-filter:blur(15px);color:#eee4f9;border-radius:12px;box-shadow:0 16px 50px rgba(0,0,0,.4);font-size:12px;transition:.3s}.v12Toast.show{opacity:1;transform:translate(-50%,0)}
+.detailsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.detailsGrid>div{padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.025)}.detailsGrid small{display:block;color:#897d93;font-size:9px}.detailsGrid b{display:block;margin-top:6px;font-size:13px}
+@media(max-width:920px){.v12Command,.v12Workspace,.v12FeaturedNews{grid-template-columns:1fr}.v12PlayerToolbar{grid-template-columns:1fr 1fr}.v12MarketPill{min-height:44px}.v12Status{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){main{padding-bottom:95px}.v12CommandHero{padding:21px}.v12CommandHero h2{font-size:27px}.v12StatusCard b{font-size:14px}.v12PlayerToolbar{grid-template-columns:1fr}.v12FeaturedCard{min-height:250px}.v12FeaturedBody{padding:18px}.v12FeaturedBody h3{font-size:20px}.v12SectionTools{width:100%}.v12SectionTools .v12Tool{flex:1}.v12BottomNav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:10px;right:10px;bottom:10px;z-index:1200;padding:7px;border:1px solid rgba(168,85,247,.24);border-radius:17px;background:rgba(12,7,18,.88);backdrop-filter:blur(20px);box-shadow:0 18px 65px rgba(0,0,0,.55)}.v12BottomNav button{border:0;background:transparent;color:#85788f;padding:9px 2px;border-radius:12px;font-size:9px;font-weight:900;display:grid;gap:4px;place-items:center;cursor:pointer}.v12BottomNav button span{font-size:16px}.v12BottomNav button.active{color:#fff;background:rgba(168,85,247,.14)}.v12BottomNav button.active span{filter:drop-shadow(0 0 7px rgba(168,85,247,.6))}.detailsGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:390px){.v12Status{gap:6px}.v12StatusCard{padding:11px}.v12StatusCard b{font-size:12px}.v12CommandHero h2{font-size:24px}}
+</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -569,6 +624,56 @@ input:focus,textarea:focus,select:focus{border-color:rgba(180,107,255,.68)!impor
 </div>
 </section>
 
+
+<section class="section" id="commandCenter">
+  <div class="sectionHead">
+    <div><h2>KONTROL MERKEZİ</h2><p>MortaLeague içindeki hesabın, piyasan ve hızlı işlemlerin tek ekranda.</p></div>
+    <span class="v12Pulse"><i></i><span id="v12LiveLabel">SİSTEM AKTİF</span></span>
+  </div>
+  <div class="v12Command">
+    <div class="v12CommandHero">
+      <span class="v12Kicker">MORTALEAGUE / COMMAND CENTER</span>
+      <h2 id="v12Welcome">Futbol evreninin kontrol sende.</h2>
+      <p id="v12WelcomeText">Giriş yaptığında kişisel piyasanı, tekliflerini, bildirimlerini ve takım bilgilerini tek merkezden yönetebilirsin.</p>
+      <div class="v12Quick">
+        <button class="primaryQuick" id="v12QuickProfile">PROFİLİ AÇ</button>
+        <button id="v12QuickMarket">OYUNCU PAZARI</button>
+        <button id="v12QuickLeague">LİG MERKEZİ</button>
+        <button id="v12QuickNews">SON HABERLER</button>
+      </div>
+    </div>
+    <div class="v12MiniPanel">
+      <span class="v12Kicker">HESAP DURUMU</span>
+      <h3 id="v12Role">Ziyaretçi</h3>
+      <p id="v12RoleText">Hesabına giriş yaparak kişisel çalışma alanını aktive et.</p>
+      <div class="v12Status" style="margin-top:16px">
+        <div class="v12StatusCard"><span>DEĞER</span><b id="v12Value">€—</b></div>
+        <div class="v12StatusCard"><span>TEKLİF</span><b id="v12Offers">0</b></div>
+        <div class="v12StatusCard"><span>BİLDİRİM</span><b id="v12Notifs">0</b></div>
+        <div class="v12StatusCard"><span>DURUM</span><b id="v12State">PASİF</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="v12Workspace">
+    <div class="v12WorkspaceCard">
+      <div class="v12WorkspaceHead"><h3>Hızlı çalışma alanı</h3><span>PERSONAL WORKSPACE</span></div>
+      <div class="detailsGrid">
+        <div><small>MEVKİ</small><b id="v12Position">—</b></div>
+        <div><small>TAKIM</small><b id="v12Team">—</b></div>
+        <div><small>HESAP TÜRÜ</small><b id="v12AccountType">—</b></div>
+        <div><small>AKTİVİTE</small><b id="v12Activity">Bekleniyor</b></div>
+      </div>
+    </div>
+    <div class="v12WorkspaceCard">
+      <div class="v12WorkspaceHead"><h3>Piyasa özeti</h3><span>TRANSFER MARKET</span></div>
+      <div class="v12Timeline">
+        <div class="v12TimelineItem"><i class="v12TimelineDot"></i><div><b>Oyuncu pazarı açık</b><small>Mevcut oyuncuları ara, filtrele ve teklif ver.</small></div></div>
+        <div class="v12TimelineItem"><i class="v12TimelineDot"></i><div><b>Teklifler hesabında</b><small>Gelen ve gönderilen transfer tekliflerini bildirim merkezinden yönet.</small></div></div>
+        <div class="v12TimelineItem"><i class="v12TimelineDot"></i><div><b>Ligler canlı</b><small>Sezon, fikstür ve puan durumuna tek tıkla geç.</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="section" id="mortaHub">
   <div class="sectionHead"><div><h2>KİŞİSEL MERKEZ</h2><p>Hesabın, bildirimlerin ve transfer hareketlerin tek yerde.</p></div><span class="badge" id="hubStatus">ÇEVRİMDIŞI</span></div>
   <div class="hubGrid">
@@ -1516,7 +1621,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="hubStats" style="margin:14px 0"><div class="hubStat"><span>KULLANICI</span><strong id="adminUserCount">—</strong></div><div class="hubStat"><span>BEKLEYEN TEKLİF</span><strong id="adminOfferCount">—</strong></div><div class="hubStat"><span>BEKLEYEN RAPOR</span><strong id="adminReportCount">—</strong></div></div>
     <div class="adminList" id="adminList"></div>
     <div style="margin-top:18px"><span class="accountEyebrow">RAPORLAR</span><div class="adminList" id="adminReportList"><div class="adminEmpty">Raporlar yükleniyor...</div></div></div>
-    <div class="adminNewsForm"><span class="accountEyebrow">MORTANEWS YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">YAYINLA</button></div>
+    <div class="adminNewsForm"><span class="accountEyebrow">YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">YAYINLA</button></div>
     <div class="accountMessage" id="adminStatus"></div>
   </div>
 </div>
@@ -2289,7 +2394,70 @@ button:hover{transform:translateY(-2px)!important}
 <button class="mortaVerseLaunch" id="openMortaVerse">✦ MORTAVERSE</button>
 <section class="mortaVerse" id="mortaVerse" aria-hidden="true"><div class="mvStars"></div><div class="mvTop"><div class="mvTitle">MORTAVERSE</div><button class="mvClose" id="closeMortaVerse">×</button></div><div class="mvMap"><div class="mvLine l1"></div><div class="mvLine l2"></div><div class="mvLine l3"></div><div class="mvLine l4"></div><div class="mvLine l5"></div><button class="mvNode n1" data-mv="Ligler"><b>🏆 Ligler</b><span>Sezonlar ve rekabet</span></button><button class="mvNode n2" data-mv="Takımlar"><b>🏟️ Takımlar</b><span>Kulüplerin dünyası</span></button><button class="mvNode n3" data-mv="Oyuncular"><b>👤 Oyuncular</b><span>Yıldızları keşfet</span></button><button class="mvNode n4" data-mv="MortaNews"><b>📰 MortaNews</b><span>Evrenin gündemi</span></button><button class="mvNode n5" data-mv="Transferler"><b>🔥 Transferler</b><span>Piyasa hareketleri</span></button><div class="mvCore">MORTA<br>LEAGUE<small>THE FOOTBALL UNIVERSE</small></div></div><div class="mvPanel" id="mvPanel"><h3>Evrene Hoş Geldin</h3><p>Bir bölüme dokun ve MortaLeague'in farklı dünyalarını keşfet.</p></div></section>
 <script id="mortaverse-script">(()=>{const v=document.getElementById('mortaVerse'),o=document.getElementById('openMortaVerse'),c=document.getElementById('closeMortaVerse'),p=document.getElementById('mvPanel');if(!v||!o)return;o.onclick=()=>{v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};c.onclick=()=>{v.classList.remove('open');v.setAttribute('aria-hidden','true');document.body.style.overflow=''};document.querySelectorAll('[data-mv]').forEach(x=>x.onclick=()=>{p.innerHTML='<h3>'+x.dataset.mv+'</h3><p>Bu MortaVerse bölümü yakında mevcut sistemlerle tamamen bağlanacak. Şimdilik interaktif evren haritasının ön izlemesindesin.</p>'});})();</script>
+
+<nav class="v12BottomNav" id="v12BottomNav" aria-label="Mobil navigasyon">
+  <button data-v12-nav="home"><span>⌂</span>Ana Sayfa</button>
+  <button data-v12-nav="players"><span>◎</span>Pazar</button>
+  <button data-v12-nav="league"><span>♛</span>Ligler</button>
+  <button data-v12-nav="mortahub"><span>◌</span>Hub</button>
+  <button data-v12-nav="profile"><span>◉</span>Profil</button>
+</nav>
+<div class="v12Toast" id="v12Toast"></div>
+<script id="morta-professional-runtime-v12">
+(()=>{
+  const q=s=>document.querySelector(s);
+  const toast=(m)=>{const t=q('#v12Toast');if(!t)return;t.textContent=m;t.classList.add('show');clearTimeout(window.__v12Toast);window.__v12Toast=setTimeout(()=>t.classList.remove('show'),2200)};
+  const money=v=>{const n=Number(v||0);if(!n)return '€—';try{return new Intl.NumberFormat('tr-TR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n)}catch{return '€'+Math.round(n).toLocaleString('tr-TR')}};
+  const scrollToId=id=>{document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'','#'+id)};
+  q('#v12QuickMarket')?.addEventListener('click',()=>scrollToId('players'));
+  q('#v12QuickLeague')?.addEventListener('click',()=>scrollToId('league'));
+  q('#v12QuickNews')?.addEventListener('click',()=>scrollToId('news'));
+  q('#v12QuickProfile')?.addEventListener('click',()=>{const b=q('#userMenuButton');if(b){b.click();return}const l=q('#openLogin');l?.click()});
+  document.querySelectorAll('[data-v12-nav]').forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.v12Nav==='profile'?'commandCenter':b.dataset.v12Nav;
+    scrollToId(id);document.querySelectorAll('[data-v12-nav]').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  }));
+  const set=({user,profile})=>{
+    const role=q('#v12Role'),rt=q('#v12RoleText'),state=q('#v12State'),acc=q('#v12AccountType');
+    if(!user){
+      q('#v12Welcome').textContent='Futbol evreninin kontrol sende.';
+      q('#v12WelcomeText').textContent='Giriş yaptığında kişisel piyasanı, tekliflerini, bildirimlerini ve takım bilgilerini tek merkezden yönetebilirsin.';
+      role.textContent='Ziyaretçi';rt.textContent='Hesabına giriş yaparak kişisel çalışma alanını aktive et.';state.textContent='PASİF';acc.textContent='—';
+      q('#v12Value').textContent='€—';q('#v12Offers').textContent='0';q('#v12Notifs').textContent='0';q('#v12Position').textContent='—';q('#v12Team').textContent='—';q('#v12Activity').textContent='Giriş bekleniyor';
+      return;
+    }
+    const p=profile||{}; const username=p.username||'Oyuncu'; const at=p.account_type==='team'?'TAKIM':'OYUNCU';
+    q('#v12Welcome').textContent='Hoş geldin, '+username+'.';
+    q('#v12WelcomeText').textContent=at==='TAKIM'?'Takım operasyonlarını, bütçeni ve transfer akışını tek merkezden takip et.':'Oyuncu profilin, piyasa değerin ve transfer hareketlerin hazır.';
+    role.textContent=at;rt.textContent=p.team?`Mevcut takım: ${p.team}`:'Takım bilgini profilinden tamamlayabilirsin.';state.textContent='AKTİF';acc.textContent=at; q('#v12Value').textContent=money(p.player_value||1000000);q('#v12Position').textContent=p.position||'—';q('#v12Team').textContent=p.team||'Takımsız';q('#v12Activity').textContent='Aktif hesap';
+  };
+  async function sync(){
+    const s=window.mortaSupabase||window.supabaseClient; if(!s||!s.auth)return;
+    try{
+      const {data:{user}}=await s.auth.getUser();
+      if(!user){set({user:null});return;}
+      const {data:p}=await s.from('profiles').select('username,avatar_url,player_value,account_type,team,position').eq('id',user.id).maybeSingle();
+      set({user,profile:p});
+      const [n,o]=await Promise.all([
+        s.from('notifications').select('id',{count:'exact',head:true}).eq('user_id',user.id).is('read_at',null),
+        s.from('transfer_offers').select('id',{count:'exact',head:true}).eq('to_user_id',user.id).eq('status','pending')
+      ]);
+      q('#v12Notifs').textContent=String(n.count||0);q('#v12Offers').textContent=String(o.count||0);
+    }catch(e){console.warn('[MortaLeague V12]',e)}
+  }
+  sync(); window.addEventListener('morta-auth-changed',sync); setInterval(sync,10000);
+  // Make MortaVerse useful instead of placeholder copy.
+  document.querySelectorAll('[data-mv]').forEach(node=>node.addEventListener('click',()=>{
+    const map={Ligler:'league',Takımlar:'players',Oyuncular:'players',MortaNews:'news',Transferler:'players'}; const id=map[node.dataset.mv]; if(id){document.getElementById('closeMortaVerse')?.click();setTimeout(()=>scrollToId(id),120);toast(node.dataset.mv+' bölümü açılıyor');}
+  }));
+  // Keep the desktop nav in sync with scroll position.
+  const targets=['home','commandCenter','players','league','mortahub','systems','news'];
+  const io=new IntersectionObserver(entries=>entries.forEach(en=>{if(!en.isIntersecting)return;const id=en.target.id;document.querySelectorAll('.navlinks button[data-scroll]').forEach(b=>b.classList.toggle('active',b.dataset.scroll===id));}),{rootMargin:'-35% 0px -55% 0px',threshold:0});
+  targets.forEach(id=>document.getElementById(id)&&io.observe(document.getElementById(id)));
+  window.mortaV12Toast=toast;
+})();
+</script>
 </body>
 </html>
+<!-- __TRAILING_CSS_REMOVED__ -->
 
-.adminSetupIntro{margin-top:16px;padding:14px 16px;border:1px solid rgba(168,85,247,.28);border-radius:14px;background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(255,255,255,.02))}.adminSetupIntro b{display:block;margin-bottom:5px}.adminSetupIntro small{color:var(--muted);line-height:1.5}.adminForm textarea{min-height:150px;width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#0c0811;color:#fff;outline:none;resize:vertical}.wideField{grid-column:1/-1}.quickSetupForm{margin-top:12px}
