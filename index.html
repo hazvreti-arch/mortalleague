@@ -536,7 +536,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 <div class="sectionHead">
   <div>
     <h2>OYUNCU KATKI DEĞERİ HESAPLAMA</h2>
-    <p>Devre veya dönem sonunda oyuncunun performansını ve bulunduğu takımın antrenman tesisini birlikte hesapla.</p>
+    <p>Devre veya dönem sonunda oyuncunun performansını ve seçtiğin antrenman katkısını birlikte hesapla.</p>
   </div>
   <span class="badge">BAŞLANGIÇ €1M</span>
 </div>
@@ -583,10 +583,16 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
         <input id="contributionTraining" type="number" min="0" step="1" value="0" placeholder="Örn. 20">
       </div>
 
-      <div class="calcTrainingInfo" id="contributionTeamInfo" aria-live="polite">
-        <span>🏟️ TAKIM BİLGİSİ</span>
-        <strong id="contributionTeamName">Takım bilgisi yükleniyor...</strong>
-        <small id="contributionTrainingInfo">Antrenman katkısı takımının tesis seviyesine göre otomatik belirlenir.</small>
+      <div class="field full">
+        <label for="contributionTrainingRate">Antrenman Başına Değer Katkısı</label>
+        <select id="contributionTrainingRate">
+          <option value="50000">€50.000</option>
+          <option value="75000">€75.000</option>
+          <option value="100000" selected>€100.000</option>
+          <option value="125000">€125.000</option>
+          <option value="150000">€150.000</option>
+          <option value="200000">€200.000</option>
+        </select>
       </div>
 
       <div class="field">
