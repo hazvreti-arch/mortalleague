@@ -1314,7 +1314,15 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   </div>
 </section>
 
-  <div class="cta"><div><h2>SAHAYA ÇIKMAYA HAZIR MISIN?</h2><p>MortalLeague'de her kararın bir sonucu var.</p></div><button class="primary" data-open="rulesModal">Kuralları Aç →</button></div>
+  <div class="cta leagueWelcomeCTA">
+    <div class="leagueWelcomeCopy">
+      <span class="leagueWelcomeTag">MORTALLEAGUE · SEASON 01</span>
+      <h2>MORTALEAGUE LİGİNE<br><span>HOŞ GELDİN.</span></h2>
+      <p>Her sezon sıfırdan başlar. Her maç sıralamayı değiştirir. Takımınla puan topla, zirve için mücadele et ve sezon sonunda şampiyonluğa ulaş.</p>
+      <div class="leagueWelcomeRules"><span><b>3</b> Galibiyet</span><span><b>1</b> Beraberlik</span><span><b>0</b> Mağlubiyet</span></div>
+    </div>
+    <button class="primary" data-scroll="league">PUAN DURUMUNU İNCELE <span>→</span></button>
+  </div>
 </main>
 
 <footer>MORTALLEAGUE · SEASON 01 · Built for the league · © 2026</footer>
@@ -2150,10 +2158,29 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
  .mortaBottomNav button{background:none;border:0;color:#a1a1aa;font:600 10px Inter,sans-serif;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
  .mortaBottomNav button b{font-size:19px;line-height:19px;font-weight:500}
  .mortaBottomNav button.active{color:#fff}
- #league,#playerCalculator,#systems{display:none!important}
+ #playerCalculator,#systems{display:none!important}
+ #league{display:block!important}
 }
 @media(min-width:901px){
  .mortaSocialIntro{margin-left:auto;margin-right:auto;max-width:968px}
+}
+
+/* ===== MOBILE LEAGUE WELCOME ===== */
+.leagueWelcomeCTA{margin-top:34px!important;min-height:0!important;align-items:center!important}
+.leagueWelcomeTag{display:inline-flex;padding:7px 10px;border:1px solid rgba(168,85,247,.28);border-radius:999px;background:rgba(168,85,247,.08);color:#d9c6ef;font:700 10px Inter,sans-serif;letter-spacing:.8px}
+.leagueWelcomeCTA h2{font-family:Inter,sans-serif!important;letter-spacing:-1.6px!important;line-height:1.08!important;margin:15px 0 12px!important;font-size:clamp(28px,4vw,44px)!important}
+.leagueWelcomeCTA h2 span{background:linear-gradient(135deg,#c084fc,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.leagueWelcomeCTA p{max-width:650px!important;line-height:1.65!important}
+.leagueWelcomeRules{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.leagueWelcomeRules span{padding:8px 10px;border:1px solid var(--igline);background:var(--igsoft);border-radius:9px;color:#b7b7c0;font:600 11px Inter,sans-serif}
+.leagueWelcomeRules b{color:#fff;margin-right:4px}
+@media(max-width:900px){
+ .leagueWelcomeCTA{margin:14px 0 22px!important;padding:28px 22px!important;align-items:flex-start!important;background:radial-gradient(circle at 85% 15%,rgba(168,85,247,.18),transparent 38%),#111114!important;border-color:#2a2233!important;border-radius:22px!important}
+ .leagueWelcomeCTA h2{font-size:32px!important}
+ .leagueWelcomeCTA p{font-size:14px!important;color:#aaa7b1!important;margin-bottom:0!important}
+ .leagueWelcomeCTA .primary{width:100%;justify-content:center;margin-top:22px!important;padding:14px 16px!important}
+ #league{margin-top:0!important;padding-top:12px!important}
+ #league .sectionHead{margin-bottom:14px!important}
 }
 </style>
 
