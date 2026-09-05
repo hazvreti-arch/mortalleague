@@ -6,7 +6,7 @@ function makeParticles(){
   box.dataset.ready="1";
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const width=window.innerWidth;
-  const count=reduce ? 0 : (width<=700 ? 6 : width<=1100 ? 10 : 18);
+  const count=reduce || width<=700 ? 0 : (width<=1100 ? 10 : 18);
   const frag=document.createDocumentFragment();
   for(let i=0;i<count;i++){
     const o=document.createElement("i"); o.className="orb";
