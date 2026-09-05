@@ -351,6 +351,10 @@ $("#contactSubmit")?.addEventListener("click",async()=>{
 });
 
 if(mortaSupabase){
-  mortaSupabase.auth.onAuthStateChange(()=>refreshMortaUser());
-  refreshMortaUser();
+  // Supabase auth callback içinde tekrar Supabase çağrısı yapma; auth lock/deadlock oluşabilir.
+  mortaSupabase.auth.onAuthStateChange((event)=>{
+    console.debug('[MortaLeague auth]', event);
+    setTimeout(()=>refreshMortaUser(), 0);
+  });
+  setTimeout(()=>refreshMortaUser(), 0);
 }
