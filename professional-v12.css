@@ -1,0 +1,121 @@
+/* MortaLeague v12 - UI quality layer (desktop-safe, mobile-first) */
+:root{--ml-max:1180px;--ml-radius:16px;--ml-radius-lg:20px;--ml-border:rgba(255,255,255,.08);--ml-text:#f6f4f8;--ml-muted:#a8a0b0;--ml-purple:#a855f7;--ml-pink:#ec4899}
+*{box-sizing:border-box}
+body{font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+button,a,input,select,textarea{touch-action:manipulation}
+button:disabled{opacity:.55;cursor:not-allowed!important}
+button,.primary,.secondary,.accountBtn,.navlinks button,.tab,.mortaBottomNav button{transition:background-color .18s ease,color .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease}
+.primary:hover:not(:disabled),.secondary:hover:not(:disabled),.accountBtn:hover:not(:disabled){transform:translateY(-1px)}
+.card,.panel,.calcPanel,.contributionResult,.hubPanel,.hubPost,.hubCompose,.feature,.newsCard,.playerDirectoryGrid>article,.teamDirectory>article{min-width:0}
+img{content-visibility:auto}
+
+/* Better section rhythm */
+.section{scroll-margin-top:88px}
+.sectionHead{min-width:0}
+.sectionHead>div{min-width:0}
+.sectionHead h2{max-width:100%;overflow-wrap:anywhere}
+.sectionHead p{max-width:72ch}
+
+/* Better form controls */
+.field input,.field select,.directorySearch input,.systemSearch input,.hubSearch,.hubComposer,input,select,textarea{min-width:0}
+.field input:focus,.field select:focus,.directorySearch:focus-within,.systemSearch:focus-within,.hubSearch:focus,.hubComposer:focus,input:focus,select:focus,textarea:focus{border-color:rgba(168,85,247,.55)!important;box-shadow:0 0 0 3px rgba(168,85,247,.09);outline:none}
+
+/* Empty/loading/error states */
+.directoryEmpty,.adminEmpty,.hubEmpty{min-height:110px;display:grid;place-items:center;padding:24px;text-align:center;color:#8f8798;border:1px dashed rgba(168,85,247,.16);border-radius:14px;background:rgba(255,255,255,.015)}
+
+/* Reduce motion for users who request it */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+
+/* MOBILE QUALITY PASS */
+@media(max-width:900px){
+  html{font-size:15px}
+  main{width:100%;max-width:none;padding-left:14px!important;padding-right:14px!important}
+  header{z-index:200!important}
+  .nav{height:60px!important;min-height:60px!important;padding:0 12px!important}
+  .logo{gap:8px!important;min-width:0!important}
+  .logoMark{width:32px!important;height:32px!important;min-width:32px!important;border-radius:9px!important}
+  .logo div{font-size:15px!important;letter-spacing:-.45px!important}
+  .accountActions{gap:6px!important}
+  .accountActions .accountBtn{font-size:10px!important;padding:7px 8px!important;min-height:34px!important}
+
+  .morta-view-mode main{padding-top:76px!important}
+  body.morta-view-mode #home,
+  body.morta-view-mode #players,
+  body.morta-view-mode #playerCalculator,
+  body.morta-view-mode #systems,
+  body.morta-view-mode #mortahub{min-height:0!important}
+
+  .section{padding:24px 0!important;scroll-margin-top:76px!important}
+  .sectionHead{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:start!important;gap:10px!important;margin-bottom:14px!important}
+  .sectionHead h2{font-size:21px!important;line-height:1.12!important;letter-spacing:-.65px!important}
+  .sectionHead p{font-size:12px!important;line-height:1.5!important;margin-top:5px!important}
+  .sectionHead .badge{font-size:9px!important;padding:6px 8px!important;white-space:nowrap}
+
+  .hero{padding:0!important;min-height:0!important}
+  #home h1{font-size:clamp(34px,9.4vw,50px)!important;line-height:1!important;letter-spacing:-1.8px!important;margin:8px 0 13px!important}
+  #home .hero p{font-size:14px!important;line-height:1.6!important;margin-bottom:17px!important}
+  #home .heroActions{gap:8px!important}
+  #home .heroActions button{min-height:42px!important;padding:10px 13px!important;font-size:12px!important}
+  #home .heroVisual{height:205px!important;min-height:205px!important}
+  #home .r1{width:205px!important;height:205px!important}.r2{width:158px!important;height:158px!important}.r3{width:115px!important;height:115px!important}
+  #home .trophy{width:123px!important;height:158px!important}
+
+  .hubTabs{overflow-x:auto!important;overflow-y:hidden!important;white-space:nowrap!important;scrollbar-width:none!important}
+  .hubTabs::-webkit-scrollbar{display:none}
+  .hubTabs button{font-size:12px!important;padding:9px 10px!important;flex:0 0 auto!important}
+  .hubLayout{gap:14px!important}
+  .hubCompose,.hubPost,.hubExploreCard{border-radius:13px!important}
+  .hubPostBody{font-size:13px!important;line-height:1.55!important}
+  .hubPostImage{max-height:430px!important}
+
+  .playerDirectory{display:block!important}
+  .directoryToolbar{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
+  .directorySearch{min-height:42px!important}
+  #playerPositionFilter,#playerTeamFilter{width:100%!important;min-height:42px!important}
+  .playerDirectoryGrid{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+  .playerDirectoryGrid>article{padding:13px!important;border-radius:14px!important}
+
+  .contributionCalc{grid-template-columns:1fr!important;gap:12px!important}
+  .calcGrid{grid-template-columns:1fr 1fr!important;gap:0 10px!important}
+  .calcGrid .field:first-child{grid-column:1 / -1}
+  .field{margin-bottom:10px!important}
+  .field label{font-size:11px!important;margin-bottom:5px!important}
+  .field input,.field select{min-height:42px!important;padding:10px!important;font-size:14px!important}
+  .calcContributionBtn{min-height:44px!important;font-size:12px!important}
+  .contributionResult{min-height:0!important;padding:18px!important}
+  #contributionTotal{font-size:32px!important}
+  .contributionBreakdown{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+
+  .systemTools{display:grid!important;grid-template-columns:1fr auto!important;gap:8px!important;align-items:center!important}
+  .systemSearch{min-width:0!important}
+  .systemCount{font-size:10px!important;white-space:nowrap}
+  .systemsDisclosure{margin-top:10px!important}
+  .systemSectionToggle{font-size:12px!important;padding:12px 14px!important}
+  .systemRule h3{font-size:13px!important;padding:15px 16px!important;line-height:1.25!important}
+  .ruleText{font-size:12px!important;line-height:1.6!important;padding-left:16px!important;padding-right:16px!important}
+  .systemRule.open .ruleText{padding-top:15px!important;padding-bottom:15px!important}
+
+  .mortaBottomNav{height:61px!important;min-height:61px!important;padding:4px 5px calc(4px + env(safe-area-inset-bottom))!important;gap:0!important}
+  .mortaBottomNav button{width:25%!important;min-width:0!important;height:53px!important;min-height:0!important;gap:2px!important;border-radius:10px!important}
+  .mortaBottomNav button b{font-size:17px!important;line-height:17px!important}
+  .mortaBottomNav button span{font-size:9px!important;line-height:1!important}
+  body.morta-view-mode{padding-bottom:68px!important}
+  main{padding-bottom:78px!important}
+
+  /* prevent desktop-only legacy sections from stealing space */
+  body.morta-view-mode section[data-morta-view].mortaViewHidden{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}
+  body.morta-view-mode section[data-morta-view]:not(.mortaViewHidden){display:block!important;visibility:visible!important;opacity:1!important}
+}
+@media(max-width:520px){
+  .nav .logo div{font-size:14px!important}
+  .accountActions .accountBtn{font-size:9px!important;padding:6px 7px!important}
+  .section{padding:20px 0!important}
+  .sectionHead{grid-template-columns:1fr!important}
+  .sectionHead .badge{justify-self:start!important}
+  .calcGrid{grid-template-columns:1fr!important}
+  .calcGrid .field:first-child{grid-column:auto}
+  #home .heroVisual{height:180px!important;min-height:180px!important}
+  #home .r1{width:180px!important;height:180px!important}.r2{width:140px!important;height:140px!important}.r3{width:102px!important;height:102px!important}
+  #home .trophy{width:108px!important;height:140px!important}
+}
+.mortaSkipLink{position:fixed;left:12px;top:-60px;z-index:10000;padding:10px 12px;border-radius:10px;background:#151019;color:#fff;border:1px solid rgba(168,85,247,.4);transition:top .15s ease}.mortaSkipLink:focus{top:12px}
