@@ -34,10 +34,6 @@ $$('.systemRule h3').forEach(title=>{
   });
 });
 
-$$("[data-scroll]").forEach(b=>b.addEventListener("click",()=>{
-  const el=$("#"+b.dataset.scroll); if(el) el.scrollIntoView({behavior:"smooth"});
-}));
-
 $$("[data-tab]").forEach(btn=>{
   btn.addEventListener("click",()=>{
     $$("[data-tab]").forEach(x=>x.classList.remove("active"));
@@ -138,16 +134,6 @@ const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation="fade .6s ease both"});
 },{threshold:.12});
 $$(".card,.panel,.cta,.sectionHead").forEach(x=>observer.observe(x));
-
-window.addEventListener("scroll",()=>{
-  const y=scrollY;
-  $$(".navlinks button").forEach(b=>{
-    const id=b.dataset.scroll, el=$("#"+id);
-    if(el && y>=el.offsetTop-150 && y<el.offsetTop+el.offsetHeight-150){
-      $$(".navlinks button").forEach(x=>x.classList.remove("active")); b.classList.add("active");
-    }
-  });
-});
 
 // Hataları sessizce yutma: üretimde bile geliştirici konsolunda görünür kalsın.
 window.addEventListener("error",e=>console.error("[MortaLeague]",e.error||e.message));

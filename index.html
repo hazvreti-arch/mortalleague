@@ -663,6 +663,18 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 </script>
 
 <link rel="stylesheet" href="professional-v12.css">
+
+<style id="morta-architecture-v14">
+/* Single-source view architecture: legacy duplicate blocks stay in DOM for data compatibility but never render. */
+.legacyHub,.legacyNews,#league{display:none!important}
+body.morta-view-mode section[data-morta-view]{display:none!important}
+body.morta-view-mode section[data-morta-view].mortaViewActive{display:block!important}
+body.morta-view-mode #home.mortaViewActive{display:grid!important}
+@media(max-width:760px){
+  body.morta-view-mode section[data-morta-view].mortaViewActive{display:block!important}
+  body.morta-view-mode #home.mortaViewActive{display:block!important}
+}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -673,7 +685,6 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 <a class="logo" href="#home"><span class="logoMark"></span><div>MORTALLEAGUE<small>THE DARK FOOTBALL ERA</small></div></a>
 <div class="navlinks">
 <button data-scroll="home">Ana Sayfa</button>
-<button data-scroll="league">Lig</button>
 <button data-scroll="players">Keşfet</button><button data-scroll="mortahub">MortaHub</button><button data-scroll="systems">Sistemler</button>
 </div>
 <div class="accountActions" id="accountActions">
@@ -688,13 +699,13 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 </header>
 
 <main>
-<section class="hero" id="home">
+<section class="hero" id="home" data-morta-view="home">
 <div class="mobileLeagueIntro">
   <div class="mobileIntroEyebrow"><span class="dot"></span> MORTALLEAGUE · SEASON 01</div>
   <h2>LİGİN İÇİNE <span>HOŞ GELDİN.</span></h2>
   <p>MortaLeague; oyuncuların performansını, gelişimini ve sahadaki etkisini tek bir futbol evreninde buluşturan rekabetçi bir platformdur.</p>
   <p class="mobileIntroMuted">Oyuncunu geliştir, katkı değerini yükselt ve MortaLeague'de kendi hikâyeni oluştur.</p>
-  <button class="primary" data-scroll="league">MORTALEAGUE'İ KEŞFET <span>↗</span></button>
+  <button class="primary" data-scroll="playerCalculator">MORTALEAGUE'İ KEŞFET <span>↗</span></button>
 </div>
 <div>
 <div class="eyebrow"><span class="dot"></span> MORTALLEAGUE SEASON 01 · ONLINE</div>
@@ -714,7 +725,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 </div>
 </section>
 
-<section class="section" id="mortaHub">
+<section class="section legacyHub" id="mortaHub">
   <div class="sectionHead"><div><h2>MORTA HUB</h2><p>Hesabın, transferlerin ve MortaLeague'deki hareketlerin tek yerde.</p></div><span class="badge" id="hubStatus">ÇEVRİMDIŞI</span></div>
   <div class="hubGrid">
     <div class="hubPanel">
@@ -726,13 +737,13 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
   </div>
 </section>
 
-<section class="section" id="news">
+<section class="section legacyNews" id="news">
   <div class="sectionHead"><div><h2>MORTANEWS</h2><p>Ligden, topluluktan ve MortaLeague'den son gelişmeler.</p></div><span class="badge" id="newsCount">0 HABER</span></div>
   <div id="newsGrid" class="newsGrid"><div class="directoryEmpty">Haberler yükleniyor...</div></div>
 </section>
 
 
-<section class="section" id="league">
+<section class="section" id="league" data-morta-view="league">
   <div class="leagueExperience">
     <div class="leagueExperienceHero">
       <span class="leagueKicker">MORTALEAGUE · FUTBOL EVRENİ</span>
@@ -776,7 +787,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
   </div>
 </section>
 
-<section class="section" id="playerCalculator">
+<section class="section" id="playerCalculator" data-morta-view="playerCalculator">
 <div class="sectionHead">
   <div>
     <h2>OYUNCU KATKI DEĞERİ HESAPLAMA</h2>
@@ -851,7 +862,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 </section>
 
 
-<section class="section" id="players">
+<section class="section" id="players" data-morta-view="players">
   <div class="sectionHead">
     <div><h2>OYUNCULAR</h2><p>MortaLeague'e kayıtlı oyuncuları bul, profillerini incele ve teklif gönder.</p></div>
     <span class="badge" id="playerCount">0 OYUNCU</span>
@@ -871,7 +882,7 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
   </div>
 </section>
 
-<section class="section" id="systems">
+<section class="section" id="systems" data-morta-view="systems">
 <div class="sectionHead"><div><h2>SİSTEMLER</h2><p>MortaLeague için hazırlanan sistemler ve kurallar.</p></div><span class="badge">16 SİSTEM</span></div>
 <details class="systemsDisclosure" id="systemsDisclosure">
 <summary class="systemSectionToggle"><span>TÜM SİSTEMLERİ GÖSTER</span><span class="toggleIcon">+</span></summary>
@@ -1495,7 +1506,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 </details>
 </section>
 
-<section class="section" id="mortahub">
+<section class="section" id="mortahub" data-morta-view="mortahub">
   <div class="sectionHead"><div><h2>MORTAHUB</h2><p>MortaLeague'in sosyal merkezi. Takip et, paylaş ve keşfet.</p></div><span class="badge">SOCIAL ERA</span></div>
   <div class="hubShell">
     <div class="hubHero"><div><div class="eyebrow">🌐 MORTALLEAGUE SOCIAL</div><h2>MORTA<span class="gradient">HUB</span></h2><p>Oyuncuları ve takımları takip et. Futbol dünyandaki gelişmeleri kendi akışında gör.</p></div></div>
@@ -1737,7 +1748,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260905-v6"></script>
+<script src="script.js?v=20260907-v14"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -2357,7 +2368,7 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
  .mortaBottomNav button{background:none;border:0;color:#a1a1aa;font:600 10px Inter,sans-serif;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
  .mortaBottomNav button b{font-size:19px;line-height:19px;font-weight:500}
  .mortaBottomNav button.active{color:#fff}
- #playerCalculator{display:block!important}
+ #playerCalculator{display:block}
  #league{display:none!important}
  #playerCalculator.mortaViewHidden{display:none!important}
  #players.mortaViewHidden{display:none!important}
@@ -2504,97 +2515,56 @@ document.getElementById('mortaDesktopDM')?.addEventListener('click',function(){
 <script src="professional-patch.js"></script>
 
 <!-- MortaLeague View Navigation: sade tek-ekran arayüz -->
-<style id="morta-view-navigation">
-:root{--morta-view-gap:24px}
+<style id="morta-view-navigation-v14">
 body.morta-view-mode{overflow-x:hidden}
 body.morta-view-mode .mortaViewHidden{display:none!important}
-body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease both}
-@keyframes mortaViewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.navlinks button[data-scroll].active{position:relative}
-.mortaViewTitle{display:none}
-@media(max-width:760px){
- body.morta-view-mode{padding-bottom:76px}
- .navlinks{display:none!important}
- .mobileDrawerLinks button.is-active{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.08)}
-}
-
-@media(max-width:760px){
-  body.morta-view-mode .section[data-morta-view="playerCalculator"].mortaViewHidden{display:none!important}
-  body.morta-view-mode .section[data-morta-view="playerCalculator"]:not(.mortaViewHidden){display:block!important}
-}
-
+body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease both}
+@keyframes mortaViewIn{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.navlinks button[data-scroll].active{color:#fff;background:rgba(168,85,247,.12)}
 </style>
-<script id="morta-view-navigation-script">
+<script id="morta-view-navigation-script-v14">
 (()=>{
-  const views={
-    home:['home'],
-    league:['league'],
-    players:['players'],
-    systems:['systems'],
-    mortahub:['mortahub','mortaHub'],
-    playerCalculator:['playerCalculator']
-  };
-  const alias={
-    home:'home', news:'news', playerCalculator:'playerCalculator',
-    league:'league', players:'players', systems:'systems',
-    mortahub:'mortahub', mortaHub:'mortahub'
-  };
-  const allIds=[...new Set(Object.values(views).flat())];
-  const sections=allIds.map(id=>document.getElementById(id)).filter(Boolean);
-  sections.forEach(sec=>sec.dataset.mortaView=alias[sec.id]||'home');
+  const viewIds=['home','mortahub','players','playerCalculator','systems'];
+  const alias={home:'home',mortahub:'mortahub',mortaHub:'mortahub',players:'players',playerCalculator:'playerCalculator',contribution:'playerCalculator',systems:'systems',league:'playerCalculator'};
+  const sections=viewIds.map(id=>document.getElementById(id)).filter(Boolean);
+  sections.forEach(sec=>{sec.dataset.mortaView=sec.id;});
   document.body.classList.add('morta-view-mode');
-
   let current='home';
-  function updateActive(view){
-    document.querySelectorAll('[data-scroll]').forEach(btn=>{
-      const target=alias[btn.dataset.scroll]||btn.dataset.scroll;
-      btn.classList.toggle('active',target===view);
+  const updateActive=()=>{
+    document.querySelectorAll('[data-scroll],[data-mobile-scroll]').forEach(btn=>{
+      const raw=btn.dataset.scroll||btn.dataset.mobileScroll||'';
+      btn.classList.toggle('active',(alias[raw]||raw)===current);
+      btn.classList.toggle('is-active',(alias[raw]||raw)===current);
     });
-    document.querySelectorAll('[data-mobile-scroll]').forEach(btn=>{
-      const target=alias[btn.dataset.mobileScroll]||btn.dataset.mobileScroll;
-      btn.classList.toggle('is-active',target===view);
-    });
-  }
-  function showView(raw,{history=true}={}){
+  };
+  const show=(raw,{history=true}={})=>{
     const view=alias[raw]||raw;
-    if(!views[view]) return false;
+    if(!viewIds.includes(view)) return false;
     current=view;
-    sections.forEach(sec=>sec.classList.toggle('mortaViewHidden',sec.dataset.mortaView!==view));
-    updateActive(view);
+    sections.forEach(sec=>sec.classList.toggle('mortaViewHidden',sec.id!==view));
+    sections.forEach(sec=>sec.classList.toggle('mortaViewActive',sec.id===view));
+    updateActive();
     window.scrollTo({top:0,behavior:'auto'});
-    if(history){
-      try{history.replaceState(null,'','#'+view)}catch(e){}
-    }
+    if(history){try{history.replaceState(null,'','#'+view)}catch(e){}}
     document.dispatchEvent(new CustomEvent('morta:viewchange',{detail:{view}}));
     return true;
-  }
-  window.MortaLeagueViews={show:showView,get current(){return current}};
-
-  // Eski "scroll" davranışını yakalayıp gerçek sayfa görünümüne çeviriyoruz.
+  };
+  window.MortaLeagueViews={show,get current(){return current}};
   document.addEventListener('click',e=>{
     const btn=e.target.closest('[data-scroll],[data-mobile-scroll]');
     if(!btn) return;
     const raw=btn.dataset.scroll||btn.dataset.mobileScroll;
-    if(!views[alias[raw]||raw]) return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    showView(raw);
+    const view=alias[raw]||raw;
+    if(!viewIds.includes(view)) return;
+    e.preventDefault(); e.stopImmediatePropagation(); show(view);
     const drawer=document.getElementById('mobileDrawer');
     const menu=document.getElementById('mobileMenuButton');
-    if(drawer?.classList.contains('open')){
-      drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');
-      menu?.setAttribute('aria-expanded','false');document.body.style.overflow='';
-    }
+    if(drawer?.classList.contains('open')){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');menu?.setAttribute('aria-expanded','false');document.body.style.overflow='';}
   },true);
-
-  window.addEventListener('hashchange',()=>{
-    const hash=location.hash.slice(1);
-    if(hash) showView(hash,{history:false});
-  });
-  showView(alias[location.hash.slice(1)]||location.hash.slice(1)||'home',{history:false});
+  window.addEventListener('hashchange',()=>{const h=location.hash.slice(1); if(h) show(h,{history:false});});
+  show(location.hash.slice(1)||'home',{history:false});
 })();
 </script>
-
 <style id="morta-mobile-view-hard-fix">
 @media(max-width:900px){
   body.morta-view-mode #playerCalculator.mortaViewHidden,
@@ -2671,5 +2641,20 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
 }
 </style>
 
+
+<style id="morta-responsive-v14">
+@media(max-width:760px){
+  :root{--ml-mobile-pad:14px}
+  body{font-size:14px;-webkit-text-size-adjust:100%}
+  main{padding-left:var(--ml-mobile-pad)!important;padding-right:var(--ml-mobile-pad)!important}
+  #home{min-height:0!important}
+  #home h1{font-size:clamp(32px,10vw,48px)!important;line-height:.98!important}
+  .sectionHead h2{font-size:20px!important;line-height:1.08!important}
+  .sectionHead p{font-size:12px!important}
+  .playerDirectoryGrid,.systemLibrary{grid-template-columns:1fr!important}
+  .directoryToolbar{grid-template-columns:1fr!important}
+  .mortaBottomNav{position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:300!important}
+}
+</style>
 </body>
 </html>
