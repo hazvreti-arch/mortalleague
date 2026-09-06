@@ -2241,6 +2241,9 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
  #systems{display:none!important}
  #playerCalculator{display:block!important}
  #league{display:none!important}
+ #playerCalculator.mortaViewHidden{display:none!important}
+ #players.mortaViewHidden{display:none!important}
+ #mortahub.mortaViewHidden{display:none!important}
 }
 @media(min-width:901px){
  .mortaSocialIntro{margin-left:auto;margin-right:auto;max-width:968px}
@@ -2466,6 +2469,14 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
 })();
 </script>
 
+<style id="morta-mobile-view-hard-fix">
+@media(max-width:900px){
+  body.morta-view-mode #playerCalculator.mortaViewHidden,
+  body.morta-view-mode #players.mortaViewHidden,
+  body.morta-view-mode #mortahub.mortaViewHidden,
+  body.morta-view-mode #home.mortaViewHidden{display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;overflow:hidden!important}
+}
+</style>
 <style id="morta-mobile-primary-nav-fix">
 @media(max-width:900px){
   .mortaBottomNav button{min-width:72px}
