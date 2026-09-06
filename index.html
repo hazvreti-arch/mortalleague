@@ -546,6 +546,10 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
   body.morta-view-mode .section[data-morta-view="home"]:not(.mortaViewHidden)#home{display:grid!important;}
 }
 </style>
+
+<style id="morta-mobile-isolation-fix">
+@media(max-width:760px){body.morta-view-mode .section[data-morta-view]{display:none!important}body.morta-view-mode .section[data-morta-view]:not(.mortaViewHidden){display:block!important}.morta-view-mode main>.hero[data-morta-view]{display:block!important}.mortaBottomNav{padding-bottom:calc(8px + env(safe-area-inset-bottom));}}
+</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -2268,10 +2272,12 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
 }
 </style>
 
-<div class="mortaBottomNav" id="mortaBottomNav">
- <button class="active" data-scroll="mortahub"><b>⌂</b>Ana Akış</button>
- <button data-scroll="players"><b>♟</b>Oyuncular</button>
- <button data-scroll="playerCalculator"><b>✦</b>Katkı Değeri</button>
+<div class="mortaBottomNav" id="mortaBottomNav" aria-label="Mobil gezinme">
+ <button class="active" data-scroll="mortahub"><b>⌂</b><span>Akış</span></button>
+ <button data-scroll="league"><b>◈</b><span>Lig</span></button>
+ <button data-scroll="players"><b>♟</b><span>Oyuncular</span></button>
+ <button data-scroll="playerCalculator"><b>✦</b><span>Katkı</span></button>
+ <button data-scroll="systems"><b>☷</b><span>Sistemler</span></button>
 </div>
 
 <script>
@@ -2303,6 +2309,13 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
     document.querySelectorAll('.mortaBottomNav button').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
   }));
+  document.addEventListener('morta:viewchange',e=>{
+    const view=e.detail?.view;
+    document.querySelectorAll('.mortaBottomNav [data-scroll]').forEach(b=>{
+      const target=b.dataset.scroll;
+      b.classList.toggle('active', target===view);
+    });
+  });
 })();
 </script>
 
@@ -2401,7 +2414,7 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
 <script id="morta-view-navigation-script">
 (()=>{
   const views={
-    home:['home','news'],
+    home:['home'],
     league:['league'],
     players:['players'],
     systems:['systems'],
@@ -2409,7 +2422,7 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
     playerCalculator:['playerCalculator']
   };
   const alias={
-    home:'home', news:'home', playerCalculator:'playerCalculator',
+    home:'home', news:'news', playerCalculator:'playerCalculator',
     league:'league', players:'players', systems:'systems',
     mortahub:'mortahub', mortaHub:'mortahub'
   };
@@ -2475,6 +2488,65 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
   body.morta-view-mode #players.mortaViewHidden,
   body.morta-view-mode #mortahub.mortaViewHidden,
   body.morta-view-mode #home.mortaViewHidden{display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;overflow:hidden!important}
+}
+</style>
+<style id="morta-professional-mobile-v7">
+@media (max-width: 900px){
+  /* Use the desktop information architecture; only density changes on mobile. */
+  .mobileLeagueIntro{display:none!important}
+  #home{min-height:0!important;display:grid!important;grid-template-columns:1fr!important;gap:22px!important;text-align:left!important;padding-top:12px!important}
+  #home > div:not(.mobileLeagueIntro){display:block!important;visibility:visible!important;opacity:1!important}
+  #home .heroActions{justify-content:flex-start!important}
+  #home h1{font-size:clamp(42px,13vw,68px)!important;line-height:.95!important;letter-spacing:-2.8px!important;margin:18px 0 16px!important}
+  #home .hero p{font-size:15px!important;line-height:1.7!important;max-width:680px!important;margin:0 0 22px!important}
+  #home .heroVisual{display:grid!important;min-height:260px!important;height:260px!important;transform:none!important;margin:0!important}
+  #home .r1{width:260px;height:260px}.r2{width:205px;height:205px}.r3{width:150px;height:150px}
+  #home .trophy{width:155px;height:200px;border-radius:30% 30% 21% 21%}
+  #home .trophy:before{font-size:82px}
+  #home .trophy:after{bottom:18px;font-size:8px;letter-spacing:3px}
+  #home .floatCard{padding:10px 12px;font-size:10px}.floatCard b{font-size:13px}.fc1{top:4px;right:2px}.fc3{top:95px;left:2px}.fc2{bottom:2px;left:10px}
+
+  .section{padding:30px 0!important}
+  .sectionHead{margin-bottom:16px!important}
+  .sectionHead h2{font-size:23px!important;line-height:1.08!important}
+  .sectionHead p{font-size:12px!important;line-height:1.55!important}
+  .sectionHead .badge{align-self:flex-start!important}
+  .panel,.calcPanel,.contributionResult{padding:17px!important;border-radius:16px!important}
+  .card{padding:17px!important}
+  .playerDirectory{width:100%!important}
+
+  /* One active view at a time — no stacking, no ghost sections. */
+  body.morta-view-mode section[data-morta-view].mortaViewHidden{display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;min-height:0!important;overflow:hidden!important;margin:0!important;padding:0!important}
+  body.morta-view-mode section[data-morta-view]:not(.mortaViewHidden){visibility:visible!important;opacity:1!important}
+
+  /* Compact, readable bottom navigation. */
+  .mortaBottomNav{height:67px!important;gap:0!important;justify-content:space-around!important;padding:0 5px env(safe-area-inset-bottom)!important;background:rgba(8,8,11,.97)!important;border-top:1px solid rgba(255,255,255,.09)!important}
+  .mortaBottomNav button{min-width:0!important;width:20%!important;height:100%!important;padding:7px 2px 5px!important;gap:4px!important;font:700 9px Inter,sans-serif!important;color:#85818c!important;justify-content:center!important}
+  .mortaBottomNav button b{font-size:18px!important;line-height:18px!important;font-weight:500!important}
+  .mortaBottomNav button span{font-size:9px!important;white-space:nowrap}
+  .mortaBottomNav button.active{color:#fff!important}
+  .mortaBottomNav button.active b{color:#d18aff!important;text-shadow:0 0 12px rgba(168,85,247,.55)}
+  body.morta-view-mode{padding-bottom:78px!important}
+  main{padding-bottom:90px!important}
+}
+@media (max-width:520px){
+  .nav{height:64px!important}
+  .logo{font-size:12px!important}
+  .logoMark{width:34px!important;height:34px!important}
+  .navCta{display:none!important}
+  .accountActions .accountBtn{padding:8px 9px!important;font-size:10px!important}
+  .heroActions{display:grid!important;grid-template-columns:1fr!important;width:100%!important}
+  .heroActions button{width:100%!important;text-align:center!important}
+  #home .heroVisual{min-height:220px!important;height:220px!important}
+  #home .r1{width:220px;height:220px}.r2{width:170px;height:170px}.r3{width:125px;height:125px}
+  #home .trophy{width:132px;height:170px}.fc1{right:0}.fc3{left:-3px}.fc2{left:0}
+  .leagueExperience{padding:22px 17px!important;border-radius:18px!important}
+  .leagueExperienceHero h2{font-size:31px!important}
+  .leagueExperienceCard{padding:17px!important}
+  .leagueExperienceFooter{padding:17px!important}
+  .leagueExperienceFooter h3{font-size:17px!important;line-height:1.3!important}
+  .contributionCalc{gap:12px!important}
+  .calcGrid{gap:0 10px!important}
 }
 </style>
 <style id="morta-mobile-primary-nav-fix">
