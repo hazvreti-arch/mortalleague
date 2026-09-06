@@ -2227,8 +2227,9 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
  .mortaBottomNav button{background:none;border:0;color:#a1a1aa;font:600 10px Inter,sans-serif;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
  .mortaBottomNav button b{font-size:19px;line-height:19px;font-weight:500}
  .mortaBottomNav button.active{color:#fff}
- #playerCalculator,#systems{display:none!important}
- #league{display:block!important}
+ #systems{display:none!important}
+ #playerCalculator{display:block!important}
+ #league{display:none!important}
 }
 @media(min-width:901px){
  .mortaSocialIntro{margin-left:auto;margin-right:auto;max-width:968px}
@@ -2256,7 +2257,7 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
 <div class="mortaBottomNav" id="mortaBottomNav">
  <button class="active" data-scroll="mortahub"><b>⌂</b>Ana Akış</button>
  <button data-scroll="players"><b>♟</b>Oyuncular</button>
- <button id="mobileProfileNav"><b>◉</b>Profil</button>
+ <button data-scroll="playerCalculator"><b>✦</b>Katkı Değeri</button>
 </div>
 
 <script>
@@ -2283,11 +2284,6 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
   if(compose) compose.addEventListener('click',()=>{
     document.getElementById('mortahub')?.scrollIntoView({behavior:'smooth'});
     setTimeout(()=>document.getElementById('hubPostText')?.focus(),450);
-  });
-  const prof=document.getElementById('mobileProfileNav');
-  if(prof) prof.addEventListener('click',()=>{
-    const x=document.getElementById('userMenuButton');
-    if(x) x.click(); else document.getElementById('openLogin')?.click();
   });
   document.querySelectorAll('.mortaBottomNav [data-scroll]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.mortaBottomNav button').forEach(x=>x.classList.remove('active'));
@@ -2381,18 +2377,25 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
  .navlinks{display:none!important}
  .mobileDrawerLinks button.is-active{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.08)}
 }
+
+@media(max-width:760px){
+  body.morta-view-mode .section[data-morta-view="playerCalculator"].mortaViewHidden{display:none!important}
+  body.morta-view-mode .section[data-morta-view="playerCalculator"]:not(.mortaViewHidden){display:block!important}
+}
+
 </style>
 <script id="morta-view-navigation-script">
 (()=>{
   const views={
-    home:['home','news','playerCalculator'],
+    home:['home','news'],
     league:['league'],
     players:['players'],
     systems:['systems'],
-    mortahub:['mortahub','mortaHub']
+    mortahub:['mortahub','mortaHub'],
+    playerCalculator:['playerCalculator']
   };
   const alias={
-    home:'home', news:'home', playerCalculator:'home',
+    home:'home', news:'home', playerCalculator:'playerCalculator',
     league:'league', players:'players', systems:'systems',
     mortahub:'mortahub', mortaHub:'mortahub'
   };
@@ -2452,5 +2455,88 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
 })();
 </script>
 
+<style id="morta-mobile-primary-nav-fix">
+@media(max-width:900px){
+  .mortaBottomNav button{min-width:72px}
+  body.morta-view-mode .section[data-morta-view="playerCalculator"]:not(.mortaViewHidden){display:block!important}
+  body.morta-view-mode .section[data-morta-view="players"]:not(.mortaViewHidden){display:block!important}
+  body.morta-view-mode #mortahub:not(.mortaViewHidden){display:block!important}
+}
+</style>
+
 </body>
 </html>
+
+<style id="morta-pc-to-mobile-final">
+/* PC ARAYÜZÜNÜ MOBİLDE KORU: yalnızca ölçüleri responsive yap */
+@media (max-width: 700px){
+  /* Özel mobil açılış ekranını kapat; PC'deki gerçek hero'yu kullan */
+  .mobileLeagueIntro{display:none !important}
+  .hero > div:not(.mobileLeagueIntro){display:block !important}
+  .hero{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    min-height:auto !important;
+    gap:26px !important;
+    padding-top:22px !important;
+    align-items:start !important;
+  }
+  .hero > div:first-of-type{width:100% !important}
+  .hero h1{font-size:clamp(42px,13vw,68px) !important;letter-spacing:-3px !important;margin:18px 0 16px !important}
+  .hero p{font-size:15px !important;line-height:1.65 !important;max-width:none !important}
+  .heroActions{display:grid !important;grid-template-columns:1fr !important;gap:10px !important}
+  .heroActions button{width:100% !important;justify-content:center !important}
+  .heroVisual{
+    min-height:320px !important;
+    width:100% !important;
+    transform:none !important;
+    margin:0 !important;
+    overflow:hidden !important;
+  }
+  .r1{width:290px !important;height:290px !important}
+  .r2{width:225px !important;height:225px !important}
+  .r3{width:165px !important;height:165px !important}
+  .trophy{width:175px !important;height:225px !important}
+  .trophy:before{font-size:88px !important}
+  .floatCard{transform:scale(.86);transform-origin:center}
+  .fc1{top:15px !important;right:8px !important}
+  .fc2{bottom:20px !important;left:4px !important}
+  .fc3{top:108px !important;left:0 !important}
+
+  /* PC'deki bölüm başlıkları ve kart düzeni korunur, yalnızca sütunlar tekilleşir */
+  .section{padding:42px 0 !important}
+  .sectionHead h2{font-size:24px !important}
+  .grid{grid-template-columns:1fr 1fr !important}
+  .players{grid-template-columns:1fr !important}
+  .stats{grid-template-columns:1fr 1fr !important}
+  .rules{grid-template-columns:1fr !important}
+  .calculator{grid-template-columns:1fr !important}
+  .systemGallery{grid-template-columns:1fr !important}
+  .systemLibrary{grid-template-columns:1fr !important}
+
+  /* Masaüstündeki panel estetiğini koru */
+  .panel,.hubPanel,.calcPanel,.leagueExperience{border-radius:18px !important}
+  .card{padding:18px !important}
+  .panel{padding:18px !important}
+
+  /* Üst navigasyon mobilde sade kalır; içerik PC ile aynı */
+  header .nav{height:68px !important}
+  .navlinks{display:none !important}
+  .accountActions,.userPanel{max-width:48vw !important}
+
+  /* Alt menü yalnızca daha erişilebilir bir mobil kontrol olarak kalır */
+  .mortaBottomNav{display:flex !important}
+}
+
+@media (max-width: 420px){
+  .grid{grid-template-columns:1fr !important}
+  .stats{grid-template-columns:1fr 1fr !important}
+  .heroVisual{min-height:285px !important}
+  .trophy{width:150px !important;height:195px !important}
+  .trophy:before{font-size:74px !important}
+  .r1{width:250px !important;height:250px !important}
+  .r2{width:195px !important;height:195px !important}
+  .r3{width:145px !important;height:145px !important}
+  .floatCard{font-size:10px !important;padding:10px 12px !important}
+}
+</style>
