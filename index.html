@@ -748,6 +748,87 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 }
 </style>
 
+
+<style id="morta-v16-mobile-home-scale">
+@media (max-width:700px){
+  /* Use the same home/hero content as desktop, but scale it to the phone. */
+  .hero{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    min-height:0!important;
+    padding:38px 0 24px!important;
+    margin:0!important;
+    text-align:left!important;
+    gap:18px!important;
+    box-sizing:border-box!important;
+  }
+  .hero > div:not(.mobileLeagueIntro){display:block!important}
+  .mobileLeagueIntro{display:none!important}
+
+  .hero h1{
+    font-size:clamp(38px,13vw,60px)!important;
+    line-height:.93!important;
+    letter-spacing:-2.4px!important;
+    margin:17px 0 14px!important;
+    max-width:100%!important;
+  }
+  .hero p{
+    font-size:14px!important;
+    line-height:1.55!important;
+    max-width:100%!important;
+    margin-bottom:18px!important;
+  }
+  .heroActions{
+    gap:9px!important;
+    width:100%!important;
+  }
+  .heroActions .primary,.heroActions .secondary{
+    min-height:40px!important;
+    padding:10px 13px!important;
+    font-size:12px!important;
+    flex:1 1 auto!important;
+  }
+  .heroVisual{
+    min-height:250px!important;
+    height:250px!important;
+    margin:0 auto!important;
+    width:100%!important;
+    max-width:360px!important;
+    transform:none!important;
+    overflow:hidden!important;
+  }
+  .heroVisual .r1{width:250px!important;height:250px!important}
+  .heroVisual .r2{width:190px!important;height:190px!important}
+  .heroVisual .r3{width:135px!important;height:135px!important}
+  .heroVisual .floatCard{
+    transform:scale(.8)!important;
+    transform-origin:center!important;
+  }
+
+  /* Keep the home page's summary/cards, but make every card fit cleanly. */
+  #home + .section{
+    padding-top:26px!important;
+  }
+  .stats,.grid,.players{
+    gap:10px!important;
+  }
+  .stats > *, .grid > *, .players > *{
+    min-width:0!important;
+  }
+  .stats strong,.stat strong{
+    font-size:18px!important;
+  }
+  .sectionHead h2{
+    font-size:23px!important;
+    line-height:1.08!important;
+  }
+  .sectionHead p{
+    font-size:13px!important;
+    line-height:1.5!important;
+  }
+}
+</style>
+
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
