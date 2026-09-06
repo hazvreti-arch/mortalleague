@@ -535,6 +535,17 @@ button,.accountBtn,.primary,.secondary,.navCta{touch-action:manipulation}
 }
 </style>
 
+<style id="morta-home-desktop-final-fix">
+@media (min-width:701px){
+  body.morta-view-mode .section[data-morta-view="home"]{display:grid!important;}
+  body.morta-view-mode #home{display:grid!important;grid-template-columns:1.1fr .9fr!important;align-items:center!important;gap:50px!important;min-height:650px!important;opacity:1!important;visibility:visible!important;}
+  body.morta-view-mode #home > .mobileLeagueIntro{display:none!important;}
+  body.morta-view-mode #home > div:not(.mobileLeagueIntro){display:block!important;visibility:visible!important;opacity:1!important;}
+  body.morta-view-mode #home .heroVisual{display:grid!important;visibility:visible!important;opacity:1!important;}
+  body.morta-view-mode .section[data-morta-view="home"]:not(.mortaViewHidden){display:block!important;}
+  body.morta-view-mode .section[data-morta-view="home"]:not(.mortaViewHidden)#home{display:grid!important;}
+}
+</style>
 </head>
 <body>
 <div id="particles"></div>
@@ -2466,77 +2477,3 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .28s ease bo
 
 </body>
 </html>
-
-<style id="morta-pc-to-mobile-final">
-/* PC ARAYÜZÜNÜ MOBİLDE KORU: yalnızca ölçüleri responsive yap */
-@media (max-width: 700px){
-  /* Özel mobil açılış ekranını kapat; PC'deki gerçek hero'yu kullan */
-  .mobileLeagueIntro{display:none !important}
-  .hero > div:not(.mobileLeagueIntro){display:block !important}
-  .hero{
-    display:grid !important;
-    grid-template-columns:1fr !important;
-    min-height:auto !important;
-    gap:26px !important;
-    padding-top:22px !important;
-    align-items:start !important;
-  }
-  .hero > div:first-of-type{width:100% !important}
-  .hero h1{font-size:clamp(42px,13vw,68px) !important;letter-spacing:-3px !important;margin:18px 0 16px !important}
-  .hero p{font-size:15px !important;line-height:1.65 !important;max-width:none !important}
-  .heroActions{display:grid !important;grid-template-columns:1fr !important;gap:10px !important}
-  .heroActions button{width:100% !important;justify-content:center !important}
-  .heroVisual{
-    min-height:320px !important;
-    width:100% !important;
-    transform:none !important;
-    margin:0 !important;
-    overflow:hidden !important;
-  }
-  .r1{width:290px !important;height:290px !important}
-  .r2{width:225px !important;height:225px !important}
-  .r3{width:165px !important;height:165px !important}
-  .trophy{width:175px !important;height:225px !important}
-  .trophy:before{font-size:88px !important}
-  .floatCard{transform:scale(.86);transform-origin:center}
-  .fc1{top:15px !important;right:8px !important}
-  .fc2{bottom:20px !important;left:4px !important}
-  .fc3{top:108px !important;left:0 !important}
-
-  /* PC'deki bölüm başlıkları ve kart düzeni korunur, yalnızca sütunlar tekilleşir */
-  .section{padding:42px 0 !important}
-  .sectionHead h2{font-size:24px !important}
-  .grid{grid-template-columns:1fr 1fr !important}
-  .players{grid-template-columns:1fr !important}
-  .stats{grid-template-columns:1fr 1fr !important}
-  .rules{grid-template-columns:1fr !important}
-  .calculator{grid-template-columns:1fr !important}
-  .systemGallery{grid-template-columns:1fr !important}
-  .systemLibrary{grid-template-columns:1fr !important}
-
-  /* Masaüstündeki panel estetiğini koru */
-  .panel,.hubPanel,.calcPanel,.leagueExperience{border-radius:18px !important}
-  .card{padding:18px !important}
-  .panel{padding:18px !important}
-
-  /* Üst navigasyon mobilde sade kalır; içerik PC ile aynı */
-  header .nav{height:68px !important}
-  .navlinks{display:none !important}
-  .accountActions,.userPanel{max-width:48vw !important}
-
-  /* Alt menü yalnızca daha erişilebilir bir mobil kontrol olarak kalır */
-  .mortaBottomNav{display:flex !important}
-}
-
-@media (max-width: 420px){
-  .grid{grid-template-columns:1fr !important}
-  .stats{grid-template-columns:1fr 1fr !important}
-  .heroVisual{min-height:285px !important}
-  .trophy{width:150px !important;height:195px !important}
-  .trophy:before{font-size:74px !important}
-  .r1{width:250px !important;height:250px !important}
-  .r2{width:195px !important;height:195px !important}
-  .r3{width:145px !important;height:145px !important}
-  .floatCard{font-size:10px !important;padding:10px 12px !important}
-}
-</style>
