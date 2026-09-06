@@ -829,6 +829,35 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 }
 </style>
 
+
+<style id="morta-v18-drawer-profile">
+.mortaHamburger{display:none}
+.mortaDrawerBackdrop{display:none}
+.mortaDrawer{display:none}
+.mlProfileHead{display:flex;gap:16px;align-items:center;padding:8px 0 12px}
+.mlProfileAvatar{width:86px;height:86px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#ec4899);border:3px solid rgba(255,255,255,.08);font:900 28px Orbitron;color:#fff}
+.mlProfileAvatar img{width:100%;height:100%;object-fit:cover}
+.mlProfileIdentity{min-width:0;flex:1}.mlProfileIdentity h3{margin:0 0 3px;font-size:20px}.mlProfileIdentity span{color:#9f9ca7;font-size:12px}.mlProfileIdentity p{margin:7px 0 0;color:#b8b5be;font-size:12px;line-height:1.45}
+.mlProfileStats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:13px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.mlProfileStats div{text-align:center}.mlProfileStats b{display:block;font-size:14px}.mlProfileStats span{display:block;color:#85818c;font-size:10px;margin-top:4px}
+.mlProfileActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.mlProfileActions button{width:100%!important}
+.mlProfileBio{color:#c6c2ca;font-size:12px;line-height:1.55;padding:3px 0 13px}
+.mlProfileGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}.mlProfileGridItem{aspect-ratio:1;display:grid;place-items:center;background:linear-gradient(135deg,#1a1223,#0f0d13);font-size:24px;color:#b78df0;border:1px solid rgba(255,255,255,.035)}
+.mlProfileEditDivider{margin:18px -2px 12px;border-top:1px solid var(--line);padding-top:15px;color:#8f8997;font-size:10px;letter-spacing:1.2px}.mlProfileEditTitle{margin:0 0 12px!important;font-size:14px!important}
+@media(max-width:900px){
+  .mortaBottomNav{display:none!important}
+  .mortaHamburger{display:flex;position:fixed;top:14px;right:14px;z-index:1001;width:42px;height:42px;padding:0;border:1px solid rgba(255,255,255,.11);border-radius:13px;background:rgba(10,9,13,.88);backdrop-filter:blur(14px);align-items:center;justify-content:center;flex-direction:column;gap:4px;box-shadow:0 10px 28px rgba(0,0,0,.28);cursor:pointer}
+  .mortaHamburger span{width:18px;height:2px;border-radius:4px;background:#eee;display:block}
+  .mortaDrawerBackdrop{display:block;position:fixed;inset:0;z-index:1000;background:rgba(3,2,7,.58);backdrop-filter:blur(3px)}
+  .mortaDrawer{display:block;position:fixed;top:0;right:0;bottom:0;z-index:1001;width:min(330px,88vw);padding:24px 16px calc(18px + env(safe-area-inset-bottom));background:#0d0b11;border-left:1px solid rgba(255,255,255,.09);box-shadow:-24px 0 70px rgba(0,0,0,.4);transform:translateX(102%);transition:transform .24s ease;overflow:auto}
+  .mortaDrawer.open{transform:translateX(0)}
+  .mortaDrawerTop{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 18px}.mortaDrawerTop strong{display:block;font-size:20px;margin-top:3px}.mortaDrawerKicker{display:block;color:#9a6bd5;font-size:9px;letter-spacing:1.7px;font-weight:800}.mortaDrawerClose{width:36px;height:36px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:#15121b;color:#ddd;font-size:23px;cursor:pointer}
+  .mortaDrawerProfile{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.025);margin-bottom:14px}.mortaDrawerAvatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font-weight:900;overflow:hidden;flex:0 0 auto}.mortaDrawerProfileMeta{min-width:0;flex:1}.mortaDrawerProfileMeta b,.mortaDrawerProfileMeta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mortaDrawerProfileMeta b{font-size:13px}.mortaDrawerProfileMeta span{font-size:10px;color:#8f8a98;margin-top:3px}.mortaDrawerProfileBtn{border:1px solid rgba(168,85,247,.3);background:rgba(139,61,255,.1);color:#d9c8ea;border-radius:9px;padding:8px 9px;font-size:10px;font-weight:800;cursor:pointer}
+  .mortaDrawerNav{display:grid;gap:7px}.mortaDrawerNav button{display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto;column-gap:8px;align-items:center;text-align:left;padding:12px 11px;border:1px solid rgba(255,255,255,.055);border-radius:13px;background:#131016;color:#ddd;cursor:pointer}.mortaDrawerNav button>span{grid-row:1/3;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:rgba(168,85,247,.1);font-size:17px}.mortaDrawerNav b{font-size:12px}.mortaDrawerNav small{font-size:9px;color:#85808b;margin-top:2px}.mortaDrawerNav button.active{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
+  .mortaDrawerFooter{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;color:#67626d;font-size:9px;text-transform:uppercase;letter-spacing:1px}
+  .mlProfileHead{padding-top:4px}.mlProfileAvatar{width:76px;height:76px;font-size:24px}.mlProfileIdentity h3{font-size:18px}.mlProfileStats{gap:3px}.mlProfileStats b{font-size:12px}.mlProfileStats span{font-size:9px}.mlProfileGridItem{font-size:19px}
+}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1739,12 +1768,45 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   </div>
 </div>
 
+
+<button class="mortaHamburger" id="mortaHamburger" type="button" aria-label="Menüyü aç" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+<div class="mortaDrawerBackdrop" id="mortaDrawerBackdrop" hidden></div>
+<aside class="mortaDrawer" id="mortaDrawer" aria-hidden="true" aria-label="Mobil menü">
+  <div class="mortaDrawerTop">
+    <div><span class="mortaDrawerKicker">MORTALEAGUE</span><strong>Menü</strong></div>
+    <button class="mortaDrawerClose" id="mortaDrawerClose" type="button" aria-label="Menüyü kapat">×</button>
+  </div>
+  <div class="mortaDrawerProfile" id="mortaDrawerProfile">
+    <div class="mortaDrawerAvatar" id="mortaDrawerAvatar">M</div>
+    <div class="mortaDrawerProfileMeta"><b id="mortaDrawerUsername">Profil</b><span id="mortaDrawerSubtitle">Hesabını görüntüle</span></div>
+    <button class="mortaDrawerProfileBtn" id="mortaDrawerProfileBtn" type="button">Profilim</button>
+  </div>
+  <nav class="mortaDrawerNav">
+    <button data-drawer-scroll="mortahub"><span>⌂</span><b>Akış</b><small>MortaHub</small></button>
+    <button data-drawer-scroll="players"><span>♟</span><b>Oyuncular</b><small>Oyuncu havuzu</small></button>
+    <button data-drawer-scroll="playerCalculator"><span>✦</span><b>Katkı Değeri</b><small>Performans hesaplama</small></button>
+    <button data-drawer-scroll="systems"><span>☷</span><b>Sistemler</b><small>Kurallar ve hesaplamalar</small></button>
+  </nav>
+  <div class="mortaDrawerFooter"><span>Mobil menü</span><span id="mortaDrawerStatus">Hazır</span></div>
+</aside>
+
 <div class="profileModal" id="profileModal" aria-hidden="true">
   <div class="accountBackdrop" data-close-profile></div>
   <div class="accountCard profileCard" role="dialog" aria-modal="true">
     <button class="accountClose" data-close-profile aria-label="Kapat">×</button>
-    <span class="accountEyebrow">OYUNCU PROFİLİ</span>
-    <h3>Profilin</h3>
+    <span class="accountEyebrow">PROFİL</span>
+    <div class="mlProfileHead">
+      <div class="mlProfileAvatar"><span id="mlProfileFallback">M</span><img id="mlProfileAvatar" alt="Profil fotoğrafı" hidden></div>
+      <div class="mlProfileIdentity"><h3 id="mlProfileName">Profilin</h3><span id="mlProfileHandle">@profil</span><p id="mlProfileMiniBio">MortaLeague oyuncu profili</p></div>
+    </div>
+    <div class="mlProfileStats"><div><b id="mlProfileFollowers">0</b><span>Takipçi</span></div><div><b id="mlProfileFollowing">0</b><span>Takip</span></div><div><b id="mlProfilePosts">0</b><span>Gönderi</span></div><div><b id="mlProfileValue">€0</b><span>Değer</span></div></div>
+    <div class="mlProfileActions"><button class="accountBtn accountPrimary" type="button" id="mlProfileEditBtn">Profili Düzenle</button><button class="accountBtn" type="button" id="mlProfileShareBtn">Profili Paylaş</button></div>
+    <div class="mlProfileBio" id="mlProfileBioDisplay">Kendin hakkında kısa bir şey yaz...</div>
+    <div class="mlProfileGrid" id="mlProfileGrid"><div class="mlProfileGridItem">⚽</div><div class="mlProfileGridItem">📈</div><div class="mlProfileGridItem">🏆</div><div class="mlProfileGridItem">🔥</div><div class="mlProfileGridItem">💎</div><div class="mlProfileGridItem">🎯</div></div>
+    <div class="mlProfileEditDivider"><span>PROFİL AYARLARI</span></div>
+    <h3 class="mlProfileEditTitle">Profil detayları</h3>
     <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
@@ -2551,51 +2613,7 @@ footer{border-top:1px solid var(--igline)!important;background:#09090b!important
 }
 </style>
 
-<div class="mortaBottomNav" id="mortaBottomNav" aria-label="Mobil gezinme">
- <button class="active" data-scroll="mortahub"><b>⌂</b><span>Akış</span></button>
- <button data-scroll="players"><b>♟</b><span>Oyuncular</span></button>
- <button data-scroll="playerCalculator"><b>✦</b><span>Katkı</span></button>
- <button data-scroll="systems"><b>☷</b><span>Sistemler</span></button>
-</div>
 
-<script>
-(function(){
-  const hub=document.getElementById('mortahub');
-  const main=document.querySelector('main');
-  if(hub&&main) main.insertBefore(hub,main.firstElementChild);
-
-  const shell=hub&&hub.querySelector('.hubShell');
-  if(shell&&!document.getElementById('mortaSocialIntro')){
-    const intro=document.createElement('div');
-    intro.id='mortaSocialIntro';
-    intro.className='mortaSocialIntro';
-    intro.innerHTML='<div><h1>MortaHub</h1><p>Takip et, paylaş ve futbol dünyanı keşfet.</p></div><div class="mortaSocialStatus"><i></i> MortaLeague topluluğu</div>';
-    shell.parentNode.insertBefore(intro,shell);
-  }
-
-  function activateTab(name){
-    const btn=document.querySelector('.hubTabs [data-hub-tab="'+name+'"]');
-    if(btn) btn.click();
-  }
-  document.querySelectorAll('[data-hub-mobile]').forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.hubMobile)));
-  const compose=document.getElementById('mobileHubCompose');
-  if(compose) compose.addEventListener('click',()=>{
-    document.getElementById('mortahub')?.scrollIntoView({behavior:'smooth'});
-    setTimeout(()=>document.getElementById('hubPostText')?.focus(),450);
-  });
-  document.querySelectorAll('.mortaBottomNav [data-scroll]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('.mortaBottomNav button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-  }));
-  document.addEventListener('morta:viewchange',e=>{
-    const view=e.detail?.view;
-    document.querySelectorAll('.mortaBottomNav [data-scroll]').forEach(b=>{
-      const target=b.dataset.scroll;
-      b.classList.toggle('active', target===view);
-    });
-  });
-})();
-</script>
 
 
 <style id="mortaDMStyles">
@@ -2811,5 +2829,38 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 }
 </style>
 <script src="master-v15.js" defer></script>
+
+<script id="morta-v18-drawer-profile-js">
+(function(){
+  const drawer=document.getElementById('mortaDrawer'), backdrop=document.getElementById('mortaDrawerBackdrop'), openBtn=document.getElementById('mortaHamburger'), closeBtn=document.getElementById('mortaDrawerClose');
+  if(!drawer||!openBtn)return;
+  function close(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');backdrop.hidden=true;openBtn.setAttribute('aria-expanded','false');document.body.classList.remove('morta-drawer-open')}
+  function open(){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');backdrop.hidden=false;openBtn.setAttribute('aria-expanded','true');document.body.classList.add('morta-drawer-open')}
+  openBtn.addEventListener('click',()=>drawer.classList.contains('open')?close():open()); closeBtn?.addEventListener('click',close); backdrop?.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+  document.querySelectorAll('[data-drawer-scroll]').forEach(btn=>btn.addEventListener('click',()=>{close();setTimeout(()=>window.MortaLeagueViews?.show(btn.dataset.drawerScroll),30)}));
+  document.getElementById('mortaDrawerProfileBtn')?.addEventListener('click',()=>{close();setTimeout(()=>window.__openMortaProfile?.(),30)});
+  const profileModal=document.getElementById('profileModal');
+  const drawerUser=document.getElementById('mortaDrawerUsername'), drawerSub=document.getElementById('mortaDrawerSubtitle'), drawerAv=document.getElementById('mortaDrawerAvatar');
+  function syncProfile(){
+    const username=document.getElementById('profileUsername')?.textContent?.trim()||'Profil';
+    const pos=document.getElementById('profilePosition')?.value||'';
+    const team=document.getElementById('profileTeam')?.value||'';
+    drawerUser.textContent=username||'Profil'; drawerSub.textContent=[pos,team].filter(Boolean).join(' · ')||'Hesabını görüntüle';
+    const img=document.getElementById('profileAvatar');
+    if(img?.src && !img.hidden){drawerAv.innerHTML='';const i=document.createElement('img');i.src=img.src;i.alt='';i.style.cssText='width:100%;height:100%;object-fit:cover';drawerAv.appendChild(i)} else drawerAv.textContent=(username||'M').slice(0,1).toUpperCase();
+    const mini=document.getElementById('mlProfileName'); if(mini) mini.textContent=username||'Profilin';
+    const handle=document.getElementById('mlProfileHandle'); if(handle) handle.textContent='@'+(username||'profil').replace(/\s+/g,'').toLocaleLowerCase('tr-TR');
+    const bio=document.getElementById('profileBio')?.value?.trim()||'MortaLeague oyuncu profili'; const mb=document.getElementById('mlProfileBioDisplay'); if(mb) mb.textContent=bio;
+    const val=Number(document.getElementById('profileValue')?.value)||0; const pv=document.getElementById('mlProfileValue'); if(pv) pv.textContent='€'+new Intl.NumberFormat('tr-TR').format(val);
+    const ma=document.getElementById('mlProfileAvatar'), mfa=document.getElementById('mlProfileFallback'); if(ma&&img?.src&&!img.hidden){ma.src=img.src;ma.hidden=false;if(mfa)mfa.hidden=true}else if(ma){ma.hidden=true;if(mfa)mfa.textContent=(username||'M').slice(0,1).toUpperCase();mfa.hidden=false}
+  }
+  if(profileModal)new MutationObserver(()=>{if(profileModal.classList.contains('open')) setTimeout(syncProfile,50)}).observe(profileModal,{attributes:true,attributeFilter:['class']});
+  ['profileUsername','profilePosition','profileTeam','profileBio','profileValue'].forEach(id=>document.getElementById(id)?.addEventListener('input',syncProfile));
+  document.getElementById('mlProfileEditBtn')?.addEventListener('click',()=>{document.getElementById('profileBio')?.focus()});
+  document.getElementById('mlProfileShareBtn')?.addEventListener('click',async()=>{const u=drawerUser?.textContent||'MortaLeague';try{await navigator.clipboard?.writeText(location.href);window.MortaUI?.toast?.(u+' profili bağlantısı kopyalandı.','success')}catch{window.MortaUI?.toast?.('Profil bağlantısı hazır.','info')}});
+  document.addEventListener('morta-auth-ready',syncProfile); window.addEventListener('load',()=>setTimeout(syncProfile,800));
+})();
+</script>
 </body>
 </html>
