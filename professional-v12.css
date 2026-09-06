@@ -119,3 +119,61 @@ img{content-visibility:auto}
   #home .trophy{width:108px!important;height:140px!important}
 }
 .mortaSkipLink{position:fixed;left:12px;top:-60px;z-index:10000;padding:10px 12px;border-radius:10px;background:#151019;color:#fff;border:1px solid rgba(168,85,247,.4);transition:top .15s ease}.mortaSkipLink:focus{top:12px}
+
+/* ===== MortaLeague v13 Master UX / polish layer ===== */
+:root{
+  --ml-bg:#09080d;--ml-panel:rgba(20,15,27,.78);--ml-panel-2:rgba(255,255,255,.035);
+  --ml-border-strong:rgba(190,110,255,.24);--ml-shadow:0 18px 50px rgba(0,0,0,.28);
+  --ml-focus:0 0 0 3px rgba(168,85,247,.16);
+}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--ml-bg);overflow-x:hidden}
+main{max-width:1180px;margin-inline:auto}
+section{contain:paint}
+a,button,input,select,textarea{outline-offset:3px}
+:focus-visible{outline:2px solid rgba(196,129,255,.9)!important;box-shadow:var(--ml-focus)!important}
+::selection{background:rgba(168,85,247,.32);color:#fff}
+button{font-family:inherit}
+button:active:not(:disabled),.primary:active:not(:disabled),.secondary:active:not(:disabled){transform:translateY(0) scale(.985)}
+.card,.panel,.calcPanel,.contributionResult,.hubPanel,.hubPost,.feature,.newsCard,.playerDirectoryGrid>article,.teamDirectory>article,.systemRule{box-shadow:var(--ml-shadow)}
+.card:hover,.panel:hover,.feature:hover,.newsCard:hover,.playerDirectoryGrid>article:hover,.teamDirectory>article:hover{border-color:var(--ml-border-strong)}
+
+/* Smooth, restrained feedback */
+.mortaPageProgress{position:fixed;left:0;top:0;height:2px;width:0;z-index:100000;background:linear-gradient(90deg,#8b5cf6,#ec4899);box-shadow:0 0 12px rgba(168,85,247,.7);pointer-events:none}
+.mortaToastStack{position:fixed;right:16px;bottom:18px;z-index:100001;display:grid;gap:8px;width:min(360px,calc(100vw - 32px));pointer-events:none}
+.mortaToast{padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(17,13,22,.94);backdrop-filter:blur(16px);color:#f7f4fb;box-shadow:0 16px 45px rgba(0,0,0,.35);font-size:13px;line-height:1.45;animation:mlToastIn .2s ease both}
+.mortaToast.success{border-color:rgba(110,231,183,.28)}.mortaToast.error{border-color:rgba(248,113,113,.3)}
+@keyframes mlToastIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.mortaBackTop{position:fixed;right:18px;bottom:86px;z-index:9998;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(16,12,22,.9);color:#fff;display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s ease;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.mortaBackTop.show{opacity:1;pointer-events:auto;transform:none}
+
+/* Section transitions */
+body.morta-view-mode section[data-morta-view]:not(.mortaViewHidden){animation:mlSectionIn .22s ease both}
+@keyframes mlSectionIn{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* Consistent cards / toolbars */
+.sectionHead,.directoryToolbar,.systemTools,.hubTabs{isolation:isolate}
+.badge,.pill,.tag{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.emptyState,.directoryEmpty,.adminEmpty,.hubEmpty{border-style:dashed}
+
+/* Mobile: compact, touch-friendly, no oversized typography */
+@media(max-width:900px){
+  body{font-size:14px}
+  .nav{height:56px!important;min-height:56px!important}
+  .logoMark{width:28px!important;height:28px!important;min-width:28px!important}
+  .logo div{font-size:13px!important;letter-spacing:-.25px!important}
+  .sectionHead h2{font-size:20px!important}
+  #home h1{font-size:clamp(29px,8.2vw,42px)!important}
+  #home .hero p{font-size:13px!important}
+  .primary,.secondary,.accountBtn,.navlinks button{border-radius:11px!important}
+  .mortaToastStack{right:10px;bottom:74px;width:calc(100vw - 20px)}
+  .mortaBackTop{right:12px;bottom:76px;width:38px;height:38px}
+  .mortaBottomNav{backdrop-filter:blur(18px);background:rgba(12,9,17,.88)!important;border-top:1px solid rgba(255,255,255,.08)!important}
+}
+@media(max-width:520px){
+  .sectionHead h2{font-size:19px!important}
+  #home h1{font-size:clamp(28px,8vw,38px)!important}
+  .mortaBottomNav button{height:50px!important}
+  .mortaBottomNav button b{font-size:16px!important}
+  .mortaBottomNav button span{font-size:8.5px!important}
+}

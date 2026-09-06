@@ -88,3 +88,109 @@
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ready,{once:true}); else ready();
 })();
+
+/* MortaLeague v13 Master UX layer */
+(() => {
+  'use strict';
+  const $ = (s,r=document)=>r.querySelector(s);
+  const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+
+  // Unified toast API used by future features without touching core logic.
+  const ensureToastStack=()=>{
+    let stack=$('.mortaToastStack');
+    if(!stack){ stack=document.createElement('div'); stack.className='mortaToastStack'; stack.setAttribute('aria-live','polite'); stack.setAttribute('aria-atomic','true'); document.body.appendChild(stack); }
+    return stack;
+  };
+  window.MortaUI=window.MortaUI||{};
+  if(!window.MortaUI.toast){
+    window.MortaUI.toast=(message,type='info')=>{
+      const item=document.createElement('div'); item.className=`mortaToast ${type}`; item.textContent=String(message);
+      ensureToastStack().appendChild(item); setTimeout(()=>item.remove(),3600);
+    };
+  }
+
+  // Scroll progress + back-to-top; both are non-invasive.
+  const bar=document.createElement('div'); bar.className='mortaPageProgress'; bar.setAttribute('aria-hidden','true'); document.body.appendChild(bar);
+  const back=document.createElement('button'); back.type='button'; back.className='mortaBackTop'; back.textContent='↑'; back.title='Başa dön'; back.setAttribute('aria-label','Başa dön'); document.body.appendChild(back);
+  const syncScroll=()=>{
+    const d=document.documentElement, max=Math.max(1,d.scrollHeight-d.clientHeight);
+    bar.style.width=`${Math.min(100,Math.max(0,(scrollY/max)*100))}%`;
+    back.classList.toggle('show',scrollY>420);
+  };
+  addEventListener('scroll',syncScroll,{passive:true}); syncScroll();
+  back.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+  // Make every button explicit and prevent accidental form submission.
+  $$('button:not([type])').forEach(b=>{if(!b.closest('form')) b.type='button';});
+
+  // External links stay predictable; no accidental loss of app state.
+  $$('a[href^="http"]').forEach(a=>{if(a.target==='_blank'){a.rel='noopener noreferrer';}});
+
+  // Improve native lazy loading for data-added images without touching avatars.
+  const optimize=()=>$$('img').forEach(img=>{
+    if(!img.hasAttribute('decoding')) img.decoding='async';
+    if(!img.hasAttribute('loading') && !img.closest('.logo,.profileAvatar,.avatar')) img.loading='lazy';
+  });
+  optimize();
+
+  // Robust view helper: if a nav control targets a view, keep one visible section.
+  const viewIds=['home','players','playerCalculator','systems','mortahub'];
+  const normalizeTarget=v=>v==='contribution'?'playerCalculator':v;
+  const enforceView=target=>{
+    const id=normalizeTarget(target);
+    if(!viewIds.includes(id)) return false;
+    const sections=viewIds.map(x=>document.getElementById(x)).filter(Boolean);
+    sections.forEach(sec=>{
+      if(sec.id===id){ sec.classList.remove('mortaViewHidden'); sec.hidden=false; sec.setAttribute('aria-hidden','false'); }
+      else { sec.classList.add('mortaViewHidden'); sec.hidden=false; sec.setAttribute('aria-hidden','true'); }
+    });
+    document.body.classList.add('morta-view-mode');
+    return true;
+  };
+  window.MortaLeagueV13={enforceView};
+
+  // Repair common semantic aliases without replacing existing event handlers.
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-mobile-scroll],[data-scroll]');
+    if(!b) return;
+    const target=normalizeTarget(b.getAttribute('data-mobile-scroll')||b.getAttribute('data-scroll')||'');
+    if(viewIds.includes(target)){
+      // Let the existing app handler run; normalize visibility after it.
+      requestAnimationFrame(()=>enforceView(target));
+    }
+  },{capture:true});
+
+  // Mobile navigation active state based on current section and viewport.
+  const syncNav=()=>{
+    const active=viewIds.find(id=>{const el=document.getElementById(id); return el && !el.classList.contains('mortaViewHidden') && el.getAttribute('aria-hidden')!=='true';});
+    $$('.mortaBottomNav button').forEach(b=>{
+      const t=normalizeTarget(b.getAttribute('data-mobile-scroll')||b.dataset.target||'');
+      const on=t===active; b.classList.toggle('is-active',on); b.setAttribute('aria-current',on?'page':'false');
+    });
+  };
+  document.addEventListener('morta:viewchange',syncNav);
+  setTimeout(syncNav,0);
+
+  // Focus the first useful control after a view change for keyboard/screen-reader users.
+  document.addEventListener('morta:viewchange',e=>{
+    const id=e.detail?.id;
+    if(!id) return;
+    const sec=document.getElementById(normalizeTarget(id));
+    const focusable=sec?.querySelector('input,select,button,[href]');
+    if(focusable && matchMedia('(min-width:901px)').matches) setTimeout(()=>focusable.focus({preventScroll:true}),50);
+  });
+
+  // Guard against accidental duplicate clicks on primary async buttons.
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('.primary,.secondary,.accountBtn');
+    if(!b || b.disabled || b.dataset.mlGuard==='1') return;
+    if(b.id && /submit|save|publish|calculate/i.test(b.id)){
+      b.dataset.mlGuard='1'; setTimeout(()=>delete b.dataset.mlGuard,450);
+    }
+  },{capture:true});
+
+  // Tiny connectivity feedback, throttled to avoid noise.
+  let last=0; const announce=(msg,type)=>{const now=Date.now(); if(now-last<1200)return; last=now; window.MortaUI?.toast(msg,type);};
+  addEventListener('online',()=>announce('Bağlantı yeniden kuruldu.','success'));
+  addEventListener('offline',()=>announce('İnternet bağlantısı kesildi.','error'));
+})();
