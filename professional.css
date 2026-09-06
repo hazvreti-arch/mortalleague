@@ -24,3 +24,32 @@ button{touch-action:manipulation}
   .ml-toast-stack{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));width:auto}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+
+/* MortaLeague mobile scale refinement v10 */
+@media (max-width: 700px){
+  html{font-size:15px}
+  body{font-size:14px;line-height:1.45}
+  header,.header,.navbar,.topbar,.site-header{min-height:56px}
+  .logo,.brand,.site-logo,.brand-logo{transform:scale(.86);transform-origin:left center}
+  .logo img,.brand img,.site-logo img,.brand-logo img{max-height:34px!important;width:auto!important}
+  h1{font-size:clamp(28px,8vw,42px)!important;line-height:1.02!important;letter-spacing:-.8px!important}
+  h2{font-size:clamp(23px,6.5vw,32px)!important;line-height:1.08!important}
+  h3{font-size:clamp(17px,4.8vw,23px)!important;line-height:1.15!important}
+  h4{font-size:16px!important}
+  p,li,.muted,.description,.subtitle{font-size:13.5px!important;line-height:1.55!important}
+  button,.btn,.primary,.secondary,.nav-btn,.tab-btn{font-size:13px!important;min-height:42px!important;padding:10px 14px!important}
+  input,select,textarea{font-size:14px!important;min-height:42px!important}
+  .card,.panel,.section,.hero,.hero-card,.feature-card,.leagueExperience,.leagueExperienceCard{border-radius:16px!important}
+  .section{padding-top:24px!important;padding-bottom:24px!important}
+  .hero,.hero-section{padding:28px 18px!important}
+  .leagueExperience{padding:24px 18px!important}
+  .leagueExperienceHero h2{font-size:31px!important}
+  .leagueExperienceCard{padding:18px!important}
+  .leagueExperienceCard h3{font-size:16px!important}
+  .leagueExperienceFooter h3{font-size:17px!important}
+  .bottom-nav,.mobile-nav,.mobile-bottom-nav{height:64px!important}
+  .bottom-nav a,.mobile-nav a,.mobile-bottom-nav a,
+  .bottom-nav button,.mobile-nav button,.mobile-bottom-nav button{font-size:11px!important}
+  .bottom-nav svg,.mobile-nav svg,.mobile-bottom-nav svg{width:18px!important;height:18px!important}
+}
