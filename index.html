@@ -881,6 +881,31 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 }
 </style>
 
+
+<style id="morta-v22-godmode-style">
+.godV2{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.godV2Head{display:flex;justify-content:space-between;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.godV2Grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:14px}
+.godV2Card{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02)}
+.godV2Card h5{margin:0 0 10px;font-size:12px;letter-spacing:.5px}
+.godV2Form{display:grid;gap:8px}
+.godV2Form label{display:grid;gap:5px;color:#9b93a4;font-size:10px}
+.godV2Form input,.godV2Form select,.godV2Form textarea{
+  width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;
+  background:#0b0710;color:#fff;padding:9px 10px;font:inherit;outline:none
+}
+.godV2Actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.godV2Actions .accountBtn{font-size:10px;padding:8px 10px}
+.godV2Log{max-height:280px;overflow:auto;display:grid;gap:7px}
+.godV2LogItem{padding:9px;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:#0d0a12}
+.godV2LogItem b{font-size:10px}.godV2LogItem span{display:block;color:#8f8797;font-size:9px;margin-top:3px}
+.godV2Selected{margin-top:8px;padding:8px 10px;border-radius:9px;background:rgba(168,85,247,.08);color:#d8c7e7;font-size:10px}
+@media(max-width:700px){
+  .godV2Grid{grid-template-columns:1fr}
+  .godV2Head{align-items:flex-start}
+}
+</style>
+
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1938,6 +1963,73 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
         <button class="accountBtn accountPrimary" id="adminUserRefresh">KULLANICILARI YÜKLE</button>
       </div>
       <div class="adminUsersGrid" id="adminUsersGrid"><div class="adminEmpty">Kullanıcılar yükleniyor...</div></div>
+    </div>
+
+
+    <div class="godV2" id="godV2">
+      <div class="godV2Head">
+        <div>
+          <span class="accountEyebrow">GODMODE V2</span>
+          <h4 style="margin:7px 0 0">SİTE YÖNETİM MERKEZİ</h4>
+          <p style="margin:6px 0 0;color:#8f839d;font-size:11px;line-height:1.5">Bir kullanıcı seçerek profilini, rolünü, oyuncu istatistiklerini, başarılarını ve bildirimlerini yönet.</p>
+        </div>
+        <div class="godV2Selected" id="godSelectedUser">Kullanıcı seçilmedi</div>
+      </div>
+
+      <div class="godV2Grid">
+        <section class="godV2Card">
+          <h5>PROFİL DÜZENLE</h5>
+          <div class="godV2Form">
+            <label>Kullanıcı adı<input id="godUsername" maxlength="60"></label>
+            <label>Takım<input id="godTeam" maxlength="80"></label>
+            <label>Pozisyon<input id="godPosition" maxlength="50"></label>
+            <label>Rol
+              <select id="godRole"><option value="player">PLAYER</option><option value="team">TEAM</option><option value="admin">ADMIN</option></select>
+            </label>
+            <label>Avatar URL<input id="godAvatar" maxlength="500"></label>
+            <label>Bio<textarea id="godBio" maxlength="1000" rows="3"></textarea></label>
+          </div>
+          <div class="godV2Actions">
+            <button class="accountBtn accountPrimary" id="godSaveProfile">PROFİLİ KAYDET</button>
+            <button class="accountBtn" id="godSaveRole">ROLÜ KAYDET</button>
+          </div>
+        </section>
+
+        <section class="godV2Card">
+          <h5>OYUNCU İSTATİSTİKLERİ</h5>
+          <div class="godV2Form">
+            <label>Gol<input id="godGoals" type="number" min="0" value="0"></label>
+            <label>Asist<input id="godAssists" type="number" min="0" value="0"></label>
+            <label>Gym<input id="godGym" type="number" min="0" value="0"></label>
+            <label>Kupa<input id="godCups" type="number" min="0" value="0"></label>
+            <label>Katkı değeri (opsiyonel)<input id="godContribution" type="number" step="0.01" min="0"></label>
+          </div>
+          <div class="godV2Actions"><button class="accountBtn accountPrimary" id="godSaveStats">İSTATİSTİKLERİ KAYDET</button></div>
+        </section>
+
+        <section class="godV2Card">
+          <h5>BİLDİRİM GÖNDER</h5>
+          <div class="godV2Form">
+            <label>Başlık<input id="godNotifTitle" maxlength="120" placeholder="MortaLeague güncellemesi"></label>
+            <label>Mesaj<textarea id="godNotifBody" maxlength="1000" rows="4" placeholder="Oyuncuya gönderilecek mesaj..."></textarea></label>
+            <label>Tür<input id="godNotifKind" maxlength="30" value="admin"></label>
+          </div>
+          <div class="godV2Actions"><button class="accountBtn accountPrimary" id="godSendNotif">BİLDİRİM GÖNDER</button></div>
+        </section>
+
+        <section class="godV2Card">
+          <h5>BAŞARI VER</h5>
+          <div class="godV2Form">
+            <label>Başarı anahtarı<input id="godAchievement" maxlength="80" placeholder="elite_player"></label>
+          </div>
+          <div class="godV2Actions"><button class="accountBtn accountPrimary" id="godGrantAchievement">BAŞARI VER</button></div>
+        </section>
+      </div>
+
+      <section class="godV2Card" style="margin-top:12px">
+        <div class="godV2Head"><h5 style="margin:0">ADMIN İŞLEM GEÇMİŞİ</h5><button class="accountBtn" id="godLoadAudit">GÜNCELLE</button></div>
+        <div class="godV2Log" id="godAuditLog"><div class="adminEmpty">İşlem geçmişi yükleniyor...</div></div>
+      </section>
     </div>
 
     <div class="accountMessage" id="adminStatus"></div>
@@ -3073,6 +3165,138 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ready,{once:true});
   else ready();
+})();
+</script>
+
+
+<script id="morta-v22-godmode-script">
+(()=>{
+  const $=s=>document.querySelector(s);
+  const sup=()=>typeof mortaSupabase!=='undefined'?mortaSupabase:null;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  let selectedId=null;
+
+  const status=(msg,ok=false)=>{
+    const el=$('#adminStatus'); if(!el) return;
+    el.textContent=msg; el.style.color=ok?'#86efac':'#ff9a9a';
+  };
+  const requireId=()=>{ if(!selectedId){status('Önce kullanıcı listesinden bir kullanıcı seç.');return false} return true; };
+
+  async function loadSelectedProfile(id){
+    selectedId=id;
+    const s=sup(); if(!s)return;
+    const [{data:p,error:pe},{data:st,error:se}]=await Promise.all([
+      s.from('profiles').select('id,username,team,position,account_type,bio,avatar_url,is_banned').eq('id',id).maybeSingle(),
+      s.from('morta_player_stats').select('goals,assists,gym,cups,contribution_value').eq('user_id',id).maybeSingle()
+    ]);
+    if(pe){status('Profil yüklenemedi: '+pe.message);return}
+    $('#godSelectedUser').textContent=`${p?.username||'Oyuncu'} · ${id.slice(0,8)}…${p?.is_banned?' · BANLI':''}`;
+    $('#godUsername').value=p?.username||'';
+    $('#godTeam').value=p?.team||'';
+    $('#godPosition').value=p?.position||'';
+    $('#godRole').value=p?.account_type||'player';
+    $('#godBio').value=p?.bio||'';
+    $('#godAvatar').value=p?.avatar_url||'';
+    $('#godGoals').value=st?.goals??0;
+    $('#godAssists').value=st?.assists??0;
+    $('#godGym').value=st?.gym??0;
+    $('#godCups').value=st?.cups??0;
+    $('#godContribution').value=st?.contribution_value??'';
+    status('Kullanıcı seçildi: '+(p?.username||'Oyuncu'),true);
+  }
+
+  // Add an edit button to the existing admin user list.
+  function enhanceUsers(){
+    document.querySelectorAll('[data-admin-user]').forEach(row=>{
+      if(row.querySelector('[data-god-edit]'))return;
+      const wrap=row.querySelector('.adminUserActions'); if(!wrap)return;
+      const b=document.createElement('button');
+      b.type='button'; b.className='accountBtn'; b.dataset.godEdit=''; b.textContent='DÜZENLE';
+      wrap.prepend(b);
+    });
+  }
+
+  $('#adminUsersGrid')?.addEventListener('click',e=>{
+    const b=e.target.closest('[data-god-edit]'); if(!b)return;
+    const row=b.closest('[data-admin-user]'); if(!row)return;
+    loadSelectedProfile(row.dataset.adminUser);
+  });
+
+  async function saveProfile(){
+    if(!requireId())return;
+    const s=sup();
+    const {error}=await s.rpc('admin_update_profile',{
+      target_user_id:selectedId,
+      new_username:$('#godUsername').value,
+      new_team:$('#godTeam').value,
+      new_position:$('#godPosition').value,
+      new_account_type:$('#godRole').value,
+      new_bio:$('#godBio').value,
+      new_avatar_url:$('#godAvatar').value
+    });
+    if(error){status('Profil kaydedilemedi: '+error.message);return}
+    status('Profil güncellendi. ✓',true);
+    window.mortaLoadAdminUsers?.($('#adminUserSearch')?.value||'');
+  }
+
+  async function saveRole(){
+    if(!requireId())return;
+    const {error}=await sup().rpc('admin_set_role',{target_user_id:selectedId,new_role:$('#godRole').value});
+    if(error){status('Rol değişmedi: '+error.message);return}
+    status('Rol güncellendi. ✓',true);
+  }
+
+  async function saveStats(){
+    if(!requireId())return;
+    const vals=['godGoals','godAssists','godGym','godCups'].map(id=>Math.max(0,parseInt($('#'+id).value||0,10)||0));
+    let contribution=parseFloat($('#godContribution').value);
+    if(Number.isNaN(contribution)) contribution=null;
+    const {error}=await sup().rpc('admin_upsert_player_stats',{
+      target_user_id:selectedId,new_goals:vals[0],new_assists:vals[1],new_gym:vals[2],new_cups:vals[3],new_contribution:contribution
+    });
+    if(error){status('İstatistikler kaydedilemedi: '+error.message);return}
+    status('Oyuncu istatistikleri güncellendi. ✓',true);
+  }
+
+  async function sendNotif(){
+    if(!requireId())return;
+    const title=$('#godNotifTitle').value.trim(),body=$('#godNotifBody').value.trim(),kind=$('#godNotifKind').value.trim()||'admin';
+    if(!title||!body){status('Bildirim başlığı ve mesajı gerekli.');return}
+    const {error}=await sup().rpc('admin_send_user_notification',{target_user_id:selectedId,notification_title:title,notification_body:body,notification_kind:kind});
+    if(error){status('Bildirim gönderilemedi: '+error.message);return}
+    $('#godNotifTitle').value=''; $('#godNotifBody').value='';
+    status('Bildirim gönderildi. ✓',true);
+  }
+
+  async function grantAchievement(){
+    if(!requireId())return;
+    const achievement=$('#godAchievement').value.trim();
+    if(!achievement){status('Başarı anahtarı gerekli.');return}
+    const {error}=await sup().rpc('admin_grant_achievement',{target_user_id:selectedId,achievement});
+    if(error){status('Başarı verilemedi: '+error.message);return}
+    $('#godAchievement').value='';
+    status('Başarı oyuncuya verildi. ✓',true);
+  }
+
+  async function loadAudit(){
+    const box=$('#godAuditLog'); if(!box)return;
+    const {data,error}=await sup().from('admin_audit_log').select('action,target_id,metadata,created_at').order('created_at',{ascending:false}).limit(50);
+    if(error){box.innerHTML=`<div class="adminEmpty">Loglar yüklenemedi: ${esc(error.message)}</div>`;return}
+    box.innerHTML=(data||[]).map(x=>`<div class="godV2LogItem"><b>${esc(x.action)}</b><span>${new Date(x.created_at).toLocaleString('tr-TR')} · ${esc(x.target_id||'')}</span><span>${esc(JSON.stringify(x.metadata||{}))}</span></div>`).join('')||'<div class="adminEmpty">Henüz işlem yok.</div>';
+  }
+
+  $('#godSaveProfile')?.addEventListener('click',saveProfile);
+  $('#godSaveRole')?.addEventListener('click',saveRole);
+  $('#godSaveStats')?.addEventListener('click',saveStats);
+  $('#godSendNotif')?.addEventListener('click',sendNotif);
+  $('#godGrantAchievement')?.addEventListener('click',grantAchievement);
+  $('#godLoadAudit')?.addEventListener('click',loadAudit);
+
+  const observer=new MutationObserver(()=>enhanceUsers());
+  const ug=$('#adminUsersGrid');
+  if(ug)observer.observe(ug,{childList:true,subtree:true});
+  enhanceUsers();
+  window.mortaGodmode={loadSelectedProfile,loadAudit};
 })();
 </script>
 
