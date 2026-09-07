@@ -858,6 +858,29 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
   .mlProfileHead{padding-top:4px}.mlProfileAvatar{width:76px;height:76px;font-size:24px}.mlProfileIdentity h3{font-size:18px}.mlProfileStats{gap:3px}.mlProfileStats b{font-size:12px}.mlProfileStats span{font-size:9px}.mlProfileGridItem{font-size:19px}
 }
 </style>
+
+<style id="morta-v19-admin-users-style">
+.adminUsers{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.adminUsersToolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.adminUsersToolbar input{flex:1 1 220px;min-width:180px;border:1px solid var(--line);border-radius:10px;background:#0b0710;color:#fff;padding:10px 12px;outline:none}
+.adminUsersGrid{display:grid;gap:9px;max-height:430px;overflow:auto}
+.adminUserRow{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}
+.adminUserAvatar{width:38px;height:38px;border-radius:11px;object-fit:cover;background:#261333;display:grid;place-items:center;color:#e4c9ff;font-weight:900}
+.adminUserMeta{min-width:0}
+.adminUserMeta b,.adminUserMeta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adminUserMeta b{font-size:12px}.adminUserMeta span{margin-top:3px;color:#8f829a;font-size:10px}
+.adminUserActions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.adminUserActions button{font-size:10px;padding:8px 10px}
+.adminBadge{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:999px;font-size:9px;font-weight:800}
+.adminBadge.banned{background:rgba(239,68,68,.12);color:#ff8c8c;border:1px solid rgba(239,68,68,.25)}
+.adminBadge.active{background:rgba(34,197,94,.09);color:#86efac;border:1px solid rgba(34,197,94,.18)}
+@media(max-width:700px){
+  .adminUserRow{grid-template-columns:34px minmax(0,1fr);align-items:start}
+  .adminUserActions{grid-column:1/-1;justify-content:flex-start}
+  .adminUserActions button{flex:1}
+}
+</style>
+
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1905,6 +1928,18 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <div class="adminLeagueRows" id="adminLeagueRows"><div class="adminEmpty">Puan durumu yükleniyor...</div></div>
     </div>
     <div class="adminNewsForm"><span class="accountEyebrow">MORTANEWS YAYINLA</span><label>Başlık<input id="adminNewsTitle" maxlength="120" placeholder="Haber başlığı"></label><label>Haber Metni<textarea id="adminNewsBody" maxlength="3000" rows="5" placeholder="Haber metnini yaz..."></textarea></label><label>Görsel URL (opsiyonel)<input id="adminNewsImage" maxlength="500" placeholder="https://..."></label><button class="accountBtn accountPrimary" id="adminNewsPublish">MORTANEWS YAYINLA</button></div>
+
+    <div class="adminUsers">
+      <span class="accountEyebrow">KULLANICI YÖNETİMİ · GODMODE</span>
+      <h4 style="margin:7px 0 0">OYUNCULARI YÖNET</h4>
+      <p style="margin:6px 0 0;color:#8f839d;font-size:11px;line-height:1.5">Kullanıcıları ara, banla/aç veya hesabı kalıcı olarak sil. Banlanan hesaplar giriş yaptığında otomatik olarak oturumdan çıkarılır.</p>
+      <div class="adminUsersToolbar">
+        <input id="adminUserSearch" placeholder="Kullanıcı adı, takım veya mevki ara..." autocomplete="off">
+        <button class="accountBtn accountPrimary" id="adminUserRefresh">KULLANICILARI YÜKLE</button>
+      </div>
+      <div class="adminUsersGrid" id="adminUsersGrid"><div class="adminEmpty">Kullanıcılar yükleniyor...</div></div>
+    </div>
+
     <div class="accountMessage" id="adminStatus"></div>
   </div>
 </div>
@@ -2862,5 +2897,184 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   document.addEventListener('morta-auth-ready',syncProfile); window.addEventListener('load',()=>setTimeout(syncProfile,800));
 })();
 </script>
+
+<script id="morta-v19-admin-users-script">
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const sup = () => (typeof mortaSupabase !== 'undefined' ? mortaSupabase : null);
+  const esc = (v='') => String(v).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const adminGrid = $('#adminUsersGrid');
+  const search = $('#adminUserSearch');
+  const refresh = $('#adminUserRefresh');
+
+  async function isAdmin() {
+    const s = sup(); if (!s) return false;
+    const {data:{user}} = await s.auth.getUser();
+    if (!user) return false;
+    const {data:p} = await s.from('profiles').select('username').eq('id', user.id).maybeSingle();
+    return String(p?.username||'').toLowerCase() === 'wexemir';
+  }
+
+  async function loadAdminUsers(term='') {
+    if (!adminGrid || !(await isAdmin())) return;
+    adminGrid.innerHTML = '<div class="adminEmpty">Kullanıcılar yükleniyor...</div>';
+    const s = sup();
+    let q = s.from('profiles')
+      .select('id,username,team,position,account_type,avatar_url,is_banned,ban_reason,created_at')
+      .order('created_at',{ascending:false}).limit(100);
+    const clean = term.trim();
+    if (clean) {
+      const safe = clean.replace(/[%(),]/g,' ');
+      q = q.or(`username.ilike.%${safe}%,team.ilike.%${safe}%,position.ilike.%${safe}%`);
+    }
+    const {data,error} = await q;
+    if (error) {
+      adminGrid.innerHTML = `<div class="adminEmpty">Kullanıcılar yüklenemedi: ${esc(error.message)}</div>`;
+      return;
+    }
+    adminGrid.innerHTML = data?.length ? data.map(p => `
+      <article class="adminUserRow" data-admin-user="${esc(p.id)}">
+        ${p.avatar_url ? `<img class="adminUserAvatar" src="${esc(p.avatar_url)}" alt="">` : `<div class="adminUserAvatar">${esc((p.username||'U').slice(0,1).toUpperCase())}</div>`}
+        <div class="adminUserMeta">
+          <b>${esc(p.username||'Oyuncu')}</b>
+          <span>${esc(p.team||'Takımsız')} · ${esc(p.position||'Mevki yok')} · ${esc(p.account_type||'player')}</span>
+          <span class="adminBadge ${p.is_banned?'banned':'active'}">${p.is_banned?'● BANLI':'● AKTİF'}</span>
+        </div>
+        <div class="adminUserActions">
+          <button type="button" class="accountBtn ${p.is_banned?'accountPrimary':''}" data-admin-ban>${p.is_banned?'BAN KALDIR':'BANLA'}</button>
+          <button type="button" class="accountBtn" data-admin-delete style="border-color:rgba(239,68,68,.35);color:#ff8d8d">KALICI SİL</button>
+        </div>
+      </article>`).join('') : '<div class="adminEmpty">Kullanıcı bulunamadı.</div>';
+  }
+
+  adminGrid?.addEventListener('click', async (e) => {
+    const row = e.target.closest('[data-admin-user]');
+    if (!row) return;
+    const id = row.dataset.adminUser;
+    const s = sup();
+    if (e.target.closest('[data-admin-ban]')) {
+      const currentlyBanned = row.querySelector('.adminBadge')?.classList.contains('banned');
+      let reason = '';
+      if (!currentlyBanned) {
+        reason = prompt('Ban nedeni (opsiyonel):') ?? '';
+        if (!confirm('Bu kullanıcıyı banlamak istediğine emin misin?')) return;
+      } else {
+        if (!confirm('Bu kullanıcının banını kaldır?')) return;
+      }
+      const {error} = await s.rpc('admin_set_user_ban',{target_user_id:id,ban_state:!currentlyBanned,reason});
+      const st=$('#adminStatus');
+      if (error) { if(st) st.textContent='İşlem başarısız: '+error.message; return; }
+      if(st) st.textContent = currentlyBanned ? 'Ban kaldırıldı. ✓' : 'Kullanıcı banlandı. ✓';
+      loadAdminUsers(search?.value||'');
+    }
+    if (e.target.closest('[data-admin-delete]')) {
+      const name = row.querySelector('.adminUserMeta b')?.textContent || 'bu kullanıcı';
+      if (!confirm(`"${name}" hesabı KALICI olarak silinecek. Bu işlem geri alınamaz. Devam edilsin mi?`)) return;
+      const {error} = await s.rpc('admin_delete_user',{target_user_id:id});
+      const st=$('#adminStatus');
+      if (error) { if(st) st.textContent='Silme başarısız: '+error.message; return; }
+      if(st) st.textContent='Kullanıcı kalıcı olarak silindi. ✓';
+      loadAdminUsers(search?.value||'');
+      if(typeof loadAdminSummary==='function') loadAdminSummary();
+    }
+  });
+
+  refresh?.addEventListener('click',()=>loadAdminUsers(search?.value||''));
+  search?.addEventListener('input',()=>loadAdminUsers(search.value));
+
+  // Ban guard: a banned player is immediately signed out and blocked from using the site.
+  async function enforceBan() {
+    const s=sup(); if(!s) return;
+    const {data:{user}}=await s.auth.getUser();
+    if(!user) return;
+    const {data:p}=await s.from('profiles').select('is_banned,ban_reason').eq('id',user.id).maybeSingle();
+    if(p?.is_banned){
+      alert('MortaLeague hesabın banlandı.' + (p.ban_reason ? `\\nNeden: ${p.ban_reason}` : ''));
+      await s.auth.signOut();
+      location.hash='#home';
+      location.reload();
+    }
+  }
+
+  if (sup()) {
+    enforceBan();
+    sup().auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') setTimeout(enforceBan, 0);
+    });
+  }
+
+  window.mortaLoadAdminUsers = loadAdminUsers;
+})();
+</script>
+
+
+<style id="morta-v20-drawer-priority">
+@media(max-width:900px){
+  #mortaDrawer{z-index:10001!important;pointer-events:none}
+  #mortaDrawer.open{pointer-events:auto}
+  #mortaDrawerBackdrop{z-index:10000!important}
+  #mortaDrawer *{pointer-events:auto}
+}
+</style>
+<script id="morta-v20-drawer-click-fix">
+(function(){
+  function ready(){
+    const drawer=document.getElementById('mortaDrawer');
+    if(!drawer || drawer.dataset.v20Bound==='1') return;
+    drawer.dataset.v20Bound='1';
+
+    const closeDrawer=()=>{
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      const bg=document.getElementById('mortaDrawerBackdrop');
+      if(bg) bg.hidden=true;
+      document.getElementById('mortaHamburger')?.setAttribute('aria-expanded','false');
+      document.body.classList.remove('morta-drawer-open');
+      document.body.style.overflow='';
+    };
+
+    // Capture-phase handler prevents older document navigation listeners from
+    // swallowing clicks while a profile modal/other overlay is active.
+    drawer.addEventListener('click', function(ev){
+      const btn=ev.target.closest('[data-drawer-scroll]');
+      if(!btn) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      const view=btn.getAttribute('data-drawer-scroll');
+      // Close any open modal first; profile overlays otherwise can sit above
+      // the selected view and make it look like the navigation did nothing.
+      document.querySelectorAll('.profileModal.open,.publicProfileModal.open,.offerModal.open,.notificationModal.open,.adminModal.open,.accountModal.open,.contactModal.open').forEach(m=>{
+        m.classList.remove('open');
+        m.setAttribute('aria-hidden','true');
+      });
+      closeDrawer();
+      requestAnimationFrame(()=>{
+        if(window.MortaLeagueViews?.show){
+          window.MortaLeagueViews.show(view);
+        } else {
+          const target=document.getElementById(view);
+          if(target){
+            document.querySelectorAll('section[data-morta-view]').forEach(s=>s.classList.toggle('mortaViewHidden',s!==target));
+            window.scrollTo({top:0,behavior:'auto'});
+          }
+        }
+      });
+    }, true);
+
+    drawer.addEventListener('click', function(ev){
+      const btn=ev.target.closest('#mortaDrawerProfileBtn');
+      if(!btn) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      closeDrawer();
+      document.querySelectorAll('.profileModal.open').forEach(m=>{m.classList.remove('open');m.setAttribute('aria-hidden','true')});
+      requestAnimationFrame(()=>window.__openMortaProfile?.());
+    }, true);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ready,{once:true});
+  else ready();
+})();
+</script>
+
 </body>
 </html>
