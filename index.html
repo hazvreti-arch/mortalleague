@@ -906,6 +906,93 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 }
 </style>
 
+
+<style id="morta-v23-global-stability-fix">
+/* v23: mobile header reserves space for hamburger instead of placing it over auth controls */
+@media (max-width: 900px){
+  header{position:relative;z-index:900}
+  .nav{
+    width:100%!important;
+    box-sizing:border-box!important;
+    padding-right:62px!important;
+  }
+  .navCta{display:none!important}
+  .nav .accountActions{
+    margin-left:0!important;
+    gap:5px!important;
+    flex-shrink:0!important;
+  }
+  .nav .accountBtn{
+    padding:8px 8px!important;
+    font-size:8px!important;
+  }
+  .userPanel{flex-shrink:0!important;min-width:0!important}
+  .userPanel .notificationBell{padding:7px!important}
+  .userPill{max-width:150px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+
+  .mortaHamburger{
+    top:10px!important;
+    right:10px!important;
+    z-index:1002!important;
+    pointer-events:auto!important;
+  }
+  /* Never let the floating menu icon sit above an open modal. */
+  body:has(.accountModal.open) .mortaHamburger,
+  body:has(.profileModal.open) .mortaHamburger,
+  body:has(.contactModal.open) .mortaHamburger,
+  body:has(.adminModal.open) .mortaHamburger,
+  body:has(.notificationModal.open) .mortaHamburger{
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+
+  .accountModal,.profileModal,.contactModal,.adminModal,.notificationModal,.offerModal{
+    z-index:1100!important;
+  }
+  .accountModal .accountBackdrop,.profileModal .accountBackdrop,
+  .contactModal .accountBackdrop,.adminModal .accountBackdrop,
+  .notificationModal .accountBackdrop,.offerModal .accountBackdrop{
+    z-index:0!important;
+  }
+  .accountModal .accountCard,.profileModal .accountCard,
+  .contactModal .accountCard,.adminModal .adminCard,
+  .notificationModal .accountCard,.offerModal .accountCard{
+    z-index:1!important;
+  }
+
+  /* Keep the first viewport fully inside the device width. */
+  html,body{overflow-x:hidden!important}
+  main{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+}
+
+/* Fallback for browsers without :has — JS below also toggles mortaModalOpen. */
+@media (max-width: 900px){
+  body.mortaModalOpen .mortaHamburger{
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+}
+</style>
+<script id="morta-v23-modal-safety">
+(function(){
+  function syncModalState(){
+    const open = !!document.querySelector(
+      '.accountModal.open,.profileModal.open,.contactModal.open,.adminModal.open,.notificationModal.open,.offerModal.open'
+    );
+    document.body.classList.toggle('mortaModalOpen',open);
+  }
+  function init(){
+    syncModalState();
+    const root=document.body;
+    if(!root || root.__mortaV23Observer) return;
+    root.__mortaV23Observer=true;
+    new MutationObserver(syncModalState).observe(root,{subtree:true,attributes:true,attributeFilter:['class']});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
+
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
