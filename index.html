@@ -964,6 +964,16 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 #profileModal .mlProfileActions{grid-template-columns:1fr!important}
 #profileModal #mlProfileShareBtn{display:none!important}
 </style>
+<style id="morta-v35-profile-photo-clean">
+/* Only the main avatar at the top is used. Hide duplicate preview in profile details. */
+#profileModal .profilePhotoPreview,
+#profileModal .profile-photo-preview,
+#profileModal .profileAvatarPreview,
+#profileModal .profileEditAvatar,
+#profileModal .editAvatarPreview{
+  display:none!important;
+}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -2151,7 +2161,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260908-v34-profile-force"></script>
+<script src="script.js?v=20260908-v35-profile-photo"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3589,6 +3599,50 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
     const modal=$("#profileModal");
     if(modal) observer.observe(modal,{childList:true,subtree:true});
   },{once:true});
+})();
+</script>
+<script id="morta-v35-profile-photo-sync">
+(function(){
+  const $=s=>document.querySelector(s);
+
+  function getMainAvatar(){
+    return $("#mlProfileAvatar img, #mlProfileAvatarImage, #profileMainAvatar img, .mlProfileAvatar img");
+  }
+
+  function bind(){
+    const fileInput=$("#profilePhotoInput") ||
+      $("#profilePhoto") ||
+      $('input[type="file"][accept*="image"]');
+
+    if(!fileInput || fileInput.dataset.v35Bound) return;
+    fileInput.dataset.v35Bound="1";
+
+    fileInput.addEventListener("change",()=>{
+      const file=fileInput.files?.[0];
+      if(!file) return;
+
+      const url=URL.createObjectURL(file);
+      const avatar=getMainAvatar();
+
+      if(avatar){
+        avatar.src=url;
+        avatar.style.display="block";
+      }else{
+        const box=$("#mlProfileAvatar") || $(".mlProfileAvatar");
+        if(box){
+          box.innerHTML="";
+          const img=document.createElement("img");
+          img.src=url;
+          img.alt="Profil fotoğrafı";
+          box.appendChild(img);
+        }
+      }
+    });
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",bind,{once:true});
+  }else bind();
 })();
 </script>
 </body>
