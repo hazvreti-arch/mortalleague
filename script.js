@@ -319,3 +319,25 @@ if(mortaSupabase){
   mortaSupabase.auth.onAuthStateChange(()=>refreshMortaUser());
   refreshMortaUser();
 }
+/* MortaLeague v33 authenticated profile identity bridge */
+(function(){
+  const expose=async()=>{
+    const sb=window.mortaSupabase||window.supabaseClient;
+    if(!sb?.auth?.getSession)return;
+    try{
+      const {data:{session}}=await sb.auth.getSession();
+      window.__mortaCurrentUser=session?.user||null;
+    }catch(e){}
+  };
+  expose();
+  const wait=setInterval(()=>{
+    const sb=window.mortaSupabase||window.supabaseClient;
+    if(sb?.auth?.getSession){
+      clearInterval(wait); expose();
+      sb.auth.onAuthStateChange?.((_e,session)=>{
+        window.__mortaCurrentUser=session?.user||null;
+      });
+    }
+  },200);
+  setTimeout(()=>clearInterval(wait),8000);
+})();

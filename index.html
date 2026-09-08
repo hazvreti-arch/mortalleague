@@ -957,6 +957,13 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
   #mortaMobileAuth .danger{background:#34131a;color:#fecaca}
 }
 </style>
+<style id="morta-v33-profile-clean">
+/* Clean profile header */
+#profileModal .mlProfileStats,
+#profileModal .mlProfileGrid{display:none!important}
+#profileModal .mlProfileActions{grid-template-columns:1fr!important}
+#profileModal #mlProfileShareBtn{display:none!important}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1902,12 +1909,10 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <span class="accountEyebrow">PROFİL</span>
     <div class="mlProfileHead">
       <div class="mlProfileAvatar"><span id="mlProfileFallback">M</span><img id="mlProfileAvatar" alt="Profil fotoğrafı" hidden></div>
-      <div class="mlProfileIdentity"><h3 id="mlProfileName">Profilin</h3><span id="mlProfileHandle">@profil</span><p id="mlProfileMiniBio">MortaLeague oyuncu profili</p></div>
+      <div class="mlProfileIdentity"><h3 id="mlProfileName">Profilin</h3><span id="mlProfileHandle">@...</span><p id="mlProfileMiniBio">MortaLeague oyuncu profili</p></div>
     </div>
-    <div class="mlProfileStats"><div><b id="mlProfileFollowers">0</b><span>Takipçi</span></div><div><b id="mlProfileFollowing">0</b><span>Takip</span></div><div><b id="mlProfilePosts">0</b><span>Gönderi</span></div><div><b id="mlProfileValue">€0</b><span>Değer</span></div></div>
     <div class="mlProfileActions"><button class="accountBtn accountPrimary" type="button" id="mlProfileEditBtn">Profili Düzenle</button><button class="accountBtn" type="button" id="mlProfileShareBtn">Profili Paylaş</button></div>
     <div class="mlProfileBio" id="mlProfileBioDisplay">Kendin hakkında kısa bir şey yaz...</div>
-    <div class="mlProfileGrid" id="mlProfileGrid"><div class="mlProfileGridItem">⚽</div><div class="mlProfileGridItem">📈</div><div class="mlProfileGridItem">🏆</div><div class="mlProfileGridItem">🔥</div><div class="mlProfileGridItem">💎</div><div class="mlProfileGridItem">🎯</div></div>
     <div class="mlProfileEditDivider"><span>PROFİL AYARLARI</span></div>
     <h3 class="mlProfileEditTitle">Profil detayları</h3>
     <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
@@ -2146,7 +2151,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260908-v32-auth-ui"></script>
+<script src="script.js?v=20260908-v33-profile"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3029,7 +3034,12 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   const profileModal=document.getElementById('profileModal');
   const drawerUser=document.getElementById('mortaDrawerUsername'), drawerSub=document.getElementById('mortaDrawerSubtitle'), drawerAv=document.getElementById('mortaDrawerAvatar');
   function syncProfile(){
-    const username=document.getElementById('profileUsername')?.textContent?.trim()||'Profil';
+    // Prefer the authenticated Supabase identity; never leave a fake static "@profil".
+    const authUser=window.__mortaCurrentUser || window.mortaCurrentUser || null;
+    const meta=authUser?.user_metadata || {};
+    const authName=meta.username || meta.user_name || meta.full_name || authUser?.email?.split("@")[0] || "";
+
+    const username=authName||document.getElementById('profileUsername')?.textContent?.trim()||'Profil';
     const pos=document.getElementById('profilePosition')?.value||'';
     const team=document.getElementById('profileTeam')?.value||'';
     drawerUser.textContent=username||'Profil'; drawerSub.textContent=[pos,team].filter(Boolean).join(' · ')||'Hesabını görüntüle';
