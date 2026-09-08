@@ -165,6 +165,7 @@ if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
   // Tek Supabase istemcisi: mobil menü ve tüm sayfa aynı oturumu okumalı.
   window.mortaSupabase = mortaSupabase;
   window.supabaseClient = mortaSupabase;
+  window.dispatchEvent(new Event("morta-auth-ready"));
 }
 
 const accountModal = $("#accountsModal");
