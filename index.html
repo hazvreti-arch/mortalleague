@@ -974,6 +974,10 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
   display:none!important;
 }
 </style>
+<style id="morta-v36-pp-clean">
+/* Profil detaylarında ikinci PP tamamen kaldırılır. */
+#profileModal .profileHero{display:none!important}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1925,7 +1929,6 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <div class="mlProfileBio" id="mlProfileBioDisplay">Kendin hakkında kısa bir şey yaz...</div>
     <div class="mlProfileEditDivider"><span>PROFİL AYARLARI</span></div>
     <h3 class="mlProfileEditTitle">Profil detayları</h3>
-    <div class="profileHero"><div class="profileAvatarLarge"><span id="profileAvatarFallback">W</span><img id="profileAvatar" alt="Profil fotoğrafı" hidden></div><div><b id="profileUsername"></b><small>Profil bilgilerini ve fotoğrafını buradan düzenleyebilirsin.</small></div></div>
     <label>Profil Fotoğrafı<input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Hakkında<textarea id="profileBio" maxlength="280" rows="4" placeholder="Kendin hakkında kısa bir şey yaz..."></textarea></label>
     <label>Hesap Türü<select id="profileAccountType"><option value="player">⚽ Oyuncu</option><option value="team">🏟️ Takım</option></select></label>
@@ -2161,7 +2164,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260908-v35-profile-photo"></script>
+<script src="script.js?v=20260908-v36-pp-exact"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3601,42 +3604,41 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   },{once:true});
 })();
 </script>
-<script id="morta-v35-profile-photo-sync">
+
+<script id="morta-v36-pp-sync">
 (function(){
   const $=s=>document.querySelector(s);
 
-  function getMainAvatar(){
-    return $("#mlProfileAvatar img, #mlProfileAvatarImage, #profileMainAvatar img, .mlProfileAvatar img");
+  function setTopAvatar(src){
+    const topImg=$("#mlProfileAvatar img, .mlProfileAvatar img");
+    const topBox=$("#mlProfileAvatar, .mlProfileAvatar");
+    if(topImg){
+      topImg.src=src;
+      topImg.hidden=false;
+      topImg.style.display="block";
+      return;
+    }
+    if(topBox){
+      const img=document.createElement("img");
+      img.src=src;
+      img.alt="Profil fotoğrafı";
+      topBox.querySelector("span")?.remove();
+      topBox.appendChild(img);
+    }
   }
 
   function bind(){
-    const fileInput=$("#profilePhotoInput") ||
-      $("#profilePhoto") ||
-      $('input[type="file"][accept*="image"]');
+    // EXACT input used by the profile form.
+    const input=$("#avatarInput");
+    if(!input || input.dataset.v36Bound) return;
+    input.dataset.v36Bound="1";
 
-    if(!fileInput || fileInput.dataset.v35Bound) return;
-    fileInput.dataset.v35Bound="1";
-
-    fileInput.addEventListener("change",()=>{
-      const file=fileInput.files?.[0];
+    input.addEventListener("change",()=>{
+      const file=input.files?.[0];
       if(!file) return;
-
-      const url=URL.createObjectURL(file);
-      const avatar=getMainAvatar();
-
-      if(avatar){
-        avatar.src=url;
-        avatar.style.display="block";
-      }else{
-        const box=$("#mlProfileAvatar") || $(".mlProfileAvatar");
-        if(box){
-          box.innerHTML="";
-          const img=document.createElement("img");
-          img.src=url;
-          img.alt="Profil fotoğrafı";
-          box.appendChild(img);
-        }
-      }
+      const reader=new FileReader();
+      reader.onload=()=>setTopAvatar(String(reader.result));
+      reader.readAsDataURL(file);
     });
   }
 
