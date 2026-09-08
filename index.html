@@ -2466,7 +2466,11 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
   async function loadDirectory(){
     const s=sup();if(!s)return;
     const {data:ps,error}=await s.from('profiles').select('id,username,bio,avatar_url,position,team,player_value,social_handle,profile_theme,cover_url,account_type').eq('account_type','player').order('username');
-    if(error){playerList&&(playerList.innerHTML=`<div class="directoryEmpty">Oyuncular yüklenemedi: ${esc(error.message)}</div>`);return;}
+    if(error){
+      playerList&&(playerList.innerHTML=`<div class="directoryEmpty"><b>Oyuncular yüklenemedi.</b><br><small>${esc(error.message)}<br>Supabase RLS/SELECT izni kontrol edilmeli.</small></div>`);
+      console.error('MortaLeague profiles load error:',error);
+      return;
+    }
     players=ps||[];q('#playerCount')&&(q('#playerCount').textContent=`${players.length} OYUNCU`);
     const teamNames=[...new Set(players.map(p=>(p.team||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));if(teamFilter){const keep=teamFilter.value;teamFilter.innerHTML='<option value="">Tüm Takımlar</option>'+teamNames.map(t=>`<option>${esc(t)}</option>`).join('');if(teamNames.includes(keep))teamFilter.value=keep;}renderPlayers();await loadTeams();
   }
