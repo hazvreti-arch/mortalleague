@@ -993,6 +993,32 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 })();
 </script>
 
+
+<style id="morta-v24-header-fix">
+.mortaDrawerAuth{display:none}
+.mortaDrawerAuthBtn{width:100%;border:1px solid rgba(255,255,255,.08);background:#15121b;color:#ddd;border-radius:11px;padding:11px 12px;font-weight:800;font-size:11px;cursor:pointer}
+.mortaDrawerAuthBtn.primary{border-color:rgba(168,85,247,.35);background:rgba(139,61,255,.13);color:#e5d6f4}
+@media(max-width:900px){
+  /* Keep authentication controls out of the hamburger hit-area on mobile.
+     Authentication is still available inside the drawer. */
+  header .accountActions,
+  header .userPanel,
+  header .navCta{
+    display:none!important;
+  }
+  header .nav{
+    padding-right:58px!important;
+  }
+  .mortaDrawerAuth{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin:12px 0 14px;
+  }
+  .mortaDrawerAuth.isAuthenticated{grid-template-columns:1fr}
+}
+</style>
+
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1924,6 +1950,11 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <button data-drawer-scroll="playerCalculator"><span>✦</span><b>Katkı Değeri</b><small>Performans hesaplama</small></button>
     <button data-drawer-scroll="systems"><span>☷</span><b>Sistemler</b><small>Kurallar ve hesaplamalar</small></button>
   </nav>
+  <div class="mortaDrawerAuth" id="mortaDrawerAuth">
+    <button type="button" class="mortaDrawerAuthBtn" data-mobile-login>GİRİŞ YAP</button>
+    <button type="button" class="mortaDrawerAuthBtn primary" data-mobile-register>KAYIT OL</button>
+  </div>
+
   <div class="mortaDrawerFooter"><span>Mobil menü</span><span id="mortaDrawerStatus">Hazır</span></div>
 </aside>
 
@@ -3384,6 +3415,159 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   if(ug)observer.observe(ug,{childList:true,subtree:true});
   enhanceUsers();
   window.mortaGodmode={loadSelectedProfile,loadAudit};
+})();
+</script>
+
+
+<script id="morta-v24-mobile-auth-script">
+(function(){
+  function init(){
+    const drawer=document.getElementById('mortaDrawerAuth');
+    const login=document.getElementById('openLogin');
+    const register=document.getElementById('openRegister');
+    const accountActions=document.getElementById('accountActions');
+    const userPanel=document.getElementById('userPanel');
+    if(!drawer) return;
+
+    drawer.querySelector('[data-mobile-login]')?.addEventListener('click',()=>{
+      document.getElementById('mortaDrawerClose')?.click();
+      setTimeout(()=>login?.click(),40);
+    });
+    drawer.querySelector('[data-mobile-register]')?.addEventListener('click',()=>{
+      document.getElementById('mortaDrawerClose')?.click();
+      setTimeout(()=>register?.click(),40);
+    });
+
+    function sync(){
+      const loggedIn = !!userPanel && !userPanel.hasAttribute('hidden');
+      drawer.hidden=false;
+      drawer.classList.toggle('isAuthenticated',loggedIn);
+      const lb=drawer.querySelector('[data-mobile-login]');
+      const rb=drawer.querySelector('[data-mobile-register]');
+      if(lb) lb.hidden=loggedIn;
+      if(rb) rb.hidden=loggedIn;
+      if(loggedIn){
+        drawer.innerHTML = `
+          <button type="button" class="mortaDrawerAuthBtn primary" data-mobile-profile>PROFİLİ AÇ</button>
+          <button type="button" class="mortaDrawerAuthBtn" data-mobile-logout>ÇIKIŞ YAP</button>
+        `;
+        drawer.querySelector('[data-mobile-profile]')?.addEventListener('click',()=>{
+          document.getElementById('mortaDrawerClose')?.click();
+          setTimeout(()=>window.__openMortaProfile?.(),40);
+        });
+        drawer.querySelector('[data-mobile-logout]')?.addEventListener('click',async()=>{
+          document.getElementById('mortaDrawerClose')?.click();
+          document.getElementById('logoutButton')?.click();
+          // fallback for layouts where logout has a different hook
+          if(window.mortaSignOut) try{ await window.mortaSignOut(); }catch(e){}
+        });
+      }else{
+        if(drawer.dataset.auth==='logged') drawer.innerHTML=`
+          <button type="button" class="mortaDrawerAuthBtn" data-mobile-login>GİRİŞ YAP</button>
+          <button type="button" class="mortaDrawerAuthBtn primary" data-mobile-register>KAYIT OL</button>`;
+        drawer.dataset.auth='guest';
+        drawer.querySelector('[data-mobile-login]')?.addEventListener('click',()=>{
+          document.getElementById('mortaDrawerClose')?.click(); setTimeout(()=>login?.click(),40);
+        });
+        drawer.querySelector('[data-mobile-register]')?.addEventListener('click',()=>{
+          document.getElementById('mortaDrawerClose')?.click(); setTimeout(()=>register?.click(),40);
+        });
+      }
+      drawer.dataset.auth=loggedIn?'logged':'guest';
+    }
+    // Observe auth UI changes without touching the existing auth implementation.
+    [accountActions,userPanel].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{attributes:true,attributeFilter:['hidden','class']}));
+    setTimeout(sync,0);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
+
+
+<style id="morta-v25-stability">
+/* v25: hard containment for every interactive layer */
+@media(max-width:900px){
+  #mortaDrawer{z-index:2000!important}
+  #mortaDrawerBackdrop{z-index:1999!important}
+  #mortaHamburger{z-index:2001!important}
+  body.mortaModalOpen #mortaDrawer,
+  body.mortaModalOpen #mortaDrawerBackdrop{display:none!important}
+  body.mortaModalOpen #mortaHamburger{display:none!important}
+
+  /* Prevent long header controls from creating invisible click blockers */
+  header *{max-width:100%}
+  .nav{min-width:0!important}
+  #mortaHamburger{touch-action:manipulation}
+  #mortaDrawer button,
+  #mortaDrawer [role="button"]{touch-action:manipulation}
+}
+
+/* Invisible/closed overlays must never intercept clicks */
+.accountModal:not(.open),
+.profileModal:not(.open),
+.contactModal:not(.open),
+.adminModal:not(.open),
+.notificationModal:not(.open),
+.offerModal:not(.open){
+  pointer-events:none!important;
+}
+</style>
+<script id="morta-v25-interaction-guard">
+(function(){
+  function closeDrawer(){
+    const drawer=document.getElementById('mortaDrawer');
+    const bg=document.getElementById('mortaDrawerBackdrop');
+    const ham=document.getElementById('mortaHamburger');
+    if(drawer){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+    if(bg){bg.hidden=true;}
+    if(ham){ham.setAttribute('aria-expanded','false');}
+    document.body.classList.remove('morta-drawer-open');
+  }
+
+  function syncModal(){
+    const modalOpen=!!document.querySelector(
+      '.accountModal.open,.profileModal.open,.contactModal.open,.adminModal.open,.notificationModal.open,.offerModal.open'
+    );
+    document.body.classList.toggle('mortaModalOpen',modalOpen);
+    if(modalOpen) closeDrawer();
+  }
+
+  function init(){
+    const drawer=document.getElementById('mortaDrawer');
+    const bg=document.getElementById('mortaDrawerBackdrop');
+    if(!drawer || drawer.dataset.v25Bound) return;
+    drawer.dataset.v25Bound='1';
+
+    // One delegated handler = no duplicate listeners and no event swallowing.
+    drawer.addEventListener('click',function(e){
+      const login=e.target.closest('[data-mobile-login]');
+      const register=e.target.closest('[data-mobile-register]');
+      const profile=e.target.closest('[data-mobile-profile]');
+      if(login){
+        e.preventDefault(); e.stopImmediatePropagation(); closeDrawer();
+        setTimeout(()=>document.getElementById('openLogin')?.click(),60); return;
+      }
+      if(register){
+        e.preventDefault(); e.stopImmediatePropagation(); closeDrawer();
+        setTimeout(()=>document.getElementById('openRegister')?.click(),60); return;
+      }
+      if(profile){
+        e.preventDefault(); e.stopImmediatePropagation(); closeDrawer();
+        setTimeout(()=>window.__openMortaProfile?.(),60); return;
+      }
+    },true);
+
+    bg?.addEventListener('click',closeDrawer,true);
+
+    new MutationObserver(syncModal).observe(document.body,{
+      subtree:true,attributes:true,attributeFilter:['class','hidden']
+    });
+    syncModal();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();
 </script>
 
