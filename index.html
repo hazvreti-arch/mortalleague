@@ -1911,7 +1911,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
       <div class="mlProfileAvatar"><span id="mlProfileFallback">M</span><img id="mlProfileAvatar" alt="Profil fotoğrafı" hidden></div>
       <div class="mlProfileIdentity"><h3 id="mlProfileName">Profilin</h3><span id="mlProfileHandle">@...</span><p id="mlProfileMiniBio">MortaLeague oyuncu profili</p></div>
     </div>
-    <div class="mlProfileActions"><button class="accountBtn accountPrimary" type="button" id="mlProfileEditBtn">Profili Düzenle</button><button class="accountBtn" type="button" id="mlProfileShareBtn">Profili Paylaş</button></div>
+    <div class="mlProfileActions"><button class="accountBtn accountPrimary" type="button" id="mlProfileEditBtn">Profili Düzenle</button></div>
     <div class="mlProfileBio" id="mlProfileBioDisplay">Kendin hakkında kısa bir şey yaz...</div>
     <div class="mlProfileEditDivider"><span>PROFİL AYARLARI</span></div>
     <h3 class="mlProfileEditTitle">Profil detayları</h3>
@@ -2151,7 +2151,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260908-v33-profile"></script>
+<script src="script.js?v=20260908-v34-profile-force"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3489,6 +3489,106 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bind,{once:true});
   else bind();
+})();
+</script>
+<style id="morta-v34-profile-force-css">
+#profileModal .mlProfileStats,
+#profileModal .mlProfileGrid,
+#profileModal #mlProfileShareBtn,
+#profileModal [data-profile-stat],
+#profileModal [data-profile-icon]{
+  display:none!important;
+}
+#profileModal .mlProfileActions{
+  display:block!important;
+}
+#profileModal .mlProfileActions #mlProfileEditBtn{
+  width:100%!important;
+}
+</style>
+<script id="morta-v34-profile-force">
+(function(){
+  const $=s=>document.querySelector(s);
+
+  function clean(){
+    const modal=$("#profileModal");
+    if(!modal) return;
+
+    // Remove unwanted elements from the DOM completely.
+    modal.querySelectorAll(".mlProfileStats,.mlProfileGrid,#mlProfileShareBtn,[data-profile-stat],[data-profile-icon]")
+      .forEach(el=>el.remove());
+
+    const actions=modal.querySelector(".mlProfileActions");
+    if(actions) actions.querySelectorAll("button").forEach(btn=>{
+      if(btn.id!=="mlProfileEditBtn") btn.remove();
+    });
+  }
+
+  async function syncIdentity(){
+    const sb=window.mortaSupabase||window.supabaseClient;
+    if(!sb?.auth?.getSession) return;
+    try{
+      const {data:{session}}=await sb.auth.getSession();
+      const user=session?.user;
+      if(!user) return;
+
+      const meta=user.user_metadata||{};
+      let username=meta.username||meta.user_name||meta.display_name||meta.full_name||"";
+      let bio="";
+
+      // Prefer the user's actual MortaLeague profile record when available.
+      try{
+        const {data:profile}=await sb.from("profiles")
+          .select("username,display_name,full_name,name,bio")
+          .eq("id",user.id).maybeSingle();
+
+        if(profile){
+          username=profile.username||profile.display_name||profile.full_name||profile.name||username;
+          bio=profile.bio||"";
+        }
+      }catch(e){}
+
+      username=(username||user.email?.split("@")[0]||"Profil").trim();
+      const handle="@"+username.replace(/^@/,"").replace(/\s+/g,"").toLocaleLowerCase("tr-TR");
+
+      const nameEl=$("#mlProfileName");
+      const handleEl=$("#mlProfileHandle");
+      const editName=$("#profileUsername");
+      const fallback=$("#mlProfileFallback");
+      const miniBio=$("#mlProfileMiniBio");
+      const bioDisplay=$("#mlProfileBioDisplay");
+
+      if(nameEl) nameEl.textContent=username;
+      if(handleEl) handleEl.textContent=handle;
+      if(editName) editName.textContent=username;
+      if(fallback) fallback.textContent=username.charAt(0).toUpperCase();
+      if(miniBio && bio) miniBio.textContent=bio;
+      if(bioDisplay && bio) bioDisplay.textContent=bio;
+    }catch(e){}
+  }
+
+  async function refresh(){
+    clean();
+    await syncIdentity();
+    clean();
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",refresh,{once:true});
+  }else refresh();
+
+  // Profile may be opened or rebuilt dynamically.
+  document.addEventListener("click",e=>{
+    if(e.target.closest("#mortaDrawerProfileBtn,[data-open-profile],#mlProfileEditBtn")){
+      setTimeout(refresh,50);
+    }
+  });
+
+  const observer=new MutationObserver(()=>clean());
+  document.addEventListener("DOMContentLoaded",()=>{
+    const modal=$("#profileModal");
+    if(modal) observer.observe(modal,{childList:true,subtree:true});
+  },{once:true});
 })();
 </script>
 </body>
