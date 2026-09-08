@@ -74,8 +74,8 @@ function filterSystems(){
 systemSearch?.addEventListener("input", filterSystems);
 
 const contributionRates = {
-  mla: {goal: 30000, assist: 20000, cup: 2000000},
-  mlb: {goal: 20000, assist: 10000, cup: 1000000},
+  // MortaLeague A: Gol 40K | Gym 40K | Asist 30K
+  mla: {goal: 40000, gym: 40000, assist: 30000, cup: 2000000},
   zmk: {goal: 20000, assist: 10000, cup: 1500000},
   facup: {goal: 15000, assist: 10000, cup: 1000000},
   goat: {goal: 10000, assist: 5000, cup: 500000},
@@ -110,7 +110,7 @@ function calculateContribution(){
 
   const base = 1000000;
   const goalValue = goals * rates.goal;
-  const gymValue = gym * rates.goal;
+  const gymValue = gym * (rates.gym ?? rates.goal);
   const assistValue = assists * rates.assist;
   const cupValue = cups * rates.cup;
   const total = base + goalValue + gymValue + assistValue + cupValue;
@@ -124,10 +124,19 @@ function calculateContribution(){
 }
 
 $("#calculateContribution")?.addEventListener("click", calculateContribution);
-["contributionTournament","contributionGoals","contributionGym","contributionAssists","contributionCups"].forEach(id=>{
-  $("#"+id)?.addEventListener("input", calculateContribution);
-  $("#"+id)?.addEventListener("change", calculateContribution);
+
+// Sonuç, kullanıcı yeni değerler yazarken değişmez; yalnızca hesapla denince güncellenir.
+$("#resetContribution")?.addEventListener("click", ()=>{
+  ["contributionGoals","contributionGym","contributionAssists","contributionCups"].forEach(id=>{
+    const el=$("#"+id);
+    if(el) el.value=0;
+  });
+  const tournament=$("#contributionTournament");
+  if(tournament) tournament.value="mla";
+  calculateContribution();
 });
+
+// İlk görünüm: sabit başlangıç değeri.
 calculateContribution();
 
 const observer=new IntersectionObserver(entries=>{
@@ -153,6 +162,9 @@ if (window.supabase && !MORTA_SUPABASE_URL.startsWith("YOUR_")) {
   mortaSupabase = window.supabase.createClient(MORTA_SUPABASE_URL, MORTA_SUPABASE_ANON_KEY, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
   });
+  // Tek Supabase istemcisi: mobil menü ve tüm sayfa aynı oturumu okumalı.
+  window.mortaSupabase = mortaSupabase;
+  window.supabaseClient = mortaSupabase;
 }
 
 const accountModal = $("#accountsModal");

@@ -955,6 +955,15 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 }
 </style>
 
+<style id="morta-v31-contribution-ui">
+.calcContributionActions{display:flex;gap:10px;align-items:stretch}
+.calcContributionActions .calcContributionBtn{flex:1}
+.calcResetBtn{white-space:nowrap;padding:0 18px;min-height:48px}
+@media(max-width:620px){
+  .calcContributionActions{flex-direction:column}
+  .calcResetBtn{width:100%}
+}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -1088,7 +1097,7 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
         <label for="contributionTournament">Turnuva</label>
         <select id="contributionTournament">
           <option value="mla">MortaLeague A</option>
-          <option value="mlb">MortaLeague B</option>
+          
           <option value="zmk">ZMK</option>
           <option value="facup">FA Cup</option>
           <option value="goat">GOAT Cup</option>
@@ -1124,7 +1133,10 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
       </div>
     </div>
 
-    <button class="primary calcContributionBtn" id="calculateContribution">KATKI DEĞERİNİ HESAPLA <span>↗</span></button>
+    <div class="calcContributionActions">
+  <button class="primary calcContributionBtn" id="calculateContribution">KATKI DEĞERİNİ HESAPLA <span>↗</span></button>
+  <button class="secondary calcResetBtn" id="resetContribution" type="button">DEĞERİ SIFIRLA ↺</button>
+</div>
   </div>
 
   <div class="contributionResult">
@@ -2141,7 +2153,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260907-v14"></script>
+<script src="script.js?v=20260908-v30-authfix"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3380,9 +3392,10 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   function sessionUser(){
     // Never sign out or reload. Only read the current client session.
     try{
-      const sb=window.supabaseClient||window.mortaSupabase||window.supabase;
+      // window.supabase CDN kütüphanesidir; auth istemcisi değildir.
+      // Yalnızca script.js tarafından oluşturulan tek MortaLeague istemcisini kullan.
+      const sb=window.mortaSupabase||window.supabaseClient;
       if(sb?.auth?.getSession) return sb.auth.getSession().then(r=>r?.data?.session?.user||null).catch(()=>null);
-      if(sb?.auth?.getUser) return sb.auth.getUser().then(r=>r?.data?.user||null).catch(()=>null);
     }catch(e){}
     return Promise.resolve(null);
   }
@@ -3403,7 +3416,7 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
     if(btn){btn.click();return;}
     // No destructive fallback: only use site's actual configured auth client.
     try{
-      const sb=window.supabaseClient||window.mortaSupabase||window.supabase;
+      const sb=window.mortaSupabase||window.supabaseClient;
       if(sb?.auth?.signOut) await sb.auth.signOut();
     }catch(e){}
   }
@@ -3432,6 +3445,10 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
       if(x.dataset.mmRegister){closeDrawer();setTimeout(()=>$('#openRegister')?.click(),80);return;}
     });
     $('#mortaHamburger')?.addEventListener('click',()=>setTimeout(render,50));
+    const sb=window.mortaSupabase||window.supabaseClient;
+    if(sb?.auth?.onAuthStateChange){
+      sb.auth.onAuthStateChange(()=>setTimeout(render,0));
+    }
     render();
   }
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',bind,{once:true}):bind();
