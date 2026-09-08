@@ -994,28 +994,22 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 </script>
 
 
-<style id="morta-v24-header-fix">
-.mortaDrawerAuth{display:none}
-.mortaDrawerAuthBtn{width:100%;border:1px solid rgba(255,255,255,.08);background:#15121b;color:#ddd;border-radius:11px;padding:11px 12px;font-weight:800;font-size:11px;cursor:pointer}
-.mortaDrawerAuthBtn.primary{border-color:rgba(168,85,247,.35);background:rgba(139,61,255,.13);color:#e5d6f4}
+
+
+
+<style id="morta-v26-mobile-menu">
 @media(max-width:900px){
-  /* Keep authentication controls out of the hamburger hit-area on mobile.
-     Authentication is still available inside the drawer. */
-  header .accountActions,
-  header .userPanel,
-  header .navCta{
-    display:none!important;
+  /* One owner for mobile auth UI: the drawer controller below */
+  header .accountActions, header .userPanel, header .navCta{display:none!important}
+  .mortaDrawerAuth{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+  .mortaDrawerAuth.logged{grid-template-columns:1fr}
+  .mortaDrawerAuth button{
+    border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:11px 8px;
+    background:#17121d;color:#fff;font-weight:800;font-size:10px;cursor:pointer
   }
-  header .nav{
-    padding-right:58px!important;
-  }
-  .mortaDrawerAuth{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
-    margin:12px 0 14px;
-  }
-  .mortaDrawerAuth.isAuthenticated{grid-template-columns:1fr}
+  .mortaDrawerAuth .primary{background:#7c3aed;border-color:#8b5cf6}
+  .mortaDrawerAuth .danger{background:#2a1016;border-color:#7f1d1d;color:#fecaca}
+  .mortaDrawerAuth[hidden]{display:none!important}
 }
 </style>
 
@@ -1955,6 +1949,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
     <button type="button" class="mortaDrawerAuthBtn primary" data-mobile-register>KAYIT OL</button>
   </div>
 
+  <div class="mortaDrawerAuth" id="mortaDrawerAuthV26"></div>
   <div class="mortaDrawerFooter"><span>Mobil menü</span><span id="mortaDrawerStatus">Hazır</span></div>
 </aside>
 
@@ -3419,155 +3414,114 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 </script>
 
 
-<script id="morta-v24-mobile-auth-script">
+
+
+
+
+
+
+
+<script id="morta-v26-mobile-menu-controller">
 (function(){
-  function init(){
-    const drawer=document.getElementById('mortaDrawerAuth');
-    const login=document.getElementById('openLogin');
-    const register=document.getElementById('openRegister');
-    const accountActions=document.getElementById('accountActions');
-    const userPanel=document.getElementById('userPanel');
-    if(!drawer) return;
+  const q=(s)=>document.querySelector(s);
 
-    drawer.querySelector('[data-mobile-login]')?.addEventListener('click',()=>{
-      document.getElementById('mortaDrawerClose')?.click();
-      setTimeout(()=>login?.click(),40);
-    });
-    drawer.querySelector('[data-mobile-register]')?.addEventListener('click',()=>{
-      document.getElementById('mortaDrawerClose')?.click();
-      setTimeout(()=>register?.click(),40);
-    });
-
-    function sync(){
-      const loggedIn = !!userPanel && !userPanel.hasAttribute('hidden');
-      drawer.hidden=false;
-      drawer.classList.toggle('isAuthenticated',loggedIn);
-      const lb=drawer.querySelector('[data-mobile-login]');
-      const rb=drawer.querySelector('[data-mobile-register]');
-      if(lb) lb.hidden=loggedIn;
-      if(rb) rb.hidden=loggedIn;
-      if(loggedIn){
-        drawer.innerHTML = `
-          <button type="button" class="mortaDrawerAuthBtn primary" data-mobile-profile>PROFİLİ AÇ</button>
-          <button type="button" class="mortaDrawerAuthBtn" data-mobile-logout>ÇIKIŞ YAP</button>
-        `;
-        drawer.querySelector('[data-mobile-profile]')?.addEventListener('click',()=>{
-          document.getElementById('mortaDrawerClose')?.click();
-          setTimeout(()=>window.__openMortaProfile?.(),40);
-        });
-        drawer.querySelector('[data-mobile-logout]')?.addEventListener('click',async()=>{
-          document.getElementById('mortaDrawerClose')?.click();
-          document.getElementById('logoutButton')?.click();
-          // fallback for layouts where logout has a different hook
-          if(window.mortaSignOut) try{ await window.mortaSignOut(); }catch(e){}
-        });
-      }else{
-        if(drawer.dataset.auth==='logged') drawer.innerHTML=`
-          <button type="button" class="mortaDrawerAuthBtn" data-mobile-login>GİRİŞ YAP</button>
-          <button type="button" class="mortaDrawerAuthBtn primary" data-mobile-register>KAYIT OL</button>`;
-        drawer.dataset.auth='guest';
-        drawer.querySelector('[data-mobile-login]')?.addEventListener('click',()=>{
-          document.getElementById('mortaDrawerClose')?.click(); setTimeout(()=>login?.click(),40);
-        });
-        drawer.querySelector('[data-mobile-register]')?.addEventListener('click',()=>{
-          document.getElementById('mortaDrawerClose')?.click(); setTimeout(()=>register?.click(),40);
-        });
-      }
-      drawer.dataset.auth=loggedIn?'logged':'guest';
-    }
-    // Observe auth UI changes without touching the existing auth implementation.
-    [accountActions,userPanel].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{attributes:true,attributeFilter:['hidden','class']}));
-    setTimeout(sync,0);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
-})();
-</script>
-
-
-<style id="morta-v25-stability">
-/* v25: hard containment for every interactive layer */
-@media(max-width:900px){
-  #mortaDrawer{z-index:2000!important}
-  #mortaDrawerBackdrop{z-index:1999!important}
-  #mortaHamburger{z-index:2001!important}
-  body.mortaModalOpen #mortaDrawer,
-  body.mortaModalOpen #mortaDrawerBackdrop{display:none!important}
-  body.mortaModalOpen #mortaHamburger{display:none!important}
-
-  /* Prevent long header controls from creating invisible click blockers */
-  header *{max-width:100%}
-  .nav{min-width:0!important}
-  #mortaHamburger{touch-action:manipulation}
-  #mortaDrawer button,
-  #mortaDrawer [role="button"]{touch-action:manipulation}
-}
-
-/* Invisible/closed overlays must never intercept clicks */
-.accountModal:not(.open),
-.profileModal:not(.open),
-.contactModal:not(.open),
-.adminModal:not(.open),
-.notificationModal:not(.open),
-.offerModal:not(.open){
-  pointer-events:none!important;
-}
-</style>
-<script id="morta-v25-interaction-guard">
-(function(){
   function closeDrawer(){
-    const drawer=document.getElementById('mortaDrawer');
-    const bg=document.getElementById('mortaDrawerBackdrop');
-    const ham=document.getElementById('mortaHamburger');
+    const drawer=q('#mortaDrawer'), bg=q('#mortaDrawerBackdrop'), ham=q('#mortaHamburger');
     if(drawer){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
-    if(bg){bg.hidden=true;}
-    if(ham){ham.setAttribute('aria-expanded','false');}
+    if(bg) bg.hidden=true;
+    if(ham) ham.setAttribute('aria-expanded','false');
     document.body.classList.remove('morta-drawer-open');
   }
 
-  function syncModal(){
-    const modalOpen=!!document.querySelector(
-      '.accountModal.open,.profileModal.open,.contactModal.open,.adminModal.open,.notificationModal.open,.offerModal.open'
-    );
-    document.body.classList.toggle('mortaModalOpen',modalOpen);
-    if(modalOpen) closeDrawer();
+  function openProfile(){
+    closeDrawer();
+    // Existing site implementations may expose either a global function or a profile button.
+    const candidates=[
+      window.__openMortaProfile,
+      window.openProfileModal,
+      window.mortaOpenProfile
+    ];
+    for(const fn of candidates){
+      if(typeof fn==='function'){
+        try{ setTimeout(()=>fn(),80); return; }catch(e){}
+      }
+    }
+    // Use an existing profile trigger instead of reconstructing the modal.
+    const trigger=q('[data-open-profile],#openProfile,#profileButton,.openProfile');
+    if(trigger){setTimeout(()=>trigger.click(),80);return;}
+    const modal=q('#profileModal');
+    if(modal){
+      setTimeout(()=>{
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+        document.body.classList.add('modalOpen');
+      },80);
+    }
   }
 
-  function init(){
-    const drawer=document.getElementById('mortaDrawer');
-    const bg=document.getElementById('mortaDrawerBackdrop');
-    if(!drawer || drawer.dataset.v25Bound) return;
-    drawer.dataset.v25Bound='1';
+  async function logout(){
+    closeDrawer();
+    const candidates=[
+      q('#logoutButton'),q('[data-logout]'),q('#logoutBtn')
+    ].filter(Boolean);
+    if(candidates.length){candidates[0].click();return;}
+    if(window.mortaSupabase?.auth?.signOut){
+      await window.mortaSupabase.auth.signOut();
+      location.reload();
+    }
+  }
 
-    // One delegated handler = no duplicate listeners and no event swallowing.
-    drawer.addEventListener('click',function(e){
-      const login=e.target.closest('[data-mobile-login]');
-      const register=e.target.closest('[data-mobile-register]');
-      const profile=e.target.closest('[data-mobile-profile]');
-      if(login){
-        e.preventDefault(); e.stopImmediatePropagation(); closeDrawer();
-        setTimeout(()=>document.getElementById('openLogin')?.click(),60); return;
+  async function getUser(){
+    try{
+      const s=window.mortaSupabase;
+      if(s?.auth?.getUser){
+        const r=await s.auth.getUser();
+        return r?.data?.user||null;
       }
-      if(register){
-        e.preventDefault(); e.stopImmediatePropagation(); closeDrawer();
-        setTimeout(()=>document.getElementById('openRegister')?.click(),60); return;
-      }
-      if(profile){
-        e.preventDefault(); e.stopImmediatePropagation(); closeDrawer();
-        setTimeout(()=>window.__openMortaProfile?.(),60); return;
-      }
-    },true);
+    }catch(e){}
+    // Fallback to visible logged-in panel only if Supabase is not ready.
+    const panel=q('#userPanel');
+    return panel && !panel.hasAttribute('hidden') ? {id:'ui-session'} : null;
+  }
 
-    bg?.addEventListener('click',closeDrawer,true);
+  async function render(){
+    const box=q('#mortaDrawerAuthV26');
+    if(!box) return;
+    const user=await getUser();
+    if(user){
+      box.className='mortaDrawerAuth logged';
+      box.innerHTML='<button type="button" class="primary" data-v26-profile>👤 PROFİLİM</button><button type="button" class="danger" data-v26-logout>ÇIKIŞ YAP</button>';
+    }else{
+      box.className='mortaDrawerAuth';
+      box.innerHTML='<button type="button" data-v26-login>GİRİŞ YAP</button><button type="button" class="primary" data-v26-register>KAYIT OL</button>';
+    }
+  }
 
-    new MutationObserver(syncModal).observe(document.body,{
-      subtree:true,attributes:true,attributeFilter:['class','hidden']
+  function bind(){
+    const box=q('#mortaDrawerAuthV26');
+    if(!box || box.dataset.bound) return;
+    box.dataset.bound='1';
+    box.addEventListener('click',e=>{
+      const b=e.target.closest('button'); if(!b)return;
+      e.preventDefault();e.stopPropagation();
+      if(b.matches('[data-v26-profile]')) return openProfile();
+      if(b.matches('[data-v26-logout]')) return logout();
+      if(b.matches('[data-v26-login]')){
+        closeDrawer(); return setTimeout(()=>q('#openLogin')?.click(),80);
+      }
+      if(b.matches('[data-v26-register]')){
+        closeDrawer(); return setTimeout(()=>q('#openRegister')?.click(),80);
+      }
     });
-    syncModal();
+
+    // Refresh only when drawer is opened, avoiding destructive continuous mutations.
+    q('#mortaHamburger')?.addEventListener('click',()=>setTimeout(render,0));
+    window.addEventListener('morta-auth-changed',render);
+    render();
   }
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});
+  else bind();
 })();
 </script>
 
