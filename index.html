@@ -1022,6 +1022,10 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
  #mlProfileAvatar,.mlProfileAvatar{width:88px!important;height:88px!important;flex-basis:88px!important;}
 }
 </style>
+<style id="morta-v39-avatar-safe">
+#mlProfileAvatar,.mlProfileAvatar{overflow:hidden!important;border-radius:50%!important;position:relative!important}
+#mlProfileAvatar img,.mlProfileAvatar img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -2208,7 +2212,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260908-v36-pp-exact"></script>
+<script src="script.js?v=20260909-v39-save-fix"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3695,17 +3699,30 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   }else bind();
 })();
 </script>
-<script id="morta-v38-avatar-enforcer">
+
+<script id="morta-v39-avatar-safe-sync">
 (function(){
- function enforce(){
-  document.querySelectorAll("#mlProfileAvatar,.mlProfileAvatar").forEach(box=>{
-   const img=box.querySelector("img"); if(!img)return;
-   img.style.cssText+=";width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;position:absolute!important;inset:0!important;";
+  function applyAvatar(src){
+    if(!src) return;
+    const box=document.querySelector("#mlProfileAvatar,.mlProfileAvatar");
+    if(!box) return;
+    let img=box.querySelector("img");
+    if(!img){
+      img=document.createElement("img");
+      img.alt="Profil fotoğrafı";
+      box.querySelector("span")?.remove();
+      box.appendChild(img);
+    }
+    img.src=src;
+  }
+  document.addEventListener("change",function(e){
+    if(e.target?.id!=="avatarInput") return;
+    const file=e.target.files?.[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>applyAvatar(reader.result);
+    reader.readAsDataURL(file);
   });
- }
- document.addEventListener("change",e=>{if(e.target?.id==="avatarInput")setTimeout(enforce,150);});
- if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",enforce,{once:true});else enforce();
- new MutationObserver(enforce).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
 </body>
