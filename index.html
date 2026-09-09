@@ -830,34 +830,7 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 </style>
 
 
-<style id="morta-v18-drawer-profile">
-.mortaHamburger{display:none}
-.mortaDrawerBackdrop{display:none}
-.mortaDrawer{display:none}
-.mlProfileHead{display:flex;gap:16px;align-items:center;padding:8px 0 12px}
-.mlProfileAvatar{width:86px;height:86px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#ec4899);border:3px solid rgba(255,255,255,.08);font:900 28px Orbitron;color:#fff}
-.mlProfileAvatar img{width:100%;height:100%;object-fit:cover}
-.mlProfileIdentity{min-width:0;flex:1}.mlProfileIdentity h3{margin:0 0 3px;font-size:20px}.mlProfileIdentity span{color:#9f9ca7;font-size:12px}.mlProfileIdentity p{margin:7px 0 0;color:#b8b5be;font-size:12px;line-height:1.45}
-.mlProfileStats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:13px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.mlProfileStats div{text-align:center}.mlProfileStats b{display:block;font-size:14px}.mlProfileStats span{display:block;color:#85818c;font-size:10px;margin-top:4px}
-.mlProfileActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.mlProfileActions button{width:100%!important}
-.mlProfileBio{color:#c6c2ca;font-size:12px;line-height:1.55;padding:3px 0 13px}
-.mlProfileGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}.mlProfileGridItem{aspect-ratio:1;display:grid;place-items:center;background:linear-gradient(135deg,#1a1223,#0f0d13);font-size:24px;color:#b78df0;border:1px solid rgba(255,255,255,.035)}
-.mlProfileEditDivider{margin:18px -2px 12px;border-top:1px solid var(--line);padding-top:15px;color:#8f8997;font-size:10px;letter-spacing:1.2px}.mlProfileEditTitle{margin:0 0 12px!important;font-size:14px!important}
-@media(max-width:900px){
-  .mortaBottomNav{display:none!important}
-  .mortaHamburger{display:flex;position:fixed;top:14px;right:14px;z-index:1001;width:42px;height:42px;padding:0;border:1px solid rgba(255,255,255,.11);border-radius:13px;background:rgba(10,9,13,.88);backdrop-filter:blur(14px);align-items:center;justify-content:center;flex-direction:column;gap:4px;box-shadow:0 10px 28px rgba(0,0,0,.28);cursor:pointer}
-  .mortaHamburger span{width:18px;height:2px;border-radius:4px;background:#eee;display:block}
-  .mortaDrawerBackdrop{display:block;position:fixed;inset:0;z-index:1000;background:rgba(3,2,7,.58);backdrop-filter:blur(3px)}
-  .mortaDrawer{display:block;position:fixed;top:0;right:0;bottom:0;z-index:1001;width:min(330px,88vw);padding:24px 16px calc(18px + env(safe-area-inset-bottom));background:#0d0b11;border-left:1px solid rgba(255,255,255,.09);box-shadow:-24px 0 70px rgba(0,0,0,.4);transform:translateX(102%);transition:transform .24s ease;overflow:auto}
-  .mortaDrawer.open{transform:translateX(0)}
-  .mortaDrawerTop{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 18px}.mortaDrawerTop strong{display:block;font-size:20px;margin-top:3px}.mortaDrawerKicker{display:block;color:#9a6bd5;font-size:9px;letter-spacing:1.7px;font-weight:800}.mortaDrawerClose{width:36px;height:36px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:#15121b;color:#ddd;font-size:23px;cursor:pointer}
-  .mortaDrawerProfile{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.025);margin-bottom:14px}.mortaDrawerAvatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font-weight:900;overflow:hidden;flex:0 0 auto}.mortaDrawerProfileMeta{min-width:0;flex:1}.mortaDrawerProfileMeta b,.mortaDrawerProfileMeta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mortaDrawerProfileMeta b{font-size:13px}.mortaDrawerProfileMeta span{font-size:10px;color:#8f8a98;margin-top:3px}.mortaDrawerProfileBtn{border:1px solid rgba(168,85,247,.3);background:rgba(139,61,255,.1);color:#d9c8ea;border-radius:9px;padding:8px 9px;font-size:10px;font-weight:800;cursor:pointer}
-  .mortaDrawerNav{display:grid;gap:7px}.mortaDrawerNav button{display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto;column-gap:8px;align-items:center;text-align:left;padding:12px 11px;border:1px solid rgba(255,255,255,.055);border-radius:13px;background:#131016;color:#ddd;cursor:pointer}.mortaDrawerNav button>span{grid-row:1/3;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:rgba(168,85,247,.1);font-size:17px}.mortaDrawerNav b{font-size:12px}.mortaDrawerNav small{font-size:9px;color:#85808b;margin-top:2px}.mortaDrawerNav button.active{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08)}
-  .mortaDrawerFooter{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;color:#67626d;font-size:9px;text-transform:uppercase;letter-spacing:1px}
-  .mlProfileHead{padding-top:4px}.mlProfileAvatar{width:76px;height:76px;font-size:24px}.mlProfileIdentity h3{font-size:18px}.mlProfileStats{gap:3px}.mlProfileStats b{font-size:12px}.mlProfileStats span{font-size:9px}.mlProfileGridItem{font-size:19px}
-}
-</style>
+
 
 <style id="morta-v19-admin-users-style">
 .adminUsers{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
@@ -957,23 +930,8 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
   #mortaMobileAuth .danger{background:#34131a;color:#fecaca}
 }
 </style>
-<style id="morta-v33-profile-clean">
-/* Clean profile header */
-#profileModal .mlProfileStats,
-#profileModal .mlProfileGrid{display:none!important}
-#profileModal .mlProfileActions{grid-template-columns:1fr!important}
-#profileModal #mlProfileShareBtn{display:none!important}
-</style>
-<style id="morta-v35-profile-photo-clean">
-/* Only the main avatar at the top is used. Hide duplicate preview in profile details. */
-#profileModal .profilePhotoPreview,
-#profileModal .profile-photo-preview,
-#profileModal .profileAvatarPreview,
-#profileModal .profileEditAvatar,
-#profileModal .editAvatarPreview{
-  display:none!important;
-}
-</style>
+
+
 <style id="morta-v36-pp-clean">
 /* Profil detaylarında ikinci PP tamamen kaldırılır. */
 #profileModal .profileHero{display:none!important}
@@ -983,55 +941,41 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 
 
 
-<style id="morta-v42-avatar-audited">
-/* V42: audited against the actual avatar markup (#profileAvatar inside .profileAvatarLarge) */
-.profileAvatarLarge{
-  width:72px!important;
-  height:72px!important;
-  flex:0 0 72px!important;
-  position:relative!important;
-  overflow:hidden!important;
-  border-radius:50%!important;
-  clip-path:none!important;
-  box-sizing:border-box!important;
-  padding:0!important;
-  line-height:0!important;
+
+<style id="morta-v43-profile-rebuild-css">
+#profileModal .mortaProfileRebuild{
+  width:min(100%,520px);margin:0 auto;padding:18px;box-sizing:border-box;
 }
-.profileAvatarLarge > #profileAvatar{
-  width:100%!important;
-  height:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  max-width:none!important;
-  max-height:none!important;
-  display:block!important;
-  position:absolute!important;
-  top:0!important;
-  left:0!important;
-  right:auto!important;
-  bottom:auto!important;
-  transform:none!important;
-  translate:none!important;
-  object-fit:cover!important;
-  object-position:center!important;
-  border-radius:inherit!important;
-  margin:0!important;
-  padding:0!important;
+#profileModal .mortaProfileRebuild .mpr-head{
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
 }
-.profileAvatarLarge > #profileAvatar[hidden]{display:none!important}
-.profileAvatarLarge > #profileAvatarFallback{
-  position:absolute!important;
-  inset:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  line-height:1!important;
+#profileModal .mortaProfileRebuild .mpr-avatar{
+  width:88px;height:88px;flex:0 0 88px;border-radius:50%;overflow:hidden;
+  position:relative;background:#17171f;display:grid;place-items:center;
 }
-.profileAvatarLarge.has-photo > #profileAvatarFallback{display:none!important}
+#profileModal .mortaProfileRebuild .mpr-avatar img{
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+}
+#profileModal .mortaProfileRebuild .mpr-placeholder{font-size:32px;line-height:1}
+#profileModal .mortaProfileRebuild .mpr-info{min-width:0}
+#profileModal .mortaProfileRebuild .mpr-name{font-size:18px;font-weight:800;word-break:break-word}
+#profileModal .mortaProfileRebuild .mpr-handle{opacity:.65;font-size:13px;margin-top:3px}
+#profileModal .mortaProfileRebuild .mpr-card{
+  padding:14px;border:1px solid rgba(255,255,255,.10);border-radius:14px;margin-top:12px;
+}
+#profileModal .mortaProfileRebuild label{display:block;font-size:12px;margin-bottom:7px}
+#profileModal .mortaProfileRebuild input[type="text"],
+#profileModal .mortaProfileRebuild textarea{
+  width:100%;box-sizing:border-box;padding:11px;border-radius:10px;
+}
+#profileModal .mortaProfileRebuild input[type="file"]{width:100%;font-size:12px}
+#profileModal .mortaProfileRebuild .mpr-save{
+  width:100%;margin-top:14px;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;
+}
+#profileModal .mortaProfileRebuild .mpr-status{min-height:18px;margin-top:8px;font-size:12px;opacity:.75}
 @media(max-width:600px){
-  .profileAvatarLarge{
-    width:64px!important;height:64px!important;flex-basis:64px!important;
-  }
+ #profileModal .mortaProfileRebuild{padding:14px}
+ #profileModal .mortaProfileRebuild .mpr-avatar{width:76px;height:76px;flex-basis:76px}
 }
 </style>
 </head>
@@ -2220,7 +2164,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260909-v42-avatar-audited"></script>
+<script src="script.js?v=20260909-v43-profile-rebuild"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3090,43 +3034,7 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 </style>
 <script src="master-v15.js" defer></script>
 
-<script id="morta-v18-drawer-profile-js">
-(function(){
-  const drawer=document.getElementById('mortaDrawer'), backdrop=document.getElementById('mortaDrawerBackdrop'), openBtn=document.getElementById('mortaHamburger'), closeBtn=document.getElementById('mortaDrawerClose');
-  if(!drawer||!openBtn)return;
-  function close(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');backdrop.hidden=true;openBtn.setAttribute('aria-expanded','false');document.body.classList.remove('morta-drawer-open')}
-  function open(){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');backdrop.hidden=false;openBtn.setAttribute('aria-expanded','true');document.body.classList.add('morta-drawer-open')}
-  openBtn.addEventListener('click',()=>drawer.classList.contains('open')?close():open()); closeBtn?.addEventListener('click',close); backdrop?.addEventListener('click',close);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-  document.querySelectorAll('[data-drawer-scroll]').forEach(btn=>btn.addEventListener('click',()=>{close();setTimeout(()=>window.MortaLeagueViews?.show(btn.dataset.drawerScroll),30)}));
-  document.getElementById('mortaDrawerProfileBtn')?.addEventListener('click',()=>{close();setTimeout(()=>window.__openMortaProfile?.(),30)});
-  const profileModal=document.getElementById('profileModal');
-  const drawerUser=document.getElementById('mortaDrawerUsername'), drawerSub=document.getElementById('mortaDrawerSubtitle'), drawerAv=document.getElementById('mortaDrawerAvatar');
-  function syncProfile(){
-    // Prefer the authenticated Supabase identity; never leave a fake static "@profil".
-    const authUser=window.__mortaCurrentUser || window.mortaCurrentUser || null;
-    const meta=authUser?.user_metadata || {};
-    const authName=meta.username || meta.user_name || meta.full_name || authUser?.email?.split("@")[0] || "";
 
-    const username=authName||document.getElementById('profileUsername')?.textContent?.trim()||'Profil';
-    const pos=document.getElementById('profilePosition')?.value||'';
-    const team=document.getElementById('profileTeam')?.value||'';
-    drawerUser.textContent=username||'Profil'; drawerSub.textContent=[pos,team].filter(Boolean).join(' · ')||'Hesabını görüntüle';
-    const img=document.getElementById('profileAvatar');
-    if(img?.src && !img.hidden){drawerAv.innerHTML='';const i=document.createElement('img');i.src=img.src;i.alt='';i.style.cssText='width:100%;height:100%;object-fit:cover';drawerAv.appendChild(i)} else drawerAv.textContent=(username||'M').slice(0,1).toUpperCase();
-    const mini=document.getElementById('mlProfileName'); if(mini) mini.textContent=username||'Profilin';
-    const handle=document.getElementById('mlProfileHandle'); if(handle) handle.textContent='@'+(username||'profil').replace(/\s+/g,'').toLocaleLowerCase('tr-TR');
-    const bio=document.getElementById('profileBio')?.value?.trim()||'MortaLeague oyuncu profili'; const mb=document.getElementById('mlProfileBioDisplay'); if(mb) mb.textContent=bio;
-    const val=Number(document.getElementById('profileValue')?.value)||0; const pv=document.getElementById('mlProfileValue'); if(pv) pv.textContent='€'+new Intl.NumberFormat('tr-TR').format(val);
-    const ma=document.getElementById('mlProfileAvatar'), mfa=document.getElementById('mlProfileFallback'); if(ma&&img?.src&&!img.hidden){ma.src=img.src;ma.hidden=false;if(mfa)mfa.hidden=true}else if(ma){ma.hidden=true;if(mfa)mfa.textContent=(username||'M').slice(0,1).toUpperCase();mfa.hidden=false}
-  }
-  if(profileModal)new MutationObserver(()=>{if(profileModal.classList.contains('open')) setTimeout(syncProfile,50)}).observe(profileModal,{attributes:true,attributeFilter:['class']});
-  ['profileUsername','profilePosition','profileTeam','profileBio','profileValue'].forEach(id=>document.getElementById(id)?.addEventListener('input',syncProfile));
-  document.getElementById('mlProfileEditBtn')?.addEventListener('click',()=>{document.getElementById('profileBio')?.focus()});
-  document.getElementById('mlProfileShareBtn')?.addEventListener('click',async()=>{const u=drawerUser?.textContent||'MortaLeague';try{await navigator.clipboard?.writeText(location.href);window.MortaUI?.toast?.(u+' profili bağlantısı kopyalandı.','success')}catch{window.MortaUI?.toast?.('Profil bağlantısı hazır.','info')}});
-  document.addEventListener('morta-auth-ready',syncProfile); window.addEventListener('load',()=>setTimeout(syncProfile,800));
-})();
-</script>
 
 <script id="morta-v19-admin-users-script">
 (() => {
@@ -3560,106 +3468,8 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   else bind();
 })();
 </script>
-<style id="morta-v34-profile-force-css">
-#profileModal .mlProfileStats,
-#profileModal .mlProfileGrid,
-#profileModal #mlProfileShareBtn,
-#profileModal [data-profile-stat],
-#profileModal [data-profile-icon]{
-  display:none!important;
-}
-#profileModal .mlProfileActions{
-  display:block!important;
-}
-#profileModal .mlProfileActions #mlProfileEditBtn{
-  width:100%!important;
-}
-</style>
-<script id="morta-v34-profile-force">
-(function(){
-  const $=s=>document.querySelector(s);
 
-  function clean(){
-    const modal=$("#profileModal");
-    if(!modal) return;
 
-    // Remove unwanted elements from the DOM completely.
-    modal.querySelectorAll(".mlProfileStats,.mlProfileGrid,#mlProfileShareBtn,[data-profile-stat],[data-profile-icon]")
-      .forEach(el=>el.remove());
-
-    const actions=modal.querySelector(".mlProfileActions");
-    if(actions) actions.querySelectorAll("button").forEach(btn=>{
-      if(btn.id!=="mlProfileEditBtn") btn.remove();
-    });
-  }
-
-  async function syncIdentity(){
-    const sb=window.mortaSupabase||window.supabaseClient;
-    if(!sb?.auth?.getSession) return;
-    try{
-      const {data:{session}}=await sb.auth.getSession();
-      const user=session?.user;
-      if(!user) return;
-
-      const meta=user.user_metadata||{};
-      let username=meta.username||meta.user_name||meta.display_name||meta.full_name||"";
-      let bio="";
-
-      // Prefer the user's actual MortaLeague profile record when available.
-      try{
-        const {data:profile}=await sb.from("profiles")
-          .select("username,display_name,full_name,name,bio")
-          .eq("id",user.id).maybeSingle();
-
-        if(profile){
-          username=profile.username||profile.display_name||profile.full_name||profile.name||username;
-          bio=profile.bio||"";
-        }
-      }catch(e){}
-
-      username=(username||user.email?.split("@")[0]||"Profil").trim();
-      const handle="@"+username.replace(/^@/,"").replace(/\s+/g,"").toLocaleLowerCase("tr-TR");
-
-      const nameEl=$("#mlProfileName");
-      const handleEl=$("#mlProfileHandle");
-      const editName=$("#profileUsername");
-      const fallback=$("#mlProfileFallback");
-      const miniBio=$("#mlProfileMiniBio");
-      const bioDisplay=$("#mlProfileBioDisplay");
-
-      if(nameEl) nameEl.textContent=username;
-      if(handleEl) handleEl.textContent=handle;
-      if(editName) editName.textContent=username;
-      if(fallback) fallback.textContent=username.charAt(0).toUpperCase();
-      if(miniBio && bio) miniBio.textContent=bio;
-      if(bioDisplay && bio) bioDisplay.textContent=bio;
-    }catch(e){}
-  }
-
-  async function refresh(){
-    clean();
-    await syncIdentity();
-    clean();
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",refresh,{once:true});
-  }else refresh();
-
-  // Profile may be opened or rebuilt dynamically.
-  document.addEventListener("click",e=>{
-    if(e.target.closest("#mortaDrawerProfileBtn,[data-open-profile],#mlProfileEditBtn")){
-      setTimeout(refresh,50);
-    }
-  });
-
-  const observer=new MutationObserver(()=>clean());
-  document.addEventListener("DOMContentLoaded",()=>{
-    const modal=$("#profileModal");
-    if(modal) observer.observe(modal,{childList:true,subtree:true});
-  },{once:true});
-})();
-</script>
 
 <script id="morta-v36-pp-sync">
 (function(){
@@ -3711,36 +3521,161 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 
 
 
-<script id="morta-v42-avatar-preview">
+
+<script id="morta-v43-profile-rebuild-js">
 (function(){
-  function bind(){
-    const input=document.getElementById("avatarInput");
-    const img=document.getElementById("profileAvatar");
-    if(!input||!img||input.dataset.v42)return;
-    input.dataset.v42="1";
-    const box=img.closest(".profileAvatarLarge");
-    const fallback=document.getElementById("profileAvatarFallback");
-    input.addEventListener("change",function(){
-      const file=this.files&&this.files[0];
-      if(!file||!/^image\//.test(file.type))return;
-      const old=img.dataset.previewUrl;
-      if(old)URL.revokeObjectURL(old);
-      const url=URL.createObjectURL(file);
-      img.dataset.previewUrl=url;
-      img.onload=function(){
-        img.hidden=false;
-        box?.classList.add("has-photo");
-        if(fallback)fallback.hidden=true;
-      };
-      img.src=url;
-      img.hidden=false;
-      box?.classList.add("has-photo");
-      if(fallback)fallback.hidden=true;
+  const $=(root,s)=>root.querySelector(s);
+  let objectUrl=null;
+
+  function getModal(){ return document.getElementById("profileModal"); }
+
+  function build(){
+    const modal=getModal();
+    if(!modal) return null;
+    let root=$ (modal,".mortaProfileRebuild");
+    if(root) return root;
+
+    // Hide all legacy profile body elements without deleting IDs used elsewhere.
+    [...modal.children].forEach(el=>{
+      if(!el.classList?.contains("mortaProfileRebuild") && !el.matches?.(".modalClose,[data-close-profile]")){
+        el.style.display="none";
+      }
     });
-    if(img.getAttribute("src")) box?.classList.add("has-photo");
+
+    root=document.createElement("div");
+    root.className="mortaProfileRebuild";
+    root.innerHTML=`
+      <div class="mpr-head">
+        <div class="mpr-avatar" id="mprAvatar"><span class="mpr-placeholder">👤</span></div>
+        <div class="mpr-info">
+          <div class="mpr-name" id="mprName">Profil</div>
+          <div class="mpr-handle" id="mprHandle">@profil</div>
+        </div>
+      </div>
+      <div class="mpr-card">
+        <label for="mprFile">Profil fotoğrafı</label>
+        <input id="mprFile" type="file" accept="image/*">
+      </div>
+      <div class="mpr-card">
+        <label for="mprUsername">Kullanıcı adı</label>
+        <input id="mprUsername" type="text" maxlength="30" autocomplete="nickname">
+      </div>
+      <div class="mpr-card">
+        <label for="mprBio">Biyografi</label>
+        <textarea id="mprBio" rows="3" maxlength="160"></textarea>
+      </div>
+      <button class="mpr-save" type="button" id="mprSave">KAYDET</button>
+      <div class="mpr-status" id="mprStatus"></div>
+    `;
+    modal.appendChild(root);
+    bind(root);
+    return root;
   }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bind,{once:true});
-  else bind();
+
+  function setText(el,text){ if(el) el.textContent=text ?? ""; }
+
+  function updateAvatar(root,src){
+    const box=$(root,"#mprAvatar");
+    if(!box) return;
+    let img=$ (box,"img");
+    const ph=$ (box,".mpr-placeholder");
+    if(!src){
+      img?.remove();
+      if(!ph){
+        const s=document.createElement("span");
+        s.className="mpr-placeholder"; s.textContent="👤"; box.appendChild(s);
+      }
+      return;
+    }
+    if(!img){
+      img=document.createElement("img");
+      img.alt="Profil fotoğrafı";
+      box.appendChild(img);
+    }
+    img.src=src;
+    ph?.remove();
+  }
+
+  async function load(root){
+    const sb=window.mortaSupabase||window.supabaseClient;
+    if(!sb?.auth?.getSession) return;
+    try{
+      const {data:{session}}=await sb.auth.getSession();
+      const user=session?.user;
+      if(!user) return;
+
+      let profile={};
+      try{
+        const {data}=await sb.from("profiles").select("*").eq("id",user.id).maybeSingle();
+        profile=data||{};
+      }catch(_){}
+
+      const meta=user.user_metadata||{};
+      const username=profile.username||profile.display_name||meta.username||meta.user_name||user.email?.split("@")[0]||"Profil";
+      const bio=profile.bio||meta.bio||"";
+      const avatar=profile.avatar_url||meta.avatar_url||meta.picture||"";
+
+      setText($(root,"#mprName"),username);
+      setText($(root,"#mprHandle"),"@"+String(username).replace(/^@/,"").replace(/\s+/g,"").toLocaleLowerCase("tr-TR"));
+      const u=$(root,"#mprUsername"); if(u)u.value=username;
+      const b=$(root,"#mprBio"); if(b)b.value=bio;
+      updateAvatar(root,avatar);
+    }catch(e){}
+  }
+
+  function bind(root){
+    const file=$(root,"#mprFile");
+    file?.addEventListener("change",()=>{
+      const f=file.files?.[0];
+      if(!f || !f.type.startsWith("image/"))return;
+      if(objectUrl)URL.revokeObjectURL(objectUrl);
+      objectUrl=URL.createObjectURL(f);
+      updateAvatar(root,objectUrl);
+    });
+
+    const username=$(root,"#mprUsername");
+    username?.addEventListener("input",()=>{
+      const v=username.value.trim()||"Profil";
+      setText($(root,"#mprName"),v);
+      setText($(root,"#mprHandle"),"@"+v.replace(/^@/,"").replace(/\s+/g,"").toLocaleLowerCase("tr-TR"));
+    });
+
+    $(root,"#mprSave")?.addEventListener("click",async()=>{
+      const status=$(root,"#mprStatus");
+      setText(status,"Kaydediliyor...");
+      const sb=window.mortaSupabase||window.supabaseClient;
+      if(!sb?.auth?.getSession){setText(status,"Oturum bulunamadı.");return;}
+      try{
+        const {data:{session}}=await sb.auth.getSession();
+        const user=session?.user;
+        if(!user){setText(status,"Oturum bulunamadı.");return;}
+
+        const username=$(root,"#mprUsername")?.value.trim()||"Profil";
+        const bio=$(root,"#mprBio")?.value.trim()||"";
+        const payload={id:user.id,username,bio,updated_at:new Date().toISOString()};
+        const {error}=await sb.from("profiles").upsert(payload,{onConflict:"id"});
+        if(error) throw error;
+        setText(status,"Kaydedildi ✓");
+      }catch(e){
+        setText(status,"Kaydedilemedi: "+(e?.message||"Bilinmeyen hata"));
+      }
+    });
+  }
+
+  function open(){
+    const root=build();
+    if(root) load(root);
+  }
+
+  document.addEventListener("click",e=>{
+    if(e.target.closest("#mortaDrawerProfileBtn,[data-open-profile],#openProfile,.openProfile")){
+      setTimeout(open,0);
+    }
+  });
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",()=>{build();},{once:true});
+  }else build();
 })();
 </script>
 </body>
