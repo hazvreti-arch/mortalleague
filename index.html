@@ -981,52 +981,42 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 
 
 
-<style id="morta-v40-avatar-system">
-/* Tek ve stabil ana profil fotoğrafı sistemi */
-#mlProfileAvatar,.mlProfileAvatar{
-  width:92px!important;
-  height:92px!important;
-  min-width:92px!important;
-  min-height:92px!important;
-  flex:0 0 92px!important;
-  aspect-ratio:1/1!important;
-  position:relative!important;
+
+<style id="morta-v41-real-avatar-css">
+/* Gerçek profil avatarı: profil kaydetme kodunun kullandığı #profileAvatar */
+.profileAvatarLarge{
+  width:64px!important;
+  height:64px!important;
+  min-width:64px!important;
+  min-height:64px!important;
   overflow:hidden!important;
-  border-radius:50%!important;
-  box-sizing:border-box!important;
-  background:#1a1a22!important;
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
 }
-#mlProfileAvatar .morta-avatar-img,
-.mlProfileAvatar .morta-avatar-img{
+.profileAvatarLarge #profileAvatar{
   position:absolute!important;
+  inset:0!important;
   width:100%!important;
   height:100%!important;
-  inset:0!important;
+  min-width:100%!important;
+  min-height:100%!important;
   display:block!important;
   object-fit:cover!important;
-  object-position:center center!important;
-  transform:none!important;
+  object-position:center!important;
   margin:0!important;
   padding:0!important;
+  border:0!important;
 }
-#mlProfileAvatar .morta-avatar-placeholder,
-.mlProfileAvatar .morta-avatar-placeholder{
-  position:absolute!important;
-  inset:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  font-size:32px!important;
-  font-weight:800!important;
+.profileAvatarLarge #profileAvatar[hidden]{display:none!important}
+.profileAvatarLarge #profileAvatarFallback{
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:100%!important;
   line-height:1!important;
 }
-@media(max-width:600px){
-  #mlProfileAvatar,.mlProfileAvatar{
-    width:78px!important;height:78px!important;
-    min-width:78px!important;min-height:78px!important;
-    flex-basis:78px!important;
-  }
-}
+.profileAvatarLarge.has-image #profileAvatarFallback{display:none!important}
 </style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
@@ -2214,7 +2204,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260909-v40-avatar-clean"></script>
+<script src="script.js?v=20260909-v41-real-avatar"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3703,74 +3693,31 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 </script>
 
 
-<script id="morta-v40-avatar-system-js">
+
+<script id="morta-v41-real-avatar-preview">
 (function(){
-  const qs=s=>document.querySelector(s);
+  const input=document.getElementById("avatarInput");
+  const avatar=document.getElementById("profileAvatar");
+  const fallback=document.getElementById("profileAvatarFallback");
+  const box=avatar?.closest(".profileAvatarLarge");
+  if(!input || !avatar || input.dataset.v41Bound) return;
+  input.dataset.v41Bound="1";
 
-  function getBox(){
-    return qs("#mlProfileAvatar") || qs(".mlProfileAvatar");
-  }
-
-  function ensureAvatar(src){
-    const box=getBox();
-    if(!box) return;
-
-    // Remove only legacy children inside the top avatar and rebuild consistently.
-    let img=box.querySelector(".morta-avatar-img");
-    let placeholder=box.querySelector(".morta-avatar-placeholder");
-
-    if(src){
-      if(!img){
-        img=document.createElement("img");
-        img.className="morta-avatar-img";
-        img.alt="Profil fotoğrafı";
-        box.appendChild(img);
-      }
-      img.src=src;
-      img.hidden=false;
-      if(placeholder) placeholder.remove();
-      return;
-    }
-
-    // No uploaded photo: clean placeholder, never show a broken image icon.
-    if(img && !img.getAttribute("src")) img.remove();
-    if(!placeholder){
-      placeholder=document.createElement("span");
-      placeholder.className="morta-avatar-placeholder";
-      placeholder.textContent="👤";
-      box.appendChild(placeholder);
-    }
-  }
-
-  function init(){
-    const box=getBox();
-    if(!box) return;
-
-    // If an existing real image exists, normalize it; otherwise show clean placeholder.
-    const existing=box.querySelector("img");
-    const src=existing && existing.getAttribute("src");
-    box.querySelectorAll("img").forEach(img=>{
-      if(!img.classList.contains("morta-avatar-img")) img.remove();
-    });
-    ensureAvatar(src || "");
-  }
-
-  function bindInput(){
-    const input=qs("#avatarInput");
-    if(!input || input.dataset.v40Bound) return;
-    input.dataset.v40Bound="1";
-    input.addEventListener("change",()=>{
-      const file=input.files && input.files[0];
-      if(!file || !file.type.startsWith("image/")) return;
-      const reader=new FileReader();
-      reader.onload=()=>ensureAvatar(reader.result);
-      reader.readAsDataURL(file);
-    });
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>{init();bindInput();},{once:true});
-  }else {init();bindInput();}
+  input.addEventListener("change",()=>{
+    const file=input.files?.[0];
+    if(!file || !file.type.startsWith("image/")) return;
+    const url=URL.createObjectURL(file);
+    avatar.onload=()=>{
+      URL.revokeObjectURL(url);
+      avatar.hidden=false;
+      box?.classList.add("has-image");
+      if(fallback) fallback.hidden=true;
+    };
+    avatar.src=url;
+    avatar.hidden=false;
+    box?.classList.add("has-image");
+    if(fallback) fallback.hidden=true;
+  });
 })();
 </script>
 </body>
