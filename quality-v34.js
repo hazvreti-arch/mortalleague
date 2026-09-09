@@ -1,66 +1,62 @@
 
-/* MortaLeague V34 — isolated interaction stabilizer */
+/* MortaLeague V34.1 — single-source mobile drawer controller */
 (() => {
-  const $ = (s) => document.querySelector(s);
+  const get = (id) => document.getElementById(id);
 
-  const menu = $('#mortaHamburger');
-  const drawer = $('#mortaDrawer');
-  const backdrop = $('#mortaDrawerBackdrop');
-  const closeBtn = $('#mortaDrawerClose');
+  function parts() {
+    return {
+      menu: get('mortaHamburger'),
+      drawer: get('mortaDrawer'),
+      backdrop: get('mortaDrawerBackdrop'),
+      close: get('mortaDrawerClose')
+    };
+  }
 
-  function isMobile(){ return window.matchMedia('(max-width:900px)').matches; }
+  function setDrawer(open) {
+    const { menu, drawer, backdrop } = parts();
+    if (!menu || !drawer || !backdrop) return false;
 
-  function setDrawer(open){
-    if(!drawer || !menu || !backdrop) return;
     drawer.classList.toggle('open', open);
-    drawer.setAttribute('aria-hidden', String(!open));
-    menu.setAttribute('aria-expanded', String(open));
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menu.setAttribute('aria-expanded', open ? 'true' : 'false');
     backdrop.hidden = !open;
     document.documentElement.classList.toggle('morta-drawer-open', open);
     document.body.classList.toggle('morta-drawer-open', open);
+    if (!open) document.body.style.overflow = '';
+    return true;
   }
 
-  menu?.addEventListener('click', (e) => {
-    if(!isMobile()) return;
-    e.preventDefault();
-    e.stopPropagation();
-    setDrawer(!drawer?.classList.contains('open'));
-  });
+  // Capture phase + stopImmediatePropagation prevents older duplicate handlers
+  // from toggling the drawer a second time.
+  document.addEventListener('click', (e) => {
+    const hamburger = e.target.closest('#mortaHamburger');
+    if (hamburger && window.matchMedia('(max-width:900px)').matches) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const drawer = get('mortaDrawer');
+      setDrawer(!drawer?.classList.contains('open'));
+      return;
+    }
 
-  closeBtn?.addEventListener('click', () => setDrawer(false));
-  backdrop?.addEventListener('click', () => setDrawer(false));
-
-  document.querySelectorAll('[data-drawer-scroll]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.drawerScroll;
-      const target = document.getElementById(id);
+    if (e.target.closest('#mortaDrawerClose') || e.target.closest('#mortaDrawerBackdrop')) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
       setDrawer(false);
-      if (target) {
-        requestAnimationFrame(() => target.scrollIntoView({behavior:'smooth', block:'start'}));
-      } else {
-        document.querySelector(`[data-scroll="${id}"]`)?.click();
-      }
-    });
-  });
-
-  $('#mortaDrawerProfileBtn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    setDrawer(false);
-    setTimeout(() => window.__openMortaProfile?.(e), 40);
-  });
+    }
+  }, true);
 
   document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && drawer?.classList.contains('open')) setDrawer(false);
+    if (e.key === 'Escape') setDrawer(false);
   });
 
   window.addEventListener('resize', () => {
-    if(!isMobile()) setDrawer(false);
+    if (!window.matchMedia('(max-width:900px)').matches) setDrawer(false);
   });
 
-  /* Extra protection against the old "textContent of null" class of crash. */
-  window.MortaSafeText = (id, value) => {
-    const el = typeof id === 'string' ? document.getElementById(id) : id;
-    if(el) el.textContent = value == null ? '' : String(value);
+  // Defensive helper for optional UI nodes.
+  window.MortaSafeText = (target, value) => {
+    const el = typeof target === 'string' ? get(target) : target;
+    if (el) el.textContent = value == null ? '' : String(value);
     return el;
   };
 })();
