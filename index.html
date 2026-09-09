@@ -1006,6 +1006,22 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
   transform:none!important;
 }
 </style>
+<style id="morta-v38-avatar-real-fix">
+#mlProfileAvatar,.mlProfileAvatar{
+  width:96px!important;height:96px!important;flex:0 0 96px!important;
+  aspect-ratio:1/1!important;overflow:hidden!important;border-radius:50%!important;
+  position:relative!important;box-sizing:border-box!important;padding:0!important;line-height:0!important;
+}
+#mlProfileAvatar img,.mlProfileAvatar img{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  min-width:100%!important;min-height:100%!important;margin:0!important;padding:0!important;
+  display:block!important;object-fit:cover!important;object-position:center center!important;
+  border:0!important;border-radius:0!important;box-sizing:border-box!important;
+}
+@media(max-width:600px){
+ #mlProfileAvatar,.mlProfileAvatar{width:88px!important;height:88px!important;flex-basis:88px!important;}
+}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -3677,6 +3693,19 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
   if(document.readyState==="loading"){
     document.addEventListener("DOMContentLoaded",bind,{once:true});
   }else bind();
+})();
+</script>
+<script id="morta-v38-avatar-enforcer">
+(function(){
+ function enforce(){
+  document.querySelectorAll("#mlProfileAvatar,.mlProfileAvatar").forEach(box=>{
+   const img=box.querySelector("img"); if(!img)return;
+   img.style.cssText+=";width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;position:absolute!important;inset:0!important;";
+  });
+ }
+ document.addEventListener("change",e=>{if(e.target?.id==="avatarInput")setTimeout(enforce,150);});
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",enforce,{once:true});else enforce();
+ new MutationObserver(enforce).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
 </body>
