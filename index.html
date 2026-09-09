@@ -978,6 +978,34 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 /* Profil detaylarında ikinci PP tamamen kaldırılır. */
 #profileModal .profileHero{display:none!important}
 </style>
+<style id="morta-v37-avatar-full">
+/* Ana profil fotoğrafının yarım görünmesini engelle */
+#mlProfileAvatar,
+.mlProfileAvatar{
+  overflow:hidden!important;
+  border-radius:50%!important;
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#mlProfileAvatar img,
+.mlProfileAvatar img{
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:50%!important;
+  transform:none!important;
+}
+</style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
 <body>
@@ -3622,6 +3650,10 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
       const img=document.createElement("img");
       img.src=src;
       img.alt="Profil fotoğrafı";
+      img.style.width="100%";
+      img.style.height="100%";
+      img.style.objectFit="cover";
+      img.style.objectPosition="center";
       topBox.querySelector("span")?.remove();
       topBox.appendChild(img);
     }
