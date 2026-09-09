@@ -982,41 +982,57 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 
 
 
-<style id="morta-v41-real-avatar-css">
-/* Gerçek profil avatarı: profil kaydetme kodunun kullandığı #profileAvatar */
+
+<style id="morta-v42-avatar-audited">
+/* V42: audited against the actual avatar markup (#profileAvatar inside .profileAvatarLarge) */
 .profileAvatarLarge{
-  width:64px!important;
-  height:64px!important;
-  min-width:64px!important;
-  min-height:64px!important;
-  overflow:hidden!important;
+  width:72px!important;
+  height:72px!important;
+  flex:0 0 72px!important;
   position:relative!important;
-  display:grid!important;
-  place-items:center!important;
+  overflow:hidden!important;
+  border-radius:50%!important;
+  clip-path:none!important;
+  box-sizing:border-box!important;
+  padding:0!important;
+  line-height:0!important;
 }
-.profileAvatarLarge #profileAvatar{
-  position:absolute!important;
-  inset:0!important;
+.profileAvatarLarge > #profileAvatar{
   width:100%!important;
   height:100%!important;
-  min-width:100%!important;
-  min-height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
   display:block!important;
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  translate:none!important;
   object-fit:cover!important;
   object-position:center!important;
+  border-radius:inherit!important;
   margin:0!important;
   padding:0!important;
-  border:0!important;
 }
-.profileAvatarLarge #profileAvatar[hidden]{display:none!important}
-.profileAvatarLarge #profileAvatarFallback{
-  display:grid!important;
-  place-items:center!important;
-  width:100%!important;
-  height:100%!important;
+.profileAvatarLarge > #profileAvatar[hidden]{display:none!important}
+.profileAvatarLarge > #profileAvatarFallback{
+  position:absolute!important;
+  inset:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
   line-height:1!important;
 }
-.profileAvatarLarge.has-image #profileAvatarFallback{display:none!important}
+.profileAvatarLarge.has-photo > #profileAvatarFallback{display:none!important}
+@media(max-width:600px){
+  .profileAvatarLarge{
+    width:64px!important;height:64px!important;flex-basis:64px!important;
+  }
+}
 </style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
@@ -2204,7 +2220,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260909-v41-real-avatar"></script>
+<script src="script.js?v=20260909-v42-avatar-audited"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3694,30 +3710,37 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 
 
 
-<script id="morta-v41-real-avatar-preview">
-(function(){
-  const input=document.getElementById("avatarInput");
-  const avatar=document.getElementById("profileAvatar");
-  const fallback=document.getElementById("profileAvatarFallback");
-  const box=avatar?.closest(".profileAvatarLarge");
-  if(!input || !avatar || input.dataset.v41Bound) return;
-  input.dataset.v41Bound="1";
 
-  input.addEventListener("change",()=>{
-    const file=input.files?.[0];
-    if(!file || !file.type.startsWith("image/")) return;
-    const url=URL.createObjectURL(file);
-    avatar.onload=()=>{
-      URL.revokeObjectURL(url);
-      avatar.hidden=false;
-      box?.classList.add("has-image");
-      if(fallback) fallback.hidden=true;
-    };
-    avatar.src=url;
-    avatar.hidden=false;
-    box?.classList.add("has-image");
-    if(fallback) fallback.hidden=true;
-  });
+<script id="morta-v42-avatar-preview">
+(function(){
+  function bind(){
+    const input=document.getElementById("avatarInput");
+    const img=document.getElementById("profileAvatar");
+    if(!input||!img||input.dataset.v42)return;
+    input.dataset.v42="1";
+    const box=img.closest(".profileAvatarLarge");
+    const fallback=document.getElementById("profileAvatarFallback");
+    input.addEventListener("change",function(){
+      const file=this.files&&this.files[0];
+      if(!file||!/^image\//.test(file.type))return;
+      const old=img.dataset.previewUrl;
+      if(old)URL.revokeObjectURL(old);
+      const url=URL.createObjectURL(file);
+      img.dataset.previewUrl=url;
+      img.onload=function(){
+        img.hidden=false;
+        box?.classList.add("has-photo");
+        if(fallback)fallback.hidden=true;
+      };
+      img.src=url;
+      img.hidden=false;
+      box?.classList.add("has-photo");
+      if(fallback)fallback.hidden=true;
+    });
+    if(img.getAttribute("src")) box?.classList.add("has-photo");
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bind,{once:true});
+  else bind();
 })();
 </script>
 </body>
