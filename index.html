@@ -942,41 +942,26 @@ body.morta-view-mode #home.mortaViewActive{display:grid!important}
 
 
 
-<style id="morta-v43-profile-rebuild-css">
-#profileModal .mortaProfileRebuild{
-  width:min(100%,520px);margin:0 auto;padding:18px;box-sizing:border-box;
+
+<style id="morta-v44-nav-restore">
+/* Restore desktop/mobile hamburger navigation */
+#hamburgerMenu,#menuBtn,#hamburgerBtn,.hamburger,.hamburgerBtn,[data-menu-toggle]{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  z-index:10000!important;
 }
-#profileModal .mortaProfileRebuild .mpr-head{
-  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+/* Hide unwanted legacy bottom navigation when present */
+.bottomNav,.bottom-nav,#bottomNav,.mobileBottomNav,.mobile-bottom-nav,[data-bottom-nav="legacy"]{
+  display:none!important;
 }
-#profileModal .mortaProfileRebuild .mpr-avatar{
-  width:88px;height:88px;flex:0 0 88px;border-radius:50%;overflow:hidden;
-  position:relative;background:#17171f;display:grid;place-items:center;
+/* Keep drawer above all page content */
+#drawer,.drawer,#mortaDrawer,[data-drawer]{
+  z-index:10001!important;
 }
-#profileModal .mortaProfileRebuild .mpr-avatar img{
-  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
-}
-#profileModal .mortaProfileRebuild .mpr-placeholder{font-size:32px;line-height:1}
-#profileModal .mortaProfileRebuild .mpr-info{min-width:0}
-#profileModal .mortaProfileRebuild .mpr-name{font-size:18px;font-weight:800;word-break:break-word}
-#profileModal .mortaProfileRebuild .mpr-handle{opacity:.65;font-size:13px;margin-top:3px}
-#profileModal .mortaProfileRebuild .mpr-card{
-  padding:14px;border:1px solid rgba(255,255,255,.10);border-radius:14px;margin-top:12px;
-}
-#profileModal .mortaProfileRebuild label{display:block;font-size:12px;margin-bottom:7px}
-#profileModal .mortaProfileRebuild input[type="text"],
-#profileModal .mortaProfileRebuild textarea{
-  width:100%;box-sizing:border-box;padding:11px;border-radius:10px;
-}
-#profileModal .mortaProfileRebuild input[type="file"]{width:100%;font-size:12px}
-#profileModal .mortaProfileRebuild .mpr-save{
-  width:100%;margin-top:14px;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;
-}
-#profileModal .mortaProfileRebuild .mpr-status{min-height:18px;margin-top:8px;font-size:12px;opacity:.75}
-@media(max-width:600px){
- #profileModal .mortaProfileRebuild{padding:14px}
- #profileModal .mortaProfileRebuild .mpr-avatar{width:76px;height:76px;flex-basis:76px}
-}
+/* Profile modal fixes must not alter application navigation */
+#profileModal{z-index:10002!important}
 </style>
 </head>
 <a id="mortaSkipLink" class="mortaSkipLink" href="#home">Ana içeriğe geç</a>
@@ -2164,7 +2149,7 @@ Not: Antrenmanları Post Olarak Paylaşmak zorunludur</div></article>
 })();
 </script>
 
-<script src="script.js?v=20260909-v43-profile-rebuild"></script>
+<script src="script.js?v=20260909-v44-nav-restore"></script>
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -3522,160 +3507,23 @@ body.morta-view-mode section[data-morta-view]{animation:mortaViewIn .22s ease bo
 
 
 
-<script id="morta-v43-profile-rebuild-js">
+
+<script id="morta-v44-nav-restore-js">
 (function(){
-  const $=(root,s)=>root.querySelector(s);
-  let objectUrl=null;
-
-  function getModal(){ return document.getElementById("profileModal"); }
-
-  function build(){
-    const modal=getModal();
-    if(!modal) return null;
-    let root=$ (modal,".mortaProfileRebuild");
-    if(root) return root;
-
-    // Hide all legacy profile body elements without deleting IDs used elsewhere.
-    [...modal.children].forEach(el=>{
-      if(!el.classList?.contains("mortaProfileRebuild") && !el.matches?.(".modalClose,[data-close-profile]")){
-        el.style.display="none";
-      }
+  const selectors=["#hamburgerMenu","#menuBtn","#hamburgerBtn",".hamburger",".hamburgerBtn","[data-menu-toggle]"];
+  const drawer=document.querySelector("#mortaDrawer,#drawer,.drawer,[data-drawer]");
+  selectors.forEach(sel=>{
+    document.querySelectorAll(sel).forEach(btn=>{
+      if(btn.dataset.v44NavBound)return;
+      btn.dataset.v44NavBound="1";
+      btn.addEventListener("click",()=>{
+        if(!drawer)return;
+        drawer.classList.toggle("open");
+        drawer.classList.toggle("active");
+        drawer.setAttribute("aria-hidden",drawer.classList.contains("open")?"false":"true");
+      });
     });
-
-    root=document.createElement("div");
-    root.className="mortaProfileRebuild";
-    root.innerHTML=`
-      <div class="mpr-head">
-        <div class="mpr-avatar" id="mprAvatar"><span class="mpr-placeholder">👤</span></div>
-        <div class="mpr-info">
-          <div class="mpr-name" id="mprName">Profil</div>
-          <div class="mpr-handle" id="mprHandle">@profil</div>
-        </div>
-      </div>
-      <div class="mpr-card">
-        <label for="mprFile">Profil fotoğrafı</label>
-        <input id="mprFile" type="file" accept="image/*">
-      </div>
-      <div class="mpr-card">
-        <label for="mprUsername">Kullanıcı adı</label>
-        <input id="mprUsername" type="text" maxlength="30" autocomplete="nickname">
-      </div>
-      <div class="mpr-card">
-        <label for="mprBio">Biyografi</label>
-        <textarea id="mprBio" rows="3" maxlength="160"></textarea>
-      </div>
-      <button class="mpr-save" type="button" id="mprSave">KAYDET</button>
-      <div class="mpr-status" id="mprStatus"></div>
-    `;
-    modal.appendChild(root);
-    bind(root);
-    return root;
-  }
-
-  function setText(el,text){ if(el) el.textContent=text ?? ""; }
-
-  function updateAvatar(root,src){
-    const box=$(root,"#mprAvatar");
-    if(!box) return;
-    let img=$ (box,"img");
-    const ph=$ (box,".mpr-placeholder");
-    if(!src){
-      img?.remove();
-      if(!ph){
-        const s=document.createElement("span");
-        s.className="mpr-placeholder"; s.textContent="👤"; box.appendChild(s);
-      }
-      return;
-    }
-    if(!img){
-      img=document.createElement("img");
-      img.alt="Profil fotoğrafı";
-      box.appendChild(img);
-    }
-    img.src=src;
-    ph?.remove();
-  }
-
-  async function load(root){
-    const sb=window.mortaSupabase||window.supabaseClient;
-    if(!sb?.auth?.getSession) return;
-    try{
-      const {data:{session}}=await sb.auth.getSession();
-      const user=session?.user;
-      if(!user) return;
-
-      let profile={};
-      try{
-        const {data}=await sb.from("profiles").select("*").eq("id",user.id).maybeSingle();
-        profile=data||{};
-      }catch(_){}
-
-      const meta=user.user_metadata||{};
-      const username=profile.username||profile.display_name||meta.username||meta.user_name||user.email?.split("@")[0]||"Profil";
-      const bio=profile.bio||meta.bio||"";
-      const avatar=profile.avatar_url||meta.avatar_url||meta.picture||"";
-
-      setText($(root,"#mprName"),username);
-      setText($(root,"#mprHandle"),"@"+String(username).replace(/^@/,"").replace(/\s+/g,"").toLocaleLowerCase("tr-TR"));
-      const u=$(root,"#mprUsername"); if(u)u.value=username;
-      const b=$(root,"#mprBio"); if(b)b.value=bio;
-      updateAvatar(root,avatar);
-    }catch(e){}
-  }
-
-  function bind(root){
-    const file=$(root,"#mprFile");
-    file?.addEventListener("change",()=>{
-      const f=file.files?.[0];
-      if(!f || !f.type.startsWith("image/"))return;
-      if(objectUrl)URL.revokeObjectURL(objectUrl);
-      objectUrl=URL.createObjectURL(f);
-      updateAvatar(root,objectUrl);
-    });
-
-    const username=$(root,"#mprUsername");
-    username?.addEventListener("input",()=>{
-      const v=username.value.trim()||"Profil";
-      setText($(root,"#mprName"),v);
-      setText($(root,"#mprHandle"),"@"+v.replace(/^@/,"").replace(/\s+/g,"").toLocaleLowerCase("tr-TR"));
-    });
-
-    $(root,"#mprSave")?.addEventListener("click",async()=>{
-      const status=$(root,"#mprStatus");
-      setText(status,"Kaydediliyor...");
-      const sb=window.mortaSupabase||window.supabaseClient;
-      if(!sb?.auth?.getSession){setText(status,"Oturum bulunamadı.");return;}
-      try{
-        const {data:{session}}=await sb.auth.getSession();
-        const user=session?.user;
-        if(!user){setText(status,"Oturum bulunamadı.");return;}
-
-        const username=$(root,"#mprUsername")?.value.trim()||"Profil";
-        const bio=$(root,"#mprBio")?.value.trim()||"";
-        const payload={id:user.id,username,bio,updated_at:new Date().toISOString()};
-        const {error}=await sb.from("profiles").upsert(payload,{onConflict:"id"});
-        if(error) throw error;
-        setText(status,"Kaydedildi ✓");
-      }catch(e){
-        setText(status,"Kaydedilemedi: "+(e?.message||"Bilinmeyen hata"));
-      }
-    });
-  }
-
-  function open(){
-    const root=build();
-    if(root) load(root);
-  }
-
-  document.addEventListener("click",e=>{
-    if(e.target.closest("#mortaDrawerProfileBtn,[data-open-profile],#openProfile,.openProfile")){
-      setTimeout(open,0);
-    }
   });
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>{build();},{once:true});
-  }else build();
 })();
 </script>
 </body>
